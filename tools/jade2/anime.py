@@ -38,7 +38,7 @@ def classify(bgr, matte, face=None, hair=None):
     blue = (h >= 190) & (h <= 240) & (s > 0.25) & (vn > 0.35)
     dark = (v < 0.2) | (vn < 0.12)
     skinlike = warm & (v > 0.35)
-    if face is None:   # stills: the face = largest warm-skin blob in the upper figure (filled)
+    if face is None or face.sum() < 0.002 * H * W:   # no usable face mask (MediaPipe misses anime faces): largest warm-skin blob in the upper figure
         ys = np.where(fig.any(1))[0]; top = ys.min() if ys.size else 0; cut = top + (ys.max() - top) * 0.45 if ys.size else H
         sk = (skinlike & fig).astype(np.uint8); sk[int(cut):] = 0
         sk = cv2.morphologyEx(sk, cv2.MORPH_CLOSE, np.ones((25, 25), np.uint8))
@@ -49,12 +49,14 @@ def classify(bgr, matte, face=None, hair=None):
             cs, _ = cv2.findContours(face.astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
             face = np.zeros((H, W), np.uint8); cv2.drawContours(face, cs, -1, 1, -1); face = face > 0
     if hair is None: hair = np.zeros((H, W), bool)
-    face = face & fig; hair = hair & fig & ~face
+    face = face & fig; hair = hair & fig & ~cv2.erode(face.astype(np.uint8), np.ones((9, 9), np.uint8)).astype(bool)
     # outfit / body
     lab[fig] = idx['jacket']
     lab[fig & (vn < 0.62)] = idx['jacket_sh']
     lab[fig & dark] = idx['black']
-    lab[fig & skinlike & ~dark & ~face] = idx['skin']        # hands
+    hands = (fig & skinlike & ~dark & ~face).astype(np.uint8)   # hands only: small warm blobs (warm-lit jacket stays jacket)
+    n_, l_, st_, _ = cv2.connectedComponentsWithStats(hands); keep = np.zeros(n_, bool); keep[1:] = st_[1:, 4] < 0.012 * H * W
+    lab[keep[l_] & (hands > 0)] = idx['skin']
     lab[fig & orange & ~face] = idx['orange']
     lab[fig & blue & ~face] = idx['patch']
     lab[hair & dark] = idx['hair']; lab[hair & ~dark & (vn < 0.45)] = idx['hair_sheen']
@@ -64,7 +66,7 @@ def classify(bgr, matte, face=None, hair=None):
         lab[face] = idx['skin']; lab[face & (vn < t_sh) & ~dark] = idx['skin_sh']
         inner = cv2.erode(face.astype(np.uint8), np.ones((15, 15), np.uint8)) > 0
         lab[face & dark & ~inner] = idx['hair']
-        lab[inner & dark] = idx['eye']
+        lab[inner & ((v < 0.36) | dark)] = idx['eye']   # irises / lash lines / brows (face-relative darks)
         lab[face & (vn > 0.92) & (s < 0.12)] = idx['eye_white']
         lab[face & (h < 20) & (s > 0.35) & (vn > 0.35) & (vn < 0.85)] = idx['mouth']
     return lab, names
@@ -74,7 +76,7 @@ def render(lab, names, matte):
     fig = (cv2.GaussianBlur(matte, (0, 0), 2) > 0.5).astype(np.uint8)
     fig = cv2.morphologyEx(fig, cv2.MORPH_OPEN, np.ones((7, 7), np.uint8))
     smooth_fill(fig, (*P['jacket'], 255), out, min_area=3000, step=6, it=3)
-    order = ['jacket_sh', 'skin', 'skin_sh', 'orange', 'patch', 'black', 'hair', 'hair_sheen', 'mouth', 'eye', 'eye_white']
+    order = ['jacket_sh', 'skin', 'skin_sh', 'orange', 'patch', 'black', 'hair', 'hair_sheen', 'mouth', 'eye_white', 'eye']
     for k in order:
         m = (lab == names.index(k) + 1).astype(np.uint8) & fig
         small = k in ('eye', 'eye_white', 'mouth')
@@ -131,7 +133,9 @@ def run_clip(J, fr=None):
     # get their eye shapes scaled back up about each eye's centroid before rendering
     es = [v['eye'] for v in info.values() if v['eye']]; ref = float(np.percentile(es, 90)) if es else None
     for i, v in info.items():
-        v['eye_scale'] = (max(1.0, ref / v['eye']) if (ref and v['eye'] and v['eye'] < ref * 0.95) else 1.0)
+        # only where measurable: plausible eye blob (4–20 % of face height); never more than +8 % (anime eyes are canon-sized)
+        ok = ref and 0.04 < ref < 0.2 and v['eye'] and 0.5 * ref < v['eye'] < ref * 0.95
+        v['eye_scale'] = min(1.08, ref / v['eye']) if ok else 1.0
         lab, mt, face = cache[i]
         mt = mt.astype(np.float32)
         if v['eye_scale'] > 1.0 and face is not None: lab = grow_eyes(lab, names, face, v['eye_scale'])
