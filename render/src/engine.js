@@ -33,7 +33,7 @@ export function shotAt(t, exclude = null) {
 export const shotById = id => E.shots.find(s => s.id === id);
 
 function defaultPost(shot) {
-  return { bloom: 0.45, bloomThr: 0.72, grain: 0.045, grainSeed: hash(shot.id) * 1000, vignette: 0.3, ca: 0.6, typeCA: 0.35,
+  return { bloom: 0.3, bloomThr: 0.8, grain: 0.045, grainSeed: hash(shot.id) * 1000, vignette: 0.3, ca: 0.6, typeCA: 0.35,
     inkC: rgb(PAL.ink), boneC: rgb(PAL.bone), cyanC: rgb(PAL.cyan), flashC: rgb(PAL.bone), ...(shot.post || {}) };
 }
 

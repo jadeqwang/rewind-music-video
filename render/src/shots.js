@@ -189,8 +189,8 @@ export function buildShots(T) {
   C('V5_back', L(8).start, L(9).start, [ink,
     { type: 'world', roto: R.plate('car_interior_1'), alpha: 0.25, lights: 0.6, cam: { from: [0.5, 0.5, 1.1], to: [0.5, 0.5, 1.2] }, mirror: { y: 700, alpha: 0.25 } },
     { type: 'sodium', period: P * 2, amount: 0.34, kick: 0.5 },
-    jade('J6', { light: 'sodium', late: P }),
-    { type: 'page', lines: [8], size: 140, maxLines: 2, y: 470, folio: '61', header: 'Chapter 3.  Proof by Exhaustion' },
+    jade('J6', { light: 'sodium', late: P, cam: { from: [0.5, 0.5, 1.0], to: [0.5, 0.5, 1.03], dx: 420 } }),
+    { type: 'page', lines: [8], size: 130, maxLines: 3, y: 440, measure: 860, folio: '61', header: 'Chapter 3.  Proof by Exhaustion' },
   ], { hud: hud(2, 0.3), fx: { heart: 0.25, kick: 0.25, blinks: [{ t: W('back').start - 0.15, skip: 0.3 }] } });
   C('V6_mirror', L(9).start, W('reload').start, [ink, { type: 'world', roto: R.flood, alpha: 0.6, lights: 1 }, { type: 'sirens', side: 'full', base: 0.25, peak: 0.5 },
     { type: 'mirror', rect: [1080, 120, 720, 230], timeOffset: -0.5, zoom: 1.6, focus: [0.5, 0.45], layers: [{ type: 'fill', color: PAL.ink }, ...sirenLit({ base: 0.6 }), ...suits('B3')] },

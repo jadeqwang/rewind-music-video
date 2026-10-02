@@ -8,7 +8,7 @@
 import { DW, DH, PAL, clamp, fin, hash, hsig, layer, clearLayer, rgba, BOIL_FPS } from './core.js';
 
 const ROOT = '../assets/roto';
-const MAX = 160;                  // cached bitmaps (1280x720 ≈ 3.7 MB each)
+const MAX = 80;                  // cached bitmaps (1280x720 ≈ 3.7 MB each)
 const cache = new Map();          // url -> {bmp, last}
 const pending = new Map();        // url -> Promise
 const metas = new Map();          // id -> meta | null
@@ -20,6 +20,7 @@ export async function loadMeta(id) {
   let m = null;
   try { const r = await fetch(`${ROOT}/${id}/meta.json`); if (r.ok) m = await r.json(); } catch (e) { /* none */ }
   if (m) { m.fps = fin(m.fps, 15); m.layers = m.layers || ['lines', 'matte']; }
+  if (m && m.layers.includes('face')) { try { const r = await fetch(`${ROOT}/${id}/face.json`); if (r.ok) m.faceData = await r.json(); } catch (e) { /* no template data */ } }
   metas.set(id, m);
   return m;
 }
@@ -136,7 +137,7 @@ export function jade(g, id, clipT, o = {}) {
   } else {
     if (o.rim) { a.globalAlpha = clamp(o.rim.alpha ?? 0.6); a.drawImage(ring('jrim', m, mt, o.rim.w ?? 1.6, o.rim.color || PAL.bone), 0, 0); a.globalAlpha = 1; }
     const F0 = scratch('jadeF', m), f0 = clearLayer(F0);
-    f0.drawImage(mt, 0, 0, m.w, m.h); hardAlpha(F0);
+    f0.drawImage(mt, 0, 0, m.w, m.h); hardAlpha(F0, 70, 150);
     f0.globalCompositeOperation = 'source-in'; f0.fillStyle = o.fill || PAL.bone; f0.fillRect(0, 0, m.w, m.h);
     f0.globalCompositeOperation = 'source-over';
     a.drawImage(F0, 0, 0);
@@ -146,14 +147,23 @@ export function jade(g, id, clipT, o = {}) {
       gr.addColorStop(0, rgba(L.color, 0)); gr.addColorStop(0.5, rgba(L.color, L.amount)); gr.addColorStop(1, rgba(L.color, 0));
       a.fillStyle = gr; a.fillRect(0, 0, m.w, m.h);
     }
-    if (hair) { a.drawImage(tinted('jhair', m, hair, o.hairColor || PAL.ink), 0, 0); }
+    if (hair) {
+      const H = tinted('jhair', m, hair, o.hairColor || PAL.ink); hardAlpha(H, 60, 170);
+      const fdh = m.faceData && m.faceData[frameIndex(m, clipT)];
+      const pts = fdh ? [].concat(fdh.jaw || [], fdh.eye_L_upper || [], fdh.eye_R_upper || [], fdh.eye_near_upper || [], fdh.N ? [fdh.N] : []) : [];
+      if (pts.length > 2) {
+        const b = bboxOf(pts), fw = Math.max(b.w, 120), cx = b.cx;
+        a.save(); a.beginPath(); a.rect(cx - fw * 2.4, 0, fw * 4.8, b.y1 + fw * 2.2); a.clip(); a.drawImage(H, 0, 0); a.restore();
+      } else a.drawImage(H, 0, 0);
+    }
     if (lines) {   // interior lines outside the face only
       const B = tinted('jlines', m, lines, lineCol), b = B.ctx;
       if (face) { b.globalCompositeOperation = 'destination-out'; b.drawImage(face, 0, 0, m.w, m.h); b.globalCompositeOperation = 'source-over'; }
       a.drawImage(B, 0, 0);
     }
-    if (feat) a.drawImage(tinted('jfeat', m, feat, lineCol), 0, 0);
-    if (pf.mouth) drawMouth(a, pf.mouth, clamp(o.mouth ?? 0), lineCol, pf.tilt || 0);
+    if (feat) a.drawImage(tinted('jfeat', m, feat, m.faceData ? (o.featColor || '#3A3230') : lineCol), 0, 0);   // softer warm-dark features on the real template (brows not heavy)
+    if (pf.mouth) drawMouth(a, pf.mouth, pf.face_mode === 'profile' ? Math.min(0.06, o.mouth ?? 0) : clamp(o.mouth ?? 0) * 0.8, m.faceData ? '#4A3A38' : lineCol, pf.tilt || 0);
+    if (m.faceData && o.glasses !== false) drawGlasses(a, m.faceData[frameIndex(m, clipT)], o);
     a.globalCompositeOperation = 'source-over';
   }
   g.save(); g.globalAlpha = clamp(o.alpha ?? 1);
@@ -161,6 +171,50 @@ export function jade(g, id, clipT, o = {}) {
   g.restore();
   return true;
 }
+// ---- glasses: her identity marker, always on. Thin rectangular frames (dark grey-teal), sized to her real frames
+// (frame width ≈ 1.1 × outer-canthus distance), placed from the template eye anchors (face.json) and head yaw/roll.
+const GL = '#1C2E31';
+const bboxOf = pts => { let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9; for (const [x, y] of pts) { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); } return { x0, y0, x1, y1, cx: (x0 + x1) / 2, cy: (y0 + y1) / 2, w: x1 - x0, h: y1 - y0 }; };
+function lens(a, cx, cy, w, h, rot, lw) {
+  a.save(); a.translate(cx, cy); a.rotate(rot);
+  const r = h * 0.28; a.beginPath(); a.moveTo(-w / 2 + r, -h / 2); a.lineTo(w / 2 - r, -h / 2); a.quadraticCurveTo(w / 2, -h / 2, w / 2, -h / 2 + r); a.lineTo(w / 2, h / 2 - r); a.quadraticCurveTo(w / 2, h / 2, w / 2 - r, h / 2); a.lineTo(-w / 2 + r, h / 2); a.quadraticCurveTo(-w / 2, h / 2, -w / 2, h / 2 - r); a.lineTo(-w / 2, -h / 2 + r); a.quadraticCurveTo(-w / 2, -h / 2, -w / 2 + r, -h / 2); a.closePath();
+  a.fillStyle = 'rgba(61,242,230,0.07)'; a.fill();
+  a.strokeStyle = GL; a.lineWidth = lw; a.stroke();
+  // faint lens glint: one short diagonal streak, top-left
+  a.strokeStyle = 'rgba(255,255,255,0.75)'; a.lineWidth = lw * 0.7; a.beginPath(); a.moveTo(-w * 0.32, -h * 0.05); a.lineTo(-w * 0.18, -h * 0.32); a.stroke();
+  a.restore();
+}
+function drawGlasses(a, fd, o) {
+  if (!fd) return;
+  a.save(); a.globalCompositeOperation = 'source-over'; a.lineCap = 'round'; a.lineJoin = 'round';
+  if (fd.eye_L_upper && fd.eye_R_upper) {
+    const L = bboxOf([...fd.eye_L_upper, ...(fd.eye_L_lower || [])]), Rr = bboxOf([...fd.eye_R_upper, ...(fd.eye_R_lower || [])]);
+    const left = L.cx < Rr.cx ? L : Rr, right = L.cx < Rr.cx ? Rr : L;
+    const outer = right.x1 - left.x0, Wf = outer * 1.14, rot = Math.atan2(right.cy - left.cy, right.cx - left.cx);
+    const bridge = Wf * 0.11, lw0 = (Wf - bridge) / 2, hh = lw0 * 0.44, lwid = Math.max(3.5, Wf * 0.028);
+    // foreshortening with yaw: each lens keeps its eye's share of the width
+    const sL = left.w / (left.w + right.w) * 2, sR = 2 - sL;
+    const cxm = (left.x0 + right.x1) / 2, cym = (left.cy + right.cy) / 2 + hh * 0.08, c = Math.cos(rot), s_ = Math.sin(rot);
+    const off = d => [cxm + c * d, cym + s_ * d];
+    const lL = lw0 * sL, lR = lw0 * sR, half = (lL + lR + bridge) / 2;
+    const pL = off(-half + lL / 2), pR = off(half - lR / 2);
+    lens(a, pL[0], pL[1], lL, hh, rot, lwid); lens(a, pR[0], pR[1], lR, hh, rot, lwid);
+    const b0 = off(-half + lL), b1 = off(half - lR);
+    a.strokeStyle = GL; a.lineWidth = lwid; a.beginPath(); a.moveTo(b0[0], b0[1] - hh * 0.2); a.quadraticCurveTo((b0[0] + b1[0]) / 2, (b0[1] + b1[1]) / 2 - hh * 0.38, b1[0], b1[1] - hh * 0.2); a.stroke();
+    // temples: short arms back toward the ears
+    const tl = off(-half), tr = off(half);
+    a.beginPath(); a.moveTo(tl[0], tl[1] - hh * 0.3); a.lineTo(tl[0] - lw0 * 0.18, tl[1] - hh * 0.25); a.moveTo(tr[0], tr[1] - hh * 0.3); a.lineTo(tr[0] + lw0 * 0.18, tr[1] - hh * 0.25); a.stroke();
+  } else if (fd.eye_near_upper) {
+    // profile: the near lens side-on and the temple arm running back to the ear
+    const E = bboxOf([...fd.eye_near_upper, ...(fd.eye_near_lower || [])]), N = fd.N || [E.cx - 40, E.cy + 40];
+    const dir = N[0] < E.cx ? -1 : 1, w = E.w * 1.45, h = w * 0.62, lwid = Math.max(3.5, w * 0.07);
+    const cx = E.cx + dir * w * 0.08, cy = E.cy + h * 0.05;
+    lens(a, cx, cy, w, h, 0, lwid);
+    a.strokeStyle = GL; a.lineWidth = lwid; a.beginPath(); const x0 = cx - dir * w / 2; a.moveTo(x0, cy - h * 0.3); a.lineTo(x0 - dir * w * 2.2, cy - h * 0.18); a.stroke();
+  }
+  a.restore();
+}
+
 // lips from the vocal track: a closed mouth is one soft ink stroke; open = a small almond whose height follows the voice
 function drawMouth(a, [x, y, w], open, col, tilt) {
   a.save(); a.translate(x, y); a.rotate(tilt); a.fillStyle = col; a.strokeStyle = col; a.lineCap = 'round';
@@ -221,9 +275,9 @@ export function star(g, x, y, R, a, col) {
 }
 
 // threshold a scratch canvas' alpha (ramp 70..130) so mattes are FLAT shapes, never textured
-export function hardAlpha(c) {
-  const g = c.ctx, im = g.getImageData(0, 0, c.width, c.height), d = im.data;
-  for (let i = 3; i < d.length; i += 4) { const a = d[i]; d[i] = a < 96 ? 0 : a > 112 ? 255 : (a - 96) * 15.9; }
+export function hardAlpha(c, lo = 96, hi = 112) {
+  const g = c.ctx, im = g.getImageData(0, 0, c.width, c.height), d = im.data, k = 255 / (hi - lo);
+  for (let i = 3; i < d.length; i += 4) { const a = d[i]; d[i] = a < lo ? 0 : a > hi ? 255 : (a - lo) * k; }
   g.putImageData(im, 0, 0);
 }
 // ---- light layer (format addition): RGB = the light's own colour, alpha = brightness; drawn additively ----

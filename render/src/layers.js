@@ -102,7 +102,7 @@ export const LAYERS = {
     const rect = camRect(L.cam, env);
     const light = L.light === 'sodium' ? (env.sweep || sodiumSweep(env.t, { amount: 0.32 })) : L.light === 'siren'
       ? { color: (env.b.i & 1) ? PAL.blue : PAL.red, amount: 0.35 * Math.exp(-env.b.phase * 2), from: (env.b.i & 1) ? [DW, 0, DW * 0.3, 0] : [0, 0, DW * 0.7, 0] } : null;
-    if (L.late) {   // the ghost outline that moves a beat late (dream lag)
+    if (L.late && !roto.meta(id).faceData) {   // the ghost outline that moves a beat late (dream lag); stand-in only (real mattes have holes)
       const ct2 = roto.clipTime(id, env.lt - L.late, { speed: L.speed ?? 1, offset: L.offset ?? 0, loop: L.loop ?? 'pingpong' });
       roto.jade(ctx.g, id, ct2, { rect: { ...rect, x: rect.x + (L.lateDx ?? 26) }, ghost: true, ghostColor: L.lateColor || PAL.cyan, boil: ctx.seed, alpha: 0.75 });
     }
