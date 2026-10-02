@@ -1495,8 +1495,43 @@
     }
    ],
    "collected": 1790922800.1832292
+  },
+  "rewind/jade_J1b_lip_t1-e37fa5ca06": {
+   "id": "e37fa5ca06",
+   "job": "rewind/jade_J1b_lip_t1-e37fa5ca06",
+   "tag": "jade_J1b_lip_t1",
+   "model": "bytedance/seedance-2.5",
+   "notes": "J1b (restaged 3/4) lip-sync: vocals slice starts exactly at 'The' 13.55 s (no handle), sung to 21.12",
+   "spec_file": "assets/gen/specs/jade/J1b_lip_t1.json",
+   "input": {
+    "duration": 8,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": true,
+    "generate_audio": false,
+    "prompt": "Night, driving. Camera fixed to the dashboard near the driver's-side A-pillar, looking back at her in a three-quarter view: she sits in the driver's seat of a white 2001 Acura TL on the right side of the frame, hands on the steering wheel, eyes on the road ahead. She softly sings the vocal in the reference audio, her lips moving in exact sync with each sung word from the very first frame, small natural breaths, calm and focused. Warm orange sodium streetlight bands sweep slowly across her and the interior from front to back as the car moves; the camera stays locked to the car. Jade: East Asian woman, heart-shaped face with a large broad forehead, thin rectangular dark gray-teal metal glasses always on, long straight black hair half-up half-down, white cropped zip jacket with an orange chest band over a black top. Keep her face exactly as in the first frame and the reference photos; same eye size, eyes open naturally, never squinting. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/firstframes/J1b.jpg",
+    "reference_images": [
+     "file:assets/character/refs_768/PXL_20250908_195405539.MP.jpg",
+     "file:assets/character/refs_768/PXL_20260528_215628802.jpg",
+     "file:assets/character/refs_768/PXL_20250908_195352130.jpg"
+    ],
+    "reference_audios": [
+     "file:analysis/slices/vocals_J1b_13.55_7.9.mp3"
+    ]
+   },
+   "est_usd": 1.8496,
+   "est_basis": "8s x 0.2312 (@720p non-video input (per second))",
+   "state": "queued",
+   "bucket": 29849030,
+   "submitted": 1790941691.881728,
+   "bytes": 691537
   }
  },
- "total_est_usd": 47.2164,
+ "total_est_usd": 49.066,
  "total_est_usd_done": 34.2692
 }

@@ -2,6 +2,52 @@
  "J1": {
   "measurable": false
  },
+ "J1b": {
+  "measurable": true,
+  "yaw": -21.1,
+  "gate_ok": false,
+  "dev_vs_real_mean": {
+   "eye_w_face": -0.0193,
+   "iris_face": -0.0763,
+   "eye_open": -0.0709,
+   "forehead": 0.0077,
+   "upper_head": -0.0843,
+   "forehead_w": 0.0042,
+   "jaw_w": 0.0,
+   "chin_w": 0.0294
+  },
+  "dev_vs_source_photo": {
+   "eye_w_face": -0.0164,
+   "iris_face": -0.0484,
+   "eye_open": -0.0039,
+   "forehead": 0.0208,
+   "upper_head": -0.007
+  },
+  "brow": {
+   "height": {
+    "got": -0.0212,
+    "expected": -0.0416,
+    "z": 0.9
+   },
+   "peak_height": {
+    "got": -0.0303,
+    "expected": -0.0452,
+    "z": 0.44
+   },
+   "arch": {
+    "got": -0.0338,
+    "expected": -0.0198,
+    "z": -0.51
+   },
+   "peak_pos": {
+    "got": -0.021,
+    "expected": -0.0008,
+    "z": -0.14
+   }
+  },
+  "face_px": 231.4,
+  "method": "REAL face pasted: PXL_20250908_195405539 (best eyes+glasses 3/4)"
+ },
  "J2": {
   "measurable": true,
   "yaw": -21.5,

@@ -12,7 +12,7 @@ W, H = 1920, 1080
 SH = json.load(open(ROOT + '/tools/jade2/jade_shape.json'))
 TF = json.load(open(ROOT + '/tools/roto/templates/jade_front.json'))
 # MediaPipe's oval stops at the upper forehead; her real forehead / upper head is larger: lift the upper oval (rounded)
-LIFT, LOWER, CHEEK = 1.18, 0.93, 1.07
+LIFT, LOWER, CHEEK = 1.30, 0.93, 1.07
 _ny = SH['nose_tip'][1]
 def _shape(P):
     P = np.array(P, np.float64)
@@ -99,19 +99,20 @@ def build_frame(J, i, frame, meta, fd, pf):
     face_ft = (cv2.GaussianBlur(fm, (0, 0), 3) > 0.5).astype(np.uint8) if fm is not None else np.zeros((H, W), np.uint8)
     if fd and mode != 'profile' and 'eye_R_upper' in fd:
         M, proj, iod, yaw = front_geom(fd)
+        info['_canthi'] = apply(M, proj([[-0.5, 0, 0], [0.5, 0, 0]])).tolist(); info['chin'] = apply(M, proj([SH['chin']]))[0].round(1).tolist()
         oval = apply(M, proj(SH['oval']))
         cv2.fillPoly(face, [np.round(chaikin(oval, 3) * 4).astype(np.int32)], 1, cv2.LINE_AA, shift=2)
         top = apply(M, proj([SH['forehead']]))[0]
         inner = cv2.erode(face, np.ones((int(iod * 0.16) | 1, int(iod * 0.16) | 1), np.uint8)); hair[inner > 0] = 0   # hair may overlap the cheek edges, never the face centre
         # hairline: centre part a little below the oval top, curving down to the temples (large forehead stays visible)
         ovp = np.array(proj(SH['oval'])); ov = apply(M, ovp)
-        templeL = ov[np.argmin(np.abs(ovp[:, 1] + 0.5) + (ovp[:, 0] > 0) * 9)]; templeR = ov[np.argmin(np.abs(ovp[:, 1] + 0.5) + (ovp[:, 0] < 0) * 9)]
-        part = apply(M, proj([[0.05, 0.86, 0.2]]))[0]
+        templeL = ov[np.argmin(np.abs(ovp[:, 1] + 0.72) + (ovp[:, 0] > 0) * 9)]; templeR = ov[np.argmin(np.abs(ovp[:, 1] + 0.72) + (ovp[:, 0] < 0) * 9)]
+        part = apply(M, proj([[0.05, 0.96, 0.2]]))[0]
         up = (top - (templeL + templeR) / 2); up /= max(1e-6, np.linalg.norm(up))
         crown = []
         # hair cap over the forehead top: two curtains from the part to each temple
         for side, tp in ((-1, templeL), (1, templeR)):
-            ctrl = part + (tp - part) * 0.45 + up * iod * 0.16
+            ctrl = part + (tp - part) * 0.5 + up * iod * 0.10
             curve = [part + (tp - part) * t * t * 0 + (1 - t) ** 2 * (part - part) + 2 * (1 - t) * t * (ctrl - part) + t * t * (tp - part) for t in np.linspace(0, 1, 16)]
             cap = np.array(curve + [tp + (tp - part) * 0.12 - up * iod * 0.05, tp + up * iod * 0.8 + (tp - part) * 0.25, part + up * iod * 0.9])
             cv2.fillPoly(hair, [np.round(chaikin(cap, 2) * 4).astype(np.int32)], 1, cv2.LINE_AA, shift=2)
@@ -261,7 +262,65 @@ def build_frame(J, i, frame, meta, fd, pf):
     out[sm] = (*HAIR_STRAND, 255)
     os.makedirs(f'{d}/cel', exist_ok=True)
     cv2.imwrite(f'{d}/cel/{i:04d}.png', out, [cv2.IMWRITE_PNG_COMPRESSION, 3])
+    if VARIANTS and 'nose' in info:
+        info['_oval'] = oval
+        for v in VARIANTS: VARIANTS[v](J, i, out.copy(), frame, info, face, hair_designed, iod)
+    info.pop('_oval', None); info.pop('_canthi', None)
     return info
+
+VARIANTS = {}
+SKIN, SKIN_SH, BLUSH, HAIR_HI = (180, 201, 233), (146, 168, 211), (160, 168, 226), (40, 44, 58)   # BGR warm palette
+def variant_B(J, i, out, frame, info, face, hair, iod):
+    """(B) 4–5 tone warm-skin cel: skin + skin shadow + cheek blush + 2-tone hair (flat shapes)."""
+    fm = face > 0
+    bone = (np.abs(out[..., :3].astype(int) - BONE).sum(-1) < 12) & fm
+    shd = (np.abs(out[..., :3].astype(int) - MID_FACE).sum(-1) < 12) & fm
+    out[bone, :3] = SKIN; out[shd, :3] = SKIN_SH
+    # cheek blush: soft rose shapes on the cheekbones (flat, smooth-edged)
+    lo = np.array(info['lips']['outer']); mc = lo.mean(0); nz = np.array(info['nose'])
+    for side in (-1, 1):
+        c = (nz[0] + side * iod * 0.42, nz[1] - iod * 0.05)
+        m = np.zeros(face.shape, np.uint8); cv2.ellipse(m, (int(c[0]), int(c[1])), (int(iod * 0.2), int(iod * 0.11)), 0, 0, 360, 1, -1, cv2.LINE_AA)
+        out[(m > 0) & fm, :3] = BLUSH
+    # hair second tone: a broad soft sheen band on the crown
+    ink = (np.abs(out[..., :3].astype(int) - INK).sum(-1) < 12) & (hair > 0)
+    top = np.array(info['top']); up = np.array(info['up'])
+    m = np.zeros(face.shape, np.uint8); c = top + up * iod * 0.15
+    cv2.ellipse(m, (int(c[0]), int(c[1])), (int(iod * 0.75), int(iod * 0.22)), math.degrees(math.atan2(up[1], up[0])) + 90, 0, 360, 1, -1, cv2.LINE_AA)
+    out[(m > 0) & ink, :3] = HAIR_HI
+    os.makedirs(f'{ROOT}/assets/roto/{J}/celB', exist_ok=True); cv2.imwrite(f'{ROOT}/assets/roto/{J}/celB/{i:04d}.png', out)
+def variant_C(J, i, out, frame, info, face, hair, iod):
+    """(C) graphic portrait drawn over her REAL face: her photo warped to the frame's eye anchors, smoothed and
+    posterized into 6 flat tone shapes (no photographic texture), inside the template face + hairline."""
+    sys.path.insert(0, ROOT + '/tools/likeness'); import measure as MS
+    ref = ROOT + '/refs/jade/IMG_20180610_074732_mr1528617091925.jpg'
+    rgb = MS.load_rgb(ref); lm = MS.landmarks(rgb); P = lm[0][:, :2]
+    src = np.float32([P[33], P[263], P[152]])
+    fd_c = info['_canthi']; ch = np.array(info['chin'])
+    dst = np.float32([fd_c[0], fd_c[1], ch])
+    A = cv2.getAffineTransform(src, dst)
+    warped = cv2.warpAffine(cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR), A, (W, H), flags=cv2.INTER_CUBIC)
+    sm = warped
+    for _ in range(4): sm = cv2.bilateralFilter(sm, 11, 30, 11)
+    sm = cv2.medianBlur(sm, 9)
+    region = cv2.dilate(face, np.ones((5, 5), np.uint8)) > 0
+    px = sm[region].reshape(-1, 3).astype(np.float32)
+    crit = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.5)
+    _, lab, cen = cv2.kmeans(px, 6, None, crit, 3, cv2.KMEANS_PP_CENTERS)
+    order = np.argsort(cen.sum(1)); cen = cen[order]; remap = np.argsort(order); lab = remap[lab.ravel()]
+    L = np.full(face.shape, -1, np.int32); L[region] = lab
+    res = out.copy()
+    for k in range(6):   # paint light → dark, each level spline-smoothed, small specks dropped
+        mk = (L >= 0) & (L <= k) if False else (L >= 0) & (L >= k)
+        mk = cv2.morphologyEx(mk.astype(np.uint8), cv2.MORPH_OPEN, np.ones((7, 7), np.uint8))
+        col = tuple(int(x) for x in cen[5 - k]) if False else tuple(int(x) for x in cen[k])
+    # paint darkest-first-as-base: fill region with the lightest, then darker levels on top
+    smooth_fill(region.astype(np.uint8), (*[int(x) for x in cen[5]], 255), res, min_area=500, step=4, it=3)
+    for k in range(4, -1, -1):
+        mk = ((L >= 0) & (L <= k)).astype(np.uint8)
+        mk = cv2.morphologyEx(mk, cv2.MORPH_OPEN, np.ones((5, 5), np.uint8)) & region
+        smooth_fill(mk, (*[int(x) for x in cen[k]], 255), res, min_area=int(iod * iod * 0.004), step=3, it=3, holes=True)
+    os.makedirs(f'{ROOT}/assets/roto/{J}/celC', exist_ok=True); cv2.imwrite(f'{ROOT}/assets/roto/{J}/celC/{i:04d}.png', res)
 
 def run(J, fr=None):
     d = f'{ROOT}/assets/roto/{J}'; meta = json.load(open(d + '/meta.json')); faces = json.load(open(d + '/face.json'))
@@ -284,5 +343,6 @@ def run(J, fr=None):
 
 if __name__ == '__main__':
     a = sys.argv[1:]; fr = None
+    if '--variants' in a: a.remove('--variants'); VARIANTS.update(B=variant_B, C=variant_C)
     if '--frames' in a: k = a.index('--frames'); fr = tuple(map(int, a[k + 1].split(':'))); a = a[:k] + a[k + 2:]
     for J in a: run(J, fr)

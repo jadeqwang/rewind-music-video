@@ -9,6 +9,7 @@ ROOT = "/home/user/rewind-music-video"; D = ROOT + "/assets/character/firstframe
 S = json.load(open(D + "/shots.json"))
 META = {
  "J1": ("driving profile (lip-sync V1)", "GEN face (profile: real-photo paste-back impossible, MediaPipe/ORB cannot align a profile); conditioned on PXL_20260929_003030232"),
+ "J1b": ("driving 3/4 from driver-side dash (lip-sync V1, restaged)", "REAL face pasted: PXL_20250908_195405539 (best eyes+glasses 3/4)"),
  "J2": ("mirror glance", "REAL face pasted: PXL_20250908_195405539"),
  "J3": ("reach/hold blank ID at window", "REAL face pasted: PXL_20250908_195352130"),
  "J5": ("performance center-lock, siren rim", "REAL face pasted: PXL_20260528_215628802"),

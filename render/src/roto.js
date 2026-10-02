@@ -8,7 +8,7 @@
 import { DW, DH, PAL, clamp, fin, hash, hsig, layer, clearLayer, rgba, BOIL_FPS } from './core.js';
 
 const ROOT = '../assets/roto';
-const FORCE_V1 = new URLSearchParams(location.search).has('jadev1');
+const _Q = new URLSearchParams(location.search), FORCE_V1 = _Q.has('jadev1'), CELV = _Q.get('cel') || 'cel', NOFEAT = _Q.has('nofeat');
 const MAX = 80;                  // cached bitmaps (1280x720 ≈ 3.7 MB each)
 const cache = new Map();          // url -> {bmp, last}
 const pending = new Map();        // url -> Promise
@@ -21,6 +21,7 @@ export async function loadMeta(id) {
   let m = null;
   try { const r = await fetch(`${ROOT}/${id}/meta.json`); if (r.ok) m = await r.json(); } catch (e) { /* none */ }
   if (m) { m.fps = fin(m.fps, 15); m.layers = m.layers || ['lines', 'matte']; }
+  if (m && m.layers.includes('cel') && CELV !== 'cel' && !m.layers.includes(CELV)) m.layers.push(CELV);
   if (m && m.layers.includes('cel')) { try { const r = await fetch(`${ROOT}/${id}/cel.json`); if (r.ok) m.celData = (await r.json()).frames; } catch (e) { /* none */ } }
   if (m && m.layers.includes('face')) { try { const r = await fetch(`${ROOT}/${id}/face.json`); if (r.ok) m.faceData = await r.json(); } catch (e) { /* no template data */ } }
   metas.set(id, m);
@@ -229,7 +230,8 @@ function smoothPath(a, pts) {   // quadratic midpoint smoothing
   const l = pts[pts.length - 1]; a.lineTo(l[0], l[1]);
 }
 // her real eye opening (opening / width) and iris size (iris diameter / face width) from the real-photo template
-const EYE_OPEN = 0.358, IRIS_FACE = 0.096, IOD_FW = 0.6578;
+const EYE_OPEN = 0.39,   // drawn target; measures as her real mean 0.358 (MediaPipe reads the lid stroke inner edge)
+  _EYE_REAL = 0.358, IRIS_FACE = 0.096, IOD_FW = 0.6578;
 function fitEye(up, lo, closure) {
   const all = [...up, ...lo]; let x0 = 1e9, x1 = -1e9; for (const p of all) { x0 = Math.min(x0, p[0]); x1 = Math.max(x1, p[0]); }
   const a = all.find(p => p[0] === x0), b = all.find(p => p[0] === x1), w = x1 - x0;
@@ -260,7 +262,7 @@ function eye(a, up, lo, crease, iris, closure, sc, fwPx) {
   if (crease) { smoothPath(a, crease); a.strokeStyle = 'rgba(58,46,44,0.6)'; a.lineWidth = Math.max(1, sc * 0.008); a.stroke(); }
 }
 export function jade2(g, id, clipT, o = {}) {
-  const m = meta(id), fi = frameIndex(m, clipT), cel = get(id, 'cel', clipT); if (!cel) return false;
+  const m = meta(id), fi = frameIndex(m, clipT), cel = get(id, CELV, clipT) || get(id, 'cel', clipT); if (!cel) return false;
   const fd = m.faceData && m.faceData[fi] || {}, cd = m.celData && (m.celData[fi] || m.celData[String(fi)]) || {}, pf = perFrame(id, clipT);
   const A = scratch('jade2', m), a = clearLayer(A);
   a.drawImage(cel, 0, 0, m.w, m.h);
@@ -279,6 +281,7 @@ export function jade2(g, id, clipT, o = {}) {
     a.globalAlpha = 0.85; a.drawImage(Lc, 0, 0); a.globalAlpha = 1;
   }
   const sc = fd.template_scale_px || (cd.iod) || 150;
+  if (NOFEAT) { if (o.glasses !== false) drawGlasses(a, fd, o); g.save(); g.globalAlpha = clamp(o.alpha ?? 1); place(g, A, o.rect, null); g.restore(); return true; }
   // brows: filled tapered polygons (her own asymmetric template)
   a.fillStyle = FEAT;
   for (const b of [fd.brow_R, fd.brow_L, fd.brow_near]) if (b && b.length > 2) { poly(a, b, true); a.fill(); }

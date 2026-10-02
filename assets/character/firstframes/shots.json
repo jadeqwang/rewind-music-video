@@ -45,5 +45,10 @@
   "src": "refs/jade/PXL_20250908_195405539.MP.jpg",
   "set": "assets/sets/car_interior/3.jpg",
   "prompt": "Night, driving, camera on the windshield looking back at the driver: she sits in the left-hand driver's seat on the RIGHT side of the frame, hands on the steering wheel, steady and determined, eyes on the road. Police red and blue lights glow through the rear window far behind her, rim-lighting her hair; her face has a soft cool frontal key; dashboard glow from below. Use the second image only as a mood reference."
+ },
+ "J1b": {
+  "src": "refs/jade/PXL_20250908_195405539.MP.jpg",
+  "set": "assets/sets/car_interior/1.jpg",
+  "prompt": "Night, driving. Camera mounted low on the dashboard near the driver's-side A-pillar, looking back at her in a three-quarter view that matches the head angle of the first image exactly: she sits in the left-hand driver's seat of a white 2001 Acura TL (simple early-2000s interior, no touchscreen), her head in the RIGHT third of the frame, face turned toward frame-left (the road ahead), both hands on the steering wheel whose rim crosses the lower part of the frame in front of her. Warm orange sodium streetlight bands fall across her and the interior through the driver's window; cool dim dashboard glow from below; soft frontal fill keeps her face clear and flattering; dark interior and passenger seat behind her at frame-left. Use the second image only as a mood reference."
  }
 }
