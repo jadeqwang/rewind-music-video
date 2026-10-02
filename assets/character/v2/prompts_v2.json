@@ -34,5 +34,44 @@
    }
   ],
   "file": "cands/G_edit_a.jpg"
+ },
+ {
+  "id": "FS1",
+  "model": "openai/gpt-image-2",
+  "prompt": "Photographic character reference sheet on a plain light warm-gray studio background, soft even frontal key light. Four head-and-shoulders portraits of the same woman in one row, evenly spaced, same scale: (1) front view facing camera, (2) three-quarter view turned to her right, (3) three-quarter view turned to her left, (4) full side profile. The 3/4 and profile views clearly show the half-up half-down hairstyle: two symmetrical twisted sections pulled back from the temples meeting behind the crown, the rest long and straight. Neutral calm expression, eyes open naturally. Same woman as the reference photos, accurate likeness, same face as the first reference image. Heart-shaped \"melon-seed\" face (\u74dc\u5b50\u8138): a large, tall, broad forehead and a proportionally large upper head/cranium, wide at the forehead/temples and cheekbones, tapering through the lower cheeks to a narrow, softly pointed chin (not round, not square). Eyes exactly as large and as shaped as in the first reference image (never smaller, never narrowed, never squinting), dark brown round-almond eyes with a slight thin double eyelid crease. Natural straight-ish brows with her subtle asymmetry: the brow on the viewer's left sits slightly lower and flatter, the brow on the viewer's right is slightly higher with a softer arch peaking toward the tail. Long straight solid black hair with a center part, styled half-up half-down: the top section pulled back from the temples into two symmetrical twisted sections meeting toward the crown, adding volume at the top and back of the head and revealing the broad forehead; the rest hangs long and straight past the shoulders, a few fine loose strands at the temples. Thin rectangular dark gray-teal metal frame glasses always on. Age 27, youthful, smooth clear skin, natural healthy complexion, soft even light on the face. Wearing the white cropped zip jacket with an orange chest band over a black top. No text, no labels.",
+  "refs": [
+   "assets/character/v2/cands/G_warp.jpg",
+   "refs/jade/PXL_20250908_195405539.MP.jpg",
+   "refs/jade/PXL_20260929_003030232.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 28.1
+   }
+  ],
+  "file": "cands/FS1.jpg"
+ },
+ {
+  "id": "TU1",
+  "model": "openai/gpt-image-2",
+  "prompt": "Photographic full-body character turnaround of the same woman on a plain light warm-gray studio background, soft even light, four full-length views side by side at the same scale, head to sneakers fully in frame: front, three-quarter, side profile, back. The back and side views clearly show her half-up half-down hairstyle: two symmetrical twisted sections pulled back from the temples meeting at the back of the crown, the rest of the long straight black hair hanging down her back. Relaxed standing pose, arms at her sides. Same woman as the reference photos, accurate likeness, same face as the first reference image. Heart-shaped \"melon-seed\" face (\u74dc\u5b50\u8138): a large, tall, broad forehead and a proportionally large upper head/cranium, wide at the forehead/temples and cheekbones, tapering through the lower cheeks to a narrow, softly pointed chin (not round, not square). Eyes exactly as large and as shaped as in the first reference image (never smaller, never narrowed, never squinting), dark brown round-almond eyes with a slight thin double eyelid crease. Natural straight-ish brows with her subtle asymmetry: the brow on the viewer's left sits slightly lower and flatter, the brow on the viewer's right is slightly higher with a softer arch peaking toward the tail. Long straight solid black hair with a center part, styled half-up half-down: the top section pulled back from the temples into two symmetrical twisted sections meeting toward the crown, adding volume at the top and back of the head and revealing the broad forehead; the rest hangs long and straight past the shoulders, a few fine loose strands at the temples. Thin rectangular dark gray-teal metal frame glasses always on. Age 27, youthful, smooth clear skin, natural healthy complexion, soft even light on the face. Outfit: white cropped zip jacket with one clean orange horizontal band across the chest continuing across both upper sleeves, plus one thin orange band near each cuff, nothing else on it (no patches, no logos, no text, not all-over stripes); black fitted top underneath; slim straight black pants; white sneakers. Use the last reference image for the outfit pattern only (not the face, ignore its patches, text and cargo pants). No text, no labels.",
+  "refs": [
+   "assets/character/v2/cands/G_warp.jpg",
+   "refs/jade/PXL_20250908_195405539.MP.jpg",
+   "refs/jade/PXL_20260929_003030232.jpg",
+   "refs/jade/Pasted image.png"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 28.9
+   }
+  ],
+  "file": "cands/TU1.jpg"
  }
 ]

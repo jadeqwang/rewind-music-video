@@ -773,10 +773,11 @@
    },
    "est_usd": 1.8496,
    "est_basis": "8s x 0.2312 (@720p non-video input (per second))",
-   "state": "queued",
+   "state": "running",
    "bucket": 29848657,
    "submitted": 1790919318.1350682,
-   "bytes": 138332
+   "bytes": 138332,
+   "started": 1790919469.876
   },
   "rewind/nj_E4_t2-2c2ba9daea": {
    "id": "2c2ba9daea",
