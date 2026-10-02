@@ -12,8 +12,19 @@ W, H = 1920, 1080
 SH = json.load(open(ROOT + '/tools/jade2/jade_shape.json'))
 TF = json.load(open(ROOT + '/tools/roto/templates/jade_front.json'))
 # MediaPipe's oval stops at the upper forehead; her real forehead / upper head is larger: lift the upper oval (rounded)
-_ov = np.array(SH['oval']); _ov[:, 1] = np.where(_ov[:, 1] > 0, _ov[:, 1] * 1.32, _ov[:, 1]); SH['oval'] = _ov.tolist()
-SH['forehead'] = [SH['forehead'][0], SH['forehead'][1] * 1.32, SH['forehead'][2]]
+LIFT, LOWER, CHEEK = 1.18, 0.93, 1.07
+_ny = SH['nose_tip'][1]
+def _shape(P):
+    P = np.array(P, np.float64)
+    y = P[:, 1]
+    P[:, 1] = np.where(y > 0, y * LIFT, np.where(y < _ny, _ny + (y - _ny) * LOWER, y))          # big forehead, shorter lower face
+    w = np.exp(-((y + 0.25) / 0.55) ** 2)                                                          # full cheeks/cheekbones, taper in the lower third
+    P[:, 0] = P[:, 0] * (1 + (CHEEK - 1) * w)
+    return P.tolist()
+SH['oval'] = _shape(SH['oval']); SH['forehead'] = _shape([SH['forehead']])[0]
+SH['lips_outer'] = _shape(SH['lips_outer']); SH['lips_inner'] = _shape(SH['lips_inner']); SH['chin'] = _shape([SH['chin']])[0]
+PS = json.load(open(ROOT + '/tools/jade2/jade_profile_shape.json'))
+ORANGE = (15, 134, 232)
 
 def chaikin(P, it=3):
     P = np.asarray(P, np.float32)
@@ -107,13 +118,13 @@ def build_frame(J, i, frame, meta, fd, pf):
         # half-up: two symmetrical gathered pieces toward the crown (fuller crown silhouette)
         perp = np.array([up[1], -up[0]])
         for side in (-1, 1):
-            c = top + up * iod * 0.22 + perp * side * iod * 0.36
-            cv2.ellipse(hair, (int(c[0]), int(c[1])), (int(iod * 0.48), int(iod * 0.34)), math.degrees(math.atan2(up[1], up[0])) + 90 + side * 18, 0, 360, 1, -1, cv2.LINE_AA)
-        info['part'] = part.round(1).tolist(); info['crown'] = (top + up * iod * 0.3).round(1).tolist(); info['up'] = up.round(4).tolist(); info['iod'] = float(iod)
+            c = top + up * iod * 0.30 + perp * side * iod * 0.30
+            cv2.ellipse(hair, (int(c[0]), int(c[1])), (int(iod * 0.42), int(iod * 0.30)), math.degrees(math.atan2(up[1], up[0])) + 90 + side * 18, 0, 360, 1, -1, cv2.LINE_AA)
+        info['part'] = part.round(1).tolist(); info['crown'] = (top + up * iod * 0.3).round(1).tolist(); info['top'] = top.round(1).tolist(); info['up'] = up.round(4).tolist(); info['iod'] = float(iod)
         # lips template, centred on the footage mouth
         lo = apply(M, proj(SH['lips_outer'])); li = apply(M, proj(SH['lips_inner']))
         if fd.get('lips'):
-            fl = np.array(fd['lips']); dlt = fl.mean(0) - lo.mean(0); lo += dlt; li += dlt
+            fl = np.array(fd['lips']); dlt = fl.mean(0) - lo.mean(0); dlt[1] = 0; lo += dlt; li += dlt
         info['lips'] = dict(outer=lo.round(1).tolist(), inner=li.round(1).tolist())
         info['iris'] = [fd[k] for k in ('eye_R_iris', 'eye_L_iris') if k in fd]
         info['glasses'] = dict(kind='front')
@@ -125,43 +136,72 @@ def build_frame(J, i, frame, meta, fd, pf):
         if fd and 'E' in fd:
             E, N = np.array(fd['E']), np.array(fd['N']); dd = np.linalg.norm(N - E); iod = dd * 1.6
             back = np.sign(E[0] - N[0]) or 1.0
-            # half-up piece seen from the side: a gathered lobe at the back of the crown + the tie
-            crown = E + np.array([back * dd * 1.25, -dd * 1.75])
-            cv2.ellipse(hair, (int(crown[0]), int(crown[1])), (int(dd * 0.95), int(dd * 0.62)), -20 * back, 0, 360, 1, -1, cv2.LINE_AA)
-            # lens: narrow parallelogram in front of the eye; temple arm back to the ear
-            fwd = np.array([-back, 0.0]); upv = np.array([0.0, -1.0])
-            lc = E + fwd * dd * 0.04 + upv * dd * 0.01
-            hw, hh, sk = dd * 0.2, dd * 0.27, dd * 0.1
-            quad = [lc + fwd * hw + upv * hh + fwd * sk, lc - fwd * hw * 0.6 + upv * hh * 0.95, lc - fwd * hw * 0.6 - upv * hh * 0.9, lc + fwd * hw - upv * hh + fwd * sk * 0.3]
-            ear = E + np.array([back * dd * 1.75, dd * 0.22])
-            info['glasses'] = dict(kind='profile', lens=np.round(quad, 1).tolist(), arm=[np.round(lc - fwd * hw * 0.6 + upv * hh * 0.6, 1).tolist(), np.round(ear, 1).tolist()])
+            # hand-annotated profile template (her real photo) mapped E,N -> E,N (similarity); mirror if she faces right
+            tE, tN = np.array(PS['E'], float), np.array(PS['N'], float)
+            def T(P):
+                P = np.array(P, float)
+                if back < 0: P[:, 0] = 2 * tE[0] - P[:, 0]; tN_ = np.array([2 * tE[0] - tN[0], tN[1]])
+                else: tN_ = tN
+                vs, vd = tN_ - tE, N - E; sc_ = np.linalg.norm(vd) / np.linalg.norm(vs); th = math.atan2(vd[1], vd[0]) - math.atan2(vs[1], vs[0])
+                R2 = sc_ * np.array([[math.cos(th), -math.sin(th)], [math.sin(th), math.cos(th)]])
+                return (P - tE) @ R2.T + E
+            sil, hl, sk = T(PS['silhouette']), T(PS['hairline']), T(PS['skull'])
+            # skin: profile curve + hairline (front→back) + down behind the jaw
+            skin_poly = np.vstack([sil, sil[-1:] + [back * dd * 0.6, 0], hl[::-1]])
+            face = np.zeros((H, W), np.uint8); cv2.fillPoly(face, [np.round(chaikin(skin_poly, 3) * 4).astype(np.int32)], 1, cv2.LINE_AA, shift=2)
+            # hair: skull cap above the hairline + the footage hair mass behind
+            cap = np.vstack([hl, sk[::-1]])
+            hair[face > 0] = 0
+            cv2.fillPoly(hair, [np.round(chaikin(cap, 3) * 4).astype(np.int32)], 1, cv2.LINE_AA, shift=2)
+            crown = T([[1700, 260]])[0]
+            cv2.ellipse(hair, (int(crown[0]), int(crown[1])), (int(dd * 0.9), int(dd * 0.55)), -15 * back, 0, 360, 1, -1, cv2.LINE_AA)
+            lens, arm = T(PS['lens']), T(PS['arm'])
+            c0 = lens.mean(0); lens = c0 + (lens - c0) * np.array([0.55, 1.0])   # slimmer: the footage is closer to true profile
+            info['glasses'] = dict(kind='profile', lens=lens.round(1).tolist(), arm=[(c0 + (np.array(T([PS['arm'][0]])[0]) - c0) * np.array([0.55, 1])).round(1).tolist(), arm[1].round(1).tolist()])
             info['iris'] = [fd['eye_near_iris']] if 'eye_near_iris' in fd else []
             info['crown'] = crown.round(1).tolist(); info['E'] = E.tolist(); info['N'] = N.tolist(); info['back'] = float(back)
+            info['nostril'] = T([PS['nostril']])[0].round(1).tolist(); info['mouth_corner'] = T([PS['mouth_corner']])[0].round(1).tolist()
+            info['sil'] = sil.round(1).tolist()
+            # nothing of the footage figure may stick out in front of her real profile curve (forehead → chin)
+            chin_i = int(np.argmax(sil[:, 1] * 0 + np.arange(len(sil)) == 15))
+            front = np.vstack([sil[:16], [sil[15][0] - back * dd * 4, sil[15][1]], [sil[0][0] - back * dd * 4, sil[0][1] - dd * 2], [sil[0][0], sil[0][1] - dd * 2]])
+            info['_front'] = front
         info['mouth'] = pf.get('mouth')
     # dark regions of the upper figure are hair (the roto hair mask misses the front of the head)
     eye_y = (info['E'][1] if 'E' in info else (np.mean([p[1] for p in info.get('iris', [[0, 540]])]) if info.get('iris') else 540))
     fv = L[fig]; dark = fig & (L < (np.percentile(fv, 30) if fv.size else 0)) & (np.arange(H)[:, None] < eye_y + iod * 0.9) & (face == 0)
     dark = cv2.morphologyEx(dark.astype(np.uint8), cv2.MORPH_OPEN, np.ones((11, 11), np.uint8))
-    hair = hair | dark
-    if 'E' in info:   # profile: the footage face mask runs over the head top; dark pixels above the brow are hair
+    hair = hair | (dark & (1 - face))
+    if False:   # (v2 hack, superseded by the profile template)
         top = fig & (L < np.percentile(L[face > 0], 35)) & (np.arange(H)[:, None] < info['E'][1] - iod * 0.25)
         top = cv2.morphologyEx(top.astype(np.uint8), cv2.MORPH_OPEN, np.ones((9, 9), np.uint8))
         E0 = np.array(info['E']); cv2.circle(top, (int(E0[0]), int(E0[1])), int(iod / 1.6 * 0.9), 0, -1)
         hair = hair | top; face = face & (1 - top)
     hair_designed = hair.copy()
+    if '_front' in info:
+        fr_ = np.zeros((H, W), np.uint8); cv2.fillPoly(fr_, [np.round(info.pop('_front') * 4).astype(np.int32)], 1, cv2.LINE_AA, shift=2)
+        fig = fig & (fr_ == 0); hair_designed = hair_designed & (1 - fr_)
     figure = (fig.astype(np.uint8) | face | hair_designed) > 0
-    # ---- body tones: 3 levels from smoothed luminance, inside the figure, outside face/hair
+    # ---- outfit as designed shapes: bone jacket, her orange bands (from the footage hue, cleaned), black top (ink),
+    #      at most 2 large mid-tone fold shadows
     body = figure & (face == 0) & (hair_designed == 0)
-    if body.sum() > 1000:
-        v = L[body]; t1, t2 = np.percentile(v, 28), np.percentile(v, 62)
-        lev = np.zeros((H, W), np.uint8); lev[body] = 1 + (L[body] > t1) + (L[body] > t2)   # 1 ink, 2 mid, 3 bone
-    else: lev = np.zeros((H, W), np.uint8)
     smooth_fill(figure, (*BONE, 255), out, min_area=2000, step=5, it=3)
-    k = np.ones((9, 9), np.uint8)
-    for val, col in ((2, MID), (1, INK)):
-        m = cv2.morphologyEx(((lev > 0) & (lev <= val)).astype(np.uint8), cv2.MORPH_OPEN, k)
-        m = cv2.morphologyEx(m, cv2.MORPH_CLOSE, k) & body
-        smooth_fill(m, (*col, 255), out, min_area=2500, step=6, it=3, holes=False)
+    if body.sum() > 1000:
+        hsv = cv2.cvtColor(cv2.resize(small, (W, H)), cv2.COLOR_BGR2HSV); hh_, ss_, vv_ = hsv[..., 0], hsv[..., 1], hsv[..., 2]
+        orange = body & (hh_ >= 4) & (hh_ <= 19) & (ss_ > 140) & (vv_ > 90)
+        v = L[body]; t_dark, t_mid = np.percentile(v, 22), np.percentile(v, 45)
+        ink = body & (L < t_dark) & ~orange
+        mid = body & (L >= t_dark) & (L < t_mid) & ~orange
+        k = np.ones((13, 13), np.uint8)
+        mid = cv2.morphologyEx(cv2.morphologyEx(mid.astype(np.uint8), cv2.MORPH_OPEN, k), cv2.MORPH_CLOSE, k)
+        n, lab, st, _ = cv2.connectedComponentsWithStats(mid)
+        keep = np.zeros(n, bool); order = np.argsort(-st[1:, 4]) + 1; keep[order[:2]] = True; keep[0] = False
+        mid = keep[lab].astype(np.uint8) & body
+        smooth_fill(mid, (*MID, 255), out, min_area=6000, step=8, it=4, holes=False)
+        orange = cv2.morphologyEx(cv2.morphologyEx(orange.astype(np.uint8), cv2.MORPH_OPEN, np.ones((7, 7), np.uint8)), cv2.MORPH_CLOSE, np.ones((15, 15), np.uint8)) & body
+        smooth_fill(orange, (*ORANGE, 255), out, min_area=4000, step=8, it=4, holes=False)
+        ink = cv2.morphologyEx(cv2.morphologyEx(ink.astype(np.uint8), cv2.MORPH_OPEN, k), cv2.MORPH_CLOSE, k) & body
+        smooth_fill(ink, (*INK, 255), out, min_area=3000, step=7, it=3, holes=False)
     # ---- face: 2 tones max, large smooth shadow shapes only near the edge (cheekbone / jaw) — never under the eyes
     if face.sum() > 500:
         fl = cv2.GaussianBlur(L, (0, 0), 14)
@@ -194,13 +234,22 @@ def build_frame(J, i, frame, meta, fd, pf):
     strands = np.zeros((H, W), np.uint8)
     if 'part' in info:
         part, up, iod_ = np.array(info['part']), np.array(info['up']), info['iod']; perp = np.array([up[1], -up[0]])
+        R0 = np.random.default_rng(7)   # static design (same every frame)
         for side in (-1, 1):
-            for k_ in range(3):
-                off = 0.22 + 0.24 * k_ + 0.06 * (k_ % 2)
-                pts = [part + perp * side * iod_ * 0.05 * k_, part + perp * side * iod_ * (0.55 + off * 0.4) + up * iod_ * (0.05 - 0.02 * k_),
-                       part + perp * side * iod_ * (0.95 + off * 0.5) - up * iod_ * 0.6, part + perp * side * iod_ * (1.0 + off * 0.55) - up * iod_ * 2.2,
-                       part + perp * side * iod_ * (0.95 + off * 0.6) - up * iod_ * 4.0]
+            for k_ in range(4):
+                off = 0.15 + 0.22 * k_ + R0.uniform(-0.06, 0.08); ln = R0.uniform(2.6, 4.4); bend = R0.uniform(-0.12, 0.12)
+                pts = [part + perp * side * iod_ * 0.04 * k_, part + perp * side * iod_ * (0.5 + off * 0.4) + up * iod_ * (0.06 - 0.02 * k_),
+                       part + perp * side * iod_ * (0.92 + off * 0.5 + bend) - up * iod_ * 0.6, part + perp * side * iod_ * (1.0 + off * 0.55 - bend) - up * iod_ * (ln * 0.5),
+                       part + perp * side * iod_ * (0.95 + off * 0.6 + bend * 2) - up * iod_ * ln]
                 cv2.polylines(strands, [np.round(chaikin(np.array(pts), 3)[:-6] * 4).astype(np.int32)], False, 1, 2, cv2.LINE_AA, shift=2)
+        # parting shadow between the two gathered crown pieces + their gather lines
+        top_ = np.array(info['top'])
+        cv2.polylines(strands, [np.round(chaikin(np.array([part, top_ + up * iod_ * 0.12, top_ + up * iod_ * 0.55]), 3) * 4).astype(np.int32)], False, 1, 3, cv2.LINE_AA, shift=2)
+        for side in (-1, 1):
+            c = top_ + up * iod_ * 0.30 + perp * side * iod_ * 0.30
+            for r in (0.62, 0.85):
+                a0 = math.degrees(math.atan2(up[1], up[0]))
+                cv2.ellipse(strands, (int(c[0]), int(c[1])), (int(iod_ * 0.42 * r), int(iod_ * 0.30 * r)), a0 + 90 + side * 18, 200 if side < 0 else -20, 340 if side < 0 else 120, 1, 2, cv2.LINE_AA)
     elif 'crown' in info and 'E' in info:
         E, back = np.array(info['E']), info['back']; dd = np.linalg.norm(np.array(info['N']) - E); cr = np.array(info['crown'])
         for k_ in range(5):

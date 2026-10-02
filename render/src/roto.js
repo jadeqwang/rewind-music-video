@@ -228,9 +228,22 @@ function smoothPath(a, pts) {   // quadratic midpoint smoothing
   for (let i = 1; i < pts.length - 1; i++) { const mx = (pts[i][0] + pts[i + 1][0]) / 2, my = (pts[i][1] + pts[i + 1][1]) / 2; a.quadraticCurveTo(pts[i][0], pts[i][1], mx, my); }
   const l = pts[pts.length - 1]; a.lineTo(l[0], l[1]);
 }
-function eye(a, up, lo, crease, iris, closure, sc) {
+// her real eye opening (opening / width) and iris size (iris diameter / face width) from the real-photo template
+const EYE_OPEN = 0.358, IRIS_FACE = 0.096, IOD_FW = 0.6578;
+function fitEye(up, lo, closure) {
+  const all = [...up, ...lo]; let x0 = 1e9, x1 = -1e9; for (const p of all) { x0 = Math.min(x0, p[0]); x1 = Math.max(x1, p[0]); }
+  const a = all.find(p => p[0] === x0), b = all.find(p => p[0] === x1), w = x1 - x0;
+  const yl = x => a[1] + (b[1] - a[1]) * (x - x0) / (w || 1);
+  let op = 0; for (const p of up) op = Math.max(op, yl(p[0]) - p[1]); let ol = 0; for (const p of lo) ol = Math.max(ol, p[1] - yl(p[0]));
+  const cur = (op + ol) / (w || 1), k = (closure == null || closure > 0.5) && cur > 0.05 ? EYE_OPEN / cur : 1;
+  const f = p => [p[0], yl(p[0]) + (p[1] - yl(p[0])) * k];
+  return { up: up.map(f), lo: lo.map(f), k, cy: yl((x0 + x1) / 2) };
+}
+function eye(a, up, lo, crease, iris, closure, sc, fwPx) {
   if (!up) return;
   const open = closure == null ? 1 : clamp(closure);
+  if (lo && lo.length) { const F = fitEye(up, lo, closure); up = F.up; lo = F.lo; if (crease) crease = crease.map(p => [p[0], F.cy + (p[1] - F.cy) * (1 + (F.k - 1) * 0.8)]); }
+  if (iris && fwPx) iris = [iris[0], iris[1], fwPx * IRIS_FACE / 2];
   // white of the eye (bone) clipped by the lids, iris dark with a catchlight
   a.save();
   poly(a, [...up, ...(lo || []).slice().reverse()], true); a.fillStyle = '#F4EFE6'; a.fill(); a.clip();
@@ -242,7 +255,7 @@ function eye(a, up, lo, crease, iris, closure, sc) {
   }
   a.restore();
   a.lineCap = 'round'; a.lineJoin = 'round';
-  smoothPath(a, up); a.strokeStyle = LIDC; a.lineWidth = Math.max(2.4, sc * 0.03); a.stroke();
+  smoothPath(a, up); a.strokeStyle = LIDC; a.lineWidth = Math.max(3, sc * 0.04); a.stroke();   // the upper lid is the dominant stroke
   if (lo) { smoothPath(a, lo); a.strokeStyle = 'rgba(58,46,44,0.55)'; a.lineWidth = Math.max(1, sc * 0.009); a.stroke(); }
   if (crease) { smoothPath(a, crease); a.strokeStyle = 'rgba(58,46,44,0.6)'; a.lineWidth = Math.max(1, sc * 0.008); a.stroke(); }
 }
@@ -261,11 +274,20 @@ export function jade2(g, id, clipT, o = {}) {
   // brows: filled tapered polygons (her own asymmetric template)
   a.fillStyle = FEAT;
   for (const b of [fd.brow_R, fd.brow_L, fd.brow_near]) if (b && b.length > 2) { poly(a, b, true); a.fill(); }
-  eye(a, fd.eye_R_upper, fd.eye_R_lower, fd.eye_R_crease, fd.eye_R_iris, fd.eye_R_closure, sc);
-  eye(a, fd.eye_L_upper, fd.eye_L_lower, fd.eye_L_crease, fd.eye_L_iris, fd.eye_L_closure, sc);
-  eye(a, fd.eye_near_upper, fd.eye_near_lower, fd.eye_near_crease, fd.eye_near_iris, 1, sc * 1.4);
-  // nose tip: a short soft mark
-  if (fd.nose && fd.nose.length > 2) { const n = fd.nose; const lo = n.slice(Math.floor(n.length * 0.55)); smoothPath(a, lo); a.strokeStyle = 'rgba(58,46,44,0.6)'; a.lineWidth = Math.max(1.5, sc * 0.014); a.stroke(); }
+  const fwPx = (fd.template_scale_px || sc) / IOD_FW;
+  eye(a, fd.eye_R_upper, fd.eye_R_lower, fd.eye_R_crease, fd.eye_R_iris, fd.eye_R_closure, sc, fwPx);
+  eye(a, fd.eye_L_upper, fd.eye_L_lower, fd.eye_L_crease, fd.eye_L_iris, fd.eye_L_closure, sc, fwPx);
+  eye(a, fd.eye_near_upper, fd.eye_near_lower, fd.eye_near_crease, fd.eye_near_iris, 1, sc * 1.4, null);
+  // nose: a small soft mid-tone shadow on the shadow side of the bridge/tip + nostril hints
+  if (cd.nose) {
+    const [nx, ny] = cd.nose, s_ = sc, side = (o.light && o.light.from && o.light.from[0] > nx) ? -1 : 1;
+    a.fillStyle = 'rgba(150,140,132,0.75)';
+    a.beginPath(); a.moveTo(nx + side * s_ * 0.05, ny - s_ * 0.26); a.quadraticCurveTo(nx + side * s_ * 0.11, ny - s_ * 0.1, nx + side * s_ * 0.09, ny + s_ * 0.02);
+    a.quadraticCurveTo(nx + side * s_ * 0.04, ny + s_ * 0.05, nx + side * s_ * 0.02, ny - s_ * 0.05); a.quadraticCurveTo(nx + side * s_ * 0.05, ny - s_ * 0.14, nx + side * s_ * 0.04, ny - s_ * 0.26); a.closePath(); a.fill();
+    a.fillStyle = 'rgba(90,70,66,0.7)';
+    for (const sd of [-1, 1]) { a.beginPath(); a.ellipse(nx + sd * s_ * 0.075, ny + s_ * 0.045, s_ * 0.03, s_ * 0.014, sd * 0.4, 0, Math.PI * 2); a.fill(); }
+    a.strokeStyle = 'rgba(90,70,66,0.55)'; a.lineWidth = Math.max(1.4, s_ * 0.012); a.beginPath(); a.moveTo(nx - s_ * 0.05, ny + s_ * 0.06); a.quadraticCurveTo(nx, ny + s_ * 0.085, nx + s_ * 0.05, ny + s_ * 0.06); a.stroke();
+  } else if (cd.nostril) { const [nx, ny] = cd.nostril; a.fillStyle = 'rgba(90,70,66,0.75)'; a.beginPath(); a.ellipse(nx, ny, sc * 0.035, sc * 0.016, 0.3, 0, Math.PI * 2); a.fill(); }
   // lips: two soft tone shapes + the mouth line; openness from the vocal envelope
   const open = clamp(o.mouth ?? 0);
   if (cd.lips) {
@@ -278,15 +300,22 @@ export function jade2(g, id, clipT, o = {}) {
     // mouth line (the meeting of the lips)
     const n = li.length, upperIn = li.slice(0, Math.ceil(n / 2) + 1);
     smoothPath(a, upperIn); a.strokeStyle = LIPD; a.lineWidth = Math.max(1.6, sc * 0.016); a.stroke();
-  } else if (pf.mouth && cd.E) {
-    const [mx, my] = pf.mouth, back = cd.back || 1, dd = Math.hypot(cd.N[0] - cd.E[0], cd.N[1] - cd.E[1]);
+  } else if ((cd.mouth_corner || pf.mouth) && cd.E) {
+    const [mx, my] = cd.mouth_corner || pf.mouth, back = cd.back || 1, dd = Math.hypot(cd.N[0] - cd.E[0], cd.N[1] - cd.E[1]);
     a.fillStyle = LIP; a.beginPath(); a.ellipse(mx - back * dd * 0.18, my + 1, dd * 0.2, dd * 0.07 + open * dd * 0.06, 0, 0, Math.PI * 2); a.fill();
     a.strokeStyle = LIPD; a.lineWidth = Math.max(1.6, dd * 0.03); a.beginPath(); a.moveTo(mx, my); a.lineTo(mx - back * dd * 0.36, my - dd * 0.02); a.stroke();
   }
   // glasses: front = rectangular frames from the eye anchors; profile = foreshortened lens + temple arm to the ear
   if (o.glasses !== false) {
     if (cd.glasses && cd.glasses.kind === 'profile') {
-      const q = cd.glasses.lens, lw = Math.max(3.5, sc * 0.03);
+      let q = cd.glasses.lens; const lw = Math.max(3.5, sc * 0.03);
+      const ir = fd.eye_near_iris || cd.E;
+      if (ir) {   // the lens sits over the eye (slightly forward of the iris)
+        const cx0 = q.reduce((s, p) => s + p[0], 0) / 4, cy0 = q.reduce((s, p) => s + p[1], 0) / 4, back = cd.back || 1;
+        const qw = Math.max(...q.map(p => p[0])) - Math.min(...q.map(p => p[0]));
+        const dx = ir[0] - back * qw * 0.12 - cx0, dy = ir[1] - cy0; q = q.map(p => [p[0] + dx, p[1] + dy]);
+        cd.glasses = { ...cd.glasses, arm: [[cd.glasses.arm[0][0] + dx, cd.glasses.arm[0][1] + dy], cd.glasses.arm[1]] };
+      }
       poly(a, q, true); a.fillStyle = 'rgba(61,242,230,0.06)'; a.fill(); a.strokeStyle = GL; a.lineWidth = lw; a.lineJoin = 'round'; a.stroke();
       const [p0, p1] = cd.glasses.arm; a.beginPath(); a.moveTo(p0[0], p0[1]); a.lineTo(p1[0], p1[1]); a.stroke();
       a.strokeStyle = 'rgba(255,255,255,0.7)'; a.lineWidth = lw * 0.6; a.beginPath(); a.moveTo(q[0][0] * 0.7 + q[3][0] * 0.3, q[0][1] * 0.7 + q[3][1] * 0.3); a.lineTo(q[0][0] * 0.85 + q[1][0] * 0.15, q[0][1] * 0.85 + q[1][1] * 0.15); a.stroke();
