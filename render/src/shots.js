@@ -31,14 +31,22 @@ export function buildShots(T) {
     { type: 'suits', roto: R.suits(id), ...o }];
   const sirenLit = (o = {}) => [{ type: 'sirens', side: 'pair', base: 0.42, peak: 0.5, ...o }, { type: 'headlights', y: 470, r: 1100, amount: 0.2 }];
   const hud = (attempt, ev_, o = {}) => ({ attempt, eval: ev_, tc: true, ...o });
+  // the death tableau (frame 0, the freeze, the case-file photo): flat red | blue split, Jade white at left, the redacted
+  // suit black at right with bar + glint, the bullet suspended between them
+  const tableau = () => [{ type: 'rect', x: 0, w: DW / 2, color: '#C81E22' }, { type: 'rect', x: DW / 2, w: DW / 2, color: '#2347D6' },
+    jade('J3', { cam: { from: [0.76, 0.42, 1.0], to: [0.76, 0.42, 1.0], dx: -500, dy: 30 }, mouth: false }),
+    { type: 'suits', roto: R.suits('B6'), cam: { from: [0.416, 0.3, 1.7], to: [0.416, 0.3, 1.7], dx: 470, dy: 20 }, rimL: PAL.bone, rimR: PAL.bone, glint: 1 },
+    { type: 'bullet', x: 700, y: 420, len: 560, angle: Math.PI, color: PAL.bone }];
 
   // =============================== 0 · INTRO 0 – 13.45 (the hook) ===============================
   const v1 = sec('verse1').start, braam0 = ev('braam', 1), shot1 = W('shot').start;
   // H0: the frozen build-1 death tableau (shot B6_tab at its last frame), readable at thumbnail size
-  C('H0_tableau', 0, bt(1), [
-    { type: 'freezeOf', shot: 'B6_tab', withType: false },
-    { type: 'slam', text: 'ATTEMPT 01 ✗', variant: 'center', at: 0, y: 330, maxH: 250, stutter: 0, onType: true, color: PAL.bone },
-  ], { hud: { mate: -1, tc: true }, fx: { heart: 0 } }, { post: { bloom: 0.2, ca: 1.5 } });
+  // frame 0 = the thumbnail: one clear read. red | blue, her white figure, the black redacted suit (bar + glint), the
+  // suspended bullet between them; ATTEMPT 01 ✗ on a calm ink band. No HUD.
+  C('H0_tableau', 0, bt(1), [...tableau(), { type: 'rect', y: 800, h: 280, color: PAL.ink },
+    { type: 'slam', text: 'ATTEMPT 01', variant: 'center', at: 0, x: 110, align: 'left', y: 1040, maxH: 230, maxW: 1300, stutter: 0, color: PAL.bone },
+    { type: 'glyph', ch: '✗', x: 1480, y: 950, size: 300, color: PAL.red, onType: false }],
+    { fx: { heart: 0 } }, { post: { bloom: 0.15, ca: 0.8, vignette: 0.15 } });
   // H1: the whole video backwards at ×64 — a trailer in reverse; lands on the dark road
   add('H1_scrub', bt(1), bt(9), 'rewind', { from: sec('end').start - 0.5, to: v1, speeds: [64], segs: [1], hold: 0, echo: 0, badge: 64 }, { fx: { jerks: [bt(1)] } });
   // H2: rain on the windshield; dashboard glow rising; case 1 of ∞
@@ -133,10 +141,7 @@ export function buildShots(T) {
       else C(id, cuts[i], cuts[i + 1], [ink, { type: 'sirens', side: 'pair', base: 0.35 }, jade('J3', { light: 'siren', cam: { from: [0.73, 0.38, 2.0], to: [0.73, 0.38, 2.1] }, mouth: true })], { hud: hud(1, -5) });
     }
     // the last cut before the shot: the tableau (suit's arm, the window, Jade's white figure, the light)
-    C('B6_tab', cuts[cuts.length - 2], b6end, [ink, ...sirenLit({ base: 0.3, peak: 0.45 }),
-      ...suits('B6', { cam: { from: [0.5, 0.42, 1.3], to: [0.5, 0.42, 1.31], dx: 420 } }),
-      { type: 'world', roto: R.plate('car_interior_2'), alpha: 0.5, color: PAL.bone, lights: 0.3, cam: { from: [0.3, 0.5, 1.0], to: [0.3, 0.5, 1.0], dx: -300 } },
-      jade('J3', { cam: { from: [0.76, 0.42, 0.95], to: [0.76, 0.42, 0.95], dx: -620, dy: 60 }, mouth: false }),
+    C('B6_tab', cuts[cuts.length - 2], b6end, [...tableau(),
     ], { hud: hud(1, null, { mate: -1 }) });
   }
   // SHOT: freeze. muzzle star, bullet line, "SHOT"

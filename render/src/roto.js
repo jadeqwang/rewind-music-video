@@ -61,9 +61,9 @@ export function perFrame(id, clipT) { const m = meta(id); if (!m || !m.per_frame
 
 function scratch(name, m) { return layer('roto_' + name, m.w, m.h); }
 // tint a white-on-transparent bitmap into a scratch canvas
-function tinted(name, m, bmp, color, alpha = 1) {
+function tinted(name, m, bmp, color, alpha = 1, times = 1) {
   const c = scratch(name, m), g = clearLayer(c);
-  g.globalAlpha = alpha; g.drawImage(bmp, 0, 0, m.w, m.h); g.globalAlpha = 1;
+  g.globalAlpha = alpha; for (let k = 0; k < times; k++) g.drawImage(bmp, 0, 0, m.w, m.h); g.globalAlpha = 1;
   g.globalCompositeOperation = 'source-in'; g.fillStyle = color; g.fillRect(0, 0, m.w, m.h);
   g.globalCompositeOperation = 'source-over';
   return c;
@@ -134,7 +134,7 @@ export function jade(g, id, clipT, o = {}) {
   } else {
     if (o.rim) { a.globalAlpha = clamp(o.rim.alpha ?? 0.6); a.drawImage(ring('jrim', m, mt, o.rim.w ?? 1.6, o.rim.color || PAL.bone), 0, 0); a.globalAlpha = 1; }
     const F0 = scratch('jadeF', m), f0 = clearLayer(F0);
-    f0.drawImage(mt, 0, 0, m.w, m.h);
+    for (let k = 0; k < 3; k++) f0.drawImage(mt, 0, 0, m.w, m.h);
     f0.globalCompositeOperation = 'source-in'; f0.fillStyle = o.fill || PAL.bone; f0.fillRect(0, 0, m.w, m.h);
     f0.globalCompositeOperation = 'source-over';
     a.drawImage(F0, 0, 0);
@@ -178,7 +178,7 @@ export function suits(g, id, clipT, o = {}) {
   if (o.rimL) { a.globalAlpha = clamp(o.rimAmt ?? 1); a.drawImage(ring('rimL', m, mt, 3.5, o.rimL, [-1, 0]), 0, 0); }
   if (o.rimR) { a.globalAlpha = clamp(o.rimAmt ?? 1); a.drawImage(ring('rimR', m, mt, 3.5, o.rimR, [1, 0]), 0, 0); }
   a.globalAlpha = 1;
-  const B = tinted('suitB', m, mt, '#000000');
+  const B = tinted('suitB', m, mt, '#000000', 1, 3);
   a.drawImage(B, 0, 0);
   g.save();
   const r = o.rect || { x: 0, y: 0, w: DW, h: DH }, kx = r.w / m.w, ky = r.h / m.h;
@@ -188,6 +188,7 @@ export function suits(g, id, clipT, o = {}) {
   if (o.bars !== false && pf.faces) {
     for (let i = 0; i < pf.faces.length; i++) {
       const [cx, cy, fw, fh] = pf.faces[i];
+      if (!o.allFaces && cy > m.h * 0.5) continue;   // false 'heads' low in frame (wheels, hands)
       const x = r.x + cx * kx, y = r.y + cy * ky, w = fw * kx * (o.barW ?? 1.55), h = fh * ky * (o.barH ?? 1.0);
       const ox = hsig(i, o.boil ?? 0, 7) * 1.2;
       g.fillStyle = '#000'; g.fillRect(x - w / 2 + ox, y - h / 2, w, h);
@@ -197,6 +198,7 @@ export function suits(g, id, clipT, o = {}) {
   // sunglasses glint: a sharp four-point star that lives on top of the bar
   if (pf.glints && (o.glint ?? 0) > 0) {
     for (let i = 0; i < pf.glints.length; i++) {
+      if (!o.allFaces && pf.glints[i][1] > m.h * 0.5) continue;
       const gi = clamp((o.glint) * (0.55 + 0.45 * hash(i, o.glintSeed ?? 0)));
       if (gi < 0.02) continue;
       const [gx, gy] = pf.glints[i];
@@ -233,11 +235,12 @@ function atlasLights(id, clipT) {
     d[i] = Math.min(255, (LCOL.red[0] * r + LCOL.sodium[0] * so + LCOL.blue[0] * b + LCOL.white[0] * w) / a);
     d[i + 1] = Math.min(255, (LCOL.red[1] * r + LCOL.sodium[1] * so + LCOL.blue[1] * b + LCOL.white[1] * w) / a);
     d[i + 2] = Math.min(255, (LCOL.red[2] * r + LCOL.sodium[2] * so + LCOL.blue[2] * b + LCOL.white[2] * w) / a);
-    d[i + 3] = Math.pow(a, 1.4) * 170;   // tamed: the atlas is a strength map, not a light source to blow out
+    d[i + 3] = clamp((a - 0.3) / 0.45) * 190;   // only real lights survive (flat, no photographic texture)
   }
   g.clearRect(0, 0, 480, 270); g.putImageData(out, 0, 0);
-  atlasCache.set(key, c); if (atlasCache.size > 60) atlasCache.delete(atlasCache.keys().next().value);
-  return c;
+  const c2 = document.createElement('canvas'); c2.width = 160; c2.height = 90; c2.getContext('2d').drawImage(c, 0, 0, 160, 90);   // soft blobs, no texture
+  atlasCache.set(key, c2); if (atlasCache.size > 60) atlasCache.delete(atlasCache.keys().next().value);
+  return c2;
 }
 export function lights(g, id, clipT, o = {}) {
   const m = meta(id); if (!m) return false;

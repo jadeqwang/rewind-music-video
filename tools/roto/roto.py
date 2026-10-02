@@ -347,6 +347,10 @@ def flow_encode(fx, fy):
     return out
 
 
+def _jd(o):
+    return o.tolist() if hasattr(o, 'tolist') else float(o)
+
+
 def run_chunk(job):
     cv2.setNumThreads(1)
     shot, d, cache, shape, n, i0, i1, layers, cfg, tn, force = job
@@ -509,7 +513,7 @@ def run_chunk(job):
         pf['t'] = {k: round(v, 3) for k, v in T.items()}
         pf['layers'] = layers
         os.makedirs(f'{d}/.parts', exist_ok=True)
-        json.dump(pf, open(f'{d}/.parts/{i:04d}.tmp', 'w')); os.replace(f'{d}/.parts/{i:04d}.tmp', f'{d}/.parts/{i:04d}.json')
+        json.dump(pf, open(f'{d}/.parts/{i:04d}.tmp', 'w'), default=_jd); os.replace(f'{d}/.parts/{i:04d}.tmp', f'{d}/.parts/{i:04d}.json')
         stats.append(T['total'])
         if i % 10 == 0:
             print(f'  {shot} {i:4d}/{n} {T["total"]:.2f}s  ' + ' '.join(f'{k}={v:.2f}' for k, v in T.items() if k != 'total'), flush=True)

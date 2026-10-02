@@ -183,7 +183,7 @@ export const LAYERS = {
     if (!hits.length) return; const h = hits[hits.length - 1], g = L.onType ? ctx.ty : ctx.g, v = h.variant || L.variant || 'center';
     const o = { t: env.t, t0: h.t, text: h.text, color: h.color || L.color || PAL.bone, y: L.y, cx: L.cx };
     if (v === 'assemble') V.assemble(g, { ...o, beat: env.T.period, maxH: L.maxH }); else if (v === 'behind') V.behind(g, o, null); else if (v === 'mirror') V.mirror(g, o); else if (v === 'bars') V.bars(g, { ...o, code: h.code }); else if (v === 'stack') V.stack(g, { ...o, beat: env.T.period });
-    else slam(g, { ...o, stutter: L.stutter ?? 1, seed: hits.length, maxW: L.maxW ?? 1780, maxH: L.maxH ?? 680, y: L.y ?? 830, plates: L.plates });
+    else slam(g, { ...o, stutter: L.stutter ?? 1, seed: hits.length, maxW: L.maxW ?? 1780, maxH: L.maxH ?? 680, y: L.y ?? 830, plates: L.plates, x: L.x, align: L.align });
   },
 
   // -------- HUD-ish graphics --------
@@ -566,6 +566,10 @@ Object.assign(LAYERS, {
     CAR.drawView(g, L.view || 'chase', cx, by, w, { color: L.color, alpha: A(L.alpha, env, 1), seed: Math.floor(env.lt * 10), lights: L.lights ?? 'tail', rot: L.rot, outline: L.outline, fill: L.fill, erase: !!L.roto });
     if (L.trail) { g.save(); g.globalCompositeOperation = 'lighter'; headlights(g, cx, by - w * 0.2, w * 0.9, 0.25, PAL.red); g.restore(); }
   },
+});
+Object.assign(LAYERS, {
+  rect(ctx, L, env) { const g = L.onType ? ctx.ty : ctx.g; g.fillStyle = L.color || PAL.ink; g.fillRect(A(L.x, env, 0), A(L.y, env, 0), A(L.w, env, DW), A(L.h, env, DH)); },
+  glyph(ctx, L, env) { glyph(L.onType === false ? ctx.g : ctx.ty, L.ch, A(L.x, env, 960), A(L.y, env, 540), L.size ?? 200, L.color || PAL.red, L.weight ?? 700); },
 });
 const TREES = new Map();
 

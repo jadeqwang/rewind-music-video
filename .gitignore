@@ -21,3 +21,6 @@ render/out/draft_v[2-9]*.mp4
 render/out/draft_v[1-9][0-9]*.mp4
 render/out/*_small.mp4
 assets/sound/*.wav
+# sound-design A/B variant: wavs are regenerable via tools/sound/make_intro_sfx.py
+assets/sound/*.wav
+assets/sound/**/*.wav

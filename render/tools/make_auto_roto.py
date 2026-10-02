@@ -34,11 +34,17 @@ def process(frames, d, rect=None, src=''):
         im = cv2.resize(im, (W, H), interpolation=cv2.INTER_AREA)
         lab = cv2.cvtColor(im, cv2.COLOR_BGR2LAB)
         L = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8, 8)).apply(lab[..., 0])
-        ln = clean(dog(L)); ln = cv2.dilate(ln, np.ones((2, 2), np.uint8)) if THICK else ln
+        ln = clean(dog(L, eps=0.45), min_area=140 if len(frames) == 1 else 40); ln = cv2.dilate(ln, np.ones((2, 2), np.uint8)) if THICK else ln
         save(d, 'lines', i, white(ln))
+        # lights, flattened to the palette: no source pixels survive (hue → sodium / siren red / siren blue / bone)
         v = im.max(2).astype(np.float32) / 255
-        a = np.clip((v - 0.55) / 0.4, 0, 1); a = cv2.GaussianBlur(a, (0, 0), 1.2)
-        li = np.zeros((H, W, 4), np.uint8); li[..., :3] = im; li[..., 3] = (a * 255).astype(np.uint8)
+        a = np.clip((v - 0.72) / 0.25, 0, 1); a = cv2.GaussianBlur(a, (0, 0), 3.0)
+        hsv = cv2.cvtColor(cv2.GaussianBlur(im, (0, 0), 3), cv2.COLOR_BGR2HSV); hch, sat = hsv[..., 0].astype(int) * 2, hsv[..., 1] / 255.0
+        pal = np.zeros((H, W, 3), np.uint8); pal[:] = (216, 230, 236)                    # bone (BGR)
+        pal[(sat > 0.35) & ((hch < 20) | (hch > 330))] = (42, 42, 255)                   # siren red
+        pal[(sat > 0.35) & (hch >= 20) & (hch < 60)] = (28, 159, 255)                    # sodium amber
+        pal[(sat > 0.35) & (hch >= 190) & (hch < 290)] = (255, 91, 47)                   # siren blue
+        li = np.zeros((H, W, 4), np.uint8); li[..., :3] = pal; li[..., 3] = (a * 255).astype(np.uint8)
         save(d, 'lights', i, li)
         if rect:
             # interim matte: dark silhouettes against fog/light (night plates). Pixels darker than a local-contrast

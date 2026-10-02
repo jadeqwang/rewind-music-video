@@ -3,7 +3,7 @@
 
 Layers (all derived from the song itself unless --el-whir):
   freeze  0.00-0.594  reversed synthetic-reverb tail of the gunshot noise burst (43.24-43.48 s), E-tuned comb -> "suspended" swell
-  chatter 0.594-4.406 granular reverse scrub along the H1_scrub playhead (226.7 s -> 13.45 s, ~x56), band-limited 350 Hz-7 kHz,
+  chatter 0.594-4.406 granular reverse scrub along the H1_scrub playhead (226.7 s -> 13.45 s, ~x56), band-limited 350 Hz-7 kHz (song-derived),
                       grain pitch factor rising x2.5 -> x9, level ramps up, hard stop at bt(9)=4.406 + tiny transport clunk
   whir    0.594-4.406 synthetic tape-transport motor (glide 70->330 Hz, flutter) + rising tape hiss
             (--el-whir: ElevenLabs music-v2 'rw_b' rising whir instead)
@@ -156,7 +156,7 @@ st = {"true_peak_region_dBTP": 20 * np.log10(true_peak(mix[:REG].astype(np.float
       "stem_peak_dBFS": 20 * np.log10(np.abs(stem).max()),
       "seg_rms_dB": {f"{a}-{b}": {"song": rms_db(song[int(a*SR):int(b*SR)]), "stem": rms_db(stem[int(a*SR):int(b*SR)])}
                      for a, b in [(0, 0.594), (0.594, 2), (2, 4.4), (4.4, 6.8)]}}
-# masking check in the kalimba band: song-to-stem ratio per STFT frame, 450-3500 Hz
+# masking check in the kalimba band: song-to-stem ratio per STFT frame, 220-3000 Hz
 _, _, S2 = signal.stft(stem.T, SR, nperseg=nper, noverlap=nper * 3 // 4)
 bm = (fr > 220) & (fr < 3000)
 eo = (np.abs(So[:, bm]) ** 2).sum((0, 1)); es = (np.abs(S2[:, bm]) ** 2).sum((0, 1)) + 1e-20
