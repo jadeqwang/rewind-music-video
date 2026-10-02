@@ -35,3 +35,4 @@ pale-blue-dot patches; NO antenna, NO glasses, NO headphones; black pants. Any p
   White" — snap-tab ribbed band collar over front zip; structured shoulder epaulettes with snap buttons. Orange bands,
   blue-dot + 1420 MHz patches, back print stay.
   Collar worn OPEN (snap tab unfastened, collar parted at the throat).
+- ON-SCREEN MEDIUM (user): anime footage composited DIRECTLY (light grade, ink outline, scene rim light); the cel re-segmentation was rejected as weird.
