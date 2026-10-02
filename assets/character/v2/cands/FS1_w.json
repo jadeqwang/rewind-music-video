@@ -2,12 +2,15 @@
  {
   "face": 0,
   "params": {
-   "eye_sx": 1.1101,
-   "eye_sy": 1.1101,
+   "eye_sx": 1.0931,
+   "eye_sy": 1.0931,
    "top_scale": 1.0,
    "top_h": 1.0,
+   "top_wx": 0.04,
    "jaw_narrow": 0.0,
-   "hair_u": 104.5348
+   "lat_lim": 182.6656,
+   "hair_u": 104.5348,
+   "top_u": 169.9983
   },
   "before": {
    "eye_w_iod": 0.3063,
@@ -28,33 +31,36 @@
    "upper_head": 0.7841
   },
   "after": {
-   "eye_w_iod": 0.3115,
-   "eye_open": 0.3887,
-   "eye_w_face": 0.2,
-   "iris_face": 0.0927,
-   "forehead": 0.3237,
-   "browchin_face": 0.6763,
-   "mid_third": 0.5571,
-   "face_hw": 1.4349,
-   "forehead_w": 0.8903,
-   "temple_w": 0.9783,
-   "jaw_w": 0.7481,
-   "lowjaw_w": 0.636,
-   "chin_w": 0.2122,
-   "chin_angle": 128.9642,
-   "chin_tip_angle": 171.6803,
-   "upper_head": 0.7835
+   "eye_w_iod": 0.3126,
+   "eye_open": 0.3873,
+   "eye_w_face": 0.202,
+   "iris_face": 0.0936,
+   "forehead": 0.3245,
+   "browchin_face": 0.6755,
+   "mid_third": 0.5584,
+   "face_hw": 1.4452,
+   "forehead_w": 0.8958,
+   "temple_w": 0.9825,
+   "jaw_w": 0.7506,
+   "lowjaw_w": 0.6377,
+   "chin_w": 0.2112,
+   "chin_angle": 129.2395,
+   "chin_tip_angle": 171.7722,
+   "upper_head": 0.7825
   }
  },
  {
   "face": 1,
   "params": {
-   "eye_sx": 1.087,
-   "eye_sy": 1.1234,
-   "top_scale": 1.0727,
+   "eye_sx": 1.0994,
+   "eye_sy": 1.1099,
+   "top_scale": 1.0705,
    "top_h": 1.0,
+   "top_wx": 0.04,
    "jaw_narrow": 0.0,
-   "hair_u": 102.0
+   "lat_lim": 179.745,
+   "hair_u": 102.0,
+   "top_u": 134.9989
   },
   "before": {
    "eye_w_iod": 0.3168,
@@ -75,33 +81,36 @@
    "upper_head": 0.6345
   },
   "after": {
-   "eye_w_iod": 0.3227,
-   "eye_open": 0.3652,
-   "eye_w_face": 0.2097,
-   "iris_face": 0.0913,
-   "forehead": 0.3336,
-   "browchin_face": 0.6664,
-   "mid_third": 0.5532,
-   "face_hw": 1.6483,
-   "forehead_w": 0.87,
-   "temple_w": 0.9667,
-   "jaw_w": 0.7676,
-   "lowjaw_w": 0.6508,
-   "chin_w": 0.2126,
-   "chin_angle": 127.8239,
-   "chin_tip_angle": 173.2362,
-   "upper_head": 0.6788
+   "eye_w_iod": 0.3221,
+   "eye_open": 0.3578,
+   "eye_w_face": 0.2088,
+   "iris_face": 0.0903,
+   "forehead": 0.3341,
+   "browchin_face": 0.6659,
+   "mid_third": 0.5547,
+   "face_hw": 1.6437,
+   "forehead_w": 0.8709,
+   "temple_w": 0.9684,
+   "jaw_w": 0.7685,
+   "lowjaw_w": 0.6513,
+   "chin_w": 0.2121,
+   "chin_angle": 128.3221,
+   "chin_tip_angle": 173.3132,
+   "upper_head": 0.6659
   }
  },
  {
   "face": 2,
   "params": {
-   "eye_sx": 1.1779,
-   "eye_sy": 1.1779,
+   "eye_sx": 1.1791,
+   "eye_sy": 1.1791,
    "top_scale": 1.0641,
    "top_h": 1.0,
+   "top_wx": 0.04,
    "jaw_narrow": 0.0,
-   "hair_u": 97.4963
+   "lat_lim": 224.4294,
+   "hair_u": 97.4963,
+   "top_u": 145.9993
   },
   "before": {
    "eye_w_iod": 0.3037,
@@ -122,22 +131,22 @@
    "upper_head": 0.6736
   },
   "after": {
-   "eye_w_iod": 0.3184,
-   "eye_open": 0.3926,
-   "eye_w_face": 0.2029,
-   "iris_face": 0.0918,
-   "forehead": 0.3205,
-   "browchin_face": 0.6795,
-   "mid_third": 0.5592,
-   "face_hw": 1.5488,
-   "forehead_w": 0.8834,
-   "temple_w": 0.9753,
-   "jaw_w": 0.7702,
-   "lowjaw_w": 0.6533,
-   "chin_w": 0.2067,
-   "chin_angle": 131.141,
-   "chin_tip_angle": 174.126,
-   "upper_head": 0.7082
+   "eye_w_iod": 0.3183,
+   "eye_open": 0.3892,
+   "eye_w_face": 0.2024,
+   "iris_face": 0.0917,
+   "forehead": 0.3194,
+   "browchin_face": 0.6806,
+   "mid_third": 0.5603,
+   "face_hw": 1.543,
+   "forehead_w": 0.8815,
+   "temple_w": 0.9735,
+   "jaw_w": 0.7686,
+   "lowjaw_w": 0.6511,
+   "chin_w": 0.2054,
+   "chin_angle": 131.7538,
+   "chin_tip_angle": 174.4137,
+   "upper_head": 0.7038
   }
  }
 ]

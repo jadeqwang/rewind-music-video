@@ -81,6 +81,24 @@
    "chin_tip_angle": 1.5607,
    "upper_head": 0.0588
   },
+  "yaw_slope": {
+   "eye_w_iod": 0.000693,
+   "eye_open": 0.000679,
+   "eye_w_face": 1.4e-05,
+   "iris_face": -0.000133,
+   "forehead": -0.000428,
+   "browchin_face": 0.000428,
+   "mid_third": -0.000139,
+   "face_hw": 0.002006,
+   "forehead_w": -0.001325,
+   "temple_w": -0.000584,
+   "jaw_w": 0.000721,
+   "lowjaw_w": 0.000142,
+   "chin_w": -0.000717,
+   "chin_angle": 0.293726,
+   "chin_tip_angle": 0.124746
+  },
+  "core_abs_yaw": 13.24,
   "brow": {
    "n": 16,
    "asym_fit": {

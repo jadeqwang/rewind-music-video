@@ -46,14 +46,23 @@ def build_map(shape, pts, P):
     brow_top = max(ax(i) for i in MS.BROW_R_UP + MS.BROW_L_UP)
     chin = ax(MS.CHIN)
     # ---- upper head: scale everything above the brow line as one unit (forehead + cranium + hair) ----
-    ts = P.get("top_scale", 1.0)
-    if abs(ts - 1) > 1e-4:
+    ts = P.get("top_scale", 1.0); twx = P.get("top_wx", 0.0)
+    if abs(ts - 1) > 1e-4 or twx > 1e-4:
         u0 = brow_top + 0.02 * fw                       # pivot just above the brow tops: brows stay put
         wgt = smooth((u - u0) / (0.14 * fw))             # 0 at/below brows -> 1 by mid-forehead
-        wgt = wgt * (1 - smooth((np.abs(v) - 1.0 * fw) / (0.5 * fw)))   # identity far to the sides
+        L = min(P.get("lat_lim") or 1e9, 1.5 * fw)
+        wgt = wgt * (1 - smooth((np.abs(v) - 0.62 * L) / (0.36 * L)))   # identity far to the sides / at panel borders
+        # fade back to identity above the head so panel borders / frame top stay continuous
+        top_u = P.get("top_u") or (P.get("hair_u", brow_top + 0.3 * fw) + 0.5 * fw)
+        u_edge = float(np.dot(np.array([g[0] - up[0] * 1e4, 0.0]) - g, up)) if up[1] < 0 else 1e9
+        u_edge = (g[1] - 2) / max(1e-6, -up[1]) if up[1] < -1e-3 else 1e9   # distance to image top along axis
+        f0 = min(top_u + 0.05 * fw, u_edge - 0.12 * fw)
+        f1 = min(top_u + 0.35 * fw, u_edge)
+        if f1 - f0 > 4:
+            wgt = wgt * (1 - smooth((u - f0) / (f1 - f0)))
         se = 1 + (ts - 1) * wgt
         su = u0 + (u - u0) / se                          # vertical: sample closer to the pivot
-        sv = v / (1 + (ts - 1) * wgt * P.get("top_h", 1.0))
+        sv = v / (1 + ((ts - 1) * P.get("top_h", 1.0) + twx) * wgt)
         mx += ((su - u) * up[0] + (sv - v) * right[0]).astype(np.float32)
         my += ((su - u) * up[1] + (sv - v) * right[1]).astype(np.float32)
     jn = P.get("jaw_narrow", 0.0)
@@ -87,7 +96,7 @@ def apply(rgb, pts, P):
     return cv2.remap(rgb, mx, my, cv2.INTER_LANCZOS4, borderMode=cv2.BORDER_REFLECT)
 
 
-def correct(rgb, ref=None, iters=3, eyes=True, forehead=True, shape=True, verbose=True, eye_tol=0.01, fh_tol=0.01):
+def correct(rgb, ref=None, iters=3, eyes=True, forehead=True, shape=True, verbose=True, eye_tol=0.01, fh_tol=0.01, lat_lim=None):
     ref = ref or MS.real_ref()
     lm = MS.landmarks(rgb)
     if lm is None:
@@ -99,8 +108,9 @@ def correct(rgb, ref=None, iters=3, eyes=True, forehead=True, shape=True, verbos
     ax = lambda i: float(np.dot(pts[i, :2] - g, up))
     brow = float(np.mean([ax(i) for i in MS.BROW_R + MS.BROW_L])); chin = ax(MS.CHIN)
     hp = m0.get("hairline_xy")
-    P = dict(eye_sx=1.0, eye_sy=1.0, top_scale=1.0, top_h=1.0, jaw_narrow=0.0,
-             hair_u=float(np.dot(np.array(hp) - g, up)) if hp else brow + 0.45 * (brow - chin))
+    P = dict(eye_sx=1.0, eye_sy=1.0, top_scale=1.0, top_h=1.0, top_wx=0.0, jaw_narrow=0.0, lat_lim=lat_lim,
+             hair_u=float(np.dot(np.array(hp) - g, up)) if hp else brow + 0.45 * (brow - chin),
+             top_u=(brow + m0["upper_head"] * (brow - chin)) if m0.get("upper_head") else None)
     m, out, hist = m0, rgb, []
     for it in range(iters):
         changed = False
@@ -124,10 +134,18 @@ def correct(rgb, ref=None, iters=3, eyes=True, forehead=True, shape=True, verbos
                 want.append(ref["upper_head"] / m["upper_head"])
             if want:
                 k = float(np.exp(np.mean(np.log(want))))
-                too_big = (m.get("forehead") or 0) > 1.10 * ref["forehead"] or (m.get("upper_head") or 0) > 1.30 * ref.get("upper_head", 9)
+                too_big = (m.get("forehead") or 0) > 1.10 * ref["forehead"]   # upper_head alone never shrinks (pitch-sensitive)
                 if k > 1 + fh_tol or (k < 1 and too_big):   # never shrink a large forehead unless beyond the gate
                     P["top_scale"] = float(np.clip(P["top_scale"] * k, 0.95, 1.25)); changed = True
         if shape and ref.get("forehead_w") and m.get("forehead_w"):
+            try:
+                RR = json.load(open(MS.REAL_JSON))["real"]; fsl, y0 = RR["yaw_slope"].get("forehead_w", 0), RR["core_abs_yaw"]
+            except Exception:
+                fsl, y0 = 0, 0
+            fref = ref["forehead_w"] + fsl * (abs(m["yaw"]) - y0)
+            fr = fref / m["forehead_w"] - 1
+            if fr > 0.02:
+                P["top_wx"] = min(0.04, P.get("top_wx", 0.0) + fr); changed = P["top_wx"] < 0.04 or changed   # mesh forehead points respond weakly: cap
             jr = m["jaw_w"] / ref["jaw_w"] - 1 if m.get("jaw_w") else 0
             if jr > 0.02:
                 P["jaw_narrow"] = min(0.06, P["jaw_narrow"] + jr * 0.8); changed = True
@@ -135,7 +153,7 @@ def correct(rgb, ref=None, iters=3, eyes=True, forehead=True, shape=True, verbos
             break
         out = apply(rgb, pts, P)
         m = MS.measure(out)
-        hist.append(dict(params={k: round(v, 4) for k, v in P.items()}, m={k: m.get(k) for k in MS.KEYS}))
+        hist.append(dict(params={k: (round(v, 4) if v is not None else None) for k, v in P.items()}, m={k: m.get(k) for k in MS.KEYS}))
         if verbose:
             print("iter", it, hist[-1]["params"], {k: m.get(k) for k in ("eye_w_face", "iris_face", "eye_open", "forehead", "upper_head", "forehead_w", "jaw_w")})
     return out, P, dict(before=m0, after=m, hist=hist)
@@ -159,12 +177,13 @@ def correct_multi(rgb, iters=3, max_yaw=35, **kw):
         bg = np.median(np.r_[rgb[0], rgb[-1], rgb[:, 0], rgb[:, -1]], 0).astype(np.uint8)
         sub = rgb[y0:y1, x0:x1].copy(); sub[lab[y0:y1, x0:x1] != i] = bg
         sub = np.ascontiguousarray(sub)
-        fixed, P, rep = correct(sub, iters=iters, verbose=False, **kw)
+        cx = (f["box"][0] + f["box"][2]) / 2 - x0
+        fixed, P, rep = correct(sub, iters=iters, verbose=False, lat_lim=float(min(cx, (x1 - x0) - cx)), **kw)
         if P is None:
             reps.append(dict(face=i, skipped="no face in cell")); continue
         msk = (lab[y0:y1, x0:x1] == i)
         out[y0:y1, x0:x1][msk] = fixed[msk]
-        reps.append(dict(face=i, params={k: round(v, 4) for k, v in P.items()},
+        reps.append(dict(face=i, params={k: (round(v, 4) if v is not None else None) for k, v in P.items()},
                          before={k: rep["before"].get(k) for k in MS.KEYS}, after={k: rep["after"].get(k) for k in MS.KEYS}))
     return out, reps
 

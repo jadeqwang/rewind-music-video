@@ -22,6 +22,10 @@ real = dict(core_files=CORE, n_core=len(core), n_all=len(allr),
             sd={k: round(stat(core, k)[1], 4) for k in MS.KEYS},
             all_mean={k: round(stat(allr, k)[0], 4) for k in MS.KEYS},
             all_sd={k: round(stat(allr, k)[1], 4) for k in MS.KEYS})
+# yaw sensitivity of each ratio (linear in |yaw|, fitted over 'all'), used by gate() to adjust the reference
+ay = np.array([abs(m["yaw"]) for m in allr])
+real["yaw_slope"] = {k: round(float(np.polyfit(ay, [m[k] for m in allr], 1)[0]), 6) for k in MS.KEYS if all(m.get(k) is not None for m in allr)}
+real["core_abs_yaw"] = round(float(np.mean([abs(m["yaw"]) for m in core])), 2)
 # brows
 bro = [m for m in per.values() if m and m.get("brow_asym") and abs(m["yaw"]) <= 26]
 y = np.array([m["yaw"] for m in bro]); A = np.c_[np.ones_like(y), y]
