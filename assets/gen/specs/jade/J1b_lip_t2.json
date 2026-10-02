@@ -1,0 +1,17 @@
+{
+ "model": "bytedance/seedance-2.5",
+ "tag": "jade_J1b_lip_t2",
+ "notes": "J1b retry: image=J1b.jpg first frame, NO reference_images (t1 went portrait/re-framed), avatar on, vocals 13.85-21.2 (0.3 s before strong onset 14.17)",
+ "input": {
+  "prompt": "Night, driving. Camera fixed to the dashboard near the driver's-side A-pillar, looking back at her in a three-quarter view: she sits in the driver's seat of a white 2001 Acura TL on the right side of the frame, hands on the steering wheel, eyes on the road ahead. She softly sings the vocal in the reference audio, her lips moving in exact sync with each sung word from the very first frame, small natural breaths, calm and focused. Warm orange sodium streetlight bands sweep slowly across her and the interior from front to back as the car moves; the camera stays locked to the car. Jade: East Asian woman, heart-shaped face with a large broad forehead, thin rectangular dark gray-teal metal glasses always on, long straight black hair half-up half-down, white cropped zip jacket with an orange chest band over a black top. Keep her face exactly as in the first frame and the reference photos; same eye size, eyes open naturally, never squinting. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+  "image": "file:assets/character/firstframes/J1b.jpg",
+  "reference_audios": [
+   "file:analysis/slices/vocals_J1b_13.85_7.35.mp3"
+  ],
+  "duration": 8,
+  "resolution": "720p",
+  "aspect_ratio": "16:9",
+  "generate_audio": false,
+  "use_virtual_avatar": true
+ }
+}

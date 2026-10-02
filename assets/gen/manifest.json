@@ -1555,8 +1555,38 @@
     }
    ],
    "collected": 1790942150.1200793
+  },
+  "rewind/jade_J1b_lip_t2-a701304c4c": {
+   "id": "a701304c4c",
+   "job": "rewind/jade_J1b_lip_t2-a701304c4c",
+   "tag": "jade_J1b_lip_t2",
+   "model": "bytedance/seedance-2.5",
+   "notes": "J1b retry: image=J1b.jpg first frame, NO reference_images (t1 went portrait/re-framed), avatar on, vocals 13.85-21.2 (0.3 s before strong onset 14.17)",
+   "spec_file": "assets/gen/specs/jade/J1b_lip_t2.json",
+   "input": {
+    "duration": 8,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": true,
+    "generate_audio": false,
+    "prompt": "Night, driving. Camera fixed to the dashboard near the driver's-side A-pillar, looking back at her in a three-quarter view: she sits in the driver's seat of a white 2001 Acura TL on the right side of the frame, hands on the steering wheel, eyes on the road ahead. She softly sings the vocal in the reference audio, her lips moving in exact sync with each sung word from the very first frame, small natural breaths, calm and focused. Warm orange sodium streetlight bands sweep slowly across her and the interior from front to back as the car moves; the camera stays locked to the car. Jade: East Asian woman, heart-shaped face with a large broad forehead, thin rectangular dark gray-teal metal glasses always on, long straight black hair half-up half-down, white cropped zip jacket with an orange chest band over a black top. Keep her face exactly as in the first frame and the reference photos; same eye size, eyes open naturally, never squinting. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/firstframes/J1b.jpg",
+    "reference_audios": [
+     "file:analysis/slices/vocals_J1b_13.85_7.35.mp3"
+    ]
+   },
+   "est_usd": 1.8496,
+   "est_basis": "8s x 0.2312 (@720p non-video input (per second))",
+   "state": "queued",
+   "bucket": 29849044,
+   "submitted": 1790942564.5675051,
+   "bytes": 415506
   }
  },
- "total_est_usd": 49.066,
+ "total_est_usd": 50.9156,
  "total_est_usd_done": 36.1188
 }
