@@ -60,19 +60,21 @@ export function buildShots(T) {
   // H3: title card on the braam
   C('H3_title', braam0, db(5), [ink,
     { type: 'slam', text: 'REWIND', variant: 'assemble', y: 640, maxH: 430 },
-    { type: 'cm', text: 'a proof by exhaustion', x: DW / 2, align: 'center', y: 820, size: 80, at: 0.35 },
+    { type: 'cm', text: 'time stops, starts rewinding. Braid-like,', x: DW / 2, align: 'center', y: 820, size: 72, at: 0.35 },
   ], { fx: { jerks: [braam0], heart: 0.2 } }, { post: e => ({ bloom: 0.25, bloomThr: 0.7, warble: 0.5 * Math.sin((e.lt % (2 * P)) / (2 * P) * Math.PI) ** 2, warbleSeed: Math.floor(e.lt * 30), scan: 0.25 }) });
-  // H4: aerial LSD self-drawing as one pen stroke; THEOREM / PROOF
-  C('H4_theorem', db(5), v1, [ink,
-    { type: 'world', roto: R.aerial, alpha: 0.5, lights: 0.4, cam: { from: [0.5, 0.5, 1.0], to: [0.48, 0.55, 1.12] }, offset: 1.2 },
-    { type: 'car', roto: R.aerial, view: 'chase', lights: 'tail', cam: { from: [0.5, 0.5, 1.0], to: [0.48, 0.55, 1.12] }, offset: 1.2 },
+  // H4: storybook page (poem lines that are not sung), then world card 1 over the aerial with her car
+  const w1 = db(5) + bar;
+  C('H4_story', db(5), w1, [{ type: 'storypage', size: 60, x: 300, lines: ['I was speeding down Lake Shore Drive, a spectre', 'shadowing me I couldn\u2019t place, saw sirens', 'in my rear view. Silent, for some reason.'] }],
+    { fx: { heart: 0.15 } }, { post: { bloom: 0, vignette: 0.12 } });
+  C('H4_world1', w1, v1, [ink,
+    { type: 'world', roto: R.aerial, alpha: 0.5, lights: 0.4, cam: { from: [0.5, 0.5, 1.0], to: [0.48, 0.55, 1.08] }, offset: 1.2 },
+    { type: 'car', roto: R.aerial, view: 'chase', lights: 'tail', cam: { from: [0.5, 0.5, 1.0], to: [0.48, 0.55, 1.08] }, offset: 1.2 },
     { type: 'pathdraw', progress: e => easeInOutCubic(e.u), width: 5 },
-    { type: 'cm', lead: 'Theorem.', text: 'She makes it home.', x: 420, y: 520, size: 112 },
-    { type: 'cm', lead: 'Proof.', text: 'By exhaustion.', x: 420, y: 690, size: 112, at: 1.4 },
+    { type: 'worldcard', title: '1 \u00b7 Time and Compliance', sub: 'ATTEMPT 01', y: 520 },
   ], { fx: { heart: 0.2 } });
 
   // =============================== 1 · VERSE 1 13.45 – 28.53 (whisper) ===============================
-  const pageHdr = { header: 'Chapter 3.  Proof by Exhaustion', folio: '47' };
+  const pageHdr = {};
   C('V1_profile', v1, L(1).start, [ink,
     { type: 'world', roto: R.plate('lake_shore_drive_1'), alpha: 0.3, lights: 0.5, cam: { from: [0.5, 0.55, 1.1], to: [0.5, 0.55, 1.2] }, mirror: { y: 640, alpha: 0.3 } },
     { type: 'sodium', period: 4 * P / 2, amount: 0.34, alpha: 0.08 },
@@ -157,6 +159,7 @@ export function buildShots(T) {
   C('B9_silence', T.beatBefore(W('stops').start - 0.3), drop1, [{ type: 'fill', color: '#000' },
     { type: 'bullet', x: 1100, y: 540, len: 1400, angle: 0, color: PAL.bone },
     { type: 'mono', text: 'time stops', y: 700, typed: 12, at: W('stops').start - T.beatBefore(W('stops').start - 0.3) - 0.35 },
+    { type: 'mono', text: 'hold \u25c0\u25c0 to rewind', y: 860, size: 46, weight: 700, color: PAL.cyan, alpha: e => (Math.floor(e.lt * 3) % 2 ? 1 : 0.35) },
   ], { fx: { heart: 0 } }, { post: { bloom: 0.5, grain: 0.02, vignette: 0 } });
 
   // =============================== 3 · DROP 1 45.20 – 71.23 (REWIND) ===============================
@@ -181,7 +184,7 @@ export function buildShots(T) {
       kills: [{ at: 0.42, share: 0.92, dy: -0.32, label: 'pull over ??' }, { at: 0.75, share: 0.0, dy: 0.0, label: '' }], survive: 0.08, surviveDy: 0.3, surviveLabel: 'keep driving !!' },
   ], { hud: { attempt: 1, failed: true, tc: true, eval: -9, ink: true }, fx: { kick: 0.6, downInvert: 2 } }, { post: { bloom: 0, vignette: 0.12 } });
   for (const d of T.downbeatsIn(r6a + 1, r7a - 1).filter((_, i) => i % 2 === 0)) C(`R6_j${DI(d)}`, d, d + P * 2, [ink, { type: 'sirens', side: 'pair', base: 0.45 }, jade('J5', { light: 'siren', late: P, cam: { from: [0.76, 0.42, 1.1], to: [0.76, 0.42, 1.0] } }), { type: 'circle', x: 960, y: 420, r: 320, color: PAL.bone }], { fx: { kick: 1, strobe: 0.4 } });
-  C('R7_attempt02', r7a, sec('verse3').start, [ink, { type: 'slam', text: 'ATTEMPT 02', variant: 'stack', at: 0 }], { fx: { kick: 1 } });
+  C('R7_attempt02', r7a, sec('verse3').start, [ink, { type: 'worldcard', title: '2 \u00b7 Time and Flight', sub: 'ATTEMPT 02', y: 520 }], { fx: { kick: 1 } });
 
   // =============================== 4 · VERSE 3 71.23 – 89.77 (attempt 02) ===============================
   const v3 = sec('verse3').start;
@@ -192,7 +195,7 @@ export function buildShots(T) {
     { type: 'world', roto: R.plate('car_interior_1'), alpha: 0.25, lights: 0.6, cam: { from: [0.5, 0.5, 1.1], to: [0.5, 0.5, 1.2] }, mirror: { y: 700, alpha: 0.25 } },
     { type: 'sodium', period: P * 2, amount: 0.34, kick: 0.5 },
     jade('J6', { light: 'sodium', late: P, cam: { from: [0.5, 0.5, 1.0], to: [0.5, 0.5, 1.03], dx: 420 } }),
-    { type: 'page', lines: [8], size: 130, maxLines: 3, y: 440, measure: 860, folio: '61', header: 'Chapter 3.  Proof by Exhaustion' },
+    { type: 'page', lines: [8], size: 130, maxLines: 3, y: 440, measure: 860},
   ], { hud: hud(2, 0.3), fx: { heart: 0.25, kick: 0.25, blinks: [{ t: W('back').start - 0.15, skip: 0.3 }] } });
   C('V6_mirror', L(9).start, W('reload').start, [ink, { type: 'world', roto: R.flood, alpha: 0.6, lights: 1 }, { type: 'sirens', side: 'full', base: 0.25, peak: 0.5 },
     { type: 'mirror', rect: [1080, 120, 720, 230], timeOffset: -0.5, zoom: 1.6, focus: [0.5, 0.45], layers: [{ type: 'fill', color: PAL.ink }, ...sirenLit({ base: 0.6 }), ...suits('B3')] },
@@ -231,7 +234,8 @@ export function buildShots(T) {
     { type: 'slam', text: 'SHOT', at: 0, y: 1010, maxH: 260, onType: true, stutter: 0.5 }], { hud: { attempt: 2, failed: true, mate: -1, tc: true } });
   add('F5_case02', sfx2, T.beatBefore(stops2 - 0.3), 'freeze', { source: 'F3_tab', case: 2, move: { n: 1, move: 'bolt', nag: '?' }, loc: 'FIELD, MONTROSE', file: 'FILE 65-HQ-', bullet: { x: 900, y: 600, len: 900, angle: 0.4 } });
   C('F6_silence', T.beatBefore(stops2 - 0.3), drop2, [{ type: 'fill', color: '#000' }, { type: 'bullet', x: 1100, y: 540, len: 1400, angle: 0 },
-    { type: 'mono', text: 'time stops', y: 700, typed: 12, at: stops2 - T.beatBefore(stops2 - 0.3) - 0.35 }], { fx: { heart: 0 } }, { post: { bloom: 0.5, vignette: 0 } });
+    { type: 'mono', text: 'time stops', y: 700, typed: 12, at: stops2 - T.beatBefore(stops2 - 0.3) - 0.35 },
+    { type: 'mono', text: 'hold \u25c0\u25c0 to rewind', y: 860, size: 46, weight: 700, color: PAL.cyan, alpha: e => (Math.floor(e.lt * 3) % 2 ? 1 : 0.35) }], { fx: { heart: 0 } }, { post: { bloom: 0.5, vignette: 0 } });
 
   // =============================== 6 · DROP 2 104.56 – 134.09 (darker) ===============================
   const r9 = L(14).start, r10 = L(15).start, bd = sec('breakdown').start;
@@ -269,7 +273,7 @@ export function buildShots(T) {
   // flickers and one more redacted committee member is sitting there (solid black against the screen). Dream: too many chairs.
   const seats = [[700, 690], [860, 690], [1020, 690], [1180, 690], [1340, 690]];
   const room = (n, o = {}) => [ink, { type: 'world', roto: R.room, alpha: 0.7, lights: 0.6, speed: 0.6, loop: 'pingpong', cam: o.cam },
-    { type: 'projector', flicker: e => (o.flick && e.lt < 0.3 ? Math.abs(Math.sin(e.lt * 60)) : 0), title: 'REWIND', sub: 'a proof by exhaustion' },
+    { type: 'projector', flicker: e => (o.flick && e.lt < 0.3 ? Math.abs(Math.sin(e.lt * 60)) : 0), title: 'DEFENSE', sub: 'Wednesday, 9:00 a.m.' },
     { type: 'committee', n, scale: 1.0, seats }];
   const chairsAt = brm[0] + bar;
   C('D1_room0', bd, brm[0], [...room(0), { type: 'mono', text: 'DEFENSE · 09:00', y: 1010, size: 50, weight: 700, at: 0.8, typed: 16 }], { hud: hud(3, 0.0), fx: { heart: 0.3, soft: 0.2 } });
@@ -313,7 +317,7 @@ export function buildShots(T) {
   const DB = i => T.downbeat(DI(fd) + i);           // i-th bar from the drop
   const n2 = DB(1), n3 = DB(8), n4 = DB(12), n5 = DB(16), n6 = sec('instrumental').start, qed = ev('braam', 9), end = sec('end').start;
   const drive = { kick: 1, strobe: 0.7, downInvert: 1, strobeColor: [1, 0.624, 0.11] };
-  C('N1_found', fd, n2, [ink, { type: 'mono', text: 'ATTEMPT 03 — LINE FOUND', y: 300, size: 64, weight: 700, color: PAL.cyan },
+  C('N1_found', fd, n2, [ink, { type: 'worldcard', title: '3 \u00b7 Time and Never Stopping', sub: 'ATTEMPT 03', y: 320, size: 92, fadeOut: P * 0.9 },
     { type: 'slam', hits: [{ t: fd + P, text: 'NEVER STOP', variant: 'center' }], y: 860, maxH: 420, maxW: 1620 }], { hud: { attempt: 3, ok: true, tc: true, eval: 9 }, fx: { kick: 1, jerks: [fd] } });
   const lane = (o = {}) => [ink, { type: 'world', roto: R.road, alpha: 0.8, lights: 0.6, speed: 2.2 }, { type: 'kickflash', color: PAL.sodium, amount: 0.55 },
     { type: 'streetlights', speed: 2.8 }, { type: 'lanewords', speed: 2.0, words: o.words }, { type: 'speedlines', amount: 0.5, vy: 430 }];
@@ -345,7 +349,7 @@ export function buildShots(T) {
     { type: 'car', roto: R.aerial, view: 'chase', lights: 'tail', trail: true, cam: { from: [0.45, 0.6, 1.5], to: [0.5, 0.5, 0.82] }, loop: false },
     { type: 'rollouts', n: 600, seed: 31, x: 180, y: 560, w: 1560, h: 900, alpha: 0.5, labels: false, kills: [{ at: 0.3, share: 0.33, dy: -0.35 }, { at: 0.55, share: 0.33, dy: 0.0 }, { at: 0.8, share: 0.34, dy: 0.3 }] },
     { type: 'pathdraw', progress: 1, width: 9, head: false, color: PAL.cyan }], { fx: { kick: 0.5, heart: 0.2, downInvert: 2, jerks: [ev('braam', 8)] } });
-  C('N7_qed', qed, end, [{ type: 'qedpage' }], { fx: { heart: 0.15, jerks: [qed] } }, { post: { bloom: 0, vignette: 0.12 } });
+  C('N7_qed', qed, end, [{ type: 'storypage', size: 56, x: 300, stagger: 0.45, lines: ['I\u2019m back in my car, sirens in my rear view,', 'and I don\u2019t stop. I don\u2019t pull over. I keep driving', 'as inconspicuously as possible.', '', 'And I never stop.'] }], { fx: { heart: 0.15, jerks: [qed] } }, { post: { bloom: 0, vignette: 0.12 } });
   C('END_black', end, end + 0.9, [{ type: 'fill', color: '#000' }, { type: 'mono', text: '∎', y: 580, size: 120, weight: 700 }], { fx: { heart: 0 } }, { post: { bloom: 0, vignette: 0, grain: 0.02 } });
   C('END_credits', end + 0.9, T.duration + 0.5, [{ type: 'fill', color: '#000' }, { type: 'mono', text: 'REWIND — Jade Wang', y: 520, size: 44, color: PAL.boneDim },
     { type: 'mono', text: 'every frame drawn in code', y: 600, size: 42, color: PAL.boneDim, at: 0.5 }], { fx: { heart: 0 } }, { post: { bloom: 0, vignette: 0 } });

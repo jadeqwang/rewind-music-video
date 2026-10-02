@@ -107,6 +107,10 @@ export const LAYERS = {
       roto.jade(ctx.g, id, ct2, { rect: { ...rect, x: rect.x + (L.lateDx ?? 26) }, ghost: true, ghostColor: L.lateColor || PAL.cyan, boil: ctx.seed, alpha: 0.75 });
     }
     if (roto.meta(id).layers.includes('cel') && !L.v1) { ctx.post.bloom = Math.min(ctx.post.bloom ?? 0.3, 0.1); }
+    if (ctx.rewinding && !L.ghost) {   // time-immune (Braid's green shimmer): she keeps a cyan outline that ignores the rewind
+      const sh = 0.55 + 0.45 * Math.sin(env.t * 21);
+      roto.jade(ctx.g, id, ct, { rect, ghost: true, ghostColor: PAL.cyan, alpha: sh, v1: true });
+    }
     roto.jade(ctx.g, id, ct, L.ghost ? { rect, ghost: true, ghostColor: L.ghostColor || PAL.cyan, boil: ctx.seed, alpha: A(L.alpha, env, 1) }
       : { rect, v1: L.v1, boil: ctx.seed, mouth: L.mouth === false ? 0 : clamp((env.T.e('vocal', env.t) - 0.18) * 1.6), light, rim: { color: L.rimColor || PAL.bone, alpha: 0.55, w: 1.4 }, alpha: A(L.alpha, env, 1) });
   },
@@ -665,6 +669,32 @@ Object.assign(LAYERS, {
     g.globalAlpha = A(L.alpha, env, L.mode === 'multiply' ? 0.45 : 0.85); g.globalCompositeOperation = L.mode === 'multiply' ? 'multiply' : 'source-over';
     g.drawImage(Lr, 0, 0); g.restore();
     env.rewindTs = L.from + (L.to - L.from) * p;
+  },
+});
+Object.assign(LAYERS, {
+  // storybook page (Braid-like world books): bone paper, serif lines set like a book, small ornament
+  storypage(ctx, L, env) {
+    const g = ctx.g, ty = ctx.ty; g.fillStyle = PAL.bone; g.fillRect(-10, -10, DW + 20, DH + 20);
+    const lines = L.lines || [], px = L.size ?? 64, lead = px * 1.5, x0 = L.x ?? 260;
+    let y = (L.y ?? (DH / 2 - (lines.length - 1) * lead / 2 + px * 0.3));
+    ty.save(); ty.textBaseline = 'alphabetic';
+    lines.forEach((ln, i) => {
+      if (ln === '') { y += lead * 0.5; return; }
+      const at = (L.stagger ?? 0.35) * i, a = smooth(at, at + 0.5, env.lt);
+      setFont(ty, L.italic === false ? F.cmuR(px) : F.cmu(px)); ty.fillStyle = rgba(PAL.ink, a); ty.fillText(ln, x0, y); y += lead;
+    });
+    // ornament: a small rule with a centred diamond
+    const oy = (L.y ?? 0) ? y + 10 : y + 10; ty.fillStyle = rgba(PAL.ink, 0.7 * smooth(0, 0.6, env.lt)); ty.fillRect(DW / 2 - 120, oy, 240, 2);
+    ty.save(); ty.translate(DW / 2, oy + 1); ty.rotate(Math.PI / 4); ty.fillRect(-7, -7, 14, 14); ty.restore();
+    ty.restore();
+  },
+  // world card (per attempt): "1 · Time and Compliance", with ATTEMPT 0N small beneath
+  worldcard(ctx, L, env) {
+    const ty = ctx.ty, a = smooth(0, 0.25, env.lt) * (L.fadeOut ? 1 - smooth(L.fadeOut, L.fadeOut + 0.3, env.lt) : 1);
+    ty.save(); ty.textAlign = 'center'; ty.textBaseline = 'alphabetic';
+    setFont(ty, F.cmu(L.size ?? 120)); ty.fillStyle = rgba(L.color || PAL.bone, a); ty.fillText(L.title, DW / 2, L.y ?? 540);
+    setFont(ty, F.mono(44, 700), 8); ty.fillStyle = rgba(L.sub2 || PAL.boneDim, a); ty.fillText(L.sub ?? '', DW / 2, (L.y ?? 540) + 110);
+    ty.restore();
   },
 });
 const TREES = new Map();

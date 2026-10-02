@@ -48,7 +48,8 @@ def check(path):
     if "head_yaw" in out and "torso_yaw" in out:
         out["delta"] = round(out["head_yaw"] - out["torso_yaw"], 1)
         opp = out["head_yaw"] * out["torso_yaw"] < 0 and min(abs(out["head_yaw"]), abs(out["torso_yaw"])) > 12
-        out["congruent"] = bool(abs(out["delta"]) <= 12 and not opp)
+        small = abs(out["head_yaw"]) <= 12 and abs(out["torso_yaw"]) <= 8      # near-frontal: torso-yaw noise ~+-5 deg
+        out["congruent"] = bool((abs(out["delta"]) <= 12 or small) and not opp)
     return out
 
 

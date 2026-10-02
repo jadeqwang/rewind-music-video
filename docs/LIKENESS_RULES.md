@@ -56,3 +56,15 @@ animations (J1, J6). Everything else waits for morning review.
   straight-on frontal photo (yaw≈0). Measure head yaw/pitch/roll and pose the body around it; verify shoulder line.
 - STYLE PICK (user): ladder option B — warm-skin flat cel (5 tones) — "looks like a face". C (posterized real photo)
   rejected as splotchy. No round blush circles; soft thin brows.
+
+## Head/body pose congruence (user, 2026-10-02) — every composite
+- Measure the real photo's head yaw/pitch/roll from landmarks (`tools/likeness/congruence.py` / `measure.pose_angles`) and build
+  the body AROUND that head: state it in the gpt-image-2 prompt (e.g. "face angled ~18° toward frame-left; chest and shoulders
+  angled the same way, no twist"). Most reliable: give the real photo as the edit input and say "keep her head AND upper body
+  exactly in the pose of the first image; only replace clothing/surroundings" — choose source photos whose own torso is
+  congruent (congruence.py on the photo: IMG_20180610_074732, PXL_20260528_215628802, PXL_20250908_195352130 are; selfies with
+  an extended arm, e.g. PXL_20260929_001719023, are not).
+- Verify: `python3 tools/likeness/congruence.py FRAME.jpg` -> head_yaw vs torso_yaw (pose landmarker shoulder line);
+  reject |delta| > 12° (or opposite turns), except near-frontal heads (|head|<=12, |torso|<=8).
+- Center-locked performance shots need a straight-on source photo (the most frontal with glasses + open eyes:
+  PXL_20260528_215628802, yaw -8.6) and a square, symmetric body.

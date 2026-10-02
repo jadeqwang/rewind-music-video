@@ -221,7 +221,7 @@ function drawGlasses(a, fd, o) {
 }
 
 // ---- Jade v2: 3-tone cel figure (tools/jade2/build.py) + template features drawn as vectors from face.json ----
-const FEAT = '#3A2E2C', LIDC = '#1E1716', LIP = '#C99B94', LIPD = '#6A4440';
+const FEAT = '#5B4237', LIDC = '#1E1716', LIP = '#C99B94', LIPD = '#6A4440';
 function poly(a, pts, close) { a.beginPath(); pts.forEach((p, i) => (i ? a.lineTo(p[0], p[1]) : a.moveTo(p[0], p[1]))); if (close) a.closePath(); }
 function smoothPath(a, pts) {   // quadratic midpoint smoothing
   if (pts.length < 3) return poly(a, pts);
@@ -261,6 +261,18 @@ function eye(a, up, lo, crease, iris, closure, sc, fwPx) {
   if (lo) { smoothPath(a, lo); a.strokeStyle = 'rgba(58,46,44,0.55)'; a.lineWidth = Math.max(1, sc * 0.009); a.stroke(); }
   if (crease) { smoothPath(a, crease); a.strokeStyle = 'rgba(58,46,44,0.6)'; a.lineWidth = Math.max(1, sc * 0.008); a.stroke(); }
 }
+// her brows: soft, medium-thin, tapered tails (keeps the template's per-side shape/asymmetry, only thins it)
+function thinBrow(b, profile) {
+  const n = b.length, h = Math.floor(n / 2), out = b.map(p => p.slice());
+  // which end is lateral: the end farther from the face centre line is the tail (approx: larger |x - mean|)
+  for (let i = 0; i < h; i++) {
+    const j = n - 1 - i, u = i / Math.max(1, h - 1);
+    const mx = (b[i][0] + b[j][0]) / 2, my = (b[i][1] + b[j][1]) / 2;
+    const k = 0.62 * (1 - 0.55 * Math.pow(u, 1.6));   // thinner overall, tapering toward the tail
+    out[i] = [mx + (b[i][0] - mx) * k, my + (b[i][1] - my) * k]; out[j] = [mx + (b[j][0] - mx) * k, my + (b[j][1] - my) * k];
+  }
+  return out;
+}
 export function jade2(g, id, clipT, o = {}) {
   const m = meta(id), fi = frameIndex(m, clipT), cel = get(id, CELV, clipT) || get(id, 'cel', clipT); if (!cel) return false;
   const fd = m.faceData && m.faceData[fi] || {}, cd = m.celData && (m.celData[fi] || m.celData[String(fi)]) || {}, pf = perFrame(id, clipT);
@@ -284,7 +296,7 @@ export function jade2(g, id, clipT, o = {}) {
   if (NOFEAT) { if (o.glasses !== false) drawGlasses(a, fd, o); g.save(); g.globalAlpha = clamp(o.alpha ?? 1); place(g, A, o.rect, null); g.restore(); return true; }
   // brows: filled tapered polygons (her own asymmetric template)
   a.fillStyle = FEAT;
-  for (const b of [fd.brow_R, fd.brow_L, fd.brow_near]) if (b && b.length > 2) { poly(a, b, true); a.fill(); }
+  for (const b of [fd.brow_R, fd.brow_L, fd.brow_near]) if (b && b.length > 2) { poly(a, thinBrow(b, fd.brow_near === b), true); a.fill(); }
   const fwPx = (fd.template_scale_px || sc) / IOD_FW;
   eye(a, fd.eye_R_upper, fd.eye_R_lower, fd.eye_R_crease, fd.eye_R_iris, fd.eye_R_closure, sc, fwPx);
   eye(a, fd.eye_L_upper, fd.eye_L_lower, fd.eye_L_crease, fd.eye_L_iris, fd.eye_L_closure, sc, fwPx);

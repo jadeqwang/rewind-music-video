@@ -12,7 +12,7 @@ W, H = 1920, 1080
 SH = json.load(open(ROOT + '/tools/jade2/jade_shape.json'))
 TF = json.load(open(ROOT + '/tools/roto/templates/jade_front.json'))
 # MediaPipe's oval stops at the upper forehead; her real forehead / upper head is larger: lift the upper oval (rounded)
-LIFT, LOWER, CHEEK = 1.48, 0.93, 1.07
+LIFT, LOWER, CHEEK = 1.48, 0.93, 1.03
 _ny = SH['nose_tip'][1]
 def _shape(P):
     P = np.array(P, np.float64)
@@ -260,6 +260,10 @@ def build_frame(J, i, frame, meta, fd, pf):
             cv2.polylines(strands, [np.round(chaikin(np.array(pts), 3) * 4).astype(np.int32)], False, 1, 2, cv2.LINE_AA, shift=2)
     sm = (strands > 0) & (out[..., :3] == INK).all(-1)
     out[sm] = (*HAIR_STRAND, 255)
+    if WARM and 'nose' in info: out = warm(out, info, face, hair_designed, iod)
+    elif WARM and face.sum() > 0:
+        fm = face > 0; bone = (np.abs(out[..., :3].astype(int) - BONE).sum(-1) < 12) & fm; shd = (np.abs(out[..., :3].astype(int) - MID_FACE).sum(-1) < 12) & fm
+        out[bone, :3] = SKIN; out[shd, :3] = SKIN_SH
     os.makedirs(f'{d}/cel', exist_ok=True)
     cv2.imwrite(f'{d}/cel/{i:04d}.png', out, [cv2.IMWRITE_PNG_COMPRESSION, 3])
     if VARIANTS and 'nose' in info:
@@ -269,7 +273,28 @@ def build_frame(J, i, frame, meta, fd, pf):
     return info
 
 VARIANTS = {}
-SKIN, SKIN_SH, BLUSH, HAIR_HI = (182, 203, 236), (150, 172, 214), (172, 184, 236), (34, 36, 46)   # BGR warm palette
+WARM = True
+def warm(out, info, face, hair, iod):
+    """Jade style B (user pick): warm-skin flat cel. Skin + skin shadow + a very subtle cheekbone tone + 2-tone hair."""
+    fm = face > 0
+    bone = (np.abs(out[..., :3].astype(int) - BONE).sum(-1) < 12) & fm
+    shd = (np.abs(out[..., :3].astype(int) - MID_FACE).sum(-1) < 12) & fm
+    out[bone, :3] = SKIN; out[shd, :3] = SKIN_SH
+    nz = np.array(info['nose'])
+    for side in (-1, 1):   # cheekbone: a large, very low-contrast soft tone following the bone (no circles)
+        m = np.zeros(face.shape, np.uint8)
+        cv2.ellipse(m, (int(nz[0] + side * iod * 0.46), int(nz[1] - iod * 0.12)), (int(iod * 0.3), int(iod * 0.12)), side * -14, 0, 360, 1, -1, cv2.LINE_AA)
+        out[(m > 0) & bone, :3] = CHEEK_TONE
+    ink = (np.abs(out[..., :3].astype(int) - INK).sum(-1) < 12) & (hair > 0)
+    part = np.array(info['part']); up = np.array(info['up']); perp = np.array([up[1], -up[0]])
+    for side in (-1, 1):
+        q = np.array([part + perp * side * iod * 0.1, part + perp * side * iod * 0.55 - up * iod * 0.1, part + perp * side * iod * 0.9 - up * iod * 0.9,
+                      part + perp * side * iod * 0.98 - up * iod * 2.6, part + perp * side * iod * 0.86 - up * iod * 2.6, part + perp * side * iod * 0.72 - up * iod * 0.8, part + perp * side * iod * 0.35 - up * iod * 0.05])
+        m = np.zeros(face.shape, np.uint8); cv2.fillPoly(m, [np.round(chaikin(q, 3) * 4).astype(np.int32)], 1, cv2.LINE_AA, shift=2)
+        out[(m > 0) & ink, :3] = HAIR_HI
+    return out
+SKIN, SKIN_SH, BLUSH, HAIR_HI = (182, 203, 236), (150, 172, 214), (172, 184, 236), (34, 36, 46)
+CHEEK_TONE = (172, 194, 232)   # BGR warm palette
 def variant_B(J, i, out, frame, info, face, hair, iod):
     """(B) 4–5 tone warm-skin cel: skin + skin shadow + cheek blush + 2-tone hair (flat shapes)."""
     fm = face > 0

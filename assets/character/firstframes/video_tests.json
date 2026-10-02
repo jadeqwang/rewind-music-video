@@ -34,5 +34,25 @@
    0.001,
    0.235
   ]
+ },
+ "J1b (3/4, audio from 13.55)": {
+  "clip": "assets/gen/jade_J1b_lip_t1_e37fa5ca06.mp4",
+  "method": "landmarks",
+  "fps": 24.0,
+  "frames": 193,
+  "face_detect_frac": 1.0,
+  "window_s": [
+   0.0,
+   7.541666666666667
+  ],
+  "r_lag0": 0.331,
+  "best_r": 0.577,
+  "best_lag_s": 0.375,
+  "mouth_open_range": [
+   0.001,
+   0.108
+  ],
+  "clip_size": "720x1280 PORTRAIT - first frame NOT honoured (reference_images present -> reference mode re-framed the shot)",
+  "likeness_gate": "17 sampled frames, 2 pass; median iris -6.5% (min -10.3), eye_w -2.4%, eye_open -2.2%, forehead +1.4%, upper_head -10.4% (min -21%)"
  }
 }

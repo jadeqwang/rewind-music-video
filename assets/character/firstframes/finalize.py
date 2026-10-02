@@ -9,17 +9,17 @@ ROOT = "/home/user/rewind-music-video"; D = ROOT + "/assets/character/firstframe
 S = json.load(open(D + "/shots.json"))
 META = {
  "J1": ("driving profile (lip-sync V1)", "GEN face (profile: real-photo paste-back impossible, MediaPipe/ORB cannot align a profile); conditioned on PXL_20260929_003030232"),
- "J1b": ("driving 3/4 from driver-side dash (lip-sync V1, restaged)", "REAL face pasted: PXL_20250908_195405539 (best eyes+glasses 3/4)"),
- "J2": ("mirror glance", "REAL face pasted: PXL_20250908_195405539"),
- "J3": ("reach/hold blank ID at window", "REAL face pasted: PXL_20250908_195352130"),
+ "J1b": ("driving 3/4, driver-side dash (V1 lip-sync) [v2 new]", "REAL face pasted: PXL_20250908_195405539 (best eyes+glasses 3/4)"),
+ "J2": ("mirror glance [v2: congruent pose]", "REAL face pasted: IMG_20180610_074732 (pose kept from photo)"),
+ "J3": ("hold blank DRIVER LICENSE at window [v2]", "REAL face pasted: PXL_20250908_195352130 (pose kept from photo)"),
  "J5": ("performance center-lock, siren rim", "REAL face pasted: PXL_20260528_215628802"),
- "J5b": ("performance variation (rewind circle)", "REAL face pasted: IMG_20180610_074732"),
+ "J5b": ("performance variation, straight-on [v2]", "REAL face pasted: PXL_20260528_215628802 (most frontal w/ glasses)"),
  "J6": ("driving 3/4 front through windshield (lip-sync V5)", "REAL face pasted: IMG_20180610_074732"),
  "J7m": ("running through grass, medium (no flashlight)", "GEN (v2 GRASS_RUN lineage) + likeness warp"),
  "J7w": ("running through grass, wide", "GEN (v2 lineage); face too small to measure"),
- "J8": ("alone in defense chair, singing softly", "REAL face pasted: PXL_20260929_001719023"),
+ "J8": ("alone in defense chair [v2: congruent pose]", "REAL face pasted: PXL_20260528_215628802"),
  "J8b": ("turning around (ghosts added in code)", "REAL face pasted: IMG_20180610_073429"),
- "J9": ("driving determined, sirens behind", "REAL face pasted: PXL_20250908_195405539"),
+ "J9": ("driving determined, sirens [v2: congruent pose]", "REAL face pasted: PXL_20250908_195352130 (pose kept from photo)"),
  "J-eyes": ("ECU glasses (lens reflections added in code)", "REAL photo crop: PXL_20260528_215628802"),
 }
 def to169(img, face_y=None):
@@ -56,17 +56,20 @@ for sid in META:
     if src:
         ms = MS.measure(ROOT + "/" + src)
         rel = {k: round(m[k] / ms[k] - 1, 4) for k in ["eye_w_face", "iris_face", "eye_open", "forehead", "upper_head"] if m.get(k) and ms.get(k)}
-    gate[sid] = dict(measurable=True, yaw=m["yaw"], gate_ok=ok, dev_vs_real_mean=dev, dev_vs_source_photo=rel, brow=br,
+    import congruence as CG
+    cg = CG.check(f"{D}/{sid}.jpg")
+    gate.setdefault("_congruence", {})[sid] = cg
+    gate[sid] = dict(measurable=True, congruence={k: cg.get(k) for k in ("head_yaw", "torso_yaw", "delta", "congruent")}, yaw=m["yaw"], gate_ok=ok, dev_vs_real_mean=dev, dev_vs_source_photo=rel, brow=br,
                      face_px=m["face_px"], method=META[sid][1])
 json.dump(gate, open(f"{D}/gate.json", "w"), indent=1, default=float)
 # board
 F = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 22); FS = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 15)
 cols, tw, th = 3, 760, 428
 ids = list(META); rows = (len(ids) + cols - 1) // cols
-B = Image.new("RGB", (cols * (tw + 20) + 20, 70 + rows * (th + 110)), (20, 20, 22)); dr = ImageDraw.Draw(B)
-dr.text((20, 20), "Jade first frames (1280x720) - REAL = her photo face pasted back pixel-exact; GEN = generated (v2 lineage), gated", font=F, fill=(240, 240, 240))
+B = Image.new("RGB", (cols * (tw + 20) + 20, 70 + rows * (th + 130)), (20, 20, 22)); dr = ImageDraw.Draw(B)
+dr.text((20, 20), "Jade first frames v2 (1280x720) - pink border = changed (pose congruence / straight-on / license); REAL = photo face pasted pixel-exact", font=F, fill=(240, 240, 240))
 for i, sid in enumerate(ids):
-    x = 20 + (i % cols) * (tw + 20); y = 70 + (i // cols) * (th + 110)
+    x = 20 + (i % cols) * (tw + 20); y = 70 + (i // cols) * (th + 130)
     im = Image.open(f"{D}/{sid}.jpg").resize((tw, th)); B.paste(im, (x, y))
     g = gate[sid]
     dr.text((x, y + th + 6), f"{sid}  {META[sid][0]}", font=F, fill=(255, 220, 90))
@@ -75,10 +78,15 @@ for i, sid in enumerate(ids):
         d = g["dev_vs_real_mean"]; s = " ".join(f"{k.split('_')[0]}{v * 100:+.0f}%" for k, v in d.items() if k in ("eye_w_face", "iris_face", "eye_open", "forehead", "upper_head"))
         tag = "PASS" if g["gate_ok"] else ("REAL-PHOTO (identity exact)" if g.get("dev_vs_source_photo") is not None else "FAIL")
         col = (120, 230, 120) if g["gate_ok"] or "REAL" in tag else (255, 110, 110)
-        dr.text((x, y + th + 58), f"{tag}  yaw{g['yaw']:+.0f}  vs real mean: {s}", font=FS, fill=col)
+        cg = g.get("congruence") or {}
+        ctag = f"  pose head{cg.get('head_yaw', 0):+.0f}/torso{cg.get('torso_yaw', 0):+.0f} {'OK' if cg.get('congruent') else 'CHECK'}" if cg.get("torso_yaw") is not None else ""
+        dr.text((x, y + th + 58), f"{tag}  vs real mean: {s}", font=FS, fill=col)
+        dr.text((x, y + th + 96), ctag.strip(), font=FS, fill=(120, 230, 120) if "OK" in ctag else (255, 170, 80))
+        if "[v2" in META[sid][0]:
+            dr.rectangle((x - 4, y - 4, x + tw + 4, y + th + 4), outline=(255, 80, 200), width=5)
         if g.get("dev_vs_source_photo"):
             dr.text((x, y + th + 78), "vs its source photo: " + " ".join(f"{k.split('_')[0]}{v * 100:+.0f}%" for k, v in g["dev_vs_source_photo"].items()), font=FS, fill=(170, 170, 170))
     else:
         dr.text((x, y + th + 58), "not measurable (profile / tiny / ECU) - visual check only", font=FS, fill=(200, 200, 120))
-B.save(f"{D}/FIRSTFRAMES_BOARD.jpg", quality=88)
+B.save(f"{D}/FIRSTFRAMES_BOARD_v2.jpg", quality=88)
 print(json.dumps({k: (v.get("gate_ok"), v.get("yaw")) for k, v in gate.items()}))

@@ -7,7 +7,7 @@
   "prompt": "The first image is a rough composite. Turn it into one seamless photograph WITHOUT moving her head: keep her head, side-profile angle, face, glasses and size exactly where they are in the frame. Night, seen from just outside the open driver's side window of a white 2001 Acura TL sedan (left-hand drive, simple early-2000s dashboard, no touchscreen): she sits in the driver's seat in side profile facing frame-left toward the road ahead, both hands on the steering wheel in front of her (frame-left of her). Remove the headphones and the earphone cable completely. A warm orange sodium streetlight band falls across her and the door frame; cool dim dashboard fill; dark road beyond. No police lights."
  },
  "J2": {
-  "src": "refs/jade/PXL_20250908_195405539.MP.jpg",
+  "src": "refs/jade/IMG_20180610_074732_mr1528617091925.jpg",
   "set": "assets/sets/car_interior/1.jpg",
   "prompt": "Night, inside the car, camera mounted on the windshield looking back at the driver: she sits in the left-hand driver's seat on the RIGHT side of the frame, steering wheel in front of her at the bottom of the frame, eyes glancing toward the rear-view mirror (frame-left). Cool blue dashboard glow from below, soft frontal key on her face, blurred orange streetlights in the rear window behind her. Use the second image only as a mood reference. POSE: her face is angled toward frame-left (about 18 degrees). Her whole upper body - chest, shoulders and arms - is angled toward frame-left by the same amount, exactly like her face: the shoulder on the frame-right side is slightly farther from the camera and the frame-left shoulder is nearer; head and torso point the same direction with no twist at the neck; the steering wheel is in front of her chest. Camera slightly above her eye line."
  },
@@ -32,7 +32,7 @@
   "prompt": "Night, driving. Three-quarter front view through the windshield of a white 2001 Acura TL (left-hand drive): she sits in the driver's seat on the RIGHT side of the frame, both hands on the steering wheel in front of her, determined, looking ahead at the road. Cool dashboard glow from below plus a soft frontal key on her face, sodium streetlight reflections sliding over the windshield glass, dark interior and night road lights behind. Hair fully black (no dyed ends). Use the second image only as a mood reference."
  },
  "J8": {
-  "src": "refs/jade/PXL_20260929_001719023.jpg",
+  "src": "refs/jade/PXL_20260528_215628802.jpg",
   "set": "assets/sets/defense_room/2.jpg",
   "prompt": "A dark empty seminar room the night before a PhD defense: she sits alone on a single black chair in the middle of the room, medium shot from the knees up, facing the camera, hands in her lap, singing softly to herself. A single soft overhead light on her, a projector beam across the room behind her, faint red and blue reflections in the dark windows. Use the second image for the room layout and mood. POSE (measured from the photo): her head is turned about 14 degrees to her right (nose toward frame-left) and the camera is slightly above her eye line; her torso and shoulders must be turned the SAME way, about 14 degrees to her right (toward frame-left), congruent with the head - the shoulder line follows the head direction, no twist between head and body. Her head also tilts slightly toward her left shoulder; let the shoulders tilt with it."
  },
@@ -42,7 +42,7 @@
   "prompt": "The same dark seminar room: she is turning around in her chair to look back over her shoulder toward the camera, three-quarter view, medium close-up, eyes open, a little startled. Soft overhead light on her face, projector haze and faint red/blue window reflections in the dark background. Hair fully black, half-up. Use the second image for the room and mood."
  },
  "J9": {
-  "src": "refs/jade/PXL_20250908_195405539.MP.jpg",
+  "src": "refs/jade/PXL_20250908_195352130.jpg",
   "set": "assets/sets/car_interior/3.jpg",
   "prompt": "Night, driving, camera on the windshield looking back at the driver: she sits in the left-hand driver's seat on the RIGHT side of the frame, hands on the steering wheel, steady and determined, eyes on the road. Police red and blue lights glow through the rear window far behind her, rim-lighting her hair; her face has a soft cool frontal key; dashboard glow from below. Use the second image only as a mood reference. POSE: her face is angled toward frame-left (about 18 degrees). Her whole upper body - chest, shoulders and arms - is angled toward frame-left by the same amount, exactly like her face: the shoulder on the frame-right side is slightly farther from the camera and the frame-left shoulder is nearer; head and torso point the same direction with no twist at the neck; the steering wheel is in front of her chest. Camera slightly above her eye line."
  },
@@ -60,5 +60,20 @@
   "src": "refs/jade/PXL_20250908_195352130.jpg",
   "set": "assets/sets/car_interior/3.jpg",
   "prompt": "Night, driving, camera on the windshield looking back at the driver: she sits in the left-hand driver's seat on the RIGHT side of the frame, hands on the steering wheel, steady and determined, eyes on the road. Police red and blue lights glow through the rear window far behind her, rim-lighting her hair; her face has a soft cool frontal key; dashboard glow from below. Use the second image only as a mood reference. IMPORTANT: keep her head AND upper body exactly in the pose of the first image - same head angle, same shoulder line, same torso direction, same camera height; only replace her clothing with the jacket, extend the frame sideways to 16:9, and replace the room with the car interior; add the steering wheel rim low in the foreground with her hands on it. Do not re-pose her."
+ },
+ "J2k2": {
+  "src": "refs/jade/IMG_20180610_074732_mr1528617091925.jpg",
+  "set": "assets/sets/car_interior/1.jpg",
+  "prompt": "Night, inside the car, camera mounted on the windshield looking back at the driver: she sits in the left-hand driver's seat on the RIGHT side of the frame, steering wheel in front of her at the bottom of the frame, eyes glancing toward the rear-view mirror (frame-left). Cool blue dashboard glow from below, soft frontal key on her face, blurred orange streetlights in the rear window behind her. Use the second image only as a mood reference. IMPORTANT: keep her head AND upper body exactly in the pose of the first image - same head angle, same shoulder line, same torso direction, same camera height; only replace her clothing with the jacket, extend the frame sideways to 16:9, and replace the room with the car interior; add the steering wheel rim low in the foreground with her hands on it. Do not re-pose her. Hair fully black (no dyed ends)."
+ },
+ "J3k": {
+  "src": "refs/jade/PXL_20250908_195352130.jpg",
+  "set": "assets/sets/pullover/1.jpg",
+  "prompt": "Night, pulled over at the roadside. Medium close-up from just outside the open driver's window of a white 2001 Acura TL (left-hand drive): she sits in the driver's seat turned toward the window and holds up her driver's license - a plain blank horizontal card with standard license proportions (85.6 x 54 mm, landscape orientation, completely blank, no text, no photo) - toward the window for the officer beside her face toward the camera. Red and blue police lights from behind the car rim-light her hair and shoulders; her face has a soft even frontal fill. Use the second image only as a mood reference for the night roadside. IMPORTANT: keep her head AND upper body exactly in the pose of the first image - same head angle, same shoulder line, same torso direction, same camera height; only replace her clothing with the jacket, extend the frame to 16:9 and replace the surroundings as described. Do not re-pose her head or torso."
+ },
+ "J8k": {
+  "src": "refs/jade/PXL_20260528_215628802.jpg",
+  "set": "assets/sets/defense_room/2.jpg",
+  "prompt": "A dark empty seminar room the night before a PhD defense: she sits alone on a single black chair in the middle of the room, medium shot from the knees up, facing the camera, hands in her lap, singing softly to herself. A single soft overhead light on her, a projector beam across the room behind her, faint red and blue reflections in the dark windows. Use the second image for the room layout and mood. POSE: she sits square to the camera, shoulders level and facing the camera, her head only very slightly turned toward frame-left exactly as in the first image - head and torso congruent, no twist. Keep her face exactly as in the first image."
  }
 }
