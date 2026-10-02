@@ -161,11 +161,35 @@
    },
    "est_usd": 1.8496,
    "est_basis": "8s x 0.2312 (@720p non-video input (per second))",
-   "state": "running",
+   "state": "done",
    "bucket": 29848645,
    "submitted": 1790918562.2944374,
    "bytes": 138262,
-   "started": 1790918749.933
+   "started": 1790918749.933,
+   "state_relay": "done",
+   "gen_secs": 158.8,
+   "finished": 1790918908.71,
+   "latency_secs": 346.4,
+   "files": [
+    "assets/gen/nj_E2_fast_t1_7037995356.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 8.042,
+     "bytes": 8378256,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "193"
+      }
+     ]
+    }
+   ],
+   "collected": 1790918918.8683083
   },
   "rewind/nj_E3_flood_t1-98b7ac73ac": {
    "id": "98b7ac73ac",
@@ -191,11 +215,35 @@
    },
    "est_usd": 1.156,
    "est_basis": "5s x 0.2312 (@720p non-video input (per second))",
-   "state": "running",
+   "state": "done",
    "bucket": 29848645,
    "submitted": 1790918562.9909863,
    "bytes": 98234,
-   "started": 1790918749.922
+   "started": 1790918749.922,
+   "state_relay": "done",
+   "gen_secs": 179.5,
+   "finished": 1790918929.437,
+   "latency_secs": 366.4,
+   "files": [
+    "assets/gen/nj_E3_flood_t1_98b7ac73ac.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 5.042,
+     "bytes": 4078277,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "121"
+      }
+     ]
+    }
+   ],
+   "collected": 1790918983.6446905
   },
   "rewind/nj_E3_follow_t1-e4b187cd83": {
    "id": "e4b187cd83",
@@ -456,5 +504,5 @@
   }
  },
  "total_est_usd": 20.166,
- "total_est_usd_done": 1.9012
+ "total_est_usd_done": 4.9068
 }

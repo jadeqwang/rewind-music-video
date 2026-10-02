@@ -1,7 +1,7 @@
 # Jade — character spec (from refs/jade/, user-supplied)
 
 Likeness anchors (MUST match): East Asian woman; long straight black hair, center part, falling past shoulders, a few
-loose strands at the temples; round soft face, full cheeks; eyes as in photos (do NOT shrink/narrow); straight-ish
+loose strands at the temples; HEART-SHAPED face ("melon seed face" 瓜子脸): wide forehead/temples and cheekbones tapering to a narrow, softly pointed chin — NOT round, NOT square, NOT long; eyes as in photos (do NOT shrink/narrow); straight-ish
 natural brows; thin rectangular glasses with dark gray/teal metal frames (her identity marker — ALWAYS on, modern-day frames, in every version incl. age 27);
 calm "resting oblivious face" expression. Photos are from her 40s; target age 27 (her age at the PhD defense), youthful and clean-skinned
 (the dream is the night before her PhD defense) WITHOUT changing face shape or eye size. See docs/LIKENESS_RULES.md.

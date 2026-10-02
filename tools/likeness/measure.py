@@ -182,6 +182,81 @@ def brow_metrics(Pc, side):
                 length=round(float(np.linalg.norm(lat - med) / iod), 4))
 
 
+def align_face(rgb, pts, iod_px=200, size=(400, 400)):
+    """Similarity-warp so the outer canthi are horizontal, IOD = iod_px, eye midpoint at (200, 200)."""
+    a, b = pts[R_OUT, :2], pts[L_OUT, :2]
+    ang = math.atan2(b[1] - a[1], b[0] - a[0]); sc = iod_px / np.linalg.norm(b - a)
+    c = (a + b) / 2
+    M = cv2.getRotationMatrix2D((float(c[0]), float(c[1])), math.degrees(ang), sc)
+    M[:, 2] += np.array([size[0] / 2, size[1] / 2]) - c
+    return cv2.warpAffine(rgb, M, size, flags=cv2.INTER_AREA if sc < 1 else cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE), M
+
+
+def brow_pixels(rgb, pts, debug=None):
+    """Pixel-level brow measurement (the mesh is too prior-smoothed to see subtle asymmetry).
+    Works on a face image aligned so outer canthi are level and IOD = 200 px. Returns per image-side dict
+    in IOD units: height (mean upper-contour height above that eye's canthus line), peak_height,
+    peak_pos (0 medial .. 1 lateral), angle (deg, + = tail higher than head), thick, length, arch."""
+    A, M = align_face(rgb, pts)
+    P = (M @ np.c_[pts[:, :2], np.ones(len(pts))].T).T
+    g = cv2.cvtColor(A, cv2.COLOR_RGB2GRAY).astype(np.float32)
+    res = {}
+    for side, ups, los, eo, ei in (("imgL", BROW_R_UP, BROW_R_LO, R_OUT, R_IN), ("imgR", BROW_L_UP, BROW_L_LO, L_OUT, L_IN)):
+        U, Lo = P[ups], P[los]
+        x0, x1 = int(min(U[:, 0].min(), Lo[:, 0].min())) - 8, int(max(U[:, 0].max(), Lo[:, 0].max())) + 8
+        ou, ol = np.argsort(U[:, 0]), np.argsort(Lo[:, 0])
+        gl = P[GLABELLA]
+        skin = np.median(g[int(gl[1]) - 40:int(gl[1]) - 15, int(gl[0]) - 15:int(gl[0]) + 15])
+        thr = skin - max(14, 0.20 * skin)
+        gb = cv2.GaussianBlur(g, (3, 3), 0)
+        eye_y = (P[eo, 1] + P[ei, 1]) / 2
+        xs, tops, bots = [], [], []
+        for x in range(max(x0, 0), min(x1, 399)):
+            yu = np.interp(x, U[ou, 0], U[ou, 1]); yl = np.interp(x, Lo[ol, 0], Lo[ol, 1])
+            ya, yb = int(yu - 12), int(yl + 4)
+            col = gb[max(ya, 0):yb, x] < thr
+            idx = np.where(col)[0]
+            if len(idx) < 3:
+                continue
+            # longest contiguous dark run = the brow
+            runs = np.split(idx, np.where(np.diff(idx) > 2)[0] + 1)
+            r = max(runs, key=len)
+            if len(r) < 3:
+                continue
+            xs.append(x); tops.append(r[0] + max(ya, 0)); bots.append(r[-1] + max(ya, 0))
+        if len(xs) < 25:
+            res[side] = None; continue
+        xs, tops, bots = map(np.array, (xs, tops, bots))
+        # trim outliers in thickness
+        th = bots - tops
+        ok = th < np.median(th) * 2.2
+        xs, tops, bots = xs[ok], tops[ok], bots[ok]
+        hts = (eye_y - tops) / 200.0
+        lat_sign = -1 if side == "imgL" else 1
+        pos = (xs - xs.min()) / max(1, xs.max() - xs.min())
+        if lat_sign < 0:
+            pos = 1 - pos
+        hs = np.convolve(np.pad(hts, 6, mode="edge"), np.ones(13) / 13, mode="same")[6:-6]
+        k = int(np.argmax(hs))
+        mid = (tops + bots) / 2
+        cf = np.polyfit(xs, mid, 1)
+        ang = math.degrees(math.atan(-cf[0] * lat_sign))
+        n5 = max(3, len(hs) // 10)
+        ends = (hs[:n5].mean() + hs[-n5:].mean()) / 2
+        res[side] = dict(height=round(float(hts.mean()), 4), peak_height=round(float(hs[k]), 4),
+                         peak_pos=round(float(pos[k]), 3), angle=round(ang, 2),
+                         thick=round(float(np.median(bots - tops + 1)) / 200, 4),
+                         length=round(float(xs.max() - xs.min()) / 200, 4), arch=round(float(hs[k] - ends), 4))
+        if debug is not None:
+            for x, t, b in zip(xs, tops, bots):
+                A[t, x] = (255, 0, 0); A[b, x] = (0, 0, 255)
+            cv2.circle(A, (int(xs[k]), int(tops[k])), 3, (255, 255, 0), -1)
+            cv2.line(A, (0, int(eye_y)), (399, int(eye_y)), (0, 255, 0), 1)
+    if debug is not None:
+        debug.append(A[110:240, 40:360])
+    return res
+
+
 def measure(src, debug_path=None):
     rgb = load_rgb(src)
     lm = landmarks(rgb)
@@ -209,8 +284,14 @@ def measure(src, debug_path=None):
     bR, bL = brow_metrics(Pc, "R"), brow_metrics(Pc, "L")
     out["eye_roll_check"] = round(math.degrees(math.atan2(Pc[L_OUT, 1] - Pc[R_OUT, 1], Pc[L_OUT, 0] - Pc[R_OUT, 0])), 2)
     # image-left / image-right brows (raw); subject sides depend on mirroring (see notes in measure.json)
-    out["brow_imgL"], out["brow_imgR"] = bR, bL
-    out["brow_asym"] = {k: round(bR[k] - bL[k], 4) for k in bR}   # image-left minus image-right
+    out["mesh_brow_imgL"], out["mesh_brow_imgR"] = bR, bL
+    dbgl = [] if debug_path else None
+    bp = brow_pixels(rgb, pts, dbgl)
+    out["brow_imgL"], out["brow_imgR"] = bp["imgL"], bp["imgR"]
+    if bp["imgL"] and bp["imgR"]:
+        out["brow_asym"] = {k: round(bp["imgL"][k] - bp["imgR"][k], 4) for k in bp["imgL"]}  # image-left minus image-right
+    else:
+        out["brow_asym"] = None
     # vertical ratios along face axis (2-D)
     up, right = face_frame(pts)
     ax = lambda i: float(np.dot(pts[i, :2] - pts[GLABELLA, :2], up))
@@ -243,6 +324,8 @@ def measure(src, debug_path=None):
         if ht is not None:
             cv2.circle(dbg, tuple(int(v) for v in hp), max(3, int(out["face_px"] / 80)), (0, 255, 255), -1)
         cv2.imwrite(debug_path, dbg)
+        if dbgl:
+            cv2.imwrite(debug_path.replace(".dbg.jpg", ".brow.png"), cv2.cvtColor(cv2.resize(dbgl[0], None, fx=2, fy=2, interpolation=cv2.INTER_NEAREST), cv2.COLOR_RGB2BGR))
     return out
 
 

@@ -28,3 +28,5 @@ The user reports most model attempts "uglify" her: shrunken eyes, invented age s
 - Her two eyebrows are slightly DIFFERENT from each other (natural asymmetry, part of her likeness). Never symmetrize.
   Measured per side in measure.json; beware mirrored front-camera selfies when deciding left/right.
 - Redraw: draw each brow from its own measured shape, not one mirrored brow.
+- FACE SHAPE (user correction): heart-shaped / "melon seed" (瓜子脸) — wide forehead & cheekbones, tapered jaw, narrow
+  softly pointed chin. Plates E and H were wrong here (too round/wide-jawed). Gate measures jaw/cheek and chin taper.
