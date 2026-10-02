@@ -89,3 +89,5 @@ impacts, speed lines, stutter frames on vocal chops, never a static frame > 2 ba
   snapping sharp on the beat; a radio-static whisper layer of text. The rewind itself is waking up inside the dream.
 - (user) The ID is her DRIVER'S LICENSE, not a NASA badge. And every rewind must continuously show actual reverse
   motion of earlier footage + ghost multiples of her past runs as the base layer; type/case files are overlays.
+- (user) The MANY-RUNS rollout visual (dense fan of possible game states) replaces the simple node tree as the search
+  language, escalating: tens (drop 1) → hundreds (drop 2) → thousands (build 3) → one survivor = the road.

@@ -9,12 +9,12 @@
  "J2": {
   "src": "refs/jade/PXL_20250908_195405539.MP.jpg",
   "set": "assets/sets/car_interior/1.jpg",
-  "prompt": "Night, inside the car, camera mounted on the windshield looking back at the driver: she sits in the left-hand driver's seat on the RIGHT side of the frame, steering wheel in front of her at the bottom of the frame, eyes glancing toward the rear-view mirror (frame-left). Cool blue dashboard glow from below, soft frontal key on her face, blurred orange streetlights in the rear window behind her. Use the second image only as a mood reference."
+  "prompt": "Night, inside the car, camera mounted on the windshield looking back at the driver: she sits in the left-hand driver's seat on the RIGHT side of the frame, steering wheel in front of her at the bottom of the frame, eyes glancing toward the rear-view mirror (frame-left). Cool blue dashboard glow from below, soft frontal key on her face, blurred orange streetlights in the rear window behind her. Use the second image only as a mood reference. POSE (measured from the photo): her head is turned about 18 degrees to her right (nose toward frame-left) and the camera is slightly above her eye line; her torso and shoulders must be turned the SAME way, about 18 degrees to her right (toward frame-left), congruent with the head - the shoulder line follows the head direction, no twist between head and body."
  },
  "J3": {
   "src": "refs/jade/PXL_20250908_195352130.jpg",
   "set": "assets/sets/pullover/1.jpg",
-  "prompt": "Night, pulled over at the roadside. Medium close-up from just outside the open driver's window of a white 2001 Acura TL (left-hand drive): she sits in the driver's seat turned toward the window and holds up a plain blank white ID badge card (completely blank, no text, no photo) beside her face toward the camera. Red and blue police lights from behind the car rim-light her hair and shoulders; her face has a soft even frontal fill. Use the second image only as a mood reference for the night roadside."
+  "prompt": "Night, pulled over at the roadside. Medium close-up from just outside the open driver's window of a white 2001 Acura TL (left-hand drive): she sits in the driver's seat turned toward the window and holds up her driver's license - a plain blank horizontal card with standard license proportions (85.6 x 54 mm, landscape orientation, completely blank, no text, no photo) - toward the window for the officer beside her face toward the camera. Red and blue police lights from behind the car rim-light her hair and shoulders; her face has a soft even frontal fill. Use the second image only as a mood reference for the night roadside. POSE (measured from the photo): her head is turned about 14 degrees to her right (nose toward frame-left) and the camera is slightly above her eye line; her torso and shoulders must be turned the SAME way, about 14 degrees to her right (toward frame-left), congruent with the head - the shoulder line follows the head direction, no twist between head and body."
  },
  "J5": {
   "src": "refs/jade/PXL_20260528_215628802.jpg",
@@ -22,9 +22,9 @@
   "prompt": "Performance shot, center-locked: she stands centered in frame against a pure black void, facing the camera, waist-up, one hand raised beside her face at shoulder height beginning a slow circular rewind gesture. Soft frontal white key light on her face, a red rim light from frame-left and a blue rim light from frame-right on her hair and shoulders (police siren colors), faint haze. Flattering, no colored light across the face."
  },
  "J5b": {
-  "src": "refs/jade/IMG_20180610_074732_mr1528617091925.jpg",
+  "src": "refs/jade/PXL_20260528_215628802.jpg",
   "set": null,
-  "prompt": "Performance shot variation, center-locked: she stands centered against a black void, medium shot from the waist up, facing the camera, both hands raised in front of her chest tracing a slow counter-clockwise circle. Soft frontal white key light on her face, alternating red and blue rim light behind her on hair and shoulders, light haze. Flattering, no colored light across the face. Hair fully black."
+  "prompt": "Performance shot, center-locked and symmetric: she stands exactly centered in frame against a black void, facing the camera straight on, medium shot from the waist up, shoulders level and square to the camera, both hands raised in front of her chest tracing a slow counter-clockwise circle, symmetric pose. Soft frontal white key light on her face, red rim light from frame-left and blue rim light from frame-right on hair and shoulders, light haze. Flattering, no colored light across the face. POSE (measured from the photo): her head is turned only about 8 degrees to her right; keep the torso square to the camera with at most the same slight turn - no twist."
  },
  "J6": {
   "src": "refs/jade/IMG_20180610_074732_mr1528617091925.jpg",
@@ -34,7 +34,7 @@
  "J8": {
   "src": "refs/jade/PXL_20260929_001719023.jpg",
   "set": "assets/sets/defense_room/2.jpg",
-  "prompt": "A dark empty seminar room the night before a PhD defense: she sits alone on a single black chair in the middle of the room, medium shot from the knees up, facing the camera, hands in her lap, singing softly to herself. A single soft overhead light on her, a projector beam across the room behind her, faint red and blue reflections in the dark windows. Use the second image for the room layout and mood."
+  "prompt": "A dark empty seminar room the night before a PhD defense: she sits alone on a single black chair in the middle of the room, medium shot from the knees up, facing the camera, hands in her lap, singing softly to herself. A single soft overhead light on her, a projector beam across the room behind her, faint red and blue reflections in the dark windows. Use the second image for the room layout and mood. POSE (measured from the photo): her head is turned about 14 degrees to her right (nose toward frame-left) and the camera is slightly above her eye line; her torso and shoulders must be turned the SAME way, about 14 degrees to her right (toward frame-left), congruent with the head - the shoulder line follows the head direction, no twist between head and body. Her head also tilts slightly toward her left shoulder; let the shoulders tilt with it."
  },
  "J8b": {
   "src": "refs/jade/IMG_20180610_073429.jpg",
@@ -44,7 +44,7 @@
  "J9": {
   "src": "refs/jade/PXL_20250908_195405539.MP.jpg",
   "set": "assets/sets/car_interior/3.jpg",
-  "prompt": "Night, driving, camera on the windshield looking back at the driver: she sits in the left-hand driver's seat on the RIGHT side of the frame, hands on the steering wheel, steady and determined, eyes on the road. Police red and blue lights glow through the rear window far behind her, rim-lighting her hair; her face has a soft cool frontal key; dashboard glow from below. Use the second image only as a mood reference."
+  "prompt": "Night, driving, camera on the windshield looking back at the driver: she sits in the left-hand driver's seat on the RIGHT side of the frame, hands on the steering wheel, steady and determined, eyes on the road. Police red and blue lights glow through the rear window far behind her, rim-lighting her hair; her face has a soft cool frontal key; dashboard glow from below. Use the second image only as a mood reference. POSE (measured from the photo): her head is turned about 18 degrees to her right (nose toward frame-left) and the camera is slightly above her eye line; her torso and shoulders must be turned the SAME way, about 18 degrees to her right (toward frame-left), congruent with the head - the shoulder line follows the head direction, no twist between head and body."
  },
  "J1b": {
   "src": "refs/jade/PXL_20250908_195405539.MP.jpg",
