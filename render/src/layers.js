@@ -603,15 +603,15 @@ Object.assign(LAYERS, {
     for (let i = 0; i < n; i++) {
       const r = R0(); let acc = 0, fate = -1;
       for (let k = 0; k < kills.length; k++) { acc += kills[k].share; if (r < acc) { fate = k; break; } }
-      const seed = R0() * 1000, amp = 0.05 + R0() * 0.12, drift = (R0() - 0.5) * 0.5;
+      const seed = R0() * 1000, amp = 0.12 + R0() * 0.3, drift = (R0() - 0.5) * 0.9, spread = (R0() + R0() + R0() - 1.5) * (L.spread ?? 0.32);
       let end = fate >= 0 ? kills[fate].at * (0.88 + R0() * 0.2) : 1;
       if (fate < 0 && killAll > 0 && i > 0) end = Math.min(end, 0.25 + R0() * 0.75 * (1 - killAll) + killAll * R0() * 0.6);
-      runs.push({ fate, seed, amp, drift, end, dy: fate >= 0 ? (kills[fate].dy ?? 0) : (L.surviveDy ?? 0.22) });
+      runs.push({ fate, seed, amp, drift, end, dy: (fate >= 0 ? (kills[fate].dy ?? 0) : (L.surviveDy ?? 0.22)) + spread });
     }
     const path = (ru, upto) => {
       const pts = [], m = Math.max(2, Math.ceil(STEPS * upto));
       for (let s = 0; s <= m; s++) {
-        const u = Math.min(upto, s / STEPS), fan = Math.pow(u, 0.8);
+        const u = Math.min(upto, s / STEPS), fan = Math.pow(u, 0.65);
         const yy = (ru.dy * fan + ru.drift * fan * fan + noise1(u * 3 + ru.seed, 3) * ru.amp * fan + noise1(u * 9 + ru.seed, 4) * ru.amp * 0.3 * fan) * H0;
         pts.push([x0 + u * W0, y0 + yy]);
       }
