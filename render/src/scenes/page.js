@@ -27,12 +27,16 @@ export function draw(ctx, lt, t, shot, { T, roto }) {
   sodiumWash(g, sw, 0.07);
   // Jade
   const mouth = clamp((T.e('vocal', t) - 0.18) * 1.6);
-  roto.jade(g, p.jade ?? [].concat(p.roto)[0], lt + (p.rotoOffset || 0), { boil: ctx.seed, mouth, light: sw, rim: { color: PAL.bone, alpha: 0.55, w: 1.4 } });
+  // in a rewind she is a past attempt: outline only (the Braid shadow)
+  roto.jade(g, p.jade ?? [].concat(p.roto)[0], lt + (p.rotoOffset || 0), ctx.rewinding
+    ? { boil: ctx.seed, ghost: true, ghostColor: PAL.bone }
+    : { boil: ctx.seed, mouth, light: sw, rim: { color: PAL.bone, alpha: 0.55, w: 1.4 } });
   // type: the page
   const ws = words(T, p);
   const fns = (p.footnotes || []).map(f => ({ ...f, at: f.at ?? (ws.find(w => w.key === f.word)?.start ?? 0) }));
   pageType(ty, ws, t, { x: p.x ?? 200, y: p.y ?? 400, w: p.measure ?? 1000, size: p.size ?? 96, header: p.header, folio: p.folio,
     footnotes: fns, furniture: smooth(0, 0.4, lt) });
+  if (ctx.rewinding) return;   // the rewind owns the HUD
   // HUD (quiet)
   if (p.eval) evalBar(ty, { value: lerp(p.eval[0], p.eval[1], smooth(0, dur, lt)), alpha: 0.85, caption: 'EVAL · DEPTH 24' });
   if (p.attempt) attempt(ty, { n: p.attempt, alpha: 0.85, sub: p.attemptSub });
