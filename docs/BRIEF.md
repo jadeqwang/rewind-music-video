@@ -28,3 +28,7 @@ not shown directly (or only heavily processed). Kinetic lyric typography is a fi
 - Report back concise conclusions (paths, key numbers, what works / doesn't), not file dumps.
 - Cloudflare API is reachable via proxy at api.cloudflare.com (auth injected automatically; no key needed).
 - Chromium for Playwright at /opt/pw-browsers (do not run playwright install).
+
+## MASTER AUDIO (user-approved)
+assets/sound/Rewind5_final.wav = "Rewind (5).mp3" + intro impact (≈6.6 s) removed + intro tape-rewind SFX.
+Timing: analysis/timing_v5.json (v5 is quantized to 129 BPM; v4→v5 time map inside). Envelopes: envelopes_v5.json.
