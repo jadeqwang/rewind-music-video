@@ -9,7 +9,7 @@ import numpy as np, cv2
 from skimage.morphology import skeletonize
 
 ROOT = "/home/user/rewind-music-video"; CAR = ROOT + "/assets/car"
-VIEWS = ["rear34", "rear", "side", "front34", "top"]
+VIEWS = ["chase", "rear34", "rear", "side", "front34", "top"]
 
 
 def raw_mask(v, img):
@@ -142,20 +142,30 @@ def contours(v, img, body, lines):
     def dt(bx, by, cw, ch):
         cy = (by + ch / 2 - y0) / bh
         if v == "top": return "window"
-        if cy > 0.62: return "wheel" if 0.5 < cw / max(ch, 1) < 2.2 or v != "rear" else "tyre"
+        if cy > 0.62:
+            if v in ("rear", "chase"): return "tyre"
+            return "wheel" if (ch > 0.18 * bh and 0.4 < cw / max(ch, 1) < 1.6) else "lower_dark"
         return "window"
     feats += blobs(dark, dt, 0.006, 8)
-    # wheel rims: circular-ish grey regions; use Hough on the side view
+    # wheel rims: ellipse fitted to each dark tyre blob, scaled to the rim radius
     if v in ("side", "front34", "rear34"):
+        for f in [f for f in feats if f["type"] == "wheel"]:
+            P = np.array(f["pts"], np.float32)
+            if len(P) < 5: continue
+            (cx, cy), (ea, eb), ang = cv2.fitEllipse(P)
+            if min(ea, eb) < 0.04: continue
+            E = cv2.ellipse2Poly((int(cx * 1e4), int(cy * 1e4)), (int(ea * 0.33e4), int(eb * 0.33e4)), int(ang), 0, 360, 12)
+            feats.append({"type": "rim", "closed": True, "pts": [[round(x / 1e4, 4), round(y / 1e4, 4)] for x, y in E]})
+    if v == "side":   # flat profile: Hough circles are exact; replace blob-based wheels
+        feats = [f for f in feats if f["type"] not in ("wheel", "rim", "lower_dark")]
         g = cv2.GaussianBlur(cv2.cvtColor(img, cv2.COLOR_BGR2GRAY), (0, 0), 2)
         circ = cv2.HoughCircles(g, cv2.HOUGH_GRADIENT, 1.5, bw * 0.25, param1=90, param2=60,
                                 minRadius=int(bh * 0.12), maxRadius=int(bh * 0.32))
-        if circ is not None:
-            for cx, cy, r in circ[0][:3]:
-                if (cy - y0) / bh < 0.55: continue
-                ang = np.linspace(0, 2 * np.pi, 33)
-                feats.append({"type": "rim", "closed": True,
-                              "pts": norm(np.c_[cx + r * np.cos(ang), cy + r * np.sin(ang)])})
+        ang = np.linspace(0, 2 * np.pi, 33)
+        for cx, cy, r in (circ[0][:4] if circ is not None else []):
+            if (cy - y0) / bh < 0.55: continue
+            for t, rr in (("wheel", r * 1.0), ("rim", r * 0.68)):
+                feats.append({"type": t, "closed": True, "pts": norm(np.c_[cx + rr * np.cos(ang), cy + rr * np.sin(ang)])})
     # detail strokes from the line art
     for p in sorted(trace_skeleton(skeletonize(lines), int(S * 0.04)), key=len, reverse=True)[:40]:
         feats.append({"type": "detail", "closed": False, "pts": norm(poly(p, eps))})
@@ -172,7 +182,7 @@ def render_contours(J, size=480, pad=20):
     Hh = int(ex[1] * s + 2 * pad)
     im = np.zeros((max(Hh, 50), W, 3), np.uint8)
     col = {"body": (255, 255, 255), "window": (200, 200, 140), "wheel": (160, 160, 160), "tyre": (160, 160, 160),
-           "rim": (220, 220, 220), "taillight": (60, 60, 255), "headlight": (200, 255, 255), "detail": (150, 150, 150)}
+           "rim": (220, 220, 220), "lower_dark": (90, 90, 90), "taillight": (60, 60, 255), "headlight": (200, 255, 255), "detail": (150, 150, 150)}
     for f in J["features"]:
         P = (np.array(f["pts"]) * s + pad).astype(np.int32)
         cv2.polylines(im, [P], f["closed"], col[f["type"]], 2 if f["type"] != "detail" else 1, cv2.LINE_AA)

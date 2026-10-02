@@ -1374,11 +1374,35 @@
    },
    "est_usd": 2.0808,
    "est_basis": "9s x 0.2312 (@720p non-video input (per second))",
-   "state": "running",
+   "state": "done",
    "bucket": 29848702,
    "submitted": 1790922054.2551525,
    "bytes": 452743,
-   "started": 1790922157.629
+   "started": 1790922157.629,
+   "state_relay": "done",
+   "gen_secs": 178.5,
+   "finished": 1790922336.165,
+   "latency_secs": 281.9,
+   "files": [
+    "assets/gen/jade_J1_lip_t3_7730ba5879.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 9.042,
+     "bytes": 7882103,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "217"
+      }
+     ]
+    }
+   ],
+   "collected": 1790922339.471345
   },
   "rewind/jade_J6_lip_t3-7770d0bf28": {
    "id": "7770d0bf28",
@@ -1442,12 +1466,37 @@
    },
    "est_usd": 1.8496,
    "est_basis": "8s x 0.2312 (@720p non-video input (per second))",
-   "state": "queued",
+   "state": "done",
    "bucket": 29848705,
    "submitted": 1790922218.707345,
-   "bytes": 411641
+   "bytes": 411641,
+   "started": 1790922340.437,
+   "state_relay": "done",
+   "gen_secs": 403.3,
+   "finished": 1790922743.772,
+   "latency_secs": 525.1,
+   "files": [
+    "assets/gen/jade_J6_lip_t4_93fc18e4f0.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 8.042,
+     "bytes": 7044412,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "193"
+      }
+     ]
+    }
+   ],
+   "collected": 1790922800.1832292
   }
  },
  "total_est_usd": 47.2164,
- "total_est_usd_done": 30.3388
+ "total_est_usd_done": 34.2692
 }

@@ -491,7 +491,11 @@ def run_chunk(job):
                 else:
                     car_box_age += 1
                 if car_box is not None and car_box_age < 8:
-                    sal = isnet(brighten(src, tn))
+                    if i % 2 == 1 and ema.get('_sal') is not None:   # ISNet (~5-9 s single-threaded) on every other drawing
+                        sal = warp(ema['_sal'], fb)
+                    else:
+                        sal = isnet(brighten(src, tn))
+                    ema['_sal'] = sal
                     x0, y0, x1, y1, _ = car_box
                     gate = np.zeros(sal.shape, np.float32)
                     mx, my = 0.12 * (x1 - x0), 0.12 * (y1 - y0)
@@ -505,7 +509,7 @@ def run_chunk(job):
                 ch['car'] = a
             # temporal smoothing: flow-warped EMA (kills flicker, keeps motion), then edge snap to the 1080p frame
             guide = cv2.cvtColor(big, cv2.COLOR_BGR2GRAY).astype(np.float32) / 255
-            for k, a in ch.items():
+            for k, a in list(ch.items()):
                 alpha_new = 0.65 if k != 'car' else 0.45
                 if k in ema:
                     wp = warp(ema[k], fb)
@@ -546,9 +550,11 @@ def run_chunk(job):
                 sup = np.maximum(sup, cv2.resize(fx['face'], (LN.AW, LN.AH)))
             if cfg.get('sky'):
                 sup[:int(cfg['sky'] * LN.AH)] = 1
-            if 'lines' in ema:
-                pass
-            al, info = LN.extract(src, tn, lp, suppress=sup)
+            pm = None
+            if '_lines' in ema:
+                pm = cv2.dilate((warp(ema['_lines'].astype(np.float32), fb) > 0.5).astype(np.uint8), np.ones((5, 5), np.uint8))
+            al, info = LN.extract(src, tn, lp, suppress=sup, prev=pm)
+            ema['_lines'] = info['mask']
             pf['strokes'] = info['n']
             if fx is not None and cfg.get('glasses', False) and fx['poly'] is not None:
                 gz = fx['glasses']

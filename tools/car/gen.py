@@ -23,6 +23,9 @@ VIEWS = {
            "looking down at the roof, rear window, trunk lid and the rear-left corner. The red tail lights are glowing.",
  "rear":   "Exactly straight-on rear view at bumper height, perfectly symmetrical, seen from directly behind. "
            "Both wide red tail lights are switched on and glowing bright red, the rear window dark.",
+ "chase":  "Elevated chase view from directly behind and above the car, like a drone following it at about 35 degrees above, "
+           "perfectly centered and symmetrical: we see the roof, the rear window, the trunk lid and the whole rear with both wide red "
+           "tail lights glowing, the car pointing straight away from the camera. The entire car including the front bumper fits inside the frame, small in frame, occupying about 55 percent of the frame height, with wide empty margin above and below.",
  "side":   "Exact side profile view from the driver's (left) side, car facing left, perfectly orthographic-looking flat side elevation, "
            "camera at door height, the whole length of the car visible. Tail lights glowing red, headlights on.",
  "front34":"Low front three-quarter view from the front-left, headlights switched on and glowing hard white, "

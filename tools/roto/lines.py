@@ -237,7 +237,7 @@ def skyline_mask(lin):
     return cv2.dilate(m, np.ones((5, 5), np.uint8))
 
 
-def extract(bgr, tn, p=None, suppress=None, return_debug=False):
+def extract(bgr, tn, p=None, suppress=None, return_debug=False, prev=None):
     """bgr: frame (any size). tn: shot tone params. suppress: float mask at AWxAH (1 = no lines).
     Returns float32 alpha (OH,OW) in 0..1, plus stats."""
     p = {**DEFAULTS, **(p or {})}
@@ -250,6 +250,11 @@ def extract(bgr, tn, p=None, suppress=None, return_debug=False):
     lgm = np.sqrt(cv2.Sobel(lin, cv2.CV_32F, 1, 0, ksize=3) ** 2 + cv2.Sobel(lin, cv2.CV_32F, 0, 1, ksize=3) ** 2)
     lgm = cv2.dilate(lgm, np.ones((3, 3), np.uint8))
     ed = cv2.Canny(f8, p['canny_lo'], p['canny_hi'], L2gradient=True)
+    if prev is not None:
+        # temporal hysteresis: where the previous drawing had a stroke (flow-warped, dilated), accept weaker edges,
+        # so established contours do not blink on and off between drawings
+        lo = cv2.Canny(f8, p['canny_lo'] * 0.5, p['canny_hi'] * 0.5, L2gradient=True)
+        ed = np.maximum(ed, lo * (prev > 0))
     if p.get('pointlights', True):
         ed[pointlight_mask(lin) > 0] = 0
     if suppress is not None:
@@ -284,10 +289,11 @@ def extract(bgr, tn, p=None, suppress=None, return_debug=False):
     for P, closed in paths:
         L = arclen(P)
         need = p['min_len_closed'] if closed else p['min_len']
-        if L < need:
+        if L < need * (0.7 if (prev is not None and float((prev[P[:, 0], P[:, 1]] > 0).mean()) > 0.6) else 1.0):
             continue
         st = float(strength[P[:, 0], P[:, 1]].mean())
-        if st < p['min_strength']:
+        onprev = prev is not None and float((prev[P[:, 0], P[:, 1]] > 0).mean()) > 0.6
+        if st < p['min_strength'] * (0.6 if onprev else 1.0):
             continue
         if float(lgm[P[:, 0], P[:, 1]].mean()) < p['min_lin']:
             continue
@@ -303,9 +309,10 @@ def extract(bgr, tn, p=None, suppress=None, return_debug=False):
         st = keep[i][2] if i < len(keep) else 0.5
         strokes.append((smooth_path(P, p['smooth'], closed), closed, st))
     alpha = draw(strokes, p)
+    mask = (cv2.resize(alpha, (AW, AH), interpolation=cv2.INTER_AREA) > 0.15).astype(np.uint8)
     if return_debug:
-        return alpha, dict(g8=g8, f8=f8, edges=ed, strength=strength, n=len(strokes))
-    return alpha, dict(n=len(strokes))
+        return alpha, dict(g8=g8, f8=f8, edges=ed, strength=strength, n=len(strokes), mask=mask)
+    return alpha, dict(n=len(strokes), mask=mask)
 
 
 def draw(strokes, p):
