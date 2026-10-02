@@ -1,0 +1,146 @@
+{
+ "model_id": "openai/gpt-image-2",
+ "name": "GPT Image 2",
+ "task": "Text-to-Image",
+ "description": "OpenAI's next-generation image model that creates and edits images from text prompts, with support for multiple quality levels, sizes, and output formats. Note: transparent backgrounds are not supported \u2014 use openai/gpt-image-1.5 for transparent PNGs.",
+ "pricing": {
+  "Cached input image tokens (per 1M)": 2,
+  "Cached input tokens (per 1M)": 1.25,
+  "Input image tokens (per 1M)": 8,
+  "Input tokens (per 1M)": 5,
+  "Output image tokens (per 1M)": 30,
+  "Output tokens (per 1M)": 10
+ },
+ "metadata": {
+  "Image Editing": "Yes",
+  "Output Formats": "png, webp, jpeg",
+  "Quality": "low, medium, high, auto",
+  "Sizes": "1024x1024, 1024x1536, 1536x1024, auto"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string",
+     "description": "Text prompt describing the image to generate or edit"
+    },
+    "images": {
+     "description": "Input images for image editing, 1-16 entries. Each entry is base64-encoded (raw string or data:image/{png|jpeg|webp};base64,... URI).",
+     "maxItems": 16,
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "quality": {
+     "description": "Quality of the generated image",
+     "type": "string",
+     "enum": [
+      "low",
+      "medium",
+      "high",
+      "auto"
+     ]
+    },
+    "size": {
+     "description": "Size of the generated image",
+     "type": "string",
+     "enum": [
+      "1024x1024",
+      "1024x1536",
+      "1536x1024",
+      "auto"
+     ]
+    },
+    "background": {
+     "description": "Background transparency setting. Use transparent for images with no background, opaque for a solid background, or auto to let the model decide.",
+     "type": "string",
+     "enum": [
+      "transparent",
+      "opaque",
+      "auto"
+     ]
+    },
+    "output_format": {
+     "description": "Output format for the generated image",
+     "type": "string",
+     "enum": [
+      "png",
+      "webp",
+      "jpeg"
+     ]
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "additionalProperties": {}
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "image": {
+     "type": "string",
+     "format": "uri",
+     "description": "URL to the generated image"
+    }
+   },
+   "required": [
+    "image"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Simple Generation",
+   "input": {
+    "prompt": "A golden retriever puppy playing in autumn leaves"
+   }
+  },
+  {
+   "name": "High Quality",
+   "input": {
+    "prompt": "A detailed botanical illustration of exotic tropical flowers with fine line work and watercolor textures",
+    "quality": "high"
+   }
+  },
+  {
+   "name": "Custom Size",
+   "input": {
+    "prompt": "A towering redwood forest with sunbeams filtering through the canopy, misty atmosphere",
+    "size": "1024x1536"
+   }
+  },
+  {
+   "name": "WebP Output",
+   "input": {
+    "prompt": "A neon-lit cyberpunk cityscape at night with rain-slicked streets and holographic billboards",
+    "output_format": "webp",
+    "quality": "high"
+   }
+  },
+  {
+   "name": "Image Edit",
+   "input": {
+    "prompt": "Transform this cartoon smiley into a photorealistic 3D clay sculpture sitting on a marble pedestal, studio lighting",
+    "images": [
+     "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAnklEQVR42u2XQRLAIAgD8/839i/26qFCACm0ozPe1KwcQsAoXvgcAABxpwFowl4QWITHxW0LCBhxVngF4gKIirMQyBRnIJAtrkE8AuwWnyFEgKzfS1UA+3sWTju3BGAu7gKYIfBW+Q/AAQgBeMCkt1wVsLZjcwUYG2Z9wGLHZitWk1DEisubUYt2XB5IWkSyFqG0RSxvMZi0Gc1+Ox3fm00ZJ5mGVtkAAAAASUVORK5CYII="
+    ]
+   }
+  },
+  {
+   "name": "Multi-Image Edit",
+   "input": {
+    "prompt": "Combine these into a single photorealistic scene: a ceramic smiley-face mug next to a red rubber ball on a sunlit wooden table",
+    "images": [
+     "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAnklEQVR42u2XQRLAIAgD8/839i/26qFCACm0ozPe1KwcQsAoXvgcAABxpwFowl4QWITHxW0LCBhxVngF4gKIirMQyBRnIJAtrkE8AuwWnyFEgKzfS1UA+3sWTju3BGAu7gKYIfBW+Q/AAQgBeMCkt1wVsLZjcwUYG2Z9wGLHZitWk1DEisubUYt2XB5IWkSyFqG0RSxvMZi0Gc1+Ox3fm00ZJ5mGVtkAAAAASUVORK5CYII=",
+     "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAhklEQVR42u2XsRHAMAgDNY73nye7OG2KgGUnGCWH76j/oTACPfnhcwIA3AoTGIFXRTADPlqjakYEDJwFWyJLAk/hrAQi4YwEouEjiVuBt+FXCVcgqntvCtjVvTUF7OremkIJlEAJ6Aikf0QSX3H6MpJYx+mBRCKSSYRSiVgucZjInGa/vY5PvB72/7IdMuAAAAAASUVORK5CYII="
+    ]
+   }
+  }
+ ]
+}

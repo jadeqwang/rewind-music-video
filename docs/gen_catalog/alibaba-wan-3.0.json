@@ -1,0 +1,83 @@
+{
+ "model_id": "alibaba/wan-3.0",
+ "name": "Wan 3.0 Video",
+ "task": "Text-to-Video",
+ "description": "Alibaba's Wan 3.0 text-to-video model. Generates cinematic videos from text prompts with adaptive aspect ratio, 480P, 720P, or 1080P resolution, and configurable duration.",
+ "pricing": {
+  "Default (per second)": 0.05,
+  "@480p (per second)": 0.05,
+  "@720p (per second)": 0.1,
+  "@1080p (per second)": 0.2
+ },
+ "metadata": {
+  "Aspect Ratio": "Adaptive",
+  "Duration": "1-15 seconds",
+  "Resolutions": "480P, 720P, 1080P"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 2500
+    },
+    "resolution": {
+     "type": "string",
+     "enum": [
+      "480P",
+      "720P",
+      "1080P"
+     ]
+    },
+    "ratio": {
+     "type": "string",
+     "enum": [
+      "adaptive",
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+     ]
+    },
+    "duration": {
+     "type": "integer",
+     "minimum": 1,
+     "maximum": 15
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "video": {
+     "type": "string",
+     "format": "uri"
+    }
+   },
+   "required": [
+    "video"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Adaptive 480P Text-to-Video",
+   "input": {
+    "prompt": "A kitten running across a rooftop under the moonlight, city neon lights flickering in the distance, cinematic quality, smooth camera movement.",
+    "resolution": "480P",
+    "ratio": "adaptive",
+    "duration": 5
+   }
+  }
+ ]
+}

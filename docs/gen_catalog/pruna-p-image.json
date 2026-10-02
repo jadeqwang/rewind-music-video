@@ -1,0 +1,125 @@
+{
+ "model_id": "pruna/p-image",
+ "name": "P-Image",
+ "task": "Text-to-Image",
+ "description": "Pruna's P-Image is an ultra-fast text-to-image model with automatic prompt enhancement and 2-stage refinement, combining exceptional speed with high-quality output and flexible aspect ratios.",
+ "pricing": {
+  "Per image": 0.005
+ },
+ "metadata": {
+  "Aspect Ratios": "1:1, 16:9, 9:16, 4:3, 3:4, 3:2, 2:3, custom",
+  "Output Formats": "jpg"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string",
+     "description": "Text description of the image to generate. The model automatically enhances prompts for better results."
+    },
+    "aspect_ratio": {
+     "default": "16:9",
+     "description": "Aspect ratio for the image. Use \"custom\" with width/height for exact dimensions.",
+     "type": "string",
+     "enum": [
+      "1:1",
+      "16:9",
+      "9:16",
+      "4:3",
+      "3:4",
+      "3:2",
+      "2:3",
+      "custom"
+     ]
+    },
+    "width": {
+     "description": "Custom width in pixels (256-1440, multiple of 16). Only used when aspect_ratio=\"custom\".",
+     "type": "integer",
+     "minimum": 256,
+     "maximum": 1440,
+     "multipleOf": 16
+    },
+    "height": {
+     "description": "Custom height in pixels (256-1440, multiple of 16). Only used when aspect_ratio=\"custom\".",
+     "type": "integer",
+     "minimum": 256,
+     "maximum": 1440,
+     "multipleOf": 16
+    },
+    "lora_weights": {
+     "description": "Load LoRA weights. Supports HuggingFace URLs in the format huggingface.co/<owner>/<model-name>[/<file.safetensors>].",
+     "type": "string"
+    },
+    "lora_scale": {
+     "default": 0.5,
+     "description": "How strongly the LoRA should be applied (-1 to 3).",
+     "type": "number",
+     "minimum": -1,
+     "maximum": 3
+    },
+    "hf_api_token": {
+     "description": "HuggingFace API token for accessing private LoRAs. This credential is forwarded verbatim to Pruna. It is only written to gateway request-body logs when the gateway-level collectLogPayload debug flag is explicitly enabled \u2014 it never appears in structured analytics logs.",
+     "type": "string"
+    },
+    "prompt_upsampling": {
+     "default": false,
+     "description": "Upsample the prompt with an LLM for enhanced results.",
+     "type": "boolean"
+    },
+    "seed": {
+     "description": "Random seed for reproducible generation.",
+     "type": "integer",
+     "minimum": -9007199254740991,
+     "maximum": 9007199254740991
+    },
+    "disable_safety_checker": {
+     "default": false,
+     "description": "Disable safety checker for generated images.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "prompt",
+    "aspect_ratio",
+    "lora_scale",
+    "prompt_upsampling",
+    "disable_safety_checker"
+   ],
+   "additionalProperties": {}
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "image": {
+     "type": "string",
+     "format": "uri",
+     "description": "Presigned URL for the generated image."
+    }
+   },
+   "required": [
+    "image"
+   ],
+   "additionalProperties": {}
+  }
+ },
+ "examples": [
+  {
+   "name": "Lion at Sunset",
+   "input": {
+    "prompt": "A majestic lion standing on a rocky cliff at sunset, photorealistic, 4k",
+    "aspect_ratio": "16:9"
+   }
+  },
+  {
+   "name": "Reading Nook",
+   "input": {
+    "prompt": "A cozy reading nook by a rainy window, warm lighting, detailed illustration",
+    "aspect_ratio": "1:1",
+    "prompt_upsampling": true
+   }
+  }
+ ]
+}

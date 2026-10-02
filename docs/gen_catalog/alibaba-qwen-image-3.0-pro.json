@@ -1,0 +1,106 @@
+{
+ "model_id": "alibaba/qwen-image-3.0-pro",
+ "name": "Qwen Image 3.0 Pro",
+ "task": "Text-to-Image",
+ "description": "Alibaba's Qwen Image 3.0 Pro generates images from text prompts with a focus on complex layout generation, small-text precision, and multilingual font rendering. Supports up to 6 image variants per call, negative prompts, seed control, and optional prompt rewriting.",
+ "pricing": {
+  "Per image": 0.04,
+  "output_size_1k": 0.04,
+  "output_size_2k": 0.07,
+  "Default (per second)": 0.04
+ },
+ "metadata": {
+  "Max Images Per Call": "6",
+  "Negative Prompt": "Yes",
+  "Seed Control": "Yes",
+  "Size Format": "WxH (e.g. 2048x2048)"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string"
+    },
+    "size": {
+     "default": "1024x1024",
+     "type": "string",
+     "pattern": "^\\d+x\\d+$"
+    },
+    "negative_prompt": {
+     "type": "string",
+     "maxLength": 500
+    },
+    "n": {
+     "type": "integer",
+     "minimum": 1,
+     "maximum": 6
+    },
+    "seed": {
+     "type": "integer",
+     "minimum": 0,
+     "maximum": 2147483647
+    },
+    "watermark": {
+     "type": "boolean"
+    },
+    "prompt_extend": {
+     "type": "boolean"
+    },
+    "prompt_extend_mode": {
+     "type": "string",
+     "enum": [
+      "direct",
+      "agent"
+     ]
+    }
+   },
+   "required": [
+    "prompt",
+    "size"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "images": {
+     "minItems": 1,
+     "type": "array",
+     "items": {
+      "type": "string",
+      "format": "uri"
+     }
+    }
+   },
+   "required": [
+    "images"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Simple Generation",
+   "input": {
+    "prompt": "A golden retriever puppy playing in autumn leaves"
+   }
+  },
+  {
+   "name": "Multiple Variants",
+   "input": {
+    "prompt": "A minimalist logo for a coffee roastery, line art style, single color",
+    "n": 4
+   }
+  },
+  {
+   "name": "Negative Prompt",
+   "input": {
+    "prompt": "A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar",
+    "negative_prompt": "modern clothing, photograph, blurry, low quality"
+   }
+  }
+ ]
+}

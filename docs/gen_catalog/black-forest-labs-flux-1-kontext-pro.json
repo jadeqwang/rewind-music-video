@@ -1,0 +1,107 @@
+{
+ "model_id": "black-forest-labs/flux-1-kontext-pro",
+ "name": "FLUX.1 Kontext [pro]",
+ "task": "Text-to-Image",
+ "description": "FLUX.1 Kontext [pro] creates and edits images from text prompts with strong character and style consistency.",
+ "pricing": {
+  "Per image": 0.04
+ },
+ "metadata": {
+  "Max Reference Images": "1",
+  "Output Formats": "JPEG, PNG",
+  "Pricing": "$0.04 per image"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string",
+     "description": "Text prompt for image generation or editing."
+    },
+    "input_image": {
+     "description": "Optional base64 encoded image or URL to edit.",
+     "type": [
+      "string",
+      "null"
+     ]
+    },
+    "aspect_ratio": {
+     "description": "Output aspect ratio, from 3:7 to 7:3. Defaults to 1:1.",
+     "type": [
+      "string",
+      "null"
+     ]
+    },
+    "seed": {
+     "description": "Optional seed for reproducible generation.",
+     "anyOf": [
+      {
+       "type": "integer",
+       "minimum": -9007199254740991,
+       "maximum": 9007199254740991
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "prompt_upsampling": {
+     "description": "Whether to upsample the prompt. Defaults to false.",
+     "type": "boolean"
+    },
+    "safety_tolerance": {
+     "description": "Moderation tolerance. 0 is strictest and 6 is most permissive.",
+     "type": "integer",
+     "minimum": 0,
+     "maximum": 6
+    },
+    "output_format": {
+     "description": "Output image format. Defaults to jpeg.",
+     "type": "string",
+     "enum": [
+      "jpeg",
+      "png"
+     ]
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "image": {
+     "type": "string",
+     "format": "uri",
+     "description": "URL to the generated image"
+    }
+   },
+   "required": [
+    "image"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Text to Image",
+   "input": {
+    "prompt": "A small furry elephant pet looks out from a cat house"
+   }
+  },
+  {
+   "name": "Wide Cinematic Image",
+   "input": {
+    "prompt": "A remote gas station swallowed by crimson fog, green glow from overhead lights staining the asphalt, cinematic wide shot",
+    "input_image": "https://cdn.sanity.io/images/gsvmb6gz/production/3ae6ee032b85373b84934574f3ac3bb2fb792d64-2048x1365.jpg",
+    "aspect_ratio": "16:9",
+    "output_format": "jpeg"
+   }
+  }
+ ]
+}

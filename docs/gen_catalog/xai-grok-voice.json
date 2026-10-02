@@ -1,0 +1,60 @@
+{
+ "model_id": "xai/grok-voice",
+ "name": "Grok Voice",
+ "task": "websocket",
+ "description": "xAI's real-time voice conversation model with low-latency audio input and output streaming.",
+ "pricing": {
+  "total_audio_minutes": 0.05,
+  "input_text_messages": 0.004
+ },
+ "metadata": {
+  "Audio Format": "PCM16 24kHz",
+  "Latency": "Real-time",
+  "Turn Detection": "Server VAD"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "websocket": {
+     "description": "Enable real-time WebSocket connection for voice conversations. When true, establishes a bidirectional WebSocket for speech-to-speech interaction with Grok voice models.",
+     "type": "boolean"
+    }
+   },
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "url": {
+     "type": "string",
+     "description": "WebSocket URL for the realtime connection (e.g., wss://...)"
+    },
+    "headers": {
+     "description": "Optional headers to include when establishing the WebSocket connection (e.g., Authorization)",
+     "type": "object",
+     "propertyNames": {
+      "type": "string"
+     },
+     "additionalProperties": {
+      "type": "string"
+     }
+    }
+   },
+   "required": [
+    "url"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "WebSocket Voice Session",
+   "input": {
+    "websocket": true
+   }
+  }
+ ]
+}

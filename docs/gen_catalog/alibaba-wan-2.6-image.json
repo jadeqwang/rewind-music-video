@@ -1,0 +1,85 @@
+{
+ "model_id": "alibaba/wan-2.6-image",
+ "name": "Wan 2.6 Image",
+ "task": "Text-to-Image",
+ "description": "Alibaba's Wan 2.6 text-to-image model generating images from text prompts with optional negative prompts and customizable dimensions.",
+ "pricing": {
+  "Per image": 0.03
+ },
+ "metadata": {
+  "Negative Prompt": "Yes",
+  "Size Format": "WxH (e.g. 1024x1024)"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string"
+    },
+    "size": {
+     "type": "string",
+     "pattern": "^\\d+x\\d+$"
+    },
+    "negative_prompt": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "image": {
+     "type": "string",
+     "format": "uri"
+    }
+   },
+   "required": [
+    "image"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Simple Generation",
+   "input": {
+    "prompt": "A golden retriever puppy playing in autumn leaves"
+   }
+  },
+  {
+   "name": "Custom Dimensions",
+   "input": {
+    "prompt": "A vast alien desert landscape with two suns setting on the horizon, ancient ruins in the foreground",
+    "size": "1024x768"
+   }
+  },
+  {
+   "name": "Square Format",
+   "input": {
+    "prompt": "A sleek wireless headphone on a minimalist white marble surface with soft studio lighting",
+    "size": "1024x1024"
+   }
+  },
+  {
+   "name": "Negative Prompt",
+   "input": {
+    "prompt": "A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar",
+    "negative_prompt": "modern clothing, photograph, blurry, low quality"
+   }
+  },
+  {
+   "name": "Portrait Format",
+   "input": {
+    "prompt": "An elegant Art Deco poster featuring a jazz singer under a spotlight",
+    "size": "768x1024"
+   }
+  }
+ ]
+}

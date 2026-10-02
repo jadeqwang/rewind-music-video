@@ -1,0 +1,159 @@
+{
+ "model_id": "recraft/recraftv4-1-utility",
+ "name": "Recraft V4.1 Utility",
+ "task": "Text-to-Image",
+ "description": "Recraft V4.1 Utility is a general-purpose text-to-image model balancing quality and flexibility for a wide range of everyday use cases at standard resolution.",
+ "pricing": {
+  "Per image": 0.04
+ },
+ "metadata": {
+  "Resolution": "1024px",
+  "Text Rendering": "Yes"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string"
+    },
+    "size": {
+     "type": "string"
+    },
+    "style": {
+     "type": "string"
+    },
+    "substyle": {
+     "type": "string"
+    },
+    "controls": {
+     "type": "object",
+     "properties": {
+      "colors": {
+       "maxItems": 5,
+       "type": "array",
+       "items": {
+        "type": "object",
+        "properties": {
+         "rgb": {
+          "minItems": 3,
+          "maxItems": 3,
+          "type": "array",
+          "items": {
+           "type": "integer",
+           "minimum": 0,
+           "maximum": 255
+          }
+         }
+        },
+        "required": [
+         "rgb"
+        ],
+        "additionalProperties": false
+       }
+      },
+      "background_color": {
+       "type": "object",
+       "properties": {
+        "rgb": {
+         "minItems": 3,
+         "maxItems": 3,
+         "type": "array",
+         "items": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+         }
+        }
+       },
+       "required": [
+        "rgb"
+       ],
+       "additionalProperties": false
+      }
+     },
+     "additionalProperties": false
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "image": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "image"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Simple Generation",
+   "input": {
+    "prompt": "A friendly cartoon robot waving hello against a white background"
+   }
+  },
+  {
+   "name": "Product Mockup",
+   "input": {
+    "prompt": "A clean product photo of a white ceramic coffee mug on a wooden table"
+   }
+  },
+  {
+   "name": "Custom Size",
+   "input": {
+    "prompt": "A simple banner illustration with abstract shapes and warm colors",
+    "size": "1024x1024"
+   }
+  },
+  {
+   "name": "With Color Controls",
+   "input": {
+    "prompt": "A flat illustration of a globe with network connections",
+    "controls": {
+     "colors": [
+      {
+       "rgb": [
+        30,
+        90,
+        200
+       ]
+      },
+      {
+       "rgb": [
+        255,
+        255,
+        255
+       ]
+      }
+     ]
+    }
+   }
+  },
+  {
+   "name": "Background Color",
+   "input": {
+    "prompt": "A simple icon of a checkmark inside a circle",
+    "controls": {
+     "background_color": {
+      "rgb": [
+       240,
+       248,
+       255
+      ]
+     }
+    },
+    "size": "1024x1024"
+   }
+  }
+ ]
+}

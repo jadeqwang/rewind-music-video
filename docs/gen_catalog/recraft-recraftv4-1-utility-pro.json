@@ -1,0 +1,151 @@
+{
+ "model_id": "recraft/recraftv4-1-utility-pro",
+ "name": "Recraft V4.1 Utility Pro",
+ "task": "Text-to-Image",
+ "description": "Recraft V4.1 Utility Pro is a general-purpose text-to-image model producing high-resolution 2048px+ output for a wide range of production and print use cases.",
+ "pricing": {
+  "Per image": 0.25
+ },
+ "metadata": {
+  "Resolution": "2048px+",
+  "Text Rendering": "Yes"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string"
+    },
+    "size": {
+     "type": "string"
+    },
+    "style": {
+     "type": "string"
+    },
+    "substyle": {
+     "type": "string"
+    },
+    "controls": {
+     "type": "object",
+     "properties": {
+      "colors": {
+       "maxItems": 5,
+       "type": "array",
+       "items": {
+        "type": "object",
+        "properties": {
+         "rgb": {
+          "minItems": 3,
+          "maxItems": 3,
+          "type": "array",
+          "items": {
+           "type": "integer",
+           "minimum": 0,
+           "maximum": 255
+          }
+         }
+        },
+        "required": [
+         "rgb"
+        ],
+        "additionalProperties": false
+       }
+      },
+      "background_color": {
+       "type": "object",
+       "properties": {
+        "rgb": {
+         "minItems": 3,
+         "maxItems": 3,
+         "type": "array",
+         "items": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+         }
+        }
+       },
+       "required": [
+        "rgb"
+       ],
+       "additionalProperties": false
+      }
+     },
+     "additionalProperties": false
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "image": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "image"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Print-Ready Illustration",
+   "input": {
+    "prompt": "A detailed illustrated map of an imaginary fantasy island with labeled landmarks, mountains, and forests"
+   }
+  },
+  {
+   "name": "Large Format Art",
+   "input": {
+    "prompt": "A wide panoramic landscape of rolling green hills with a river winding through the valley under a bright blue sky",
+    "size": "2048x2048"
+   }
+  },
+  {
+   "name": "Marketing Asset",
+   "input": {
+    "prompt": "A clean, modern banner illustration of a smartphone displaying a productivity app",
+    "controls": {
+     "background_color": {
+      "rgb": [
+       250,
+       250,
+       255
+      ]
+     },
+     "colors": [
+      {
+       "rgb": [
+        100,
+        200,
+        150
+       ]
+      },
+      {
+       "rgb": [
+        20,
+        20,
+        60
+       ]
+      }
+     ]
+    },
+    "size": "2048x2048"
+   }
+  },
+  {
+   "name": "Technical Diagram",
+   "input": {
+    "prompt": "A clean technical diagram showing the layers of a cloud computing architecture with labeled tiers"
+   }
+  }
+ ]
+}

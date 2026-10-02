@@ -1,0 +1,98 @@
+{
+ "model_id": "google/nano-banana-2-lite",
+ "name": "Nano Banana 2 Lite",
+ "task": "Text-to-Image",
+ "description": "Google's fastest Gemini image generation model for rapid image creation and iteration.",
+ "pricing": {
+  "Input tokens (per 1M)": 0.25,
+  "Output tokens (per 1M)": 30
+ },
+ "metadata": {
+  "Input Size Limit": "500 MB",
+  "Output Format": "JPEG or PNG"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string"
+    },
+    "image_input": {
+     "maxItems": 3,
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "aspect_ratio": {
+     "type": "string",
+     "enum": [
+      "match_input_image",
+      "1:1",
+      "2:3",
+      "3:2",
+      "3:4",
+      "4:3",
+      "4:5",
+      "5:4",
+      "9:16",
+      "16:9",
+      "21:9"
+     ]
+    },
+    "output_format": {
+     "type": "string",
+     "enum": [
+      "jpg",
+      "png"
+     ]
+    },
+    "resolution": {
+     "type": "string",
+     "enum": [
+      "1K",
+      "2K",
+      "4K"
+     ]
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "image": {
+     "type": "string",
+     "format": "uri"
+    }
+   },
+   "required": [
+    "image"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Concept Sketch",
+   "input": {
+    "prompt": "A playful concept sketch of a compact solar-powered delivery robot rolling through a leafy neighborhood, bright morning light, clean product design",
+    "aspect_ratio": "16:9"
+   }
+  },
+  {
+   "name": "Product Render",
+   "input": {
+    "prompt": "A studio product render of translucent wireless earbuds in a frosted glass charging case, soft gradient background, premium advertising style",
+    "aspect_ratio": "1:1",
+    "output_format": "png"
+   }
+  }
+ ]
+}

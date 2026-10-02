@@ -1,0 +1,135 @@
+{
+ "model_id": "google/veo-3.1",
+ "name": "Veo 3.1",
+ "task": "Text-to-Video",
+ "description": "Google's latest video generation model with improved quality, motion, and audio generation.",
+ "pricing": {
+  "Default (per second)": 0.4,
+  "@720p (per second)": 0.2,
+  "@1080p (per second)": 0.2,
+  "@4k (per second)": 0.4,
+  "@720p w/ audio (per second)": 0.4,
+  "@1080p w/ audio (per second)": 0.4,
+  "@4k w/ audio (per second)": 0.6
+ },
+ "metadata": {
+  "Audio Generation": "Yes",
+  "Max Duration": "8 seconds",
+  "Resolutions": "720p, 1080p"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string",
+     "description": "Text prompt describing the video to generate"
+    },
+    "image_input": {
+     "description": "Base64-encoded reference image for i2v",
+     "type": "string"
+    },
+    "duration": {
+     "default": "6s",
+     "description": "Video duration",
+     "type": "string",
+     "enum": [
+      "4s",
+      "6s",
+      "8s"
+     ]
+    },
+    "aspect_ratio": {
+     "default": "16:9",
+     "description": "Video aspect ratio",
+     "type": "string",
+     "enum": [
+      "16:9",
+      "9:16",
+      "1:1"
+     ]
+    },
+    "resolution": {
+     "default": "720p",
+     "description": "Video resolution",
+     "type": "string",
+     "enum": [
+      "720p",
+      "1080p"
+     ]
+    },
+    "generate_audio": {
+     "default": true,
+     "description": "Whether to generate audio with the video",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "prompt",
+    "duration",
+    "aspect_ratio",
+    "resolution",
+    "generate_audio"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "video": {
+     "type": "string",
+     "format": "uri",
+     "description": "URL to the generated video"
+    }
+   },
+   "required": [
+    "video"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Nature Documentary",
+   "input": {
+    "prompt": "A majestic eagle soaring over snow-capped mountains, tracking shot following the bird as it glides through clouds",
+    "aspect_ratio": "16:9",
+    "duration": "8s",
+    "generate_audio": true,
+    "resolution": "1080p"
+   }
+  },
+  {
+   "name": "Urban Time-lapse",
+   "input": {
+    "prompt": "A time-lapse of a busy city intersection at night, car lights creating streaks, people walking in fast motion",
+    "aspect_ratio": "16:9",
+    "duration": "6s",
+    "generate_audio": true,
+    "resolution": "1080p"
+   }
+  },
+  {
+   "name": "Abstract Art",
+   "input": {
+    "prompt": "Colorful ink drops falling into water in slow motion, creating organic swirling patterns",
+    "aspect_ratio": "16:9",
+    "duration": "6s",
+    "generate_audio": false,
+    "resolution": "720p"
+   }
+  },
+  {
+   "name": "Food Video",
+   "input": {
+    "prompt": "Melted chocolate being poured over fresh strawberries in slow motion, rich and glossy",
+    "aspect_ratio": "9:16",
+    "duration": "4s",
+    "generate_audio": true,
+    "resolution": "1080p"
+   }
+  }
+ ]
+}

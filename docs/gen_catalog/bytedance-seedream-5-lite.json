@@ -1,0 +1,141 @@
+{
+ "model_id": "bytedance/seedream-5-lite",
+ "name": "Seedream 5 Lite",
+ "task": "Text-to-Image",
+ "description": "Seedream 5 Lite is a lighter, faster version of the Seedream 5 family with multi-reference and batch generation support.",
+ "pricing": {
+  "Per image": 0.035
+ },
+ "metadata": {
+  "Max Images": "15",
+  "Multi-Reference": "Yes",
+  "Output Formats": "JPEG, PNG, WebP"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string"
+    },
+    "image_input": {
+     "maxItems": 14,
+     "type": "array",
+     "items": {
+      "type": "string",
+      "format": "uri"
+     }
+    },
+    "size": {
+     "type": "string",
+     "enum": [
+      "2K",
+      "3K"
+     ]
+    },
+    "aspect_ratio": {
+     "type": "string",
+     "enum": [
+      "match_input_image",
+      "1:1",
+      "4:3",
+      "3:4",
+      "16:9",
+      "9:16",
+      "3:2",
+      "2:3",
+      "21:9"
+     ]
+    },
+    "sequential_image_generation": {
+     "type": "string",
+     "enum": [
+      "disabled",
+      "auto"
+     ]
+    },
+    "max_images": {
+     "type": "integer",
+     "minimum": 1,
+     "maximum": 15
+    },
+    "output_format": {
+     "type": "string",
+     "enum": [
+      "png",
+      "jpeg"
+     ]
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "images": {
+     "minItems": 1,
+     "type": "array",
+     "items": {
+      "type": "string",
+      "format": "uri"
+     }
+    }
+   },
+   "required": [
+    "images"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Simple Generation",
+   "input": {
+    "prompt": "A cute robot watering plants in a sunny greenhouse"
+   }
+  },
+  {
+   "name": "High Resolution PNG",
+   "input": {
+    "prompt": "A detailed technical blueprint of a futuristic spacecraft with annotations and measurements",
+    "aspect_ratio": "16:9",
+    "output_format": "png",
+    "size": "3K"
+   }
+  },
+  {
+   "name": "Portrait Photo",
+   "input": {
+    "prompt": "A professional headshot portrait with soft studio lighting and a neutral gray background",
+    "aspect_ratio": "3:4",
+    "output_format": "jpeg",
+    "size": "2K"
+   }
+  },
+  {
+   "name": "Sequential Comic",
+   "input": {
+    "prompt": "A four-panel comic strip showing a cat discovering a cardboard box and deciding to sit in it",
+    "aspect_ratio": "4:3",
+    "max_images": 4,
+    "sequential_image_generation": "auto"
+   }
+  },
+  {
+   "name": "Image Variation",
+   "input": {
+    "prompt": "Create a variation of this image in a watercolor painting style",
+    "aspect_ratio": "match_input_image",
+    "image_input": [
+     "https://replicate.delivery/xezq/jCypj4MeXYUiRyq7nfgm8z1OvFZF81wh4FznutDsZOuJz0YWA/tmp1iukn307.jpg"
+    ],
+    "size": "2K"
+   }
+  }
+ ]
+}

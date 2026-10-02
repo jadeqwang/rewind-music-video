@@ -1,0 +1,126 @@
+{
+ "model_id": "pruna/p-video-replace",
+ "name": "P-Video-Replace",
+ "task": "Image-to-Video",
+ "description": "Pruna's P-Video-Replace takes a source video and one or more identity reference images, then places the referenced person or people into the video while preserving the source motion and audio.",
+ "pricing": {
+  "Default (per second)": 0.03,
+  "@720p (per second)": 0.03,
+  "@1080p (per second)": 0.06
+ },
+ "metadata": {
+  "Resolutions": "720p, 1080p",
+  "Reference Images": "1-3"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "video": {
+     "type": "string",
+     "description": "Source RGB video (.mp4) used as the motion and audio source. HTTP(S) URL or data URI."
+    },
+    "images": {
+     "minItems": 1,
+     "maxItems": 3,
+     "type": "array",
+     "items": {
+      "type": "string"
+     },
+     "description": "Identity reference image(s), 1 to 3, to place into the video. Each entry is an HTTP(S) URL or a data URI."
+    },
+    "turbo": {
+     "default": false,
+     "description": "Turbo mode: faster generation for slightly lower quality.",
+     "type": "boolean"
+    },
+    "resolution": {
+     "default": "720p",
+     "description": "Target resolution.",
+     "type": "string",
+     "enum": [
+      "720p",
+      "1080p"
+     ]
+    },
+    "save_audio": {
+     "default": true,
+     "description": "Save the video with audio.",
+     "type": "boolean"
+    },
+    "ignore_audio": {
+     "default": false,
+     "description": "Ignore source audio during generation.",
+     "type": "boolean"
+    },
+    "target_fps": {
+     "default": "original",
+     "description": "Target FPS for the working video.",
+     "type": "string",
+     "enum": [
+      "24",
+      "48",
+      "original"
+     ]
+    },
+    "instruction_prompt": {
+     "default": "",
+     "description": "Further instruction on how to place people from the reference images into the scene.",
+     "type": "string"
+    },
+    "seed": {
+     "description": "Random seed for reproducible generation.",
+     "type": "integer",
+     "minimum": -9007199254740991,
+     "maximum": 9007199254740991
+    },
+    "disable_safety_checker": {
+     "default": false,
+     "description": "Disable safety checker for generated videos.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "video",
+    "images",
+    "turbo",
+    "resolution",
+    "save_audio",
+    "ignore_audio",
+    "target_fps",
+    "instruction_prompt",
+    "disable_safety_checker"
+   ],
+   "additionalProperties": {}
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "video": {
+     "type": "string",
+     "format": "uri",
+     "description": "Presigned URL for the replacement video."
+    }
+   },
+   "required": [
+    "video"
+   ],
+   "additionalProperties": {}
+  }
+ },
+ "examples": [
+  {
+   "name": "Character Swap",
+   "input": {
+    "video": "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4",
+    "images": [
+     "https://huggingface.co/spaces/yisol/IDM-VTON/resolve/main/example/human/00121_00.jpg"
+    ],
+    "resolution": "720p",
+    "target_fps": "original"
+   }
+  }
+ ]
+}

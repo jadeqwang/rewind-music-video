@@ -1,0 +1,151 @@
+{
+ "model_id": "recraft/recraftv4-1-utility-pro-vector",
+ "name": "Recraft V4.1 Utility Pro SVG",
+ "task": "Text-to-Image",
+ "description": "Generate detailed, high-resolution SVG vector graphics from text prompts with a general-purpose model, scalable to any size for print and large-scale design work.",
+ "pricing": {
+  "Per image": 0.3
+ },
+ "metadata": {
+  "Output Format": "SVG",
+  "Resolution": "2048px+"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string"
+    },
+    "size": {
+     "type": "string"
+    },
+    "style": {
+     "type": "string"
+    },
+    "substyle": {
+     "type": "string"
+    },
+    "controls": {
+     "type": "object",
+     "properties": {
+      "colors": {
+       "maxItems": 5,
+       "type": "array",
+       "items": {
+        "type": "object",
+        "properties": {
+         "rgb": {
+          "minItems": 3,
+          "maxItems": 3,
+          "type": "array",
+          "items": {
+           "type": "integer",
+           "minimum": 0,
+           "maximum": 255
+          }
+         }
+        },
+        "required": [
+         "rgb"
+        ],
+        "additionalProperties": false
+       }
+      },
+      "background_color": {
+       "type": "object",
+       "properties": {
+        "rgb": {
+         "minItems": 3,
+         "maxItems": 3,
+         "type": "array",
+         "items": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+         }
+        }
+       },
+       "required": [
+        "rgb"
+       ],
+       "additionalProperties": false
+      }
+     },
+     "additionalProperties": false
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "image": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "image"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Logo Design",
+   "input": {
+    "prompt": "A clean, versatile logo for a software company with abstract geometric shapes"
+   }
+  },
+  {
+   "name": "Detailed Illustration",
+   "input": {
+    "prompt": "A detailed flat vector illustration of a city map with labeled streets, parks, and landmarks",
+    "size": "2048x2048"
+   }
+  },
+  {
+   "name": "Print-Ready Vector",
+   "input": {
+    "prompt": "A decorative border pattern with repeating floral and leaf motifs, suitable for certificate or diploma design",
+    "size": "2048x2048"
+   }
+  },
+  {
+   "name": "Brand Illustration",
+   "input": {
+    "prompt": "A flat vector illustration of interconnected nodes representing a network or data flow",
+    "controls": {
+     "colors": [
+      {
+       "rgb": [
+        0,
+        122,
+        204
+       ]
+      },
+      {
+       "rgb": [
+        255,
+        165,
+        0
+       ]
+      },
+      {
+       "rgb": [
+        240,
+        240,
+        240
+       ]
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

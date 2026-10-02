@@ -1,0 +1,97 @@
+alibaba/hh1-i2v	Image-to-Video	{"Default (per second)": 0.28, "@720p (per second)": 0.14, "@1080p (per second)": 0.28}
+alibaba/hh1-t2v	Text-to-Video	{"Default (per second)": 0.28, "@720p (per second)": 0.14, "@1080p (per second)": 0.28}
+alibaba/hh1.1-i2v	Image-to-Video	{"Default (per second)": 0.18, "@720p (per second)": 0.14, "@1080p (per second)": 0.18}
+alibaba/hh1.1-r2v	Image-to-Video	{"Default (per second)": 0.18, "@720p (per second)": 0.14, "@1080p (per second)": 0.18}
+alibaba/hh1.1-t2v	Text-to-Video	{"Default (per second)": 0.18, "@720p (per second)": 0.14, "@1080p (per second)": 0.18}
+alibaba/qwen-image-3.0-pro	Text-to-Image	{"Per image": 0.04, "output_size_1k": 0.04, "output_size_2k": 0.07, "Default (per second)"
+alibaba/wan-2.6-image	Text-to-Image	{"Per image": 0.03}
+alibaba/wan-2.7-i2v	Image-to-Video	{"Default (per second)": 0.1, "@720p (per second)": 0.1, "@1080p (per second)": 0.15}
+alibaba/wan-3.0-prime	Text-to-Video	{"Default (per second)": 0.068, "@480p (per second)": 0.068, "@720p (per second)": 0.14, "
+alibaba/wan-3.0	Text-to-Video	{"Default (per second)": 0.05, "@480p (per second)": 0.05, "@720p (per second)": 0.1, "@10
+assemblyai/universal-3-pro	Automatic Speech Recognition	{"Per audio minute": 0.0035}
+assemblyai/universal-3.5-pro	Automatic Speech Recognition	{"Per audio minute": 0.0035, "Per minute (speaker diarization)": 0.0003, "Per minute (key 
+black-forest-labs/flux-1-kontext-max	Text-to-Image	{"Per image": 0.08}
+black-forest-labs/flux-1-kontext-pro	Text-to-Image	{"Per image": 0.04}
+black-forest-labs/flux-2-flex	Text-to-Image	{"First output megapixel": 0.05, "Per additional output megapixel": 0.05, "Per input megap
+black-forest-labs/flux-2-max	Text-to-Image	{"First output megapixel": 0.07, "Per additional output megapixel": 0.03, "Per input megap
+black-forest-labs/flux-2-pro-preview	Text-to-Image	{"First output megapixel": 0.03, "Per additional output megapixel": 0.015, "Per input mega
+black-forest-labs/flux-3-video	Text-to-Video	{"hd": 0.17, "fhd": 0.29, "v2v_hd": 0.41, "v2v_fhd": 0.53, "hd_draft": 0.06, "v2v_hd_draft
+black-forest-labs/flux-video-upscale	video-to-video	{"Precise (per megapixel-second)": 0.07, "Creative (per megapixel-second)": 0.1}
+bytedance/seedance-2.0-fast	Text-to-Video	{"Default (per second)": 0.12, "@480p video input (per second)": 0.132, "@720p video input
+bytedance/seedance-2.0-mini	Text-to-Video	{"Default (per second)": 0.09, "@480p video input (per second)": 0.084, "@720p video input
+bytedance/seedance-2.0	Text-to-Video	{"Default (per second)": 0.15, "@480p video input (per second)": 0.172, "@720p video input
+bytedance/seedance-2.5	Text-to-Video	{"Default (per second)": 0.2312, "@480p video input (per second)": 0.4304, "@720p video in
+bytedance/seedream-4.0	Text-to-Image	{"Per image": 0.03}
+bytedance/seedream-4.5	Text-to-Image	{"Per image": 0.04}
+bytedance/seedream-5-lite	Text-to-Image	{"Per image": 0.035}
+bytedance/seedream-5-pro	Text-to-Image	{"Per image": 0.045, "Per input image": 0.03, "Default (per second)": 0.045}
+elevenlabs/eleven-flash-v2-5	Text-to-Speech	{"Per character": 5e-05, "Default (per second)": 5e-05}
+elevenlabs/eleven-multilingual-v2	Text-to-Speech	{"Per character": 0.0001, "Default (per second)": 0.0001}
+elevenlabs/eleven-turbo-v2-5	Text-to-Speech	{"Per character": 5e-05, "Default (per second)": 5e-05}
+elevenlabs/eleven-v3	Text-to-Speech	{"Per character": 0.0001, "Default (per second)": 0.0001}
+elevenlabs/music-v2	Music Generation	{"output_audio_seconds": 0.0025, "Default (per second)": 0.0025}
+google/gemini-3.1-flash-tts	Text-to-Speech	{"Input audio tokens (per 1M)": 3, "Input text tokens (per 1M)": 0.75, "output_audio_token
+google/gemini-omni-1.1-flash	Text-to-Video	{"Input text tokens (per 1M)": 1.5, "Input image tokens (per 1M)": 1.5, "Input audio token
+google/gemini-omni-flash	Text-to-Video	{"Input text tokens (per 1M)": 1.5, "Input image tokens (per 1M)": 1.5, "Input audio token
+google/nano-banana-2-lite	Text-to-Image	{"Input tokens (per 1M)": 0.25, "Output tokens (per 1M)": 30}
+google/nano-banana-2	Text-to-Image	{"Input tokens (per 1M)": 0.5, "Output tokens (per 1M)": 60}
+google/nano-banana-pro	Text-to-Image	{"Input tokens (per 1M)": 2, "Output tokens (per 1M)": 120}
+google/nano-banana	Text-to-Image	{"Input tokens (per 1M)": 0.3, "Output tokens (per 1M)": 30, "Cached input tokens (per 1M)
+google/veo-3.1-fast	Text-to-Video	{"Default (per second)": 0.08, "@720p (per second)": 0.08, "@1080p (per second)": 0.1, "@4
+google/veo-3.1	Text-to-Video	{"Default (per second)": 0.4, "@720p (per second)": 0.2, "@1080p (per second)": 0.2, "@4k 
+inworld/tts-1.5-max	Text-to-Speech	{"Per character": 3.5e-05}
+inworld/tts-1.5-mini	Text-to-Speech	{"Per character": 1.5e-05}
+inworld/tts-2	Text-to-Speech	{"Per character": 2.5e-05}
+krea/krea-2-large	Text-to-Image	{"Default (per second)": 0.06, "Per image": 0.06}
+krea/krea-2-medium-turbo	Text-to-Image	{"Default (per second)": 0.015, "Per image": 0.015}
+krea/krea-2-medium	Text-to-Image	{"Default (per second)": 0.03, "Per image": 0.03}
+lightricks/ltx-2-5-fast	Text-to-Video	{"Default (per second)": 0.09, "@720p (per second)": 0.09, "@1080p (per second)": 0.15, "@
+minimax/h3-max	Text-to-Video	{"Default (per second)": 0.05, "@480p (per second)": 0.05, "@768p (per second)": 0.08}
+minimax/h3	Text-to-Video	{"Default (per second)": 0.08, "@768p (per second)": 0.08, "@2k (per second)": 0.13}
+minimax/hailuo-2.3-fast	Text-to-Video	{"Default (per second)": 0.032, "6s @768p": 0.19, "10s @768p": 0.32, "6s @1080p": 0.33}
+minimax/hailuo-2.3	Text-to-Video	{"Default (per second)": 0.047, "6s @768p": 0.28, "10s @768p": 0.56, "6s @1080p": 0.49}
+minimax/music-2.6	Music Generation	{"Per track": 0.15, "Per lyrics generation": 0.01}
+minimax/speech-2.8-hd	Text-to-Speech	{"Per character": 0.0001}
+minimax/speech-2.8-turbo	Text-to-Speech	{"Per character": 6e-05}
+openai/gpt-4o-transcribe	Automatic Speech Recognition	{"Per audio minute": 0.006}
+openai/gpt-image-1.5	Text-to-Image	{"Input tokens (per 1M)": 5, "Input image tokens (per 1M)": 8, "Cached input tokens (per 1
+openai/gpt-image-2.5-flare	Text-to-Image	{"Cached input image tokens (per 1M)": 3, "Cached input tokens (per 1M)": 1.25, "Input ima
+openai/gpt-image-2.5-sunburst	Text-to-Image	{"Cached input image tokens (per 1M)": 3, "Cached input tokens (per 1M)": 1.25, "Input ima
+openai/gpt-image-2	Text-to-Image	{"Cached input image tokens (per 1M)": 2, "Cached input tokens (per 1M)": 1.25, "Input ima
+openai/tts-1-hd	Text-to-Speech	{"Per character": 3e-05}
+openai/tts-1	Text-to-Speech	{"Per character": 1.5e-05}
+pixverse/v5.6	Text-to-Video	{"Default (per second)": 0.08, "5s @360p": 0.175, "5s @360p w/ audio": 0.4, "8s @360p": 0.
+pixverse/v6	Text-to-Video	{"Default (per second)": 0.06, "@360p (per second)": 0.025, "@540p (per second)": 0.035, "
+pruna/p-image-edit	Image-to-Image	{"Per image": 0.01}
+pruna/p-image-try-on	Image-to-Image	{"Per image": 0.015, "Per input image": 0.008}
+pruna/p-image-upscale	Image-to-Image	{"Per image (1-4 MP)": 0.005, "Per image (5-8 MP)": 0.01, "Per image (9-16 MP)": 0.02, "Pe
+pruna/p-image	Text-to-Image	{"Per image": 0.005}
+pruna/p-video-animate	Image-to-Video	{"Default (per second)": 0.03, "@720p (per second)": 0.03, "@1080p (per second)": 0.06}
+pruna/p-video-avatar	Image-to-Video	{"Default (per second)": 0.025, "@720p (per second)": 0.025, "@1080p (per second)": 0.045}
+pruna/p-video-replace	Image-to-Video	{"Default (per second)": 0.03, "@720p (per second)": 0.03, "@1080p (per second)": 0.06}
+pruna/p-video	Text-to-Video	{"Default (per second)": 0.02, "@720p (per second)": 0.02, "@1080p (per second)": 0.04, "@
+recraft/recraftv3	Text-to-Image	{"Per image": 0.04}
+recraft/recraftv4-1-pro-vector	Text-to-Image	{"Per image": 0.3}
+recraft/recraftv4-1-pro	Text-to-Image	{"Per image": 0.25}
+recraft/recraftv4-1-utility-pro-vector	Text-to-Image	{"Per image": 0.3}
+recraft/recraftv4-1-utility-pro	Text-to-Image	{"Per image": 0.25}
+recraft/recraftv4-1-utility-vector	Text-to-Image	{"Per image": 0.08}
+recraft/recraftv4-1-utility	Text-to-Image	{"Per image": 0.04}
+recraft/recraftv4-1-vector	Text-to-Image	{"Per image": 0.08}
+recraft/recraftv4-1	Text-to-Image	{"Per image": 0.04}
+recraft/recraftv4-pro-vector	Text-to-Image	{"Per image": 0.3}
+recraft/recraftv4-pro	Text-to-Image	{"Per image": 0.25}
+recraft/recraftv4-vector	Text-to-Image	{"Per image": 0.08}
+recraft/recraftv4	Text-to-Image	{"Per image": 0.04}
+runwayml/aleph-2	Text-to-Video	{"Default (per second)": 0.336}
+runwayml/gen-4.5	Text-to-Video	{"Default (per second)": 0.12}
+vidu/q3-pro	Text-to-Video	{"Default (per second)": 0.125, "@540p (per second)": 0.05, "@720p (per second)": 0.125, "
+vidu/q3-turbo	Text-to-Video	{"Default (per second)": 0.06, "@540p (per second)": 0.04, "@720p (per second)": 0.06, "@1
+xai/grok-imagine-image-2.0	Text-to-Image	{"Per image": 0.04, "Per input image": 0.01}
+xai/grok-imagine-image-quality	Text-to-Image	{"Per image": 0.05, "Per input image": 0.01}
+xai/grok-imagine-image	Text-to-Image	{"Per image": 0.02, "Per input image": 0.002}
+xai/grok-imagine-video-1.5-preview	Image-to-Video	{"Default (per second)": 0.08, "@480p (per second)": 0.08, "@720p (per second)": 0.14}
+xai/grok-imagine-video	Text-to-Video	{"Default (per second)": 0.05, "@480p (per second)": 0.05, "@720p (per second)": 0.07}
+xai/grok-stt	Automatic Speech Recognition	{"Per audio minute": 0.001667, "input_audio_minutes_streaming": 0.003334}
+xai/grok-tts	Text-to-Speech	{"Per character": 1.5e-05}
+xai/grok-voice	websocket	{"total_audio_minutes": 0.05, "input_text_messages": 0.004}

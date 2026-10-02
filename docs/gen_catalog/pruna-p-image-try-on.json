@@ -1,0 +1,125 @@
+{
+ "model_id": "pruna/p-image-try-on",
+ "name": "P-Image Try-On",
+ "task": "Image-to-Image",
+ "description": "Pruna's P-Image Try-On virtually fits one or more garments onto a person's photo. Provide a photo of a person plus garment reference images and the model realistically dresses the person in the provided garments.",
+ "pricing": {
+  "Per image": 0.015,
+  "Per input image": 0.008
+ },
+ "metadata": {
+  "Garments": "1 required, up to 6 recommended, up to 11 supported",
+  "Input Modalities": "Image",
+  "Output Formats": "jpg, png, webp"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "person_image": {
+     "type": "string",
+     "description": "Image of the person to dress. A publicly reachable HTTP(S) URL or a base64 data URI (data:image/...;base64,...)."
+    },
+    "garment_images": {
+     "minItems": 1,
+     "maxItems": 11,
+     "type": "array",
+     "items": {
+      "type": "string"
+     },
+     "description": "Garment reference images to fit onto the person. Each entry is an HTTP(S) URL or a base64 data URI. Up to 6 recommended, up to 11 supported."
+    },
+    "prompt": {
+     "default": "",
+     "description": "Experimental guidance for non-flatlay garment images, e.g. which garment from which image to use.",
+     "type": "string"
+    },
+    "seed": {
+     "description": "Random seed. Leave unset for a random seed.",
+     "type": "integer",
+     "minimum": -9007199254740991,
+     "maximum": 9007199254740991
+    },
+    "turbo": {
+     "default": false,
+     "description": "Run faster with additional optimizations. Not recommended for more than 4 garments.",
+     "type": "boolean"
+    },
+    "output_format": {
+     "default": "jpg",
+     "description": "Format of the saved output image.",
+     "type": "string",
+     "enum": [
+      "webp",
+      "jpg",
+      "png"
+     ]
+    },
+    "output_quality": {
+     "default": 95,
+     "description": "Quality for jpg/webp outputs, from 0 to 100.",
+     "type": "integer",
+     "minimum": 0,
+     "maximum": 100
+    },
+    "reference_pose": {
+     "description": "Optional reference pose image (HTTP(S) URL or data URI). When provided, the person is reposed to match this reference before virtual try-on.",
+     "type": "string"
+    },
+    "preserve_input_size": {
+     "default": true,
+     "description": "Return the output at the original input resolution.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "person_image",
+    "garment_images",
+    "prompt",
+    "turbo",
+    "output_format",
+    "output_quality",
+    "preserve_input_size"
+   ],
+   "additionalProperties": {}
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "image": {
+     "type": "string",
+     "format": "uri",
+     "description": "Presigned URL for the generated try-on image."
+    }
+   },
+   "required": [
+    "image"
+   ],
+   "additionalProperties": {}
+  }
+ },
+ "examples": [
+  {
+   "name": "Single Garment",
+   "input": {
+    "person_image": "https://huggingface.co/spaces/yisol/IDM-VTON/resolve/main/example/human/00121_00.jpg",
+    "garment_images": [
+     "https://huggingface.co/spaces/yisol/IDM-VTON/resolve/main/example/cloth/04469_00.jpg"
+    ]
+   }
+  },
+  {
+   "name": "Turbo PNG",
+   "input": {
+    "person_image": "https://huggingface.co/spaces/yisol/IDM-VTON/resolve/main/example/human/00121_00.jpg",
+    "garment_images": [
+     "https://huggingface.co/spaces/yisol/IDM-VTON/resolve/main/example/cloth/09163_00.jpg"
+    ],
+    "turbo": true,
+    "output_format": "png"
+   }
+  }
+ ]
+}

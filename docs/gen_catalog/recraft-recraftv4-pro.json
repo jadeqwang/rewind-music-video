@@ -1,0 +1,151 @@
+{
+ "model_id": "recraft/recraftv4-pro",
+ "name": "Recraft V4 Pro",
+ "task": "Text-to-Image",
+ "description": "Recraft V4 Pro generates high-resolution, art-directed images at 2048px+ with strong composition, text rendering, and design taste. Built for print and production work.",
+ "pricing": {
+  "Per image": 0.25
+ },
+ "metadata": {
+  "Resolution": "2048px+",
+  "Text Rendering": "Yes"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string"
+    },
+    "size": {
+     "type": "string"
+    },
+    "style": {
+     "type": "string"
+    },
+    "substyle": {
+     "type": "string"
+    },
+    "controls": {
+     "type": "object",
+     "properties": {
+      "colors": {
+       "maxItems": 5,
+       "type": "array",
+       "items": {
+        "type": "object",
+        "properties": {
+         "rgb": {
+          "minItems": 3,
+          "maxItems": 3,
+          "type": "array",
+          "items": {
+           "type": "integer",
+           "minimum": 0,
+           "maximum": 255
+          }
+         }
+        },
+        "required": [
+         "rgb"
+        ],
+        "additionalProperties": false
+       }
+      },
+      "background_color": {
+       "type": "object",
+       "properties": {
+        "rgb": {
+         "minItems": 3,
+         "maxItems": 3,
+         "type": "array",
+         "items": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+         }
+        }
+       },
+       "required": [
+        "rgb"
+       ],
+       "additionalProperties": false
+      }
+     },
+     "additionalProperties": false
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "image": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "image"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Print-Ready Illustration",
+   "input": {
+    "prompt": "A detailed vintage botanical illustration of a rose with leaves and thorns, scientific illustration style"
+   }
+  },
+  {
+   "name": "Large Format Art",
+   "input": {
+    "prompt": "A sweeping fantasy landscape with floating islands, waterfalls cascading into clouds, and ancient stone bridges connecting the islands",
+    "size": "2048x2048"
+   }
+  },
+  {
+   "name": "Brand Asset",
+   "input": {
+    "prompt": "A modern, clean illustration of a shield with a checkmark inside, representing security and trust",
+    "controls": {
+     "background_color": {
+      "rgb": [
+       15,
+       23,
+       42
+      ]
+     },
+     "colors": [
+      {
+       "rgb": [
+        46,
+        117,
+        182
+       ]
+      },
+      {
+       "rgb": [
+        255,
+        255,
+        255
+       ]
+      }
+     ]
+    },
+    "size": "2048x2048"
+   }
+  },
+  {
+   "name": "Editorial Illustration",
+   "input": {
+    "prompt": "A conceptual illustration of artificial intelligence as a tree with circuit-board branches and glowing data leaves"
+   }
+  }
+ ]
+}

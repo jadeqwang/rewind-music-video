@@ -1,0 +1,116 @@
+{
+ "model_id": "openai/tts-1-hd",
+ "name": "TTS-1 HD",
+ "task": "Text-to-Speech",
+ "description": "OpenAI's high-definition text-to-speech model producing higher quality audio output.",
+ "pricing": {
+  "Per character": 3e-05
+ },
+ "metadata": {
+  "Voices": "alloy, echo, fable, onyx, nova, shimmer"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "text": {
+     "type": "string",
+     "maxLength": 4096,
+     "description": "The text to generate audio for. Maximum length is 4096 characters."
+    },
+    "voice": {
+     "default": "alloy",
+     "description": "The voice to use when generating the audio. Defaults to alloy.",
+     "type": "string",
+     "enum": [
+      "alloy",
+      "echo",
+      "fable",
+      "onyx",
+      "nova",
+      "shimmer"
+     ]
+    },
+    "response_format": {
+     "default": "mp3",
+     "description": "The output format for the audio. Supported formats are mp3, opus, wav, aac and flac.",
+     "type": "string",
+     "enum": [
+      "mp3",
+      "opus",
+      "wav",
+      "aac",
+      "flac"
+     ]
+    },
+    "speed": {
+     "default": 1,
+     "description": "The speed of the generated audio. Select a value from 0.25 to 4.0. 1.0 is the default.",
+     "type": "number",
+     "minimum": 0.25,
+     "maximum": 4
+    }
+   },
+   "required": [
+    "text",
+    "voice",
+    "response_format",
+    "speed"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "audio": {
+     "type": "string",
+     "description": "URL to the generated audio file"
+    }
+   },
+   "required": [
+    "audio"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Simple Speech",
+   "input": {
+    "response_format": "mp3",
+    "speed": 1,
+    "text": "Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.",
+    "voice": "alloy"
+   }
+  },
+  {
+   "name": "Storytelling",
+   "input": {
+    "response_format": "mp3",
+    "speed": 0.9,
+    "text": "Once upon a time, in a kingdom beyond the clouds, there lived a young inventor who dreamed of building machines that could think.",
+    "voice": "fable"
+   }
+  },
+  {
+   "name": "Podcast Style",
+   "input": {
+    "response_format": "mp3",
+    "speed": 1,
+    "text": "So here's the thing about large language models \u2014 they're not actually thinking. They're predicting the next token based on patterns in their training data. But the results can be surprisingly coherent.",
+    "voice": "echo"
+   }
+  },
+  {
+   "name": "Shimmer Voice",
+   "input": {
+    "response_format": "mp3",
+    "speed": 1,
+    "text": "Breaking news: scientists have discovered a new species of deep-sea fish that produces its own light using bioluminescence.",
+    "voice": "shimmer"
+   }
+  }
+ ]
+}

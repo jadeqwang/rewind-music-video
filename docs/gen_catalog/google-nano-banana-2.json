@@ -1,0 +1,120 @@
+{
+ "model_id": "google/nano-banana-2",
+ "name": "Nano Banana 2",
+ "task": "Text-to-Image",
+ "description": "Google's second-generation image generation model with improved quality and speed.",
+ "pricing": {
+  "Input tokens (per 1M)": 0.5,
+  "Output tokens (per 1M)": 60
+ },
+ "metadata": {
+  "Output Format": "JPEG"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string"
+    },
+    "image_input": {
+     "maxItems": 3,
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "aspect_ratio": {
+     "type": "string",
+     "enum": [
+      "match_input_image",
+      "1:1",
+      "2:3",
+      "3:2",
+      "3:4",
+      "4:3",
+      "4:5",
+      "5:4",
+      "9:16",
+      "16:9",
+      "21:9"
+     ]
+    },
+    "output_format": {
+     "type": "string",
+     "enum": [
+      "jpg",
+      "png"
+     ]
+    },
+    "resolution": {
+     "type": "string",
+     "enum": [
+      "1K",
+      "2K",
+      "4K"
+     ]
+    },
+    "google_search": {
+     "type": "boolean"
+    },
+    "image_search": {
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "image": {
+     "type": "string",
+     "format": "uri"
+    }
+   },
+   "required": [
+    "image"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Futuristic City",
+   "input": {
+    "prompt": "A futuristic cyberpunk city at night with towering skyscrapers, neon signs in Japanese and English, flying cars, and rain-slicked streets reflecting colorful lights",
+    "aspect_ratio": "16:9"
+   }
+  },
+  {
+   "name": "Abstract Art",
+   "input": {
+    "prompt": "An abstract expressionist painting with bold splashes of cobalt blue, crimson red, and gold leaf accents on a large canvas",
+    "aspect_ratio": "1:1",
+    "output_format": "jpg"
+   }
+  },
+  {
+   "name": "With Google Search",
+   "input": {
+    "prompt": "An illustration of the latest Mars rover exploring the Martian surface",
+    "aspect_ratio": "16:9",
+    "google_search": true
+   }
+  },
+  {
+   "name": "High Resolution Portrait",
+   "input": {
+    "prompt": "A professional studio portrait of a woman with dramatic side lighting, wearing elegant jewelry",
+    "aspect_ratio": "3:4",
+    "output_format": "jpg",
+    "resolution": "4K"
+   }
+  }
+ ]
+}

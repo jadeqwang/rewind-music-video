@@ -1,0 +1,96 @@
+{
+ "model_id": "bytedance/seedream-5-pro",
+ "name": "Seedream 5 Pro",
+ "task": "Text-to-Image",
+ "description": "Seedream 5 Pro is ByteDance's high-quality image generation and editing model with text prompts, up to 10 reference images, and 1K, 2K, or explicit pixel-size output controls.",
+ "pricing": {
+  "Per image": 0.045,
+  "Per input image": 0.03,
+  "Default (per second)": 0.045
+ },
+ "metadata": {
+  "Max Reference Images": "10",
+  "Output Sizes": "1K, 2K, custom WIDTHxHEIGHT",
+  "Reference Image Formats": "JPEG, PNG, WebP, BMP, TIFF, GIF, HEIC, HEIF"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string"
+    },
+    "image": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "minItems": 1,
+       "maxItems": 10,
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      }
+     ]
+    },
+    "size": {
+     "type": "string"
+    },
+    "watermark": {
+     "default": false,
+     "description": "Whether to add an AI-generated watermark to the output image",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "prompt",
+    "watermark"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "images": {
+     "minItems": 1,
+     "type": "array",
+     "items": {
+      "type": "string",
+      "format": "uri"
+     }
+    }
+   },
+   "required": [
+    "images"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Mechanical Watch",
+   "input": {
+    "prompt": "Premium studio product render of a transparent mechanical wristwatch suspended above matte black stone, visible gears, sapphire reflections, razor-sharp lighting, luxury advertising style"
+   }
+  },
+  {
+   "name": "Red Panda Bakery",
+   "input": {
+    "prompt": "A cozy children's book illustration of a red panda baker frosting moon-shaped cakes inside a tiny snowy mountain bakery, soft gouache texture, warm window light",
+    "size": "1536x864"
+   }
+  },
+  {
+   "name": "Claymation Reference",
+   "input": {
+    "image": "https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg",
+    "prompt": "Transform this reference into a handcrafted claymation diorama, rounded clay forms, visible fingerprints, miniature set lighting, playful stop-motion film look",
+    "size": "1K"
+   }
+  }
+ ]
+}

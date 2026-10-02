@@ -1,0 +1,245 @@
+{
+ "model_id": "runwayml/aleph-2",
+ "name": "RunwayML Aleph 2",
+ "task": "Text-to-Video",
+ "description": "RunwayML's video editing model. Edit one frame to update your whole video, make changes across multiple shots, and work with up to 30 seconds of video. Supports keyframe-guided editing for precise control over specific moments in the clip.",
+ "pricing": {
+  "Default (per second)": 0.336
+ },
+ "metadata": {
+  "Input Modalities": "Text, Image, Video",
+  "Max Input Duration": "30 seconds",
+  "Max Keyframes": "5",
+  "Operation": "Video-to-Video Editing"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 1000,
+     "description": "Text prompt describing the edit to apply to the input video"
+    },
+    "video_uri": {
+     "type": "string",
+     "description": "HTTPS URL, Runway URI, or data URI of the source video to edit (\u226430 seconds)"
+    },
+    "keyframes": {
+     "description": "Timed guidance images placed at specific points in the input video. Each entry has a uri and either seconds (absolute timestamp) or at (fractional position). Up to 5.",
+     "minItems": 1,
+     "maxItems": 5,
+     "type": "array",
+     "items": {
+      "anyOf": [
+       {
+        "type": "object",
+        "properties": {
+         "uri": {
+          "type": "string",
+          "description": "HTTPS URL, Runway URI, or data URI of the guidance image"
+         },
+         "seconds": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 30,
+          "description": "Absolute timestamp in seconds from the start of the input video"
+         }
+        },
+        "required": [
+         "uri",
+         "seconds"
+        ],
+        "additionalProperties": false
+       },
+       {
+        "type": "object",
+        "properties": {
+         "uri": {
+          "type": "string",
+          "description": "HTTPS URL, Runway URI, or data URI of the guidance image"
+         },
+         "at": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Position as a fraction [0.0, 1.0] of the input video duration"
+         }
+        },
+        "required": [
+         "uri",
+         "at"
+        ],
+        "additionalProperties": false
+       }
+      ]
+     }
+    },
+    "prompt_images": {
+     "description": "Image keyframes for guiding the edit at specific points in the output video. Up to 5.",
+     "minItems": 1,
+     "maxItems": 5,
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "uri": {
+        "type": "string",
+        "description": "HTTPS URL, Runway URI, or data URI of the keyframe image"
+       },
+       "position": {
+        "anyOf": [
+         {
+          "type": "string",
+          "enum": [
+           "first",
+           "last"
+          ]
+         },
+         {
+          "type": "object",
+          "properties": {
+           "type": {
+            "type": "string",
+            "const": "timestamp"
+           },
+           "timestampSeconds": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Absolute timestamp in seconds from the start of the output video"
+           }
+          },
+          "required": [
+           "type",
+           "timestampSeconds"
+          ],
+          "additionalProperties": false
+         },
+         {
+          "type": "object",
+          "properties": {
+           "type": {
+            "type": "string",
+            "const": "position"
+           },
+           "positionPercentage": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Position as a fraction [0.0, 1.0] of the total video duration"
+           }
+          },
+          "required": [
+           "type",
+           "positionPercentage"
+          ],
+          "additionalProperties": false
+         }
+        ],
+        "description": "Where in the output video this image applies: \"first\", \"last\", { type: \"timestamp\", timestampSeconds }, or { type: \"position\", positionPercentage }"
+       }
+      },
+      "required": [
+       "uri",
+       "position"
+      ],
+      "additionalProperties": false
+     }
+    },
+    "seed": {
+     "description": "Random seed for reproducible results",
+     "type": "integer",
+     "minimum": 0,
+     "maximum": 4294967295
+    },
+    "content_moderation": {
+     "description": "Settings that affect the behavior of the content moderation system",
+     "type": "object",
+     "properties": {
+      "public_figure_threshold": {
+       "description": "When set to \"low\", content moderation is less strict about recognizable public figures",
+       "type": "string",
+       "enum": [
+        "auto",
+        "low"
+       ]
+      }
+     },
+     "additionalProperties": false
+    },
+    "duration": {
+     "description": "Duration of the source video in seconds. Used for billing only \u2014 not sent to RunwayML. Provide this so the gateway can compute per-second video cost accurately.",
+     "type": "number",
+     "exclusiveMinimum": 0
+    }
+   },
+   "required": [
+    "prompt",
+    "video_uri"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "video": {
+     "type": "string",
+     "format": "uri",
+     "description": "URL to the edited video"
+    }
+   },
+   "required": [
+    "video"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Simple Video Edit",
+   "input": {
+    "prompt": "Transform the scene into a golden-hour sunset with warm lighting",
+    "video_uri": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/cinematic-scene.mp4"
+   }
+  },
+  {
+   "name": "Keyframe-Guided Edit",
+   "input": {
+    "prompt": "Edit the video to match the provided reference frame",
+    "video_uri": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/nature-close-up.mp4",
+    "prompt_images": [
+     {
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/8/85/Tour_Eiffel_Wikimedia_Commons_(cropped).jpg",
+      "position": "first"
+     }
+    ]
+   }
+  },
+  {
+   "name": "Timed Keyframe Edit",
+   "input": {
+    "prompt": "Change the background to a futuristic cityscape at night",
+    "video_uri": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/simple-text-to-video.mp4",
+    "keyframes": [
+     {
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/8/85/Tour_Eiffel_Wikimedia_Commons_(cropped).jpg",
+      "seconds": 2
+     }
+    ]
+   }
+  },
+  {
+   "name": "Content Moderation Override",
+   "input": {
+    "prompt": "Make the background a dramatic stormy sky",
+    "video_uri": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/cinematic-scene.mp4",
+    "content_moderation": {
+     "public_figure_threshold": "low"
+    }
+   }
+  }
+ ]
+}

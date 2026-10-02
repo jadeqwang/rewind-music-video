@@ -1,0 +1,151 @@
+{
+ "model_id": "recraft/recraftv4-1-utility-vector",
+ "name": "Recraft V4.1 Utility SVG",
+ "task": "Text-to-Image",
+ "description": "Generate production-ready SVG vector graphics from text prompts with a general-purpose model suited for a wide range of design and illustration tasks.",
+ "pricing": {
+  "Per image": 0.08
+ },
+ "metadata": {
+  "Output Format": "SVG",
+  "Resolution": "1024px"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string"
+    },
+    "size": {
+     "type": "string"
+    },
+    "style": {
+     "type": "string"
+    },
+    "substyle": {
+     "type": "string"
+    },
+    "controls": {
+     "type": "object",
+     "properties": {
+      "colors": {
+       "maxItems": 5,
+       "type": "array",
+       "items": {
+        "type": "object",
+        "properties": {
+         "rgb": {
+          "minItems": 3,
+          "maxItems": 3,
+          "type": "array",
+          "items": {
+           "type": "integer",
+           "minimum": 0,
+           "maximum": 255
+          }
+         }
+        },
+        "required": [
+         "rgb"
+        ],
+        "additionalProperties": false
+       }
+      },
+      "background_color": {
+       "type": "object",
+       "properties": {
+        "rgb": {
+         "minItems": 3,
+         "maxItems": 3,
+         "type": "array",
+         "items": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+         }
+        }
+       },
+       "required": [
+        "rgb"
+       ],
+       "additionalProperties": false
+      }
+     },
+     "additionalProperties": false
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "image": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "image"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Simple Icon",
+   "input": {
+    "prompt": "A simple flat icon of a calendar with a date marked"
+   }
+  },
+  {
+   "name": "App Icon",
+   "input": {
+    "prompt": "A clean app icon featuring a magnifying glass over a document",
+    "size": "1024x1024"
+   }
+  },
+  {
+   "name": "Illustration",
+   "input": {
+    "prompt": "A flat vector illustration of a team of people collaborating around a table with laptops",
+    "size": "1024x1024"
+   }
+  },
+  {
+   "name": "With Brand Colors",
+   "input": {
+    "prompt": "A simple shield icon representing protection and security",
+    "controls": {
+     "background_color": {
+      "rgb": [
+       245,
+       245,
+       245
+      ]
+     },
+     "colors": [
+      {
+       "rgb": [
+        34,
+        139,
+        87
+       ]
+      },
+      {
+       "rgb": [
+        255,
+        255,
+        255
+       ]
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,124 @@
+{
+ "model_id": "openai/gpt-image-1.5",
+ "name": "GPT Image 1.5",
+ "task": "Text-to-Image",
+ "description": "OpenAI's image generation model that creates and edits images from text prompts, supporting multiple quality levels and output sizes.",
+ "pricing": {
+  "Input tokens (per 1M)": 5,
+  "Input image tokens (per 1M)": 8,
+  "Cached input tokens (per 1M)": 1.25,
+  "Cached input image tokens (per 1M)": 2,
+  "Output image tokens (per 1M)": 32,
+  "Output tokens (per 1M)": 10
+ },
+ "metadata": {
+  "Image Editing": "Yes",
+  "Quality": "low, medium, high, auto",
+  "Sizes": "256x256 to 1792x1024",
+  "Styles": "vivid, natural"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string",
+     "description": "Text prompt describing the image to generate or edit"
+    },
+    "images": {
+     "description": "Input images for image editing, 1-16 entries. Each entry is base64-encoded (raw string or data:image/{png|jpeg|webp};base64,... URI).",
+     "maxItems": 16,
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "quality": {
+     "description": "Quality of the generated image",
+     "type": "string",
+     "enum": [
+      "low",
+      "medium",
+      "high",
+      "auto"
+     ]
+    },
+    "size": {
+     "description": "Size of the generated image",
+     "type": "string",
+     "enum": [
+      "256x256",
+      "512x512",
+      "1024x1024",
+      "1792x1024",
+      "1024x1792"
+     ]
+    },
+    "style": {
+     "description": "Style of the generated image",
+     "type": "string",
+     "enum": [
+      "vivid",
+      "natural"
+     ]
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "additionalProperties": {}
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "image": {
+     "type": "string",
+     "format": "uri",
+     "description": "URL to the generated image"
+    }
+   },
+   "required": [
+    "image"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Simple Generation",
+   "input": {
+    "prompt": "A golden retriever puppy playing in autumn leaves"
+   }
+  },
+  {
+   "name": "High Quality",
+   "input": {
+    "prompt": "A detailed botanical illustration of exotic tropical flowers with fine line work and watercolor textures",
+    "quality": "high"
+   }
+  },
+  {
+   "name": "Low Quality Draft",
+   "input": {
+    "prompt": "A quiet Japanese garden in morning mist with a stone lantern and koi pond",
+    "quality": "low"
+   }
+  },
+  {
+   "name": "Medium Quality",
+   "input": {
+    "prompt": "A neon-lit cyberpunk figure standing in the rain beneath a holographic billboard, cinematic lighting",
+    "quality": "medium"
+   }
+  },
+  {
+   "name": "Auto Quality",
+   "input": {
+    "prompt": "A panoramic view of the northern lights over a snowy mountain range, vivid greens and purples dancing across the sky",
+    "quality": "auto"
+   }
+  }
+ ]
+}

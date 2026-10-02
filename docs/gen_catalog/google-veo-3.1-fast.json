@@ -1,0 +1,135 @@
+{
+ "model_id": "google/veo-3.1-fast",
+ "name": "Veo 3.1 Fast",
+ "task": "Text-to-Video",
+ "description": "A faster version of Veo 3.1 optimized for lower latency while maintaining high-quality video and audio output.",
+ "pricing": {
+  "Default (per second)": 0.08,
+  "@720p (per second)": 0.08,
+  "@1080p (per second)": 0.1,
+  "@4k (per second)": 0.25,
+  "@720p w/ audio (per second)": 0.1,
+  "@1080p w/ audio (per second)": 0.12,
+  "@4k w/ audio (per second)": 0.3
+ },
+ "metadata": {
+  "Audio Generation": "Yes",
+  "Max Duration": "8 seconds",
+  "Resolutions": "720p, 1080p"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string",
+     "description": "Text prompt describing the video to generate"
+    },
+    "image_input": {
+     "description": "Base64-encoded reference image for i2v",
+     "type": "string"
+    },
+    "duration": {
+     "default": "6s",
+     "description": "Video duration",
+     "type": "string",
+     "enum": [
+      "4s",
+      "6s",
+      "8s"
+     ]
+    },
+    "aspect_ratio": {
+     "default": "16:9",
+     "description": "Video aspect ratio",
+     "type": "string",
+     "enum": [
+      "16:9",
+      "9:16",
+      "1:1"
+     ]
+    },
+    "resolution": {
+     "default": "720p",
+     "description": "Video resolution",
+     "type": "string",
+     "enum": [
+      "720p",
+      "1080p"
+     ]
+    },
+    "generate_audio": {
+     "default": true,
+     "description": "Whether to generate audio with the video",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "prompt",
+    "duration",
+    "aspect_ratio",
+    "resolution",
+    "generate_audio"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "video": {
+     "type": "string",
+     "format": "uri",
+     "description": "URL to the generated video"
+    }
+   },
+   "required": [
+    "video"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Quick Demo",
+   "input": {
+    "prompt": "A butterfly landing on a colorful flower in a garden",
+    "aspect_ratio": "16:9",
+    "duration": "6s",
+    "generate_audio": true,
+    "resolution": "720p"
+   }
+  },
+  {
+   "name": "Social Content",
+   "input": {
+    "prompt": "Aesthetic morning routine: sun rays through curtains, coffee being poured",
+    "aspect_ratio": "9:16",
+    "duration": "6s",
+    "generate_audio": true,
+    "resolution": "720p"
+   }
+  },
+  {
+   "name": "Motion Graphics",
+   "input": {
+    "prompt": "Glowing neon lines forming geometric patterns on a dark background",
+    "aspect_ratio": "16:9",
+    "duration": "4s",
+    "generate_audio": false,
+    "resolution": "720p"
+   }
+  },
+  {
+   "name": "Ambient Scene",
+   "input": {
+    "prompt": "Rain falling on a window with a blurred city skyline in the background at night",
+    "aspect_ratio": "16:9",
+    "duration": "8s",
+    "generate_audio": true,
+    "resolution": "720p"
+   }
+  }
+ ]
+}

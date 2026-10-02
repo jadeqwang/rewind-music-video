@@ -1,0 +1,190 @@
+{
+ "model_id": "pixverse/v5.6",
+ "name": "Pixverse v5.6",
+ "task": "Text-to-Video",
+ "description": "Pixverse v5.6 is a video generation model supporting text-to-video and image-to-video with audio generation, customizable aspect ratios, and up to 1080p output.",
+ "pricing": {
+  "Default (per second)": 0.08,
+  "5s @360p": 0.175,
+  "5s @360p w/ audio": 0.4,
+  "8s @360p": 0.35,
+  "8s @360p w/ audio": 0.575,
+  "10s @360p": 0.385,
+  "10s @360p w/ audio": 0.61,
+  "5s @540p": 0.175,
+  "5s @540p w/ audio": 0.45,
+  "8s @540p": 0.35,
+  "8s @540p w/ audio": 0.575,
+  "10s @540p": 0.385,
+  "10s @540p w/ audio": 0.61,
+  "5s @720p": 0.225,
+  "5s @720p w/ audio": 0.4,
+  "8s @720p": 0.45,
+  "8s @720p w/ audio": 0.675,
+  "10s @720p": 0.495,
+  "10s @720p w/ audio": 0.72,
+  "5s @1080p": 0.375,
+  "5s @1080p w/ audio": 0.75,
+  "8s @1080p": 0.75,
+  "8s @1080p w/ audio": 0.975
+ },
+ "metadata": {
+  "Aspect Ratios": "16:9, 4:3, 1:1, 3:4, 9:16, 2:3, 3:2, 21:9",
+  "Audio Generation": "Yes",
+  "Image-to-Video": "Yes",
+  "Max Duration": "10 seconds",
+  "Resolutions": "360p, 540p, 720p, 1080p"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string",
+     "maxLength": 2048,
+     "description": "Text prompt describing the video to generate"
+    },
+    "negative_prompt": {
+     "description": "Negative text prompt",
+     "type": "string",
+     "maxLength": 2048
+    },
+    "image_input": {
+     "description": "Base64-encoded reference image for image-to-video generation (data:image/...;base64,...). The image will be uploaded to Pixverse automatically.",
+     "type": "string"
+    },
+    "duration": {
+     "default": 5,
+     "description": "Video duration in seconds",
+     "anyOf": [
+      {
+       "type": "number",
+       "const": 5
+      },
+      {
+       "type": "number",
+       "const": 8
+      },
+      {
+       "type": "number",
+       "const": 10
+      }
+     ]
+    },
+    "aspect_ratio": {
+     "default": "16:9",
+     "description": "Video aspect ratio",
+     "type": "string",
+     "enum": [
+      "16:9",
+      "4:3",
+      "1:1",
+      "3:4",
+      "9:16",
+      "2:3",
+      "3:2",
+      "21:9"
+     ]
+    },
+    "quality": {
+     "default": "720p",
+     "description": "Video quality",
+     "type": "string",
+     "enum": [
+      "360p",
+      "540p",
+      "720p",
+      "1080p"
+     ]
+    },
+    "seed": {
+     "description": "Random seed for reproducibility",
+     "type": "integer",
+     "minimum": 0,
+     "maximum": 2147483647
+    },
+    "motion_mode": {
+     "description": "Motion mode (fast only available when duration=5; 1080p does not support fast)",
+     "type": "string",
+     "enum": [
+      "normal",
+      "fast"
+     ]
+    },
+    "generate_audio": {
+     "default": true,
+     "description": "Whether to generate audio with the video",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "prompt",
+    "duration",
+    "aspect_ratio",
+    "quality",
+    "generate_audio"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "video": {
+     "type": "string",
+     "format": "uri",
+     "description": "URL to the generated video"
+    }
+   },
+   "required": [
+    "video"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Simple Video",
+   "input": {
+    "prompt": "A golden retriever running through a field of sunflowers on a sunny day",
+    "aspect_ratio": "16:9",
+    "duration": 5,
+    "generate_audio": true,
+    "quality": "720p"
+   }
+  },
+  {
+   "name": "Cinematic Scene with Audio",
+   "input": {
+    "prompt": "A dramatic aerial shot flying over misty mountain peaks at sunrise, cinematic lighting with volumetric fog",
+    "aspect_ratio": "16:9",
+    "duration": 8,
+    "generate_audio": true,
+    "quality": "720p"
+   }
+  },
+  {
+   "name": "Portrait Video",
+   "input": {
+    "prompt": "A barista pouring latte art in a cozy coffee shop, close-up with shallow depth of field",
+    "aspect_ratio": "9:16",
+    "duration": 5,
+    "generate_audio": true,
+    "quality": "540p"
+   }
+  },
+  {
+   "name": "High Quality Video",
+   "input": {
+    "prompt": "Abstract ink drops spreading through water, vivid colors mixing in slow motion",
+    "aspect_ratio": "1:1",
+    "duration": 5,
+    "generate_audio": true,
+    "negative_prompt": "blurry, low quality",
+    "quality": "1080p",
+    "seed": 12345
+   }
+  }
+ ]
+}

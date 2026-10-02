@@ -1,0 +1,159 @@
+{
+ "model_id": "recraft/recraftv4",
+ "name": "Recraft V4",
+ "task": "Text-to-Image",
+ "description": "Recraft V4 generates art-directed images with strong composition, accurate text rendering, and design taste built in. Fast and cost-efficient at standard resolution.",
+ "pricing": {
+  "Per image": 0.04
+ },
+ "metadata": {
+  "Resolution": "1024px",
+  "Text Rendering": "Yes"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string"
+    },
+    "size": {
+     "type": "string"
+    },
+    "style": {
+     "type": "string"
+    },
+    "substyle": {
+     "type": "string"
+    },
+    "controls": {
+     "type": "object",
+     "properties": {
+      "colors": {
+       "maxItems": 5,
+       "type": "array",
+       "items": {
+        "type": "object",
+        "properties": {
+         "rgb": {
+          "minItems": 3,
+          "maxItems": 3,
+          "type": "array",
+          "items": {
+           "type": "integer",
+           "minimum": 0,
+           "maximum": 255
+          }
+         }
+        },
+        "required": [
+         "rgb"
+        ],
+        "additionalProperties": false
+       }
+      },
+      "background_color": {
+       "type": "object",
+       "properties": {
+        "rgb": {
+         "minItems": 3,
+         "maxItems": 3,
+         "type": "array",
+         "items": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+         }
+        }
+       },
+       "required": [
+        "rgb"
+       ],
+       "additionalProperties": false
+      }
+     },
+     "additionalProperties": false
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "image": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "image"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Simple Generation",
+   "input": {
+    "prompt": "A minimalist logo of a mountain range with a sun rising behind it"
+   }
+  },
+  {
+   "name": "Scene Composition",
+   "input": {
+    "prompt": "A cozy cabin in the woods surrounded by tall pine trees, smoke rising from the chimney"
+   }
+  },
+  {
+   "name": "Custom Size",
+   "input": {
+    "prompt": "A flat illustration of a workspace with a laptop, coffee cup, and potted plant",
+    "size": "1024x1024"
+   }
+  },
+  {
+   "name": "With Color Controls",
+   "input": {
+    "prompt": "An abstract geometric pattern suitable for a tech company brand identity",
+    "controls": {
+     "colors": [
+      {
+       "rgb": [
+        255,
+        107,
+        53
+       ]
+      },
+      {
+       "rgb": [
+        0,
+        43,
+        91
+       ]
+      }
+     ]
+    }
+   }
+  },
+  {
+   "name": "Background Color",
+   "input": {
+    "prompt": "A clean icon of a lightning bolt",
+    "controls": {
+     "background_color": {
+      "rgb": [
+       245,
+       245,
+       245
+      ]
+     }
+    },
+    "size": "1024x1024"
+   }
+  }
+ ]
+}

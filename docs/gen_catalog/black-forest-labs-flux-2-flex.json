@@ -1,0 +1,129 @@
+{
+ "model_id": "black-forest-labs/flux-2-flex",
+ "name": "FLUX.2 [flex]",
+ "task": "Text-to-Image",
+ "description": "FLUX.2 [flex] is Black Forest Labs' fine-grained control variant of FLUX.2 \u2014 exposes tunable inference steps, guidance, and prompt upsampling for typography-heavy and production workflows.",
+ "pricing": {
+  "First output megapixel": 0.05,
+  "Per additional output megapixel": 0.05,
+  "Per input megapixel": 0.05
+ },
+ "metadata": {
+  "Architecture": "Flow matching transformer",
+  "Guidance Range": "1.5 \u2013 10",
+  "Max Reference Images": "8",
+  "Steps Range": "1 \u2013 50"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string",
+     "description": "Text prompt for image generation or editing."
+    },
+    "seed": {
+     "description": "Optional seed for reproducible generation.",
+     "type": "integer",
+     "minimum": -9007199254740991,
+     "maximum": 9007199254740991
+    },
+    "width": {
+     "description": "Width of the generated image in pixels (minimum 64). Omit to let BFL pick.",
+     "type": "integer",
+     "minimum": 64,
+     "maximum": 9007199254740991
+    },
+    "height": {
+     "description": "Height of the generated image in pixels (minimum 64). Omit to let BFL pick.",
+     "type": "integer",
+     "minimum": 64,
+     "maximum": 9007199254740991
+    },
+    "safety_tolerance": {
+     "description": "Tolerance for input/output moderation. 0 is the strictest, 5 the most permissive. Defaults to 2.",
+     "type": "integer",
+     "minimum": 0,
+     "maximum": 5
+    },
+    "output_format": {
+     "description": "Output image format. Defaults to jpeg.",
+     "type": "string",
+     "enum": [
+      "jpeg",
+      "png",
+      "webp"
+     ]
+    },
+    "input_images": {
+     "description": "Up to 8 reference images for editing or multi-image composition. Each entry is an HTTPS URL or a data:image/...;base64,... URI.",
+     "maxItems": 8,
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "prompt_upsampling": {
+     "description": "Whether BFL should expand short prompts before generation. Defaults to true on flex.",
+     "type": "boolean"
+    },
+    "guidance": {
+     "description": "Classifier-free guidance scale (1.5\u201310). Higher values follow the prompt more strictly at the cost of realism.",
+     "type": "number",
+     "minimum": 1.5,
+     "maximum": 10
+    },
+    "steps": {
+     "description": "Number of denoising steps (1\u201350). Higher steps yield more detail at the cost of latency.",
+     "type": "integer",
+     "minimum": 1,
+     "maximum": 50
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "image": {
+     "type": "string",
+     "format": "uri",
+     "description": "URL to the generated image"
+    }
+   },
+   "required": [
+    "image"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Typography & Design",
+   "input": {
+    "prompt": "Samsung Galaxy S25 Ultra product advertisement, 'Ultra-strong titanium' headline, close-up of phone edge showing titanium frame, dark gradient background, clean minimalist tech aesthetic"
+   }
+  },
+  {
+   "name": "High Detail Generation",
+   "input": {
+    "prompt": "A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar",
+    "guidance": 7.5,
+    "steps": 50
+   }
+  },
+  {
+   "name": "Fast Draft",
+   "input": {
+    "prompt": "A simple line sketch of a mountain landscape",
+    "prompt_upsampling": false,
+    "steps": 10
+   }
+  }
+ ]
+}

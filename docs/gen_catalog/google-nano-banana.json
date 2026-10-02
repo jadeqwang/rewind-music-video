@@ -1,0 +1,121 @@
+{
+ "model_id": "google/nano-banana",
+ "name": "Nano Banana",
+ "task": "Text-to-Image",
+ "description": "Google's fast image generation model producing high-quality images from text prompts.",
+ "pricing": {
+  "Input tokens (per 1M)": 0.3,
+  "Output tokens (per 1M)": 30,
+  "Cached input tokens (per 1M)": 0.03,
+  "Cache creation tokens (per 1M)": 0.083333
+ },
+ "metadata": {
+  "Output Format": "JPEG"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string"
+    },
+    "image_input": {
+     "maxItems": 3,
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "aspect_ratio": {
+     "type": "string",
+     "enum": [
+      "1:1",
+      "3:2",
+      "2:3",
+      "3:4",
+      "4:3",
+      "4:5",
+      "5:4",
+      "9:16",
+      "16:9",
+      "21:9"
+     ]
+    },
+    "output_format": {
+     "type": "string",
+     "enum": [
+      "jpg",
+      "png",
+      "webp"
+     ]
+    },
+    "image_size": {
+     "type": "string",
+     "enum": [
+      "1K",
+      "2K",
+      "4K"
+     ]
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "image": {
+     "type": "string",
+     "format": "uri"
+    }
+   },
+   "required": [
+    "image"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Cozy Coffee Shop",
+   "input": {
+    "prompt": "A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window",
+    "aspect_ratio": "16:9"
+   }
+  },
+  {
+   "name": "Vintage Tokyo Poster",
+   "input": {
+    "prompt": "A vintage travel poster for Tokyo, Japan in the style of 1960s airline advertisements, with Mount Fuji in the background and cherry blossoms framing the scene",
+    "aspect_ratio": "9:16"
+   }
+  },
+  {
+   "name": "Dewdrops Macro",
+   "input": {
+    "prompt": "A photorealistic macro shot of dewdrops on a spider web at sunrise, with rainbow light refracting through each droplet",
+    "aspect_ratio": "1:1"
+   }
+  },
+  {
+   "name": "Pixel Art Marketplace",
+   "input": {
+    "prompt": "An isometric pixel art scene of a bustling medieval marketplace with merchants, knights, and a dragon perched on the town hall roof",
+    "aspect_ratio": "1:1"
+   }
+  },
+  {
+   "name": "High Resolution Landscape",
+   "input": {
+    "prompt": "A dramatic mountain landscape at golden hour with snow-capped peaks and a crystal clear alpine lake",
+    "aspect_ratio": "16:9",
+    "image_size": "4K",
+    "output_format": "png"
+   }
+  }
+ ]
+}

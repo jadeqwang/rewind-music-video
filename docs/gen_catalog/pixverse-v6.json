@@ -1,0 +1,156 @@
+{
+ "model_id": "pixverse/v6",
+ "name": "Pixverse v6",
+ "task": "Text-to-Video",
+ "description": "Pixverse v6 is the latest Pixverse video model with support for up to 15-second videos, customizable duration from 1 to 15 seconds, and audio generation.",
+ "pricing": {
+  "Default (per second)": 0.06,
+  "@360p (per second)": 0.025,
+  "@540p (per second)": 0.035,
+  "@720p (per second)": 0.045,
+  "@1080p (per second)": 0.09,
+  "@360p w/ audio (per second)": 0.035,
+  "@540p w/ audio (per second)": 0.045,
+  "@720p w/ audio (per second)": 0.06,
+  "@1080p w/ audio (per second)": 0.115
+ },
+ "metadata": {
+  "Aspect Ratios": "16:9, 4:3, 1:1, 3:4, 9:16, 2:3, 3:2, 21:9",
+  "Audio Generation": "Yes",
+  "Image-to-Video": "Yes",
+  "Max Duration": "15 seconds",
+  "Resolutions": "360p, 540p, 720p, 1080p"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string",
+     "maxLength": 2048,
+     "description": "Text prompt describing the video to generate"
+    },
+    "negative_prompt": {
+     "description": "Negative text prompt",
+     "type": "string",
+     "maxLength": 2048
+    },
+    "image_input": {
+     "description": "Base64-encoded reference image for image-to-video generation (data:image/...;base64,...). The image will be uploaded to Pixverse automatically.",
+     "type": "string"
+    },
+    "duration": {
+     "default": 5,
+     "description": "Video duration in seconds (1 to 15)",
+     "type": "integer",
+     "minimum": 1,
+     "maximum": 15
+    },
+    "aspect_ratio": {
+     "default": "16:9",
+     "description": "Video aspect ratio",
+     "type": "string",
+     "enum": [
+      "16:9",
+      "4:3",
+      "1:1",
+      "3:4",
+      "9:16",
+      "2:3",
+      "3:2",
+      "21:9"
+     ]
+    },
+    "quality": {
+     "default": "720p",
+     "description": "Video quality",
+     "type": "string",
+     "enum": [
+      "360p",
+      "540p",
+      "720p",
+      "1080p"
+     ]
+    },
+    "seed": {
+     "description": "Random seed for reproducibility",
+     "type": "integer",
+     "minimum": 0,
+     "maximum": 2147483647
+    },
+    "generate_audio": {
+     "default": true,
+     "description": "Whether to generate audio with the video",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "prompt",
+    "duration",
+    "aspect_ratio",
+    "quality",
+    "generate_audio"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "video": {
+     "type": "string",
+     "format": "uri",
+     "description": "URL to the generated video"
+    }
+   },
+   "required": [
+    "video"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Simple Video",
+   "input": {
+    "prompt": "A golden retriever running through a field of sunflowers on a sunny day",
+    "aspect_ratio": "16:9",
+    "duration": 5,
+    "generate_audio": true,
+    "quality": "720p"
+   }
+  },
+  {
+   "name": "Long Duration Video",
+   "input": {
+    "prompt": "A time-lapse of a bustling city street from dawn to dusk, showing the flow of people and vehicles",
+    "aspect_ratio": "16:9",
+    "duration": 15,
+    "generate_audio": true,
+    "quality": "720p"
+   }
+  },
+  {
+   "name": "Ultra-wide Cinematic",
+   "input": {
+    "prompt": "A dramatic aerial shot flying over misty mountain peaks at sunrise, cinematic lighting with volumetric fog",
+    "aspect_ratio": "21:9",
+    "duration": 10,
+    "generate_audio": true,
+    "quality": "720p"
+   }
+  },
+  {
+   "name": "Silent Video",
+   "input": {
+    "prompt": "Abstract ink drops spreading through water, vivid colors mixing in slow motion",
+    "aspect_ratio": "1:1",
+    "duration": 3,
+    "generate_audio": false,
+    "negative_prompt": "blurry, low quality",
+    "quality": "540p"
+   }
+  }
+ ]
+}

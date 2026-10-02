@@ -1,0 +1,100 @@
+{
+ "model_id": "pruna/p-image-edit",
+ "name": "P-Image-Edit",
+ "task": "Image-to-Image",
+ "description": "Pruna's P-Image-Edit edits and composes 1-5 reference images with text instructions. It supports complex compositions, style transfers, and targeted edits with flexible output aspect ratios.",
+ "pricing": {
+  "Per image": 0.01
+ },
+ "metadata": {
+  "Reference Images": "1-5",
+  "Output Formats": "jpg"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string",
+     "description": "Text instruction describing the desired edit or composition."
+    },
+    "images": {
+     "minItems": 1,
+     "maxItems": 5,
+     "type": "array",
+     "items": {
+      "type": "string"
+     },
+     "description": "Array of 1-5 reference images. Each entry is an HTTP(S) URL or a base64 data URI (data:image/...;base64,...)."
+    },
+    "turbo": {
+     "default": true,
+     "description": "Run faster with additional optimizations. For complicated tasks, it is recommended to turn this off.",
+     "type": "boolean"
+    },
+    "aspect_ratio": {
+     "default": "match_input_image",
+     "description": "Output aspect ratio.",
+     "type": "string",
+     "enum": [
+      "match_input_image",
+      "1:1",
+      "16:9",
+      "9:16",
+      "4:3",
+      "3:4",
+      "3:2",
+      "2:3"
+     ]
+    },
+    "seed": {
+     "description": "Random seed for reproducible generation.",
+     "type": "integer",
+     "minimum": -9007199254740991,
+     "maximum": 9007199254740991
+    },
+    "disable_safety_checker": {
+     "default": false,
+     "description": "Disable safety checker for generated images.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "prompt",
+    "images",
+    "turbo",
+    "aspect_ratio",
+    "disable_safety_checker"
+   ],
+   "additionalProperties": {}
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "image": {
+     "type": "string",
+     "format": "uri",
+     "description": "Presigned URL for the edited image."
+    }
+   },
+   "required": [
+    "image"
+   ],
+   "additionalProperties": {}
+  }
+ },
+ "examples": [
+  {
+   "name": "Watercolor Style",
+   "input": {
+    "prompt": "Transform the subject into a watercolor painting style with vibrant colors",
+    "images": [
+     "https://huggingface.co/spaces/yisol/IDM-VTON/resolve/main/example/human/00121_00.jpg"
+    ],
+    "aspect_ratio": "1:1"
+   }
+  }
+ ]
+}

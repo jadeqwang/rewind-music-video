@@ -1,0 +1,133 @@
+{
+ "model_id": "elevenlabs/eleven-multilingual-v2",
+ "name": "Eleven Multilingual v2",
+ "task": "Text-to-Speech",
+ "description": "ElevenLabs' multilingual text-to-speech model for generating natural speech across many languages with ElevenLabs voices.",
+ "pricing": {
+  "Per character": 0.0001,
+  "Default (per second)": 0.0001
+ },
+ "metadata": {
+  "Languages": "Multilingual speech generation",
+  "Output Formats": "MP3, WAV, PCM, Opus, u-law, A-law",
+  "Voices": "Supports ElevenLabs voice IDs"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "text": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 10000,
+     "description": "The text to convert into speech."
+    },
+    "voice_id": {
+     "type": "string",
+     "minLength": 1,
+     "description": "The ElevenLabs voice ID to use for generation."
+    },
+    "output_format": {
+     "type": "string",
+     "enum": [
+      "mp3_22050_32",
+      "mp3_24000_48",
+      "mp3_44100_128",
+      "mp3_44100_192",
+      "mp3_44100_32",
+      "mp3_44100_64",
+      "mp3_44100_96",
+      "opus_48000_128",
+      "opus_48000_192",
+      "opus_48000_32",
+      "opus_48000_64",
+      "opus_48000_96"
+     ]
+    },
+    "language_code": {
+     "description": "ISO 639-1 language code to enforce.",
+     "type": "string"
+    },
+    "voice_settings": {
+     "type": "object",
+     "properties": {
+      "stability": {
+       "type": "number",
+       "minimum": 0,
+       "maximum": 1
+      },
+      "similarity_boost": {
+       "type": "number",
+       "minimum": 0,
+       "maximum": 1
+      },
+      "style": {
+       "type": "number",
+       "minimum": 0,
+       "maximum": 1
+      },
+      "use_speaker_boost": {
+       "type": "boolean"
+      },
+      "speed": {
+       "type": "number",
+       "minimum": 0.7,
+       "maximum": 1.2
+      }
+     },
+     "additionalProperties": false
+    },
+    "seed": {
+     "type": "integer",
+     "minimum": 0,
+     "maximum": 4294967295
+    },
+    "previous_text": {
+     "type": "string"
+    },
+    "next_text": {
+     "type": "string"
+    },
+    "apply_text_normalization": {
+     "type": "string",
+     "enum": [
+      "auto",
+      "on",
+      "off"
+     ]
+    }
+   },
+   "required": [
+    "text",
+    "voice_id"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "audio": {
+     "type": "string",
+     "description": "URL to the generated audio file."
+    }
+   },
+   "required": [
+    "audio"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "French AI Gateway Speech",
+   "input": {
+    "text": "Bonjour et bienvenue dans Cloudflare AI Gateway. Suivez vos requetes, vos couts et les performances de vos modeles depuis une seule interface.",
+    "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+    "language_code": "fr",
+    "output_format": "mp3_44100_128"
+   }
+  }
+ ]
+}

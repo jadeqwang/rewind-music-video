@@ -1,0 +1,133 @@
+{
+ "model_id": "elevenlabs/eleven-turbo-v2-5",
+ "name": "Eleven Turbo v2.5",
+ "task": "Text-to-Speech",
+ "description": "ElevenLabs' Turbo v2.5 text-to-speech model balancing high-quality voice generation with low latency across 32 languages.",
+ "pricing": {
+  "Per character": 5e-05,
+  "Default (per second)": 5e-05
+ },
+ "metadata": {
+  "Languages": "32",
+  "Latency": "Low (~250-300ms)",
+  "Output Formats": "MP3, WAV, PCM, Opus, u-law, A-law",
+  "Voices": "Supports ElevenLabs voice IDs"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "text": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 10000,
+     "description": "The text to convert into speech."
+    },
+    "voice_id": {
+     "type": "string",
+     "minLength": 1,
+     "description": "The ElevenLabs voice ID to use for generation."
+    },
+    "output_format": {
+     "type": "string",
+     "enum": [
+      "mp3_22050_32",
+      "mp3_24000_48",
+      "mp3_44100_128",
+      "mp3_44100_192",
+      "mp3_44100_32",
+      "mp3_44100_64",
+      "mp3_44100_96",
+      "opus_48000_128",
+      "opus_48000_192",
+      "opus_48000_32",
+      "opus_48000_64",
+      "opus_48000_96"
+     ]
+    },
+    "language_code": {
+     "description": "ISO 639-1 language code to enforce.",
+     "type": "string"
+    },
+    "voice_settings": {
+     "type": "object",
+     "properties": {
+      "stability": {
+       "type": "number",
+       "minimum": 0,
+       "maximum": 1
+      },
+      "similarity_boost": {
+       "type": "number",
+       "minimum": 0,
+       "maximum": 1
+      },
+      "style": {
+       "type": "number",
+       "minimum": 0,
+       "maximum": 1
+      },
+      "use_speaker_boost": {
+       "type": "boolean"
+      },
+      "speed": {
+       "type": "number",
+       "minimum": 0.7,
+       "maximum": 1.2
+      }
+     },
+     "additionalProperties": false
+    },
+    "seed": {
+     "type": "integer",
+     "minimum": 0,
+     "maximum": 4294967295
+    },
+    "previous_text": {
+     "type": "string"
+    },
+    "next_text": {
+     "type": "string"
+    },
+    "apply_text_normalization": {
+     "type": "string",
+     "enum": [
+      "auto",
+      "on",
+      "off"
+     ]
+    }
+   },
+   "required": [
+    "text",
+    "voice_id"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "audio": {
+     "type": "string",
+     "description": "URL to the generated audio file."
+    }
+   },
+   "required": [
+    "audio"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "AI Gateway Notification",
+   "input": {
+    "text": "Your Cloudflare AI Gateway usage report is ready. Review provider latency, token counts, cache status, and request costs in the dashboard.",
+    "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+    "output_format": "mp3_44100_128"
+   }
+  }
+ ]
+}

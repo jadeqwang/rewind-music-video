@@ -1,0 +1,128 @@
+{
+ "model_id": "openai/gpt-image-2.5-flare",
+ "name": "GPT Image 2.5 Flare",
+ "task": "Text-to-Image",
+ "description": "OpenAI's fastest high-quality everyday image generation model. It accepts text and image inputs and produces images with low, medium, high, xhigh, max, and auto quality settings.",
+ "pricing": {
+  "Cached input image tokens (per 1M)": 3,
+  "Cached input tokens (per 1M)": 1.25,
+  "Input image tokens (per 1M)": 8,
+  "Input tokens (per 1M)": 5,
+  "Output image tokens (per 1M)": 30
+ },
+ "metadata": {
+  "Image Editing": "Yes",
+  "Output Formats": "png, webp, jpeg",
+  "Quality": "low, medium, high, xhigh, max, auto",
+  "Sizes": "1024x1024, 1024x1536, 1536x1024, auto"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string",
+     "description": "Text prompt describing the image to generate or edit"
+    },
+    "images": {
+     "description": "Input images for image editing, 1-16 entries. Each entry is base64-encoded (raw string or data:image/{png|jpeg|webp};base64,... URI).",
+     "maxItems": 16,
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "quality": {
+     "description": "Quality of the generated image",
+     "type": "string",
+     "enum": [
+      "low",
+      "medium",
+      "high",
+      "xhigh",
+      "max",
+      "auto"
+     ]
+    },
+    "size": {
+     "description": "Size of the generated image",
+     "type": "string",
+     "enum": [
+      "1024x1024",
+      "1024x1536",
+      "1536x1024",
+      "auto"
+     ]
+    },
+    "background": {
+     "description": "Background transparency setting",
+     "type": "string",
+     "enum": [
+      "transparent",
+      "opaque",
+      "auto"
+     ]
+    },
+    "output_format": {
+     "description": "Output format for the generated image",
+     "type": "string",
+     "enum": [
+      "png",
+      "webp",
+      "jpeg"
+     ]
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "additionalProperties": {}
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "image": {
+     "type": "string",
+     "format": "uri",
+     "description": "URL to the generated image"
+    }
+   },
+   "required": [
+    "image"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Commercial Product Scene",
+   "input": {
+    "prompt": "A premium studio product photograph of a translucent orange mechanical keyboard on a cobalt blue acrylic pedestal, a few keys glowing amber, crisp reflections, bold geometric shadows, clean commercial art direction, no logos or readable words",
+    "quality": "high",
+    "size": "1024x1024",
+    "output_format": "jpeg"
+   }
+  },
+  {
+   "name": "Environmental Concept Frame",
+   "input": {
+    "prompt": "A wide establishing shot of a hidden mountain library carved into basalt cliffs, tiny figures crossing rope bridges, waterfalls disappearing into mist, late afternoon sun, grounded fantasy concept art with realistic scale",
+    "quality": "xhigh",
+    "size": "1536x1024"
+   }
+  },
+  {
+   "name": "Poster Reference Edit",
+   "input": {
+    "prompt": "Reimagine the reference as a vibrant risograph poster for a fictional night market. Keep the central market stall silhouette and hanging lantern arrangement, add layered coral, teal, and navy ink textures, imperfect registration, and a lively crowd rendered as abstract shapes",
+    "images": [
+     "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAnklEQVR42u2XQRLAIAgD8/839i/26qFCACm0ozPe1KwcQsAoXvgcAABxpwFowl4QWITHxW0LCBhxVngF4gKIirMQyBRnIJAtrkE8AuwWnyFEgKzfS1UA+3sWTju3BGAu7gKYIfBW+Q/AAQgBeMCkt1wVsLZjcwUYG2Z9wGLHZitWk1DEisubUYt2XB5IWkSyFqG0RSxvMZi0Gc1+Ox3fm00ZJ5mGVtkAAAAASUVORK5CYII="
+    ],
+    "quality": "medium",
+    "output_format": "png"
+   }
+  }
+ ]
+}

@@ -1,0 +1,151 @@
+{
+ "model_id": "recraft/recraftv4-vector",
+ "name": "Recraft V4 SVG",
+ "task": "Text-to-Image",
+ "description": "Generate production-ready SVG vector graphics from text prompts with clean geometry, structured layers, and editable paths.",
+ "pricing": {
+  "Per image": 0.08
+ },
+ "metadata": {
+  "Output Format": "SVG",
+  "Resolution": "1024px"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string"
+    },
+    "size": {
+     "type": "string"
+    },
+    "style": {
+     "type": "string"
+    },
+    "substyle": {
+     "type": "string"
+    },
+    "controls": {
+     "type": "object",
+     "properties": {
+      "colors": {
+       "maxItems": 5,
+       "type": "array",
+       "items": {
+        "type": "object",
+        "properties": {
+         "rgb": {
+          "minItems": 3,
+          "maxItems": 3,
+          "type": "array",
+          "items": {
+           "type": "integer",
+           "minimum": 0,
+           "maximum": 255
+          }
+         }
+        },
+        "required": [
+         "rgb"
+        ],
+        "additionalProperties": false
+       }
+      },
+      "background_color": {
+       "type": "object",
+       "properties": {
+        "rgb": {
+         "minItems": 3,
+         "maxItems": 3,
+         "type": "array",
+         "items": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+         }
+        }
+       },
+       "required": [
+        "rgb"
+       ],
+       "additionalProperties": false
+      }
+     },
+     "additionalProperties": false
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "image": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "image"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Simple Icon",
+   "input": {
+    "prompt": "A simple flat icon of a coffee cup with steam rising"
+   }
+  },
+  {
+   "name": "App Icon",
+   "input": {
+    "prompt": "A colorful gradient app icon featuring a chat bubble with a sparkle effect",
+    "size": "1024x1024"
+   }
+  },
+  {
+   "name": "Illustration",
+   "input": {
+    "prompt": "A flat vector illustration of a person working at a desk with a computer, plants, and a window showing a city view",
+    "size": "1024x1024"
+   }
+  },
+  {
+   "name": "With Brand Colors",
+   "input": {
+    "prompt": "A badge or seal design with a star in the center, suitable for a certification mark",
+    "controls": {
+     "background_color": {
+      "rgb": [
+       255,
+       255,
+       255
+      ]
+     },
+     "colors": [
+      {
+       "rgb": [
+        0,
+        119,
+        182
+       ]
+      },
+      {
+       "rgb": [
+        255,
+        209,
+        102
+       ]
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

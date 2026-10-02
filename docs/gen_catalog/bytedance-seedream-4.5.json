@@ -1,0 +1,136 @@
+{
+ "model_id": "bytedance/seedream-4.5",
+ "name": "Seedream 4.5",
+ "task": "Text-to-Image",
+ "description": "Seedream 4.5 builds on 4.0 with multi-reference image support, batch generation, and sequential image generation.",
+ "pricing": {
+  "Per image": 0.04
+ },
+ "metadata": {
+  "Max Images": "15",
+  "Multi-Reference": "Yes",
+  "Sequential Generation": "Yes"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string"
+    },
+    "image_input": {
+     "type": "array",
+     "items": {
+      "type": "string",
+      "format": "uri"
+     }
+    },
+    "size": {
+     "type": "string",
+     "enum": [
+      "2K",
+      "4K"
+     ]
+    },
+    "aspect_ratio": {
+     "type": "string",
+     "enum": [
+      "match_input_image",
+      "1:1",
+      "4:3",
+      "3:4",
+      "16:9",
+      "9:16",
+      "3:2",
+      "2:3",
+      "21:9"
+     ]
+    },
+    "sequential_image_generation": {
+     "type": "string",
+     "enum": [
+      "disabled",
+      "auto"
+     ]
+    },
+    "max_images": {
+     "type": "integer",
+     "minimum": 1,
+     "maximum": 15
+    },
+    "disable_safety_checker": {
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "images": {
+     "minItems": 1,
+     "type": "array",
+     "items": {
+      "type": "string",
+      "format": "uri"
+     }
+    }
+   },
+   "required": [
+    "images"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Simple Generation",
+   "input": {
+    "prompt": "A cozy reading nook with floor-to-ceiling bookshelves and a comfortable armchair"
+   }
+  },
+  {
+   "name": "High Resolution",
+   "input": {
+    "prompt": "A hyperrealistic still life painting of fresh fruit on an antique wooden table with dramatic chiaroscuro lighting",
+    "aspect_ratio": "4:3",
+    "size": "4K"
+   }
+  },
+  {
+   "name": "Image-to-Image",
+   "input": {
+    "prompt": "Transform this scene into a winter wonderland with snow covering everything",
+    "aspect_ratio": "match_input_image",
+    "image_input": [
+     "https://replicate.delivery/xezq/0lxxNQSg3NabCZrDiQVAPGVmjP1Q2dd7TgYCOTfI9LpyZaMLA/tmp89gopylq.jpg"
+    ]
+   }
+  },
+  {
+   "name": "Sequential Generation",
+   "input": {
+    "prompt": "A character design sheet for a fantasy warrior: front view, side view, and back view",
+    "aspect_ratio": "16:9",
+    "max_images": 3,
+    "sequential_image_generation": "auto"
+   }
+  },
+  {
+   "name": "Multi-Image Edit",
+   "input": {
+    "prompt": "Combine the style of the first image with the subject from the second image",
+    "image_input": [
+     "https://replicate.delivery/xezq/TRYcLgNMrBpPJVq09ICKXWe4Z8d6olzpK5vtQPOB8O23ZaMLA/tmpaecga26m.jpg",
+     "https://replicate.delivery/xezq/1SbAc0aXYXbVD9doyrdCW78hYufVefMsaJXBrETN7Lu2npxsA/tmphvkx7emy.jpg"
+    ],
+    "size": "2K"
+   }
+  }
+ ]
+}

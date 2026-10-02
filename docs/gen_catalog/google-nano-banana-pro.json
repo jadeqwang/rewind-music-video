@@ -1,0 +1,114 @@
+{
+ "model_id": "google/nano-banana-pro",
+ "name": "Nano Banana Pro",
+ "task": "Text-to-Image",
+ "description": "Google's higher-quality image generation model with improved detail and prompt adherence.",
+ "pricing": {
+  "Input tokens (per 1M)": 2,
+  "Output tokens (per 1M)": 120
+ },
+ "metadata": {
+  "Output Format": "JPEG"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string"
+    },
+    "image_input": {
+     "maxItems": 3,
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "aspect_ratio": {
+     "type": "string",
+     "enum": [
+      "1:1",
+      "3:2",
+      "2:3",
+      "3:4",
+      "4:3",
+      "4:5",
+      "5:4",
+      "9:16",
+      "16:9",
+      "21:9"
+     ]
+    },
+    "output_format": {
+     "type": "string",
+     "enum": [
+      "jpg",
+      "png",
+      "webp"
+     ]
+    },
+    "image_size": {
+     "type": "string",
+     "enum": [
+      "1K",
+      "2K",
+      "4K"
+     ]
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "image": {
+     "type": "string",
+     "format": "uri"
+    }
+   },
+   "required": [
+    "image"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Product Photography",
+   "input": {
+    "prompt": "A sleek modern wireless headphone on a minimalist white marble surface with soft studio lighting and subtle shadows",
+    "aspect_ratio": "1:1",
+    "output_format": "png"
+   }
+  },
+  {
+   "name": "Fantasy Illustration",
+   "input": {
+    "prompt": "An epic fantasy illustration of a wizard casting a spell in an ancient library, magical runes floating in the air, dust motes catching golden light streaming through stained glass windows",
+    "aspect_ratio": "16:9",
+    "image_size": "2K"
+   }
+  },
+  {
+   "name": "Architectural Visualization",
+   "input": {
+    "prompt": "A photorealistic architectural visualization of a modern glass house perched on a cliff overlooking the ocean at sunset",
+    "aspect_ratio": "16:9",
+    "image_size": "4K",
+    "output_format": "jpg"
+   }
+  },
+  {
+   "name": "Character Design",
+   "input": {
+    "prompt": "A detailed character design sheet for a steampunk inventor, showing front view, side view, and detail callouts for mechanical arm and goggles",
+    "aspect_ratio": "3:2"
+   }
+  }
+ ]
+}

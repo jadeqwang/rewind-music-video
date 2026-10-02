@@ -1,0 +1,184 @@
+{
+ "model_id": "xai/grok-imagine-image-quality",
+ "name": "Grok Imagine Image Quality",
+ "task": "Text-to-Image",
+ "description": "xAI's higher-fidelity text-to-image model optimized for sharper details, more accurate compositions, and stronger text rendering. Supports image editing via reference images and masks. Trades speed for quality compared to grok-imagine-image. Default output at 2k resolution.",
+ "pricing": {
+  "Per image": 0.05,
+  "Per input image": 0.01
+ },
+ "metadata": {
+  "Aspect Ratios": "1:1, 3:4, 4:3, 9:16, 16:9, 2:3, 3:2, 1:2, 2:1, auto (and more)",
+  "Max Images per Request": "10",
+  "Resolutions": "1k, 2k",
+  "Text Rendering": "Yes"
+ },
+ "schema": {
+  "input": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "prompt": {
+     "type": "string"
+    },
+    "n": {
+     "type": "integer",
+     "minimum": 1,
+     "maximum": 10
+    },
+    "aspect_ratio": {
+     "type": "string",
+     "enum": [
+      "1:1",
+      "3:4",
+      "4:3",
+      "9:16",
+      "16:9",
+      "2:3",
+      "3:2",
+      "9:19.5",
+      "19.5:9",
+      "9:20",
+      "20:9",
+      "1:2",
+      "2:1",
+      "auto"
+     ]
+    },
+    "quality": {
+     "type": "string",
+     "enum": [
+      "low",
+      "medium",
+      "high"
+     ]
+    },
+    "resolution": {
+     "type": "string",
+     "enum": [
+      "1k",
+      "2k"
+     ]
+    },
+    "response_format": {
+     "type": "string",
+     "enum": [
+      "url",
+      "b64_json"
+     ]
+    },
+    "user": {
+     "type": "string"
+    },
+    "image": {
+     "type": "object",
+     "properties": {
+      "url": {
+       "type": "string"
+      },
+      "type": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "url"
+     ],
+     "additionalProperties": false
+    },
+    "images": {
+     "maxItems": 10,
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "url": {
+        "type": "string"
+       },
+       "type": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "url"
+      ],
+      "additionalProperties": false
+     }
+    },
+    "mask": {
+     "type": "object",
+     "properties": {
+      "url": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "url"
+     ],
+     "additionalProperties": false
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "additionalProperties": false
+  },
+  "output": {
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "type": "object",
+   "properties": {
+    "image": {
+     "type": "string",
+     "description": "Generated image. Either a base64 data URI (`data:image/png;base64,...`) or an `https://` URL, depending on the upstream `response_format` (defaults to base64)."
+    }
+   },
+   "required": [
+    "image"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "examples": [
+  {
+   "name": "Simple Generation",
+   "input": {
+    "prompt": "A golden retriever puppy playing in autumn leaves"
+   }
+  },
+  {
+   "name": "High Quality Portrait",
+   "input": {
+    "prompt": "A detailed botanical illustration of exotic tropical flowers with fine line work and watercolor textures",
+    "aspect_ratio": "3:4",
+    "quality": "high",
+    "resolution": "2k"
+   }
+  },
+  {
+   "name": "Cinematic Widescreen",
+   "input": {
+    "prompt": "A neon-lit cyberpunk figure standing in the rain beneath a holographic billboard, cinematic lighting",
+    "aspect_ratio": "16:9",
+    "quality": "high",
+    "resolution": "2k"
+   }
+  },
+  {
+   "name": "Medium Quality Landscape",
+   "input": {
+    "prompt": "A panoramic view of the northern lights over a snowy mountain range, vivid greens and purples dancing across the sky",
+    "aspect_ratio": "16:9",
+    "quality": "medium",
+    "resolution": "1k"
+   }
+  },
+  {
+   "name": "Square Low Quality Draft",
+   "input": {
+    "prompt": "A quiet Japanese garden in morning mist with a stone lantern and koi pond",
+    "aspect_ratio": "1:1",
+    "quality": "low",
+    "resolution": "1k"
+   }
+  }
+ ]
+}
