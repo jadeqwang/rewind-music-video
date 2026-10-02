@@ -2399,7 +2399,7 @@
  "lines": [
   {
    "text": "The night before my dissertation defense,",
-   "start": 13.14,
+   "start": 13.55,
    "end": 19.06
   },
   {
@@ -2439,7 +2439,7 @@
   },
   {
    "text": "And now I'm back on the road",
-   "start": 71.54,
+   "start": 73.55,
    "end": 79.08
   },
   {
@@ -2494,17 +2494,17 @@
   },
   {
    "text": "Never stop.",
-   "start": 170.6,
-   "end": 171.28
+   "start": 169.77,
+   "end": 171.26
   }
  ],
  "words": [
   {
    "w": "The",
-   "start": 13.14,
-   "end": 14.24,
+   "start": 13.55,
+   "end": 14.2,
    "line_idx": 0,
-   "voc_db": -19.4
+   "voc_db": -24.1
   },
   {
    "w": "night",
@@ -2851,14 +2851,14 @@
   },
   {
    "w": "And",
-   "start": 71.54,
-   "end": 72.62,
+   "start": 73.55,
+   "end": 73.76,
    "line_idx": 8,
-   "voc_db": -18.7
+   "voc_db": -30.0
   },
   {
    "w": "now",
-   "start": 73.54,
+   "start": 73.77,
    "end": 74.34,
    "line_idx": 8,
    "voc_db": -21.0
@@ -3313,15 +3313,15 @@
   },
   {
    "w": "Never",
-   "start": 170.6,
-   "end": 170.82,
+   "start": 169.77,
+   "end": 170.6,
    "line_idx": 19,
-   "voc_db": -25.6
+   "voc_db": -26.3
   },
   {
    "w": "stop",
-   "start": 170.82,
-   "end": 171.28,
+   "start": 170.62,
+   "end": 171.26,
    "line_idx": 19,
    "voc_db": -25.1
   }
@@ -3475,8 +3475,8 @@
   },
   {
    "start": 12.67,
-   "end": 13.09,
-   "peak_db": -36.4,
+   "end": 13.5,
+   "peak_db": -35.2,
    "heard": ""
   },
   {
@@ -3541,8 +3541,8 @@
   },
   {
    "start": 60.29,
-   "end": 71.49,
-   "peak_db": -20.2,
+   "end": 72.46,
+   "peak_db": -18.7,
    "heard": ""
   },
   {
@@ -3637,7 +3637,7 @@
   },
   {
    "start": 163.51,
-   "end": 170.41,
+   "end": 169.72,
    "peak_db": -22.0,
    "heard": ""
   },

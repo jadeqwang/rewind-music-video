@@ -27,7 +27,7 @@ export function draw(ctx, lt, t, shot, { T, roto }) {
   sodiumWash(g, sw, 0.07);
   // Jade
   const mouth = clamp((T.e('vocal', t) - 0.18) * 1.6);
-  roto.jade(g, p.roto, lt + (p.rotoOffset || 0), { boil: ctx.seed, mouth, light: sw });
+  roto.jade(g, p.jade ?? [].concat(p.roto)[0], lt + (p.rotoOffset || 0), { boil: ctx.seed, mouth, light: sw });
   // type: the page
   const ws = words(T, p);
   const fns = (p.footnotes || []).map(f => ({ ...f, at: f.at ?? (ws.find(w => w.key === f.word)?.start ?? 0) }));
