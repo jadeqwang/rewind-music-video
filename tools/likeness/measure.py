@@ -125,9 +125,16 @@ def face_cells(rgb, faces):
     return np.argmin(dist, 0)
 
 
-def measure_multi(src):
-    """Measure every face in a sheet: each face is measured on its own Voronoi cell (other cells greyed)."""
+def measure_multi(src, ntiles=None):
+    """Measure every face in a sheet: each face is measured on its own Voronoi cell (other cells greyed).
+    ntiles=N: full-body turnaround with N figures -> measure upscaled head tiles instead."""
     rgb = load_rgb(src)
+    if ntiles:
+        res = []
+        for x0, x1, y1, t in tiles(rgb, ntiles):
+            m = measure(t)
+            res.append(dict(m=m, cell=[x0, 0, x1, y1]))
+        return res
     faces = all_faces(rgb)
     if len(faces) <= 1:
         m = measure(rgb)
@@ -140,6 +147,17 @@ def measure_multi(src):
         sub = np.ascontiguousarray(cell[ys.min():ys.max() + 1, xs.min():xs.max() + 1])
         m = measure(sub)
         out.append(dict(m=m, box=[float(v) for v in f["box"]], cell=[int(xs.min()), int(ys.min()), int(xs.max()), int(ys.max())]))
+    return out
+
+
+def tiles(rgb, n, top=0.32, up=3.0):
+    """Head tiles for full-body turnarounds: n equal columns, top fraction, upscaled (MediaPipe needs
+    faces >~100 px). Returns list of (x0, x1, y1, upscaled_rgb)."""
+    h, w = rgb.shape[:2]; out = []
+    for i in range(n):
+        x0, x1, y1 = int(i * w / n), int((i + 1) * w / n), int(h * top)
+        t = cv2.resize(rgb[:y1, x0:x1], None, fx=up, fy=up, interpolation=cv2.INTER_CUBIC)
+        out.append((x0, x1, y1, t))
     return out
 
 
@@ -473,6 +491,7 @@ def main():
     ap.add_argument("--json"); ap.add_argument("--debug"); ap.add_argument("--gate", action="store_true")
     ap.add_argument("--video"); ap.add_argument("--every", type=int, default=12)
     ap.add_argument("--multi", action="store_true", help="measure every face (character sheets)")
+    ap.add_argument("--tiles", type=int, help="with --multi: N full-body figures in columns (turnaround)")
     a = ap.parse_args()
     items = [(p, p) for p in a.imgs]
     if a.video:
@@ -489,7 +508,7 @@ def main():
         dbg = os.path.join(a.debug, os.path.basename(str(name)).replace("#", "_") + ".dbg.jpg") if a.debug else None
         if dbg: os.makedirs(a.debug, exist_ok=True)
         if a.multi:
-            ms = measure_multi(src)
+            ms = measure_multi(src, a.tiles)
             for j, e in enumerate(ms):
                 if e["m"] and a.gate:
                     e["m"]["gate_ok"], e["m"]["gate_dev"], e["m"]["brow_check"] = gate(e["m"])

@@ -43,3 +43,7 @@ The user reports most model attempts "uglify" her: shrunken eyes, invented age s
 Prefer her REAL PHOTOS as the base: choose shot angles that match an existing photo's camera, composite her (real face
 pasted back, pixel-exact) into the set plate, relight with simple grading, and use that as Seedance's first frame,
 with the real photos as reference_images. Generated character sheets are backup for wides/full-body only.
+
+## Approval state (2026-10-02 night)
+User: "yes, generate the shots but don't animate them all just yet." → all Jade first-frame stills OK; max 2 validation
+animations (J1, J6). Everything else waits for morning review.

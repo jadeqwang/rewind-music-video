@@ -40,29 +40,19 @@ def process(frames, d, rect=None, src=''):
         li = np.zeros((H, W, 4), np.uint8); li[..., :3] = im; li[..., 3] = (a * 255).astype(np.uint8)
         save(d, 'lights', i, li)
         if rect:
-            sm = cv2.resize(im, (640, 360)); x0, y0, x1, y1 = [int(c * s) for c, s in zip(rect, (640, 360, 640, 360))]
-            mask = np.full((360, 640), cv2.GC_BGD, np.uint8)
-            if prev is None:
-                mask[y0:y1, x0:x1] = cv2.GC_PR_FGD
-                dark = cv2.cvtColor(sm, cv2.COLOR_BGR2GRAY) < 40
-                mask[y0:y1, x0:x1][dark[y0:y1, x0:x1]] = cv2.GC_PR_FGD
-            else:
-                mask[y0:y1, x0:x1] = cv2.GC_PR_BGD
-                er = cv2.erode(prev, np.ones((7, 7), np.uint8)); di = cv2.dilate(prev, np.ones((9, 9), np.uint8))
-                mask[(di > 0)] = cv2.GC_PR_FGD; mask[(er > 0)] = cv2.GC_FGD
-                mask[:, :x0] = cv2.GC_BGD; mask[:, x1:] = cv2.GC_BGD; mask[:y0] = cv2.GC_BGD
-            bg = np.zeros((1, 65)); fg = np.zeros((1, 65))
-            try: cv2.grabCut(sm, mask, None, bg, fg, 3, cv2.GC_INIT_WITH_MASK)
-            except cv2.error: pass
-            m = np.where((mask == 1) | (mask == 3), 255, 0).astype(np.uint8)
-            m = cv2.morphologyEx(m, cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
+            # interim matte: dark silhouettes against fog/light (night plates). Pixels darker than a local-contrast
+            # threshold inside rect; the dark ground merges in, which reads as figures standing on black.
+            x0, y0, x1, y1 = [int(c * s_) for c, s_ in zip(rect, (W, H, W, H))]
+            g = cv2.GaussianBlur(cv2.cvtColor(im, cv2.COLOR_BGR2GRAY), (0, 0), 2.0).astype(np.float32)
+            bgl = cv2.GaussianBlur(g, (0, 0), 40)
+            m = ((g < np.maximum(18, bgl * 0.55)) * 255).astype(np.uint8)
+            m[:, :x0] = 0; m[:, x1:] = 0; m[:y0] = 0; m[y1:] = 0
+            m = cv2.morphologyEx(m, cv2.MORPH_OPEN, np.ones((5, 5), np.uint8)); m = cv2.morphologyEx(m, cv2.MORPH_CLOSE, np.ones((9, 9), np.uint8))
             n, labs, st, _ = cv2.connectedComponentsWithStats(m)
             mm = np.zeros_like(m)
             for k in range(1, n):
-                if st[k, 4] > 300: mm[labs == k] = 255
-            prev = mm
-            big = cv2.GaussianBlur(cv2.resize(mm, (W, H), interpolation=cv2.INTER_LINEAR), (0, 0), 0.8)
-            save(d, 'matte', i, white(big.astype(np.float32) / 255))
+                if st[k, 4] > 2500: mm[labs == k] = 255
+            save(d, 'matte', i, white(cv2.GaussianBlur(mm, (0, 0), 0.8).astype(np.float32) / 255))
     meta = dict(fps=FPS, frames=len(frames), w=W, h=H, layers=layers, src=src)
     json.dump(meta, open(d + '/meta.json', 'w')); print(d, len(frames))
 

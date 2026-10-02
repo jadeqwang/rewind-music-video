@@ -159,6 +159,23 @@ def correct(rgb, ref=None, iters=3, eyes=True, forehead=True, shape=True, verbos
     return out, P, dict(before=m0, after=m, hist=hist)
 
 
+def correct_tiles(rgb, n, iters=3, max_yaw=35, **kw):
+    """Turnaround: correct each figure's upscaled head tile, downscale and paste back."""
+    out = rgb.copy(); reps = []
+    for i, (x0, x1, y1, t) in enumerate(MS.tiles(rgb, n)):
+        lm = MS.landmarks(t)
+        if lm is None or abs(MS.pose_angles(lm[1])[0]) > max_yaw:
+            reps.append(dict(face=i, skipped="no face / profile / back")); continue
+        cx = (lm[0][:, 0].min() + lm[0][:, 0].max()) / 2
+        fixed, P, rep = correct(t, iters=iters, verbose=False, lat_lim=float(min(cx, t.shape[1] - cx)), **kw)
+        if P is None:
+            reps.append(dict(face=i, skipped="no face")); continue
+        out[:y1, x0:x1] = cv2.resize(fixed, (x1 - x0, y1), interpolation=cv2.INTER_AREA)
+        reps.append(dict(face=i, params={k: (round(v, 4) if v is not None else None) for k, v in P.items()},
+                         before={k: rep["before"].get(k) for k in MS.KEYS}, after={k: rep["after"].get(k) for k in MS.KEYS}))
+    return out, reps
+
+
 def correct_multi(rgb, iters=3, max_yaw=35, **kw):
     """Correct every face of a multi-panel sheet: each face is solved on its own Voronoi cell and the
     corrected cell is pasted back (warps are identity well before the cell borders). Faces with
@@ -195,10 +212,12 @@ def main():
     ap.add_argument("--no-eyes", action="store_true"); ap.add_argument("--no-forehead", action="store_true")
     ap.add_argument("--no-shape", action="store_true"); ap.add_argument("--report")
     ap.add_argument("--multi", action="store_true", help="character sheet with several faces")
+    ap.add_argument("--tiles", type=int, help="full-body turnaround with N figures in columns")
     a = ap.parse_args()
     rgb = MS.load_rgb(a.inp)
     if a.multi:
-        out, reps = correct_multi(rgb, iters=a.iters, eyes=not a.no_eyes, forehead=not a.no_forehead, shape=not a.no_shape)
+        fn = (lambda r, **k: correct_tiles(r, a.tiles, **k)) if a.tiles else correct_multi
+        out, reps = fn(rgb, iters=a.iters, eyes=not a.no_eyes, forehead=not a.no_forehead, shape=not a.no_shape)
         cv2.imwrite(a.out, cv2.cvtColor(out, cv2.COLOR_RGB2BGR), [cv2.IMWRITE_JPEG_QUALITY, 95])
         if a.report:
             json.dump(reps, open(a.report, "w"), indent=1, default=float)

@@ -1,6 +1,110 @@
 [
  {
-  "params": null,
-  "report": null
+  "face": 0,
+  "params": {
+   "eye_sx": 1.1331,
+   "eye_sy": 1.1331,
+   "top_scale": 1.0,
+   "top_h": 1.0,
+   "top_wx": 0.04,
+   "jaw_narrow": 0.0,
+   "lat_lim": 430.6312,
+   "hair_u": 115.0432,
+   "top_u": 182.9964
+  },
+  "before": {
+   "eye_w_iod": 0.3065,
+   "eye_open": 0.3596,
+   "eye_w_face": 0.1934,
+   "iris_face": 0.0889,
+   "forehead": 0.3175,
+   "browchin_face": 0.6825,
+   "mid_third": 0.5447,
+   "face_hw": 1.4293,
+   "forehead_w": 0.8915,
+   "temple_w": 0.9777,
+   "jaw_w": 0.7598,
+   "lowjaw_w": 0.6498,
+   "chin_w": 0.2128,
+   "chin_angle": 126.7871,
+   "chin_tip_angle": 171.1642,
+   "upper_head": 0.7471
+  },
+  "after": {
+   "eye_w_iod": 0.3165,
+   "eye_open": 0.3879,
+   "eye_w_face": 0.2028,
+   "iris_face": 0.0926,
+   "forehead": 0.3183,
+   "browchin_face": 0.6817,
+   "mid_third": 0.5425,
+   "face_hw": 1.4268,
+   "forehead_w": 0.8958,
+   "temple_w": 0.9808,
+   "jaw_w": 0.7562,
+   "lowjaw_w": 0.6454,
+   "chin_w": 0.2119,
+   "chin_angle": 126.4685,
+   "chin_tip_angle": 170.9005,
+   "upper_head": 0.7485
+  }
+ },
+ {
+  "face": 1,
+  "params": {
+   "eye_sx": 1.18,
+   "eye_sy": 1.3,
+   "top_scale": 1.168,
+   "top_h": 1.0,
+   "top_wx": 0.04,
+   "jaw_narrow": 0.0,
+   "lat_lim": 473.4457,
+   "hair_u": 111.9861,
+   "top_u": 140.0032
+  },
+  "before": {
+   "eye_w_iod": 0.3107,
+   "eye_open": 0.3427,
+   "eye_w_face": 0.1935,
+   "iris_face": 0.0828,
+   "forehead": 0.3115,
+   "browchin_face": 0.6885,
+   "mid_third": 0.5322,
+   "face_hw": 1.5272,
+   "forehead_w": 0.8632,
+   "temple_w": 0.962,
+   "jaw_w": 0.7779,
+   "lowjaw_w": 0.6614,
+   "chin_w": 0.2107,
+   "chin_angle": 130.6485,
+   "chin_tip_angle": 172.0626,
+   "upper_head": 0.5683
+  },
+  "after": {
+   "eye_w_iod": 0.3164,
+   "eye_open": 0.3599,
+   "eye_w_face": 0.1974,
+   "iris_face": 0.0857,
+   "forehead": 0.3406,
+   "browchin_face": 0.6594,
+   "mid_third": 0.53,
+   "face_hw": 1.5877,
+   "forehead_w": 0.8625,
+   "temple_w": 0.9628,
+   "jaw_w": 0.7687,
+   "lowjaw_w": 0.6505,
+   "chin_w": 0.2078,
+   "chin_angle": 130.5662,
+   "chin_tip_angle": 171.5516,
+   "upper_head": 0.6614
+  }
+ },
+ {
+  "face": 2,
+  "skipped": "no face / profile / back"
+ },
+ {
+  "face": 3,
+  "skipped": "no face / profile / back"
  }
 ]
