@@ -4,7 +4,10 @@ Writes stems/vocals.wav and stems/no_vocals.wav at 48 kHz (same length as the so
 import numpy as np, soundfile as sf, onnxruntime as ort, soxr, os, time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SONG = os.path.join(HERE, '..', 'Rewind (4).mp3')
+import sys
+# usage: separate_mdx.py [song path] [stem dir]   (defaults: Rewind (4).mp3 -> stems/)
+SONG = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, '..', 'Rewind (4).mp3')
+STEMS = sys.argv[2] if len(sys.argv) > 2 else os.path.join(HERE, 'stems')
 N_FFT, HOP, DIM_F, DIM_T, COMP = 7680, 1024, 3072, 256, 1.009
 CHUNK = HOP * (DIM_T - 1)
 TRIM = N_FFT // 2
@@ -61,9 +64,9 @@ def main():
     if voc48.shape[0] < n48:
         voc48 = np.pad(voc48, ((0, n48 - voc48.shape[0]), (0, 0)))
     inst = y.T - voc48
-    os.makedirs(os.path.join(HERE, 'stems'), exist_ok=True)
-    sf.write(os.path.join(HERE, 'stems', 'vocals.wav'), voc48, sr)
-    sf.write(os.path.join(HERE, 'stems', 'no_vocals.wav'), inst, sr)
+    os.makedirs(STEMS, exist_ok=True)
+    sf.write(os.path.join(STEMS, 'vocals.wav'), voc48, sr)
+    sf.write(os.path.join(STEMS, 'no_vocals.wav'), inst, sr)
     print('done')
 
 

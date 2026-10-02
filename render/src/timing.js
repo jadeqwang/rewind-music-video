@@ -1,3 +1,4 @@
+import { audioCfg, AUDIO_DEFAULT } from './audio.config.js';
 // timing.js: the TimeMap over analysis/timing.json (+ envelopes). Shots reference times symbolically through it.
 // timing.json: {duration, bpm, beats[], downbeats[], sections[{name,start,end}], words[{w,start,end,line_idx}],
 //               lines[{text,start,end}], events[{type,t}]}
@@ -14,12 +15,13 @@ async function getJSON(urls) {
 }
 
 export class TimeMap {
-  static async load(base = '..') {
-    const tm = await getJSON([`${base}/analysis/timing.json`, `data/timing.stub.json`]);
-    const env = await getJSON([`${base}/analysis/envelopes.json`, `${base}/analysis/envelopes30.json`, `data/envelopes.stub.json`]);
+  static async load(base = '..', audioKey = null) {
+    const A = audioCfg(audioKey);
+    const tm = await getJSON([...A.timing.map(u => `${base}/${u}`), `data/timing.stub.json`]);
+    const env = await getJSON([...A.envelopes.map(u => `${base}/${u}`), `${base}/analysis/envelopes30.json`, `data/envelopes.stub.json`]);
     if (!tm) throw new Error('no timing.json (analysis/timing.json or render/data/timing.stub.json)');
     const m = new TimeMap(tm.json, env ? env.json : null);
-    m.sources = { timing: tm.url, envelopes: env && env.url };
+    m.sources = { audio: audioKey || AUDIO_DEFAULT, timing: tm.url, envelopes: env && env.url };
     return m;
   }
 

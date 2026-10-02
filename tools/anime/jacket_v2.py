@@ -3,6 +3,7 @@
 gpt-image-2 single-input edits. Usage:
   jacket_v2.py sheet N K0 [quality]          -> assets/character/anime/v2/cands/sheet_<k>.jpg  (input CANON_SHEET.jpg)
   jacket_v2.py shot SHOT[,SHOT] N K0 [q]     -> assets/character/anime/v2/cands/<SHOT>_<k>.jpg (input shots/<SHOT>.jpg 1536x864)
+  v3 (user: collar worn OPEN): sheet3 N K0 (input CANON_SHEET_v2) / shot3 SHOT[,..] N K0 (input shots/<SHOT>_v2.jpg) -> cands/sheet3_<k>, <SHOT>_v3_<k>
 Log: assets/character/anime/v2/prompts.json"""
 import sys, os, json, time, threading, io, base64
 from concurrent.futures import ThreadPoolExecutor
@@ -30,6 +31,14 @@ SHEET_P = ("Edit this anime character turnaround sheet (front, three-quarter, si
   "exactly as they are.")
 SHOT_P = ("Edit this anime film frame minimally. " + JACKET + "Where the shoulders or neck are hidden by hair, seat or framing, show "
   "only the visible part. " + KEEP)
+
+OPEN = ("Edit this anime image minimally: she wears the jacket's band collar OPEN. Unfasten the snap tab at the throat: the two halves "
+  "of the short stand-up ribbed band collar are parted at the throat, opening in a V/gap so the black high-neck top shows between "
+  "them: inside the open collar the black top's own HIGH MOCK-NECK (black turtleneck collar) still covers her neck up to just below the chin, exactly as in the input; the small snap tab is unfastened and hangs loose from the end of one collar half (snap button visible on the loose tab). The "
+  "front zip stays fully open as now. Keep the shoulder epaulettes with their snap buttons exactly as they are. ")
+OPEN_SHEET = OPEN + ("Apply the same change identically in the front, three-quarter and side views (the back view stays unchanged). " + KEEP +
+  "Keep the back print (pale-blue circle and 'RARE EARTH') and the view labels exactly as they are.")
+OPEN_SHOT = OPEN + KEEP
 
 def uri(im, mx=1536):
     im = im.copy(); im.thumbnail((mx, mx)); b = io.BytesIO(); im.save(b, "JPEG", quality=92)
@@ -63,7 +72,11 @@ def one(name, src, prompt, size, k, quality):
 
 if __name__ == "__main__":
     os.makedirs(OUT + "/cands", exist_ok=True); a = sys.argv[1:]
-    if a[0] == "sheet":
+    if a[0] == "sheet3":
+        tasks = [("sheet3", A + "/CANON_SHEET_v2.jpg", OPEN_SHEET, "1536x1024")]; a = a[1:]
+    elif a[0] == "shot3":
+        tasks = [(s + "_v3", A + f"/shots/{s}_v2.jpg", OPEN_SHOT, "1536x1024") for s in a[1].split(",")]; a = a[2:]
+    elif a[0] == "sheet":
         tasks = [("sheet", os.environ.get("SHEET_SRC", A + "/CANON_SHEET.jpg"), os.environ.get("EXTRA", "") + SHEET_P, "1536x1024")]; a = a[1:]
     else:
         tasks = [(s, A + f"/shots/{s}.jpg", os.environ.get("EXTRA", "") + SHOT_P, "1536x1024") for s in a[1].split(",")]; a = a[2:]

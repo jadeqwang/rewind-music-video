@@ -24,3 +24,4 @@ assets/sound/*.wav
 # sound-design A/B variant: wavs are regenerable via tools/sound/make_intro_sfx.py
 assets/sound/*.wav
 assets/sound/**/*.wav
+analysis/stems_v5/

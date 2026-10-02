@@ -166,7 +166,7 @@ async function resolveRotos(o, acc = new Set()) {
 
 export async function boot() {
   const which = Q.get('shots') || 'main';
-  E.T = await TimeMap.load('..');
+  E.T = await TimeMap.load('..', Q.get('audio'));
   await loadFonts();
   await CAR.load();
   const mod = await import(which === 'main' ? './shots.js' : `./shots.${which}.js`);

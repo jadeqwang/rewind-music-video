@@ -29,7 +29,10 @@ const findChrome = () => {
   throw new Error('no chrome under /opt/pw-browsers');
 };
 const CHROME = findChrome();
-const SONG = resolve(ROOT, args.song || 'Rewind (4).mp3');
+const { audioCfg, AUDIO_DEFAULT } = await import('./src/audio.config.js');
+const AUDIO_KEY = args.audio || AUDIO_DEFAULT, ACFG = audioCfg(AUDIO_KEY);
+const SONG = resolve(ROOT, args.song || ACFG.song);
+if (!existsSync(SONG)) console.warn(`[audio] ${SONG} missing (audio=${AUDIO_KEY})`);
 const FPS = 30, W = +(args.w || 1920), H = +(args.h || 1080);
 const SHOTS = args.shots || 'main';
 const FRAMES = resolve(HERE, args.dir || `frames/${SHOTS}${W === 1920 ? '' : '_' + W}`);
@@ -78,7 +81,7 @@ async function openPage(tag = '') {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
   page.on('console', m => { if ((['error', 'warning'].includes(m.type()) && !/Failed to load resource/.test(m.text())) || args.verbose) console.log(`[page${tag}] ${m.text()}`); });
   page.on('pageerror', e => console.log(`[page error${tag}] ${e.message}`));
-  await page.goto(`http://127.0.0.1:${PORT}/render/index.html?render&shots=${SHOTS}&w=${W}&h=${H}${args.query ? '&' + args.query : ''}`, { waitUntil: 'load' });
+  await page.goto(`http://127.0.0.1:${PORT}/render/index.html?render&shots=${SHOTS}&w=${W}&h=${H}&audio=${AUDIO_KEY}${args.query ? '&' + args.query : ''}`, { waitUntil: 'load' });
   await page.waitForFunction('window.ready === true || window.bootError', null, { timeout: 120000, polling: 100 });
   const err = await page.evaluate('window.bootError'); if (err) throw new Error('boot failed: ' + err);
   if (args.verbose) console.log(await page.evaluate('JSON.stringify(window.timingInfo)'));

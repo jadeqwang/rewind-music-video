@@ -298,5 +298,77 @@
   "attempts": 2,
   "est_cost_usd": 0.14,
   "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/v2/cands/sheet3_2.jpg",
+  "job": "sheet3",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "src": "CANON_SHEET_v2.jpg",
+  "prompt": "Edit this anime image minimally: she wears the jacket's band collar OPEN. Unfasten the snap tab at the throat: the two halves of the short stand-up ribbed band collar are parted at the throat, opening in a V/gap so the black high-neck top shows between them; the small snap tab is unfastened and hangs loose from the end of one collar half (snap button visible on the loose tab). The front zip stays fully open as now. Keep the shoulder epaulettes with their snap buttons exactly as they are. Apply the same change identically in the front, three-quarter and side views (the back view stays unchanged). Keep EVERYTHING else EXACTLY identical to the input image: the same face, the same eyes and their size and shape, the same hair, the same line weight, flat cel shading, colours, pose, composition, background and lighting; the jacket stays white, cropped, with the same orange horizontal bands, the pale-blue dot patch on her left chest, the round '1420 MHz' patch ONLY on her LEFT sleeve, the same sleeves and cuffs; same black crop top and black trousers. No chest pocket, no extra patches, no text added. Keep the back print (pale-blue circle and 'RARE EARTH') and the view labels exactly as they are.",
+  "secs": 30.2,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/v2/cands/sheet3_1.jpg",
+  "job": "sheet3",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "src": "CANON_SHEET_v2.jpg",
+  "prompt": "Edit this anime image minimally: she wears the jacket's band collar OPEN. Unfasten the snap tab at the throat: the two halves of the short stand-up ribbed band collar are parted at the throat, opening in a V/gap so the black high-neck top shows between them; the small snap tab is unfastened and hangs loose from the end of one collar half (snap button visible on the loose tab). The front zip stays fully open as now. Keep the shoulder epaulettes with their snap buttons exactly as they are. Apply the same change identically in the front, three-quarter and side views (the back view stays unchanged). Keep EVERYTHING else EXACTLY identical to the input image: the same face, the same eyes and their size and shape, the same hair, the same line weight, flat cel shading, colours, pose, composition, background and lighting; the jacket stays white, cropped, with the same orange horizontal bands, the pale-blue dot patch on her left chest, the round '1420 MHz' patch ONLY on her LEFT sleeve, the same sleeves and cuffs; same black crop top and black trousers. No chest pocket, no extra patches, no text added. Keep the back print (pale-blue circle and 'RARE EARTH') and the view labels exactly as they are.",
+  "secs": 31.2,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/v2/cands/sheet3_0.jpg",
+  "job": "sheet3",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "src": "CANON_SHEET_v2.jpg",
+  "prompt": "Edit this anime image minimally: she wears the jacket's band collar OPEN. Unfasten the snap tab at the throat: the two halves of the short stand-up ribbed band collar are parted at the throat, opening in a V/gap so the black high-neck top shows between them; the small snap tab is unfastened and hangs loose from the end of one collar half (snap button visible on the loose tab). The front zip stays fully open as now. Keep the shoulder epaulettes with their snap buttons exactly as they are. Apply the same change identically in the front, three-quarter and side views (the back view stays unchanged). Keep EVERYTHING else EXACTLY identical to the input image: the same face, the same eyes and their size and shape, the same hair, the same line weight, flat cel shading, colours, pose, composition, background and lighting; the jacket stays white, cropped, with the same orange horizontal bands, the pale-blue dot patch on her left chest, the round '1420 MHz' patch ONLY on her LEFT sleeve, the same sleeves and cuffs; same black crop top and black trousers. No chest pocket, no extra patches, no text added. Keep the back print (pale-blue circle and 'RARE EARTH') and the view labels exactly as they are.",
+  "secs": 30.4,
+  "attempts": 3,
+  "est_cost_usd": 0.21000000000000002,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/v2/cands/sheet3_5.jpg",
+  "job": "sheet3",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "src": "CANON_SHEET_v2.jpg",
+  "prompt": "Edit this anime image minimally: she wears the jacket's band collar OPEN. Unfasten the snap tab at the throat: the two halves of the short stand-up ribbed band collar are parted at the throat, opening in a V/gap so the black high-neck top shows between them: inside the open collar the black top's own HIGH MOCK-NECK (black turtleneck collar) still covers her neck up to just below the chin, exactly as in the input; the small snap tab is unfastened and hangs loose from the end of one collar half (snap button visible on the loose tab). The front zip stays fully open as now. Keep the shoulder epaulettes with their snap buttons exactly as they are. Apply the same change identically in the front, three-quarter and side views (the back view stays unchanged). Keep EVERYTHING else EXACTLY identical to the input image: the same face, the same eyes and their size and shape, the same hair, the same line weight, flat cel shading, colours, pose, composition, background and lighting; the jacket stays white, cropped, with the same orange horizontal bands, the pale-blue dot patch on her left chest, the round '1420 MHz' patch ONLY on her LEFT sleeve, the same sleeves and cuffs; same black crop top and black trousers. No chest pocket, no extra patches, no text added. Keep the back print (pale-blue circle and 'RARE EARTH') and the view labels exactly as they are.",
+  "secs": 29.3,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/v2/cands/sheet3_3.jpg",
+  "job": "sheet3",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "src": "CANON_SHEET_v2.jpg",
+  "prompt": "Edit this anime image minimally: she wears the jacket's band collar OPEN. Unfasten the snap tab at the throat: the two halves of the short stand-up ribbed band collar are parted at the throat, opening in a V/gap so the black high-neck top shows between them: inside the open collar the black top's own HIGH MOCK-NECK (black turtleneck collar) still covers her neck up to just below the chin, exactly as in the input; the small snap tab is unfastened and hangs loose from the end of one collar half (snap button visible on the loose tab). The front zip stays fully open as now. Keep the shoulder epaulettes with their snap buttons exactly as they are. Apply the same change identically in the front, three-quarter and side views (the back view stays unchanged). Keep EVERYTHING else EXACTLY identical to the input image: the same face, the same eyes and their size and shape, the same hair, the same line weight, flat cel shading, colours, pose, composition, background and lighting; the jacket stays white, cropped, with the same orange horizontal bands, the pale-blue dot patch on her left chest, the round '1420 MHz' patch ONLY on her LEFT sleeve, the same sleeves and cuffs; same black crop top and black trousers. No chest pocket, no extra patches, no text added. Keep the back print (pale-blue circle and 'RARE EARTH') and the view labels exactly as they are.",
+  "secs": 29.2,
+  "attempts": 2,
+  "est_cost_usd": 0.14,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/v2/cands/sheet3_4.jpg",
+  "job": "sheet3",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "src": "CANON_SHEET_v2.jpg",
+  "prompt": "Edit this anime image minimally: she wears the jacket's band collar OPEN. Unfasten the snap tab at the throat: the two halves of the short stand-up ribbed band collar are parted at the throat, opening in a V/gap so the black high-neck top shows between them: inside the open collar the black top's own HIGH MOCK-NECK (black turtleneck collar) still covers her neck up to just below the chin, exactly as in the input; the small snap tab is unfastened and hangs loose from the end of one collar half (snap button visible on the loose tab). The front zip stays fully open as now. Keep the shoulder epaulettes with their snap buttons exactly as they are. Apply the same change identically in the front, three-quarter and side views (the back view stays unchanged). Keep EVERYTHING else EXACTLY identical to the input image: the same face, the same eyes and their size and shape, the same hair, the same line weight, flat cel shading, colours, pose, composition, background and lighting; the jacket stays white, cropped, with the same orange horizontal bands, the pale-blue dot patch on her left chest, the round '1420 MHz' patch ONLY on her LEFT sleeve, the same sleeves and cuffs; same black crop top and black trousers. No chest pocket, no extra patches, no text added. Keep the back print (pale-blue circle and 'RARE EARTH') and the view labels exactly as they are.",
+  "secs": 30.2,
+  "attempts": 2,
+  "est_cost_usd": 0.14,
+  "error": null
  }
 ]
