@@ -1111,10 +1111,17 @@
    },
    "est_usd": 2.0808,
    "est_basis": "9s x 0.2312 (@720p non-video input (per second))",
-   "state": "queued",
+   "state": "error",
    "bucket": 29848687,
    "submitted": 1790921112.755722,
-   "bytes": 746219
+   "bytes": 746219,
+   "state_relay": "error",
+   "gen_secs": 7.8,
+   "started": 1790921257.433,
+   "finished": 1790921265.217,
+   "latency_secs": 152.5,
+   "error": "7003: User Input Error",
+   "est_usd_note": "errored runs are normally not billed"
   },
   "rewind/jade_J6_lip_t1-ad5c49bad5": {
    "id": "ad5c49bad5",
@@ -1146,10 +1153,17 @@
    },
    "est_usd": 1.8496,
    "est_basis": "8s x 0.2312 (@720p non-video input (per second))",
-   "state": "queued",
+   "state": "error",
    "bucket": 29848687,
    "submitted": 1790921113.2129364,
-   "bytes": 718993
+   "bytes": 718993,
+   "state_relay": "error",
+   "gen_secs": 8.2,
+   "started": 1790921257.349,
+   "finished": 1790921265.578,
+   "latency_secs": 152.4,
+   "error": "7003: User Input Error",
+   "est_usd_note": "errored runs are normally not billed"
   },
   "rewind/nj_E1_t2b-1fa57c7b8d": {
    "id": "1fa57c7b8d",
