@@ -266,5 +266,63 @@
    }
   ],
   "file": "cands/J1b_2.jpg"
+ },
+ {
+  "id": "J2",
+  "model": "openai/gpt-image-2",
+  "prompt": "Night, inside the car, camera mounted on the windshield looking back at the driver: she sits in the left-hand driver's seat on the RIGHT side of the frame, steering wheel in front of her at the bottom of the frame, eyes glancing toward the rear-view mirror (frame-left). Cool blue dashboard glow from below, soft frontal key on her face, blurred orange streetlights in the rear window behind her. Use the second image only as a mood reference. POSE (measured from the photo): her head is turned about 18 degrees to her right (nose toward frame-left) and the camera is slightly above her eye line; her torso and shoulders must be turned the SAME way, about 18 degrees to her right (toward frame-left), congruent with the head - the shoulder line follows the head direction, no twist between head and body. Keep this exact woman from the first image: her face, head angle, eyes, eyebrows, glasses and expression must stay exactly as in the photo (do not redraw or beautify her face). Long straight solid black hair with a center part styled half-up half-down (two symmetrical sections pulled back from the temples toward the crown, the rest hanging long), revealing her broad forehead. She wears a white cropped zip jacket with one clean orange horizontal band across the chest and upper sleeves (no patches, no text) over a black top. Cinematic photographic film still, 16:9 widescreen composition, soft flattering light on her face, smooth clear skin. No text, no logos, no headphones.",
+  "refs": [
+   "refs/jade/PXL_20250908_195405539.MP.jpg",
+   "assets/sets/car_interior/1.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 28.1
+   }
+  ],
+  "file": "cands/J2.jpg"
+ },
+ {
+  "id": "J5b",
+  "model": "openai/gpt-image-2",
+  "prompt": "Performance shot, center-locked and symmetric: she stands exactly centered in frame against a black void, facing the camera straight on, medium shot from the waist up, shoulders level and square to the camera, both hands raised in front of her chest tracing a slow counter-clockwise circle, symmetric pose. Soft frontal white key light on her face, red rim light from frame-left and blue rim light from frame-right on hair and shoulders, light haze. Flattering, no colored light across the face. POSE (measured from the photo): her head is turned only about 8 degrees to her right; keep the torso square to the camera with at most the same slight turn - no twist. Keep this exact woman from the first image: her face, head angle, eyes, eyebrows, glasses and expression must stay exactly as in the photo (do not redraw or beautify her face). Long straight solid black hair with a center part styled half-up half-down (two symmetrical sections pulled back from the temples toward the crown, the rest hanging long), revealing her broad forehead. She wears a white cropped zip jacket with one clean orange horizontal band across the chest and upper sleeves (no patches, no text) over a black top. Cinematic photographic film still, 16:9 widescreen composition, soft flattering light on her face, smooth clear skin. No text, no logos, no headphones.",
+  "refs": [
+   "refs/jade/PXL_20260528_215628802.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 29.3
+   }
+  ],
+  "file": "cands/J5b.jpg"
+ },
+ {
+  "id": "J3",
+  "model": "openai/gpt-image-2",
+  "prompt": "Night, pulled over at the roadside. Medium close-up from just outside the open driver's window of a white 2001 Acura TL (left-hand drive): she sits in the driver's seat turned toward the window and holds up her driver's license - a plain blank horizontal card with standard license proportions (85.6 x 54 mm, landscape orientation, completely blank, no text, no photo) - toward the window for the officer beside her face toward the camera. Red and blue police lights from behind the car rim-light her hair and shoulders; her face has a soft even frontal fill. Use the second image only as a mood reference for the night roadside. POSE (measured from the photo): her head is turned about 14 degrees to her right (nose toward frame-left) and the camera is slightly above her eye line; her torso and shoulders must be turned the SAME way, about 14 degrees to her right (toward frame-left), congruent with the head - the shoulder line follows the head direction, no twist between head and body. Keep this exact woman from the first image: her face, head angle, eyes, eyebrows, glasses and expression must stay exactly as in the photo (do not redraw or beautify her face). Long straight solid black hair with a center part styled half-up half-down (two symmetrical sections pulled back from the temples toward the crown, the rest hanging long), revealing her broad forehead. She wears a white cropped zip jacket with one clean orange horizontal band across the chest and upper sleeves (no patches, no text) over a black top. Cinematic photographic film still, 16:9 widescreen composition, soft flattering light on her face, smooth clear skin. No text, no logos, no headphones.",
+  "refs": [
+   "refs/jade/PXL_20250908_195352130.jpg",
+   "assets/sets/pullover/1.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": false,
+    "secs": 30.4,
+    "err": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs."
+   },
+   {
+    "ok": true,
+    "secs": 29.2
+   }
+  ],
+  "file": "cands/J3.jpg"
  }
 ]
