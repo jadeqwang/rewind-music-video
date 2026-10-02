@@ -8,7 +8,7 @@ from cf import run_model, save_media
 from PIL import Image, ImageOps
 OUT = ROOT + "/assets/character/anime"; PJ = OUT + "/prompts.json"; LOCK = threading.Lock()
 SRC = {"orig": ROOT + "/refs/jade/Pasted image.png", "canon": OUT + "/CANON_SHEET.jpg",
-       "photo29": ROOT + "/refs/jade/image-1790918316346.webp"}
+       "head": OUT + "/CANON_HEAD_front.jpg", "photo29": ROOT + "/refs/jade/image-1790918316346.webp"}
 
 def uri(path, mx=1024, pad=None):
     im = ImageOps.exif_transpose(Image.open(path)).convert("RGB")
@@ -38,6 +38,16 @@ JOBS = {
    "slight concentration); top-right STARTLED (eyes a little wider, brows raised, lips parted); bottom-left SINGING SOFTLY "
    "(eyes half-lowered, mouth gently open); bottom-right DETERMINED (brows lowered and set, firm mouth, steady gaze). Eyes keep "
    "the same size and shape as on the sheet in every panel. Small caption under each: FOCUSED, STARTLED, SINGING, DETERMINED."),
+ "E_expr2": (["head"], None, "1536x1024",
+   "Image 1 is a close-up of the approved anime character (front view, from her official model sheet). Keep her face EXACTLY as "
+   "drawn: same face shape, same large eyes with the same size, shape, iris colour and highlights, same nose and mouth placement, "
+   "same center-parted long straight black hair with curtain bangs, same thin clean lineart and flat pale cel shading. No glasses, "
+   "no headphones. Make an expression sheet: 2x2 grid of LARGE head close-ups (head and neck only, the face filling most of each "
+   "panel, slight three-quarter front view, black high-neck top collar visible), plain light warm-gray background: top-left "
+   "FOCUSED DRIVING (calm, eyes forward, slight concentration, lips closed); top-right STARTLED (eyes a little wider, brows "
+   "raised, lips parted); bottom-left SINGING SOFTLY (eyes softly half-lowered, mouth gently open); bottom-right DETERMINED (brows "
+   "lowered and set, firm mouth, steady gaze). The eyes keep the same size and shape as image 1 in every panel (never smaller). "
+   "Small caption under each: FOCUSED, STARTLED, SINGING, DETERMINED."),
  "K_drive": (["canon"], None, "1536x1024",
    STYLE_LOCK + "Anime film keyframe, 16:9, same art style as the sheet: night, she drives alone in a white 2001 Acura TL "
    "(second-gen sedan), US left-hand drive: she sits in the LEFT front seat with the steering wheel in front of her; simple "

@@ -64,5 +64,155 @@
   "attempts": 4,
   "est_cost": 0.28,
   "error": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs."
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/cands/S_canon_1.jpg",
+  "job": "S_canon",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "refs": [
+   "Pasted image.png"
+  ],
+  "size": "1536x1024",
+  "prompt": "Edit this official anime character turnaround sheet with three small changes, identical in all four views (front, three-quarter, side, back): (1) recolour the cargo trousers from navy blue to true BLACK (deep neutral black with dark-gray cel shading; keep their cut, pockets and orange straps shapes); (2) remove the Yagi antenna prop completely - her hands simply hang relaxed and empty at her sides; (3) remove the orange headphones from her neck completely, showing her neck and the black top's collar. Keep everything else EXACTLY identical to the input image: the same face, the same eyes and their size and shape, the same hair, line weight, flat cel shading, colours, poses, layout, background and the view labels; keep the jacket's '1420 MHz' patch, the pale-blue dot patch and the back print exactly as they are. Do not add glasses.",
+  "secs": 30.1,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/cands/S_canon_0.jpg",
+  "job": "S_canon",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "refs": [
+   "Pasted image.png"
+  ],
+  "size": "1536x1024",
+  "prompt": "Edit this official anime character turnaround sheet with three small changes, identical in all four views (front, three-quarter, side, back): (1) recolour the cargo trousers from navy blue to true BLACK (deep neutral black with dark-gray cel shading; keep their cut, pockets and orange straps shapes); (2) remove the Yagi antenna prop completely - her hands simply hang relaxed and empty at her sides; (3) remove the orange headphones from her neck completely, showing her neck and the black top's collar. Keep everything else EXACTLY identical to the input image: the same face, the same eyes and their size and shape, the same hair, line weight, flat cel shading, colours, poses, layout, background and the view labels; keep the jacket's '1420 MHz' patch, the pale-blue dot patch and the back print exactly as they are. Do not add glasses.",
+  "secs": 30.5,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/cands/E_expr_1.jpg",
+  "job": "E_expr",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "refs": [
+   "CANON_SHEET.jpg"
+  ],
+  "size": "1536x1024",
+  "prompt": "Draw her EXACTLY as in the reference character sheet (image 1): same anime face, same eyes and eye size, same center-parted long straight black hair with curtain bangs, same line weight, flat cel shading and palette, same outfit: white cropped bomber jacket with orange bands, '1420 MHz' patch and pale-blue dot patch, black crop top, black trousers, white sneakers. No glasses, no headphones, no antenna. Make an expression sheet of this exact character: 2x2 grid of large head-and-shoulders portraits, slight three-quarter front view, plain light warm-gray background like the sheet: top-left FOCUSED DRIVING (calm, eyes forward, slight concentration); top-right STARTLED (eyes a little wider, brows raised, lips parted); bottom-left SINGING SOFTLY (eyes half-lowered, mouth gently open); bottom-right DETERMINED (brows lowered and set, firm mouth, steady gaze). Eyes keep the same size and shape as on the sheet in every panel. Small caption under each: FOCUSED, STARTLED, SINGING, DETERMINED.",
+  "secs": 28.4,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/cands/E_expr_0.jpg",
+  "job": "E_expr",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "refs": [
+   "CANON_SHEET.jpg"
+  ],
+  "size": "1536x1024",
+  "prompt": "Draw her EXACTLY as in the reference character sheet (image 1): same anime face, same eyes and eye size, same center-parted long straight black hair with curtain bangs, same line weight, flat cel shading and palette, same outfit: white cropped bomber jacket with orange bands, '1420 MHz' patch and pale-blue dot patch, black crop top, black trousers, white sneakers. No glasses, no headphones, no antenna. Make an expression sheet of this exact character: 2x2 grid of large head-and-shoulders portraits, slight three-quarter front view, plain light warm-gray background like the sheet: top-left FOCUSED DRIVING (calm, eyes forward, slight concentration); top-right STARTLED (eyes a little wider, brows raised, lips parted); bottom-left SINGING SOFTLY (eyes half-lowered, mouth gently open); bottom-right DETERMINED (brows lowered and set, firm mouth, steady gaze). Eyes keep the same size and shape as on the sheet in every panel. Small caption under each: FOCUSED, STARTLED, SINGING, DETERMINED.",
+  "secs": 28.5,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/cands/K_drive_1.jpg",
+  "job": "K_drive",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "refs": [
+   "CANON_SHEET.jpg"
+  ],
+  "size": "1536x1024",
+  "prompt": "Draw her EXACTLY as in the reference character sheet (image 1): same anime face, same eyes and eye size, same center-parted long straight black hair with curtain bangs, same line weight, flat cel shading and palette, same outfit: white cropped bomber jacket with orange bands, '1420 MHz' patch and pale-blue dot patch, black crop top, black trousers, white sneakers. No glasses, no headphones, no antenna. Anime film keyframe, 16:9, same art style as the sheet: night, she drives alone in a white 2001 Acura TL (second-gen sedan), US left-hand drive: she sits in the LEFT front seat with the steering wheel in front of her; simple early-2000s dashboard with analog gauges, no touchscreen; the empty passenger seat is on the right. Camera outside the windshield, front-right three-quarter, looking in at her; her head and shoulders face the same way (forward, down the road), both hands on the wheel. Chicago Lake Shore Drive city lights streak past in cool blue; the rear-view mirror at the top centre of the windshield glows with red and blue police lights behind her, tinting the cabin edges red/blue. Her face is lit softly by the dash glow, clean and calm-focused. No text.",
+  "secs": 30.1,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/cands/K_drive_0.jpg",
+  "job": "K_drive",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "refs": [
+   "CANON_SHEET.jpg"
+  ],
+  "size": "1536x1024",
+  "prompt": "Draw her EXACTLY as in the reference character sheet (image 1): same anime face, same eyes and eye size, same center-parted long straight black hair with curtain bangs, same line weight, flat cel shading and palette, same outfit: white cropped bomber jacket with orange bands, '1420 MHz' patch and pale-blue dot patch, black crop top, black trousers, white sneakers. No glasses, no headphones, no antenna. Anime film keyframe, 16:9, same art style as the sheet: night, she drives alone in a white 2001 Acura TL (second-gen sedan), US left-hand drive: she sits in the LEFT front seat with the steering wheel in front of her; simple early-2000s dashboard with analog gauges, no touchscreen; the empty passenger seat is on the right. Camera outside the windshield, front-right three-quarter, looking in at her; her head and shoulders face the same way (forward, down the road), both hands on the wheel. Chicago Lake Shore Drive city lights streak past in cool blue; the rear-view mirror at the top centre of the windshield glows with red and blue police lights behind her, tinting the cabin edges red/blue. Her face is lit softly by the dash glow, clean and calm-focused. No text.",
+  "secs": 30.2,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/cands/K_perform_1.jpg",
+  "job": "K_perform",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "refs": [
+   "CANON_SHEET.jpg"
+  ],
+  "size": "1536x1024",
+  "prompt": "Draw her EXACTLY as in the reference character sheet (image 1): same anime face, same eyes and eye size, same center-parted long straight black hair with curtain bangs, same line weight, flat cel shading and palette, same outfit: white cropped bomber jacket with orange bands, '1420 MHz' patch and pale-blue dot patch, black crop top, black trousers, white sneakers. No glasses, no headphones, no antenna. Anime film keyframe, 16:9, same art style as the sheet: centre-locked symmetrical performance shot; she stands dead centre facing the camera straight-on, square shoulders, waist-up, singing softly with mouth slightly open, eyes to the lens. Dark near-black void background; strong red police-siren rim light from frame-left and blue rim light from frame-right outlining her hair, shoulders and jacket; her face lit by a soft even white front fill (no harsh shadows on the face). Paranoid dream mood like Satoshi Kon's Perfect Blue. No text.",
+  "secs": 24.9,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/cands/K_perform_0.jpg",
+  "job": "K_perform",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "refs": [
+   "CANON_SHEET.jpg"
+  ],
+  "size": "1536x1024",
+  "prompt": "Draw her EXACTLY as in the reference character sheet (image 1): same anime face, same eyes and eye size, same center-parted long straight black hair with curtain bangs, same line weight, flat cel shading and palette, same outfit: white cropped bomber jacket with orange bands, '1420 MHz' patch and pale-blue dot patch, black crop top, black trousers, white sneakers. No glasses, no headphones, no antenna. Anime film keyframe, 16:9, same art style as the sheet: centre-locked symmetrical performance shot; she stands dead centre facing the camera straight-on, square shoulders, waist-up, singing softly with mouth slightly open, eyes to the lens. Dark near-black void background; strong red police-siren rim light from frame-left and blue rim light from frame-right outlining her hair, shoulders and jacket; her face lit by a soft even white front fill (no harsh shadows on the face). Paranoid dream mood like Satoshi Kon's Perfect Blue. No text.",
+  "secs": 26.7,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/cands/E_expr2_0.jpg",
+  "job": "E_expr2",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "refs": [
+   "CANON_HEAD_front.jpg"
+  ],
+  "size": "1536x1024",
+  "prompt": "Image 1 is a close-up of the approved anime character (front view, from her official model sheet). Keep her face EXACTLY as drawn: same face shape, same large eyes with the same size, shape, iris colour and highlights, same nose and mouth placement, same center-parted long straight black hair with curtain bangs, same thin clean lineart and flat pale cel shading. No glasses, no headphones. Make an expression sheet: 2x2 grid of LARGE head close-ups (head and neck only, the face filling most of each panel, slight three-quarter front view, black high-neck top collar visible), plain light warm-gray background: top-left FOCUSED DRIVING (calm, eyes forward, slight concentration, lips closed); top-right STARTLED (eyes a little wider, brows raised, lips parted); bottom-left SINGING SOFTLY (eyes softly half-lowered, mouth gently open); bottom-right DETERMINED (brows lowered and set, firm mouth, steady gaze). The eyes keep the same size and shape as image 1 in every panel (never smaller). Small caption under each: FOCUSED, STARTLED, SINGING, DETERMINED.",
+  "secs": 25.9,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/cands/E_expr2_1.jpg",
+  "job": "E_expr2",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "refs": [
+   "CANON_HEAD_front.jpg"
+  ],
+  "size": "1536x1024",
+  "prompt": "Image 1 is a close-up of the approved anime character (front view, from her official model sheet). Keep her face EXACTLY as drawn: same face shape, same large eyes with the same size, shape, iris colour and highlights, same nose and mouth placement, same center-parted long straight black hair with curtain bangs, same thin clean lineart and flat pale cel shading. No glasses, no headphones. Make an expression sheet: 2x2 grid of LARGE head close-ups (head and neck only, the face filling most of each panel, slight three-quarter front view, black high-neck top collar visible), plain light warm-gray background: top-left FOCUSED DRIVING (calm, eyes forward, slight concentration, lips closed); top-right STARTLED (eyes a little wider, brows raised, lips parted); bottom-left SINGING SOFTLY (eyes softly half-lowered, mouth gently open); bottom-right DETERMINED (brows lowered and set, firm mouth, steady gaze). The eyes keep the same size and shape as image 1 in every panel (never smaller). Small caption under each: FOCUSED, STARTLED, SINGING, DETERMINED.",
+  "secs": 27.3,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
  }
 ]
