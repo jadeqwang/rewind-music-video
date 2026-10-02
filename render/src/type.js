@@ -93,7 +93,8 @@ export function slam(g, o) {
   const maxW = o.maxW ?? 1760; if (w > maxW) { px *= maxW / w; setFont(g, fam(px), o.track ?? 0); w = g.measureText(text).width; }
   if (o.maxH && px * 0.74 > o.maxH) { px = o.maxH / 0.74; setFont(g, fam(px), o.track ?? 0); w = g.measureText(text).width; }
   // slam-in: overshoot scale 1.18 → 1 over 5 frames, then a slow creep
-  const e = dt < 0.17 ? lerp(1.18, 1, easeOutExpo(dt / 0.17)) : 1 + 0.02 * Math.min(1, (dt - .17) / 1.2);
+  const dc = t - (o.creepFrom ?? o.t0);   // slow creep measured from the first hit, overshoot only on real hits
+  const e = (o.stutter ?? 0) >= 0.9 && dt < 0.17 ? lerp(1.18, 1, easeOutExpo(dt / 0.17)) : 1 + 0.02 * Math.min(1, Math.max(0, dc - .17) / 1.2);
   const cx = o.x ?? DW / 2, by = o.y ?? DH / 2 + px * 0.36;
   const frame = Math.floor(dt * 30 + 1e-3);
   g.translate(cx, by - px * 0.36); g.scale(e, e); g.translate(-cx, -(by - px * 0.36));

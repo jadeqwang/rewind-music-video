@@ -81,10 +81,11 @@
    },
    "est_usd": 2.312,
    "est_basis": "10s x 0.2312 (@720p non-video input (per second))",
-   "state": "queued",
+   "state": "running",
    "bucket": 29848644,
    "submitted": 1790918561.4015493,
-   "bytes": 165395
+   "bytes": 165395,
+   "started": 1790918689.933
   },
   "rewind/nj_E2_calm_t1-99b38ae665": {
    "id": "99b38ae665",
@@ -108,10 +109,11 @@
    },
    "est_usd": 1.3872,
    "est_basis": "6s x 0.2312 (@720p non-video input (per second))",
-   "state": "queued",
+   "state": "running",
    "bucket": 29848644,
    "submitted": 1790918561.8593054,
-   "bytes": 138285
+   "bytes": 138285,
+   "started": 1790918689.962
   },
   "rewind/nj_E2_fast_t1-7037995356": {
    "id": "7037995356",

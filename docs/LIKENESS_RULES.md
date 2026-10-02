@@ -25,3 +25,6 @@ The user reports most model attempts "uglify" her: shrunken eyes, invented age s
   "subtly shrank my eyes for no reason". Known model biases: compressed forehead/low hairline, shrunken eyes.
 - Gate: every image/frame of Jade is measured with tools/likeness/measure.py against the real-photo ratios
   (assets/character/v2/measure.json); deviations > ~5% in eye size or forehead height are corrected (warp.py) or rejected.
+- Her two eyebrows are slightly DIFFERENT from each other (natural asymmetry, part of her likeness). Never symmetrize.
+  Measured per side in measure.json; beware mirrored front-camera selfies when deciding left/right.
+- Redraw: draw each brow from its own measured shape, not one mirrored brow.
