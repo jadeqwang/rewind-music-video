@@ -47,7 +47,7 @@ export function drawView(g, view, cx, by, w, o = {}) {
       const lit = (t === 'taillight' && (o.lights === 'tail' || o.lights === 'brake')) || (t === 'headlight' && o.lights === 'head');
       path(f.pts, 0, k); if (f.closed) g.closePath();
       if (lit && !o.outline) {
-        g.save(); g.fillStyle = t === 'taillight' ? PAL.red : '#F4F1EA'; g.shadowColor = g.fillStyle; g.shadowBlur = Math.max(6, w * 0.06) * (o.lights === 'brake' ? 1.6 : 1); g.globalAlpha = a; g.fill(); g.restore();
+        g.save(); g.fillStyle = t === 'taillight' ? PAL.red : '#F4F1EA'; g.shadowColor = g.fillStyle; g.shadowBlur = Math.max(6, w * 0.06) * (o.lights === 'brake' ? 1.6 : 1) * (w < 260 ? 2 : 1); g.globalAlpha = a; g.fill(); if (w < 260) { g.globalCompositeOperation = 'lighter'; g.globalAlpha = a * 0.6; g.fill(); } g.restore();
       } else { g.strokeStyle = rgba(o.outline ? col : (t === 'taillight' ? PAL.red : col), a); g.lineWidth = Math.max(1.5, w * 0.006); g.stroke(); }
       return;
     }

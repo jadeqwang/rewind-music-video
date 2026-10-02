@@ -159,3 +159,6 @@ S4: 151 frames @15fps from assets/clips/S4.mp4 (1280x720), layers=['lines', 'mat
   S4   10/151 1.69s  flow=0.05 matte=1.05 ground=0.00 face=0.00 lines=0.33 write=0.25
   S4   20/151 1.49s  flow=0.06 matte=0.97 ground=0.00 face=0.00 lines=0.22 write=0.25
   S4   30/151 1.56s  flow=0.04 matte=1.00 ground=0.00 face=0.00 lines=0.22 write=0.30
+  S4   40/151 1.54s  flow=0.04 matte=1.04 ground=0.00 face=0.00 lines=0.20 write=0.25
+  S4   50/151 1.52s  flow=0.05 matte=1.00 ground=0.00 face=0.00 lines=0.25 write=0.22
+  S4   60/151 1.84s  flow=0.07 matte=1.30 ground=0.00 face=0.00 lines=0.18 write=0.30

@@ -77,7 +77,7 @@ export function stack(g, o) {
     const tin = dt - i * six, slide = (1 - easeOutExpo(clamp(tin / 0.07))) * (i % 2 ? -1 : 1) * 700;
     const y = top + i * rowH * 1.04, x = (o.cx ?? DW / 2) - w / 2 + slide + (i - (n - 1) / 2) * 40;
     if (i === landed - 1) { g.fillStyle = o.color || PAL.bone; g.fillText(text, x, y); }
-    else { g.strokeStyle = rgba(i === landed - 2 ? PAL.red : PAL.bone, 0.45 + 0.5 * (i / n)); g.lineWidth = 3; g.strokeText(text, x, y); }
+    else { g.strokeStyle = rgba(i === landed - 2 ? PAL.red : (o.color === PAL.ink ? PAL.ink : PAL.bone), 0.45 + 0.5 * (i / n)); g.lineWidth = 3; g.strokeText(text, x, y); }
   }
   g.restore();
 }

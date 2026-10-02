@@ -64,10 +64,10 @@ export const LAYERS = {
   sodium(ctx, L, env) {
     const sw = sodiumSweep(env.t, { period: L.period ?? 0.92, amount: A(L.amount, env, 0.5) });
     sodiumWash(ctx.g, sw, L.alpha ?? 0.12);
-    if (L.kick) { const k = env.k; if (k > 0.05) { const g = ctx.g; g.save(); g.globalCompositeOperation = 'lighter'; g.fillStyle = rgba(PAL.sodium, L.kick * 0.3 * k); g.fillRect(0, 0, DW, DH); g.restore(); } }
+    if (L.kick) { const k = env.k; if (k > 0.05) { const g = ctx.g; g.save(); g.globalCompositeOperation = 'source-over'; g.fillStyle = rgba(PAL.sodium, L.kick * 0.3 * k); g.fillRect(0, 0, DW, DH); g.restore(); } }
     env.sweep = sw;
   },
-  kickflash(ctx, L, env) { const k = env.k; if (k < 0.03) return; const g = ctx.g; g.save(); g.globalCompositeOperation = 'lighter'; g.fillStyle = rgba(L.color || PAL.bone, (L.amount ?? 0.2) * k); g.fillRect(0, 0, DW, DH); g.restore(); },
+  kickflash(ctx, L, env) { const k = env.k; if (k < 0.03) return; const g = ctx.g; g.save(); g.globalCompositeOperation = L.comp || 'source-over'; g.fillStyle = rgba(L.color || PAL.bone, (L.amount ?? 0.2) * k); g.fillRect(0, 0, DW, DH); g.restore(); },
   flash(ctx, L, env) { const a = A(L.amount, env, 0); if (a <= 0) return; const g = ctx.g; g.save(); g.globalCompositeOperation = L.comp || 'lighter'; g.fillStyle = rgba(L.color || PAL.bone, a); g.fillRect(0, 0, DW, DH); g.restore(); },
   rain(ctx, L, env) { rain(ctx.g, ctx.boil, env.t * (L.slow ?? 1), { n: L.n ?? 140, alpha: A(L.alpha, env, 0.2) }); },
 
@@ -192,7 +192,7 @@ export const LAYERS = {
     TREES.has(key) || TREES.set(key, buildTree(L.seed ?? 3, L.depth ?? 5, L.kids ?? 3));
     const TR = TREES.get(key), g = L.onType ? ctx.ty : ctx.g;
     const geo = { x: A(L.x, env, 300), y: A(L.y, env, 560), w: A(L.w, env, 1300), h: A(L.h, env, 760) };
-    const { P } = searchTree(g, TR, { ...geo, progress: A(L.progress, env, 1), lit: A(L.lit, env, 0), labels: L.labels, alpha: A(L.alpha, env, 1), litColor: L.litColor, leafSize: L.leafSize });
+    const { P } = searchTree(g, TR, { ...geo, progress: A(L.progress, env, 1), lit: A(L.lit, env, 0), labels: L.labels, alpha: A(L.alpha, env, 1), litColor: L.litColor, leafSize: L.leafSize, ink: L.ink, labelSize: L.labelSize });
     for (const d of [].concat(L.dead ?? [])) {
       const a = P(TR.nodes[0]), b = P(TR.nodes[d]), u = A(L.deadU, env, 1);
       g.save(); g.strokeStyle = rgba(PAL.red, 0.95 * u); g.lineWidth = 7; g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(lerp(a[0], b[0], u), lerp(a[1], b[1], u)); g.stroke(); g.restore();

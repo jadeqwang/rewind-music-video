@@ -29,7 +29,7 @@ export function buildShots(T) {
   const jade = (id, o = {}) => ({ type: 'jade', roto: R.jade(id), ...o });
   const suits = (id, o = {}) => [{ type: 'world', roto: R.suits(id), color: PAL.ink, alpha: 0.5, comp: 'source-over', lights: 0, cam: o.cam, ...(o.world || {}) },
     { type: 'suits', roto: R.suits(id), ...o }];
-  const sirenLit = (o = {}) => [{ type: 'sirens', side: 'pair', base: 0.42, peak: 0.5, ...o }, { type: 'headlights', y: 470, r: 1100, amount: 0.32 }];
+  const sirenLit = (o = {}) => [{ type: 'sirens', side: 'pair', base: 0.42, peak: 0.5, ...o }, { type: 'headlights', y: 470, r: 1100, amount: 0.2 }];
   const hud = (attempt, ev_, o = {}) => ({ attempt, eval: ev_, tc: true, ...o });
 
   // =============================== 0 · INTRO 0 – 13.45 (the hook) ===============================
@@ -169,10 +169,10 @@ export function buildShots(T) {
   const r5a = T.chopsIn(L(7).start, L(7).start + 3)[0] ?? L(7).end, r6a = T.downbeatsIn(r5a + 2, r5a + 6)[0];
   C('R5_hoots', r5a, r6a, [ink, { type: 'sirens', side: 'pair', base: 0.3 }, { type: 'ghosts', roto: R.jade('J5'), n: e => [2, 4, 8, 8][Math.min(3, Math.floor(e.lt / P / 1.5))] }], { fx: { kick: 1, strobe: 0.5 } });
   const r7a = T.downbeatsIn(r6a + 8.5, sec('verse3').start)[0] ?? sec('verse3').start - bar;
-  C('R6_tree', r6a, r7a, [ink,
-    { type: 'tree', seed: 7, depth: 4, progress: e => smooth(0, 0.5, e.u) * 0.55 + 0.45 * smooth(0.4, 1, e.u), dead: 1, deadU: e => smooth(0.15, 0.3, e.u), lit: 0.2,
-      labels: [{ node: 1, text: '  pull over??', color: PAL.red }, { node: 2, text: 'bolt?' }, { node: 3, text: 'keep driving!!', color: PAL.cyan }] },
-  ], { hud: { attempt: 1, failed: true, tc: true, eval: -9 }, fx: { kick: 0.6 } });
+  C('R6_tree', r6a, r7a, [{ type: 'fill', color: PAL.bone },
+    { type: 'tree', seed: 7, depth: 4, ink: true, x: 220, y: 560, w: 1480, h: 860, labelSize: 56, progress: e => smooth(0, 0.5, e.u) * 0.55 + 0.45 * smooth(0.4, 1, e.u), dead: 1, deadU: e => smooth(0.15, 0.3, e.u), lit: 0.2,
+      labels: [{ node: 1, text: '  pull over??', color: PAL.red }, { node: 2, text: 'bolt?' }, { node: 3, text: 'keep driving!!', color: PAL.blue }] },
+  ], { hud: { attempt: 1, failed: true, tc: true, eval: -9, ink: true }, fx: { kick: 0.6, downInvert: 2 } }, { post: { bloom: 0, vignette: 0.12 } });
   for (const d of T.downbeatsIn(r6a + 1, r7a - 1).filter((_, i) => i % 2 === 0)) C(`R6_j${DI(d)}`, d, d + P * 2, [ink, { type: 'sirens', side: 'pair', base: 0.45 }, jade('J5', { light: 'siren', late: P, cam: { from: [0.76, 0.42, 1.1], to: [0.76, 0.42, 1.0] } }), { type: 'circle', x: 960, y: 420, r: 320, color: PAL.bone }], { fx: { kick: 1, strobe: 0.4 } });
   C('R7_attempt02', r7a, sec('verse3').start, [ink, { type: 'slam', text: 'ATTEMPT 02', variant: 'stack', at: 0 }], { fx: { kick: 1 } });
 
@@ -191,11 +191,10 @@ export function buildShots(T) {
     { type: 'mirror', rect: [1080, 120, 720, 230], timeOffset: -0.5, zoom: 1.6, focus: [0.5, 0.45], layers: [{ type: 'fill', color: PAL.ink }, ...sirenLit({ base: 0.6 }), ...suits('B3')] },
     { type: 'subtitle', lines: [9], x: 700 }], { hud: hud(2, 0.1), fx: { kick: 0.6, heart: 0.3 } });
   C('V7_reload', W('reload').start, L(10).start, [ink, { type: 'reload', dur: 0.5 }], { hud: hud(2, 0.3), fx: { jerks: [W('reload').start], kick: 0.5 } });
-  C('V8_shadow', L(10).start, sec('build2').start, [ink, { type: 'world', roto: R.follow, alpha: 0.6, lights: 1 },
-    { type: 'ghostcar', x: 1530, y: 300, scale: 0.42, alpha: 0.85, color: PAL.cyan },
-    { type: 'mirror', rect: [150, 120, 620, 200], timeOffset: 0, zoom: 1.3, layers: [{ type: 'freezeOf', time: shot1 - 0.03, withType: false }] },
+  C('V8_shadow', L(10).start, sec('build2').start, [ink, { type: 'world', roto: R.follow, alpha: 0.8, lights: 0.8 },
+    { type: 'mirror', rect: [300, 60, 1320, 430], zoom: 1, layers: [{ type: 'fill', color: PAL.ink }, { type: 'sirens', side: 'pair', base: 0.75, peak: 0.6 }, { type: 'headlights', y: 600, r: 700, amount: 0.25 },
+      { type: 'ghostcar', x: 960, y: 640, scale: 1.25, alpha: 1, color: PAL.bone }] },
     { type: 'page', lines: [10], size: 120, y: 700, measure: 1500, maxLines: 2 }], { hud: hud(2, 0.0), fx: { heart: 0.3, kick: 0.3 } });
-
   // =============================== 5 · BUILD 2 88.92 – 102.84 (the field) ===============================
   const b2 = sec('build2').start, shot2 = W('shot', 2).start;
   const fieldGrass = (o = {}) => [ink, { type: 'world', roto: R.plate('grass_field_1'), alpha: 0.35, lights: 0.8, cam: o.cam }, { type: 'grass', n: 1200, y: 560, alpha: 0.55, scroll: o.scroll ?? 0.3 },
@@ -290,7 +289,7 @@ export function buildShots(T) {
 
   // =============================== 8 · BUILD 3 164.10 – 171.50 (brute force) ===============================
   const b3 = sec('build3').start, never = W('never').start, stop3 = W('stop', 1, { after: never }).start, fd = ev('drop', 3);
-  C('X1_search', b3, never, [ink, { type: 'explode', n: e => 20 + 1600 * e.u * e.u, seed: 11 },
+  C('X1_search', b3, never, [ink, { type: 'explode', n: e => 220 + 1400 * e.u * e.u, seed: 11 },
     { type: 'counter', value: e => (e.u < 0.92 ? Math.floor(3 + Math.pow(e.u / 0.92, 3) * 996) : '∞'), x: DW - 80, y: 250, size: 150 }],
     { hud: { attempt: 3, tc: true, eval: e => Math.sin(e * 17) * 9 }, fx: { heart: 0.5, kick: 0.6 } });
   for (const d of T.downbeatsIn(b3 + 0.5, never - 0.5)) C(`X1_eyes${DI(d)}`, d, d + P, [ink, { type: 'glasses' }], { fx: { heart: 0.5 } });
@@ -304,20 +303,19 @@ export function buildShots(T) {
   // club in time (cut on downbeats, sodium floods on every kick, bone-paper inversions on every downbeat)
   const DB = i => T.downbeat(DI(fd) + i);           // i-th bar from the drop
   const n2 = DB(1), n3 = DB(8), n4 = DB(12), n5 = DB(16), n6 = sec('instrumental').start, qed = ev('braam', 9), end = sec('end').start;
-  const drive = { kick: 1, strobe: 0.7, downInvert: 1 };
+  const drive = { kick: 1, strobe: 0.7, downInvert: 1, strobeColor: [1, 0.624, 0.11] };
   C('N1_found', fd, n2, [ink, { type: 'mono', text: 'ATTEMPT 03 — LINE FOUND', y: 300, size: 64, weight: 700, color: PAL.cyan },
     { type: 'slam', hits: [{ t: fd + P, text: 'NEVER STOP', variant: 'center' }], y: 860, maxH: 420 }], { hud: { attempt: 3, ok: true, tc: true, eval: 9 }, fx: { kick: 1, jerks: [fd] } });
   const lane = (o = {}) => [ink, { type: 'world', roto: R.road, alpha: 0.8, lights: 0.6, speed: 2.2 }, { type: 'kickflash', color: PAL.sodium, amount: 0.55 },
     { type: 'streetlights', speed: 2.8 }, { type: 'lanewords', speed: 2.0, words: o.words }, { type: 'speedlines', amount: 0.5, vy: 430 }];
   const insert = (kind, i) => kind === 'jade' ? [ink, { type: 'sodium', period: P, amount: 0.9, kick: 1, alpha: 0.4 }, jade('J9', { light: 'sodium', late: P / 2, cam: { from: [0.76, 0.42, 1.05], to: [0.76, 0.42, 1.12] } })]
-    : kind === 'pages' ? [{ type: 'fill', color: PAL.sodium }, { type: 'world', roto: R.road, alpha: 0.8, color: PAL.ink, comp: 'source-over', lights: 0, speed: 2 }, { type: 'casepages', n: 8 }]
+    : kind === 'pages' ? [{ type: 'fill', color: '#E8860F' }, { type: 'world', roto: R.road, alpha: 0.8, color: PAL.ink, comp: 'source-over', lights: 0, speed: 2 }, { type: 'casepages', n: 8 }]
     : kind === 'scale' ? [ink, ...sirenLit({ base: 0.45 }), ...suits('S5', { cam: { from: [0.5, 0.5, 0.28], to: [0.5, 0.5, 0.22], dy: -120 } }),
       { type: 'suits', roto: R.suits('S5'), cam: { from: [0.25, 0.4, 2.8], to: [0.25, 0.4, 3.2], dx: 700 } }, { type: 'speedlines', amount: 0.6 }]
     : [ink, { type: 'world', roto: R.road, alpha: 0.9, lights: 1, speed: 2.4 }, { type: 'mirror', rect: [460, 60, 1000, 300], zoom: 1.2, layers: [{ type: 'world', roto: R.flood, alpha: 0.9, lights: e => 1 - e.u * 0.8 }, { type: 'sirens', side: 'full', amount: e => 1 - e.u, base: 0.4 }] }];
   C('N2_lane', n2, n3, lane(), { hud: hud(3, 4, { ok: true }), fx: drive });
-  [['jade', 2], ['pages', 4], ['scale', 6], ['mirror', 7]].forEach(([k, b], j) => C(`N2_${k}`, DB(b), DB(b + 1), [...insert(k, j),
-    { type: 'slam', hits: T.chopsIn(DB(b), DB(b + 1)).map(c => ({ t: c, text: 'I DREAMT', variant: 'stack' })), onType: true, cx: k === 'jade' ? 560 : DW / 2 }],
-    { hud: hud(3, 5, { ok: true }), fx: drive }));
+  [['jade', 2], ['pages', 4], ['scale', 6], ['mirror', 7]].forEach(([k, b], j) => C(`N2_${k}`, DB(b), DB(b + 1), insert(k, j),
+    { hud: hud(3, 5, { ok: true }), fx: { ...drive, ...(k === 'pages' ? { strobe: 0 } : {}) } }, k === 'pages' ? { post: { bloom: 0 } } : {}));
   // N3: the search tree collapses into the road — thousands of branches fold into one line, the LSD curve
   C('N3_collapse', n3, n4, [ink, { type: 'collapse', n: 1100, progress: e => smooth(0.05, 0.9, e.u) }, { type: 'kickflash', color: PAL.bone, amount: 0.25 }],
     { hud: { attempt: 3, ok: true, tc: true, eval: t => lerp(5, 40, clamp((t - n3) / (n4 - n3))) }, fx: { kick: 1, strobe: 0.5 } });
@@ -329,8 +327,11 @@ export function buildShots(T) {
     { type: 'ghostcar', x: e => lerp(900, 1500, e.u), y: e => lerp(420, 1000, e.u), scale: e => lerp(0.3, 0.8, e.u), alpha: e => 0.95 * (1 - e.u), color: PAL.bone }],
     { hud: { attempt: 3, ok: true, tc: true, eval: Infinity }, fx: { kick: 0.8, downInvert: 2 } });
   // N5: pure road, pure speed; the HUD falls away; inserts every other bar
-  C('N5_speed', n5, n6, lane({ words: ['I', 'DREAMT'] }), { hud: { attempt: 3, ok: true, tc: true, eval: Infinity, alpha: 1 }, fx: drive });
-  ['pages', 'jade', 'scale', 'jade'].forEach((k, j) => C(`N5_${k}${j}`, DB(17 + 2 * j), DB(18 + 2 * j), insert(k, j), { hud: j < 2 ? { attempt: 3, ok: true, eval: Infinity } : null, fx: drive }));
+  C('N5_speed', n5, n6, lane(), { hud: { attempt: 3, ok: true, tc: true, eval: Infinity, alpha: 1 }, fx: drive });
+  ['pages', 'jade', 'scale', 'jade'].forEach((k, j) => C(`N5_${k}${j}`, DB(17 + 2 * j), DB(18 + 2 * j), insert(k, j), { hud: j < 2 ? { attempt: 3, ok: true, eval: Infinity } : null, fx: { ...drive, ...(k === 'pages' ? { strobe: 0 } : {}) } }, k === 'pages' ? { post: { bloom: 0 } } : {}));
+  // "I DREAMT" (the chopped vocal) gets its own one-beat inserts: ink stutter-stack on a bone flash
+  for (const c of T.chopsIn(n2, n6).filter(c => (c < n3 || c >= n5))) C(`N_dreamt${Math.round(c * 100)}`, c, c + P, [{ type: 'fill', color: PAL.bone }, { type: 'slam', text: 'I DREAMT', variant: 'stack', at: 0, color: PAL.ink }],
+    { fx: { kick: 1 } }, { post: { bloom: 0, vignette: 0.1 } });
   C('N6_lake', n6, qed, [ink, { type: 'world', roto: R.aerial, alpha: 1, lights: 0.5, cam: { from: [0.45, 0.6, 1.5], to: [0.5, 0.5, 0.82] }, loop: false },
     { type: 'car', roto: R.aerial, view: 'chase', lights: 'tail', trail: true, cam: { from: [0.45, 0.6, 1.5], to: [0.5, 0.5, 0.82] }, loop: false },
     { type: 'tree', seed: 7, depth: 4, progress: 1, lit: 1, alpha: 0.6, x: 180, y: 560, w: 1560, h: 980, litColor: PAL.cyan },

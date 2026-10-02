@@ -128,8 +128,8 @@ export function searchTree(g, T, o) {
     const p0 = P(nodes[n.parent]), p1 = P(n);
     const mx = p0[0] + (p1[0] - p0[0]) * 0.45;
     const isLit = alive.has(n.i);
-    g.strokeStyle = isLit && lit > 0 ? rgba(o.litColor || PAL.bone, a * lerp(0.6, 1, lit)) : rgba(PAL.boneDim, a * 0.75);
-    g.lineWidth = isLit && lit > 0 ? lerp(3, 6, lit) : 3;
+    g.strokeStyle = isLit && lit > 0 ? rgba(o.litColor || (o.ink ? PAL.ink : PAL.bone), a * lerp(0.6, 1, lit)) : rgba(o.ink ? PAL.ink : PAL.boneDim, a * (o.ink ? 0.8 : 0.75));
+    g.lineWidth = (isLit && lit > 0 ? lerp(3, 6, lit) : 3) * (o.ink ? 1.4 : 1);
     if (o.elbow) {   // elbow connector (bracket look), partially drawn by u
       const L1 = mx - p0[0], L2 = Math.abs(p1[1] - p0[1]), L3 = p1[0] - mx, Lt = L1 + L2 + L3, s = u * Lt;
       g.beginPath(); g.moveTo(p0[0], p0[1]);
@@ -144,16 +144,16 @@ export function searchTree(g, T, o) {
       if (!n.kids.length && !alive.has(n.i)) {
         const st = clamp((grow - n.d - (n.r ?? 0) * 0.35) * 2.2);
         if (st > 0) glyph(g, '✗', p1[0] + 22, p1[1], o.leafSize ?? 40, rgba(PAL.red, a * clamp(st * 1.5)));
-      } else { g.fillStyle = isLit && lit > 0 ? rgba(PAL.bone, a) : rgba(PAL.boneDim, a * 0.8); g.beginPath(); g.arc(p1[0], p1[1], n.d === 1 ? 9 : 5, 0, Math.PI * 2); g.fill(); }
+      } else { g.fillStyle = o.ink ? PAL.ink : isLit && lit > 0 ? rgba(PAL.bone, a) : rgba(PAL.boneDim, a * 0.8); g.beginPath(); g.arc(p1[0], p1[1], n.d === 1 ? 9 : 5, 0, Math.PI * 2); g.fill(); }
     }
   }
-  const r0 = P(nodes[0]); g.fillStyle = rgba(PAL.bone, a); g.fillRect(r0[0] - 8, r0[1] - 8, 16, 16);
+  const r0 = P(nodes[0]); g.fillStyle = o.ink ? PAL.ink : rgba(PAL.bone, a); g.fillRect(r0[0] - 8, r0[1] - 8, 16, 16);
   if (o.labels) {
     setFont(g, F.mono(o.labelSize ?? 48, 700), 0); g.textBaseline = 'alphabetic';
     for (const lb of o.labels) {
       const n = nodes[lb.node]; if (!n) continue; const p = P(n);
       if (grow - n.d < 0.6) continue;
-      g.fillStyle = rgba(lb.color || PAL.bone, a * clamp((grow - n.d - 0.6) * 3));
+      g.fillStyle = rgba(lb.color || (o.ink ? PAL.ink : PAL.bone), a * clamp((grow - n.d - 0.6) * 3));
       g.fillText(lb.text, p[0] + 22, p[1] - 22);
     }
   }
