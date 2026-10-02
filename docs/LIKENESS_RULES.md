@@ -68,3 +68,4 @@ animations (J1, J6). Everything else waits for morning review.
   reject |delta| > 12° (or opposite turns), except near-frontal heads (|head|<=12, |torso|<=8).
 - Center-locked performance shots need a straight-on source photo (the most frontal with glasses + open eyes:
   PXL_20260528_215628802, yaw -8.6) and a square, symmetric body.
+- LOCKED STYLE (user): B with B1 eyebrows (fuller, darker) + B2 cheekbone tone shape. Crown = smooth volume.

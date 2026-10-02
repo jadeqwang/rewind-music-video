@@ -154,7 +154,10 @@ export function buildShots(T) {
     { type: 'star', x: 1180, y: 430, r: 150 }, { type: 'bullet', x: 780, y: 470, len: 1200, angle: 0.02 },
     { type: 'slam', text: 'SHOT', at: 0, y: 1010, maxH: 260, onType: true, stutter: 0.5 },
   ], { hud: { attempt: 1, failed: true, mate: -1, tc: true } }, { post: { ca: 3, bloom: 0.4 } });
-  add('B8_case01', sfx1, T.beatBefore(W('stops').start - 0.3), 'freeze', { source: 'B6_tab', case: 1, move: { n: 1, move: 'pull over', nag: '??' }, loc: 'LAKE SHORE DR', file: 'FILE 65-HQ-' },
+  // Picasso escalation 1/4: a hint — the subject's portrait on the case file splits into 2 planes; Guernica planes + lamp-eye over the print
+  const casePic = (planes) => [{ type: 'guernica', rect: [100, 190, 1150, 647], n: 5 + planes, bx: 675, by: 236, br: 62 },
+    { type: 'cubist', planes, clip: [1320, 820, 420, 210], cx: 1530, cy: 930, scale: 0.55, bg: '#2A2624', seed: planes }];
+  add('B8_case01', sfx1, T.beatBefore(W('stops').start - 0.3), 'freeze', { source: 'B6_tab', case: 1, move: { n: 1, move: 'pull over', nag: '??' }, loc: 'LAKE SHORE DR', file: 'FILE 65-HQ-', over: casePic(2) },
     { fx: { heart: 0, jerks: [] }, post: {} });
   C('B9_silence', T.beatBefore(W('stops').start - 0.3), drop1, [{ type: 'fill', color: '#000' },
     { type: 'bullet', x: 1100, y: 540, len: 1400, angle: 0, color: PAL.bone },
@@ -232,7 +235,7 @@ export function buildShots(T) {
   const sfx2 = ev('shot_sfx', 2), drop2 = ev('drop', 2), stops2 = W('stops', 2).start;
   C('F4_shot', shot2, sfx2, [{ type: 'freezeOf', shot: 'F3_tab', withType: false }, { type: 'star', x: 520, y: 420, r: 140 }, { type: 'bullet', x: 900, y: 600, len: 900, angle: 0.4 },
     { type: 'slam', text: 'SHOT', at: 0, y: 1010, maxH: 260, onType: true, stutter: 0.5 }], { hud: { attempt: 2, failed: true, mate: -1, tc: true } });
-  add('F5_case02', sfx2, T.beatBefore(stops2 - 0.3), 'freeze', { source: 'F3_tab', case: 2, move: { n: 1, move: 'bolt', nag: '?' }, loc: 'FIELD, MONTROSE', file: 'FILE 65-HQ-', bullet: { x: 900, y: 600, len: 900, angle: 0.4 } });
+  add('F5_case02', sfx2, T.beatBefore(stops2 - 0.3), 'freeze', { over: casePic(4), source: 'F3_tab', case: 2, move: { n: 1, move: 'bolt', nag: '?' }, loc: 'FIELD, MONTROSE', file: 'FILE 65-HQ-', bullet: { x: 900, y: 600, len: 900, angle: 0.4 } });
   C('F6_silence', T.beatBefore(stops2 - 0.3), drop2, [{ type: 'fill', color: '#000' }, { type: 'bullet', x: 1100, y: 540, len: 1400, angle: 0 },
     { type: 'mono', text: 'time stops', y: 700, typed: 12, at: stops2 - T.beatBefore(stops2 - 0.3) - 0.35 },
     { type: 'mono', text: 'hold \u25c0\u25c0 to rewind', y: 860, size: 46, weight: 700, color: PAL.cyan, alpha: e => (Math.floor(e.lt * 3) % 2 ? 1 : 0.35) }], { fx: { heart: 0 } }, { post: { bloom: 0.5, vignette: 0 } });
@@ -305,7 +308,8 @@ export function buildShots(T) {
   C('X1_search', b3, never, [ink, { type: 'rollouts', n: e => 220 + 2600 * e.u * e.u, seed: 31, x: 180, y: 540, w: 1600, h: 900, lw: 1.2, tick: 2, labels: false, kills: [{ at: 0.3, share: 0.3, dy: -0.35 }, { at: 0.55, share: 0.3, dy: 0.0 }, { at: 0.8, share: 0.35, dy: 0.3 }] },
     { type: 'counter', value: e => (e.u < 0.92 ? Math.floor(3 + Math.pow(e.u / 0.92, 3) * 996) : '∞'), x: DW - 80, y: 250, size: 150 }],
     { hud: { attempt: 3, tc: true, eval: e => Math.sin(e * 17) * 9 }, fx: { heart: 0.5, kick: 0.6 } });
-  for (const d of T.downbeatsIn(b3 + 0.5, never - 0.5)) C(`X1_eyes${DI(d)}`, d, d + P, [ink, { type: 'glasses' }], { fx: { heart: 0.5 } });
+  // Picasso escalation 3/4: the fully fractured portrait, planes re-cut on every heartbeat
+  for (const d of T.downbeatsIn(b3 + 0.5, never - 0.5)) C(`X1_cubist${DI(d)}`, d, d + 2 * P, [ink, { type: 'cubist', planes: 6, beatCycle: true, scale: 2.4, cy: 500 }], { fx: { heart: 0.6 } }, { post: { bloom: 0.1 } });
   C('X2_never', never, stop3, [ink, { type: 'rollouts', n: 2800, seed: 31, x: 180, y: 540, w: 1600, h: 900, lw: 1.2, tick: 2, labels: false, kill: e => e.u, survivor: true, progress: 1, surviveDy: 0.05, kills: [{ at: 0.3, share: 0.3, dy: -0.35 }, { at: 0.55, share: 0.3, dy: 0.0 }, { at: 0.8, share: 0.35, dy: 0.3 }] }, { type: 'slam', text: 'NEVER', at: 0, y: 1000, maxH: 300, onType: true }],
     { hud: { attempt: 3, tc: true, eval: 0 }, fx: { kick: 1 } });
   C('X3_stop', stop3, T.opt(T => T.section('silence3').end, stop3 + 0.66) - 0.22, [ink, { type: 'rollouts', n: 0, seed: 31, x: 180, y: 540, w: 1600, h: 900, survivor: true, surviveDy: 0.05, labels: false, kills: [] }, { type: 'slam', text: 'STOP', at: 0, y: 1000, maxH: 300, onType: true }], { fx: { kick: 1 } });
@@ -327,6 +331,9 @@ export function buildShots(T) {
       { type: 'suits', roto: R.suits('S5'), cam: { from: [0.25, 0.4, 2.8], to: [0.25, 0.4, 3.2], dx: 700 } }, { type: 'speedlines', amount: 0.6 }]
     : [ink, { type: 'world', roto: R.road, alpha: 0.9, lights: 1, speed: 2.4 }, { type: 'mirror', rect: [460, 60, 1000, 300], zoom: 1.2, layers: [{ type: 'world', roto: R.flood, alpha: 0.9, lights: e => 1 - e.u * 0.8 }, { type: 'sirens', side: 'full', amount: e => 1 - e.u, base: 0.4 }] }];
   C('N2_lane', n2, n3, lane(), { hud: hud(3, 4, { ok: true }), fx: drive });
+  // Picasso escalation 4/4: she RESOLVES — the planes converge into one whole single-view face (the survivor)
+  C('N1_resolve', n2, DB(2), [ink, { type: 'sodium', period: P, amount: 0.6, alpha: 0.3 }, { type: 'cubist', planes: 6, resolve: e => smooth(0.05, 0.75, e.u), scale: 2.3, cy: 500 }],
+    { hud: hud(3, 5, { ok: true }), fx: { kick: 1 } }, { post: { bloom: 0.1 } });
   [['jade', 2], ['pages', 4], ['scale', 6], ['mirror', 7]].forEach(([k, b], j) => C(`N2_${k}`, DB(b), DB(b + 1), insert(k, j),
     { hud: hud(3, 5, { ok: true }), fx: { ...drive, ...(k === 'pages' ? { strobe: 0 } : {}) } }, k === 'pages' ? { post: { bloom: 0 } } : {}));
   // N3: the search tree collapses into the road — thousands of branches fold into one line, the LSD curve

@@ -92,7 +92,8 @@ export async function rewindOf(ctx, shotId, fromT, toT, progress, opts = {}) {
     const c = ctx.g; c.save(); c.setTransform(1, 0, 0, 1, 0, 0);
     c.globalAlpha = k === 0 ? 1 : a0 * 0.6 * (1 - (k - 1) / n);
     c.globalCompositeOperation = k === 0 ? 'source-over' : 'screen';
-    c.drawImage(L, 0, 0); c.restore();
+    if (k > 0) c.filter = `blur(${1 + k}px)`;   // long-exposure light trails
+    c.drawImage(L, 0, 0); c.filter = 'none'; c.restore();
   }
   return ts;
 }

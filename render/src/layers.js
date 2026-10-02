@@ -352,7 +352,12 @@ export const LAYERS = {
       const c = i % 4, r = Math.floor(i / 4), w = DW * sc, h = DH * sc;
       const x = DW / 2 - w * 0.75 + (c - (cols - 1) / 2) * w * 0.34, y = DH * 0.08 + r * h * 0.42 + (DH - h) * 0.4 - (rows - 1) * h * 0.2;
       const ct = roto.clipTime(id, env.lt - i * 0.12, { loop: 'pingpong' });   // each copy a step later in time
-      roto.jade(ctx.g, id, ct, { rect: { x, y, w, h }, ghost: i > 0, ghostColor: i % 2 ? PAL.cyan : PAL.bone, boil: ctx.seed + i, mouth: 0, alpha: i ? 0.85 : 1 });
+      if (i === 0) { roto.jade(ctx.g, id, ct, { rect: { x, y, w, h }, boil: ctx.seed, mouth: 0 }); continue; }
+      // Gjon Mili light drawing: the past run as one luminous line, long exposure (soft glow + crisp core), brightness travelling
+      const g = ctx.g; g.save(); g.globalCompositeOperation = 'lighter';
+      g.filter = 'blur(6px)'; roto.jade(g, id, ct, { rect: { x, y, w, h }, ghost: true, ghostColor: i % 2 ? PAL.cyan : PAL.bone, mouth: 0, alpha: 0.7, v1: true });
+      g.filter = 'none'; roto.jade(g, id, ct, { rect: { x, y, w, h }, ghost: true, ghostColor: '#FFFFFF', mouth: 0, alpha: 0.4 + 0.5 * (0.5 + 0.5 * Math.sin(env.t * 6 + i)), v1: true });
+      g.restore();
     }
   },
   // A Beautiful Mind wall: pinned death photos, timestamps, red string
@@ -695,6 +700,77 @@ Object.assign(LAYERS, {
     setFont(ty, F.cmu(L.size ?? 120)); ty.fillStyle = rgba(L.color || PAL.bone, a); ty.fillText(L.title, DW / 2, L.y ?? 540);
     setFont(ty, F.mono(44, 700), 8); ty.fillStyle = rgba(L.sub2 || PAL.boneDim, a); ty.fillText(L.sub ?? '', DW / 2, (L.y ?? 540) + 110);
     ty.restore();
+  },
+});
+Object.assign(LAYERS, {
+  // CUBIST SIMULTANEITY: her face (style B) fractured into angular planes that combine the frontal view (J6) and the
+  // side view (J1, its nose/cheek aligned onto the frontal face) — multiple attempts at once. Elegant (late-1930s portrait
+  // logic), never grotesque: the frontal eyes stay whole and full size; planes offset a little, shift tone, ink seams.
+  // L: {front, side, planes (0..6), resolve (0..1: planes converge into one whole face), cx, cy, scale, beatCycle}
+  async cubist(ctx, L, env, { roto }) {
+    const F = L.front || 'J6', Sd = L.side || 'J1', mf = roto.meta(F), ms = roto.meta(Sd); if (!mf || !mf.celData) return;
+    const ctF = roto.clipTime(F, env.lt * (L.speed ?? 0.4) + (L.offset ?? 2.0), { loop: 'pingpong' }), fiF = roto.frameIndex(mf, ctF);
+    const cdF = mf.celData[fiF] || mf.celData[String(fiF)]; if (!cdF || !cdF.nose) return;
+    const iod = cdF.iod || 160, nose = cdF.nose;
+    // place the face: scale so the face is big in frame, centred at (cx, cy)
+    const sc = (L.scale ?? 2.3), cx = L.cx ?? 960, cy = L.cy ?? 520;
+    const rect = { x: cx - nose[0] * sc, y: cy - nose[1] * sc, w: 1920 * sc, h: 1080 * sc };
+    const Lf = layer('cub_front', ctx.g.canvas.width, ctx.g.canvas.height), fg = clearLayer(Lf); fg.setTransform(ctx.S, 0, 0, ctx.S, 0, 0);
+    roto.jade(fg, F, ctF, { rect, mouth: clamp((env.T.e('vocal', env.t) - 0.18) * 1.6) });
+    let haveSide = false; const Ls = layer('cub_side', ctx.g.canvas.width, ctx.g.canvas.height), sg = clearLayer(Ls); sg.setTransform(ctx.S, 0, 0, ctx.S, 0, 0);
+    if (ms && ms.celData) {
+      const ctS = roto.clipTime(Sd, env.lt * 0.4 + 1.5, { loop: 'pingpong' }), fiS = roto.frameIndex(ms, ctS), cdS = ms.celData[fiS] || ms.celData[String(fiS)];
+      if (cdS && cdS.N && cdS.E) {   // align the profile's nose tip onto the frontal nose, scaled by eye–nose distance
+        const dd = Math.hypot(cdS.N[0] - cdS.E[0], cdS.N[1] - cdS.E[1]), k = sc * (iod * 0.62) / dd;
+        const rs = { x: cx - cdS.N[0] * k + iod * sc * 0.06, y: cy - cdS.N[1] * k, w: 1920 * k, h: 1080 * k };
+        roto.jade(sg, Sd, ctS, { rect: rs, mouth: 0 }); haveSide = true;
+      }
+    }
+    resetCtx(fg); resetCtx(sg);
+    const res = clamp(A(L.resolve, env, 0)), nP = Math.max(0, Math.round(A(L.planes, env, 3) * (1 - res)));
+    const g = ctx.g, S = ctx.S, cyc = L.beatCycle ? env.b.i : 0;
+    g.save(); g.setTransform(1, 0, 0, 1, 0, 0);
+    if (L.clip) { const [qx, qy, qw, qh] = L.clip; g.beginPath(); g.rect(qx * S, qy * S, qw * S, qh * S); g.clip(); g.fillStyle = L.bg || PAL.ink; g.fillRect(qx * S, qy * S, qw * S, qh * S); }
+    g.drawImage(Lf, 0, 0);                        // the whole frontal face is the base (eyes stay whole)
+    if (nP > 0) {
+      const R0 = rng((L.seed ?? 3) + cyc * 7.31), u = iod * sc * S;
+      const C = [cx * S, cy * S];
+      for (let p = 0; p < nP; p++) {
+        // an angular plane: a wedge from near the face centre outward (avoid covering both eyes)
+        const a0 = (p / nP) * Math.PI * 2 + R0() * 0.6 + 0.4, a1 = a0 + 0.7 + R0() * 0.6, r0 = u * (0.15 + R0() * 0.25), r1 = u * (2.2 + R0());
+        const poly = [[C[0] + Math.cos(a0) * r0, C[1] + Math.sin(a0) * r0 + u * 0.25], [C[0] + Math.cos(a0) * r1, C[1] + Math.sin(a0) * r1], [C[0] + Math.cos(a1) * r1, C[1] + Math.sin(a1) * r1], [C[0] + Math.cos(a1) * r0, C[1] + Math.sin(a1) * r0 + u * 0.25]];
+        const src = haveSide && (p % 2 === 0) ? Ls : Lf, off = (1 - res) * u * 0.06;
+        g.save(); g.beginPath(); poly.forEach((q, i) => (i ? g.lineTo(q[0], q[1]) : g.moveTo(q[0], q[1]))); g.closePath(); g.clip();
+        g.drawImage(src, (R0() - 0.5) * off, (R0() - 0.5) * off);
+        // tone shift per plane (flat): warm shadow / sodium / cyan light / grey
+        const tones = ['rgba(150,120,100,0.28)', 'rgba(255,159,28,0.16)', 'rgba(61,242,230,0.14)', 'rgba(120,120,120,0.22)'];
+        g.globalCompositeOperation = 'multiply'; g.fillStyle = tones[(p + cyc) % tones.length]; g.fillRect(0, 0, g.canvas.width, g.canvas.height);
+        g.restore();
+        // ink seam along the plane edge
+        g.strokeStyle = 'rgba(7,8,10,0.9)'; g.lineWidth = 3 * S; g.beginPath(); poly.forEach((q, i) => (i ? g.lineTo(q[0], q[1]) : g.moveTo(q[0], q[1]))); g.closePath(); g.stroke();
+      }
+    }
+    g.restore();
+  },
+  // Guernica-inflected freeze: angular planes in ink/bone/greys + the bare-bulb lamp-eye (spiky radiant shape) above
+  guernica(ctx, L, env) {
+    const g = ctx.g, R0 = rng(L.seed ?? 9), n = L.n ?? 7, [x, y, w, h] = L.rect || [0, 0, DW, DH];
+    g.save(); g.beginPath(); g.rect(x, y, w, h); g.clip();
+    for (let i = 0; i < n; i++) {
+      const px = x + R0() * w, py = y + R0() * h, a = R0() * Math.PI, r1 = w * (0.25 + R0() * 0.4), r2 = h * (0.2 + R0() * 0.4);
+      g.beginPath(); g.moveTo(px, py); g.lineTo(px + Math.cos(a) * r1, py + Math.sin(a) * r1); g.lineTo(px + Math.cos(a + 1.9) * r2, py + Math.sin(a + 1.9) * r2); g.closePath();
+      g.globalCompositeOperation = 'multiply'; g.fillStyle = ['rgba(120,118,112,0.35)', 'rgba(60,58,56,0.3)', 'rgba(200,196,186,0.4)'][i % 3]; g.fill();
+      g.globalCompositeOperation = 'source-over'; g.strokeStyle = 'rgba(7,8,10,0.85)'; g.lineWidth = 3; g.stroke();
+    }
+    g.restore();
+    // the lamp-eye: a spiky radiant bulb in bone with an ink pupil
+    const bx = L.bx ?? x + w * 0.5, by = L.by ?? y + 70, R = L.br ?? 70;
+    g.save(); g.fillStyle = PAL.bone; g.strokeStyle = PAL.ink; g.lineWidth = 4; g.beginPath();
+    for (let k = 0; k < 28; k++) { const a = k / 28 * Math.PI * 2, rr = k % 2 ? R * 0.55 : R * (1 + 0.25 * hash(k, 3)); g.lineTo(bx + Math.cos(a) * rr, by + Math.sin(a) * rr * 0.75); }
+    g.closePath(); g.fill(); g.stroke();
+    g.fillStyle = PAL.ink; g.beginPath(); g.ellipse(bx, by, R * 0.32, R * 0.2, 0, 0, Math.PI * 2); g.fill();
+    g.fillStyle = PAL.bone; g.beginPath(); g.arc(bx - R * 0.08, by - R * 0.04, R * 0.07, 0, Math.PI * 2); g.fill();
+    g.restore();
   },
 });
 const TREES = new Map();
