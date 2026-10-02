@@ -36,3 +36,8 @@ E1_alt: 151 frames @15fps from assets/clips/E1_alt.mp4 (1280x720), layers=['line
 E1_alt: done 151/151 frames, wall 64.0s, 30.3 MB, mean s/frame (per worker): flow=0.148, matte=0.014, ground=0.0, face=0.0, lines=0.661, write=0.285, total=1.108
 E2_calm: 91 frames @15fps from assets/clips/E2_calm.mp4 (1280x720), layers=['lines', 'matte', 'light', 'flow'], workers=3, tone={'hi': 0.5686274766921997, 'gamma': 0.47425837079759287}
   E2_calm    0/91 1.38s  flow=0.32 matte=0.01 ground=0.00 face=0.00 lines=0.90 write=0.16
+  E2_calm   30/91 0.57s  flow=0.06 matte=0.00 ground=0.00 face=0.00 lines=0.38 write=0.13
+  E2_calm   60/91 0.69s  flow=0.06 matte=0.01 ground=0.00 face=0.00 lines=0.29 write=0.33
+  E2_calm   10/91 1.81s  flow=0.12 matte=0.21 ground=0.00 face=0.00 lines=0.98 write=0.50
+  E2_calm   40/91 1.86s  flow=0.09 matte=0.03 ground=0.00 face=0.00 lines=1.21 write=0.53
+  E2_calm   70/91 1.34s  flow=0.30 matte=0.01 ground=0.00 face=0.00 lines=0.65 write=0.38
