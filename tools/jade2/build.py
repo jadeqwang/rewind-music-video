@@ -269,7 +269,7 @@ def build_frame(J, i, frame, meta, fd, pf):
     return info
 
 VARIANTS = {}
-SKIN, SKIN_SH, BLUSH, HAIR_HI = (180, 201, 233), (146, 168, 211), (160, 168, 226), (40, 44, 58)   # BGR warm palette
+SKIN, SKIN_SH, BLUSH, HAIR_HI = (182, 203, 236), (150, 172, 214), (172, 184, 236), (34, 36, 46)   # BGR warm palette
 def variant_B(J, i, out, frame, info, face, hair, iod):
     """(B) 4–5 tone warm-skin cel: skin + skin shadow + cheek blush + 2-tone hair (flat shapes)."""
     fm = face > 0
@@ -280,14 +280,17 @@ def variant_B(J, i, out, frame, info, face, hair, iod):
     lo = np.array(info['lips']['outer']); mc = lo.mean(0); nz = np.array(info['nose'])
     for side in (-1, 1):
         c = (nz[0] + side * iod * 0.42, nz[1] - iod * 0.05)
-        m = np.zeros(face.shape, np.uint8); cv2.ellipse(m, (int(c[0]), int(c[1])), (int(iod * 0.2), int(iod * 0.11)), 0, 0, 360, 1, -1, cv2.LINE_AA)
-        out[(m > 0) & fm, :3] = BLUSH
+        m = np.zeros(face.shape, np.uint8); cv2.ellipse(m, (int(c[0]), int(c[1])), (int(iod * 0.17), int(iod * 0.08)), 0, 0, 360, 1, -1, cv2.LINE_AA)
+        out[(m > 0) & fm & bone, :3] = BLUSH
     # hair second tone: a broad soft sheen band on the crown
     ink = (np.abs(out[..., :3].astype(int) - INK).sum(-1) < 12) & (hair > 0)
-    top = np.array(info['top']); up = np.array(info['up'])
-    m = np.zeros(face.shape, np.uint8); c = top + up * iod * 0.15
-    cv2.ellipse(m, (int(c[0]), int(c[1])), (int(iod * 0.75), int(iod * 0.22)), math.degrees(math.atan2(up[1], up[0])) + 90, 0, 360, 1, -1, cv2.LINE_AA)
-    out[(m > 0) & ink, :3] = HAIR_HI
+    # hair second tone: the curtains falling from the part (one lit side of each), flat shapes
+    part = np.array(info['part']); up = np.array(info['up']); perp = np.array([up[1], -up[0]])
+    for side in (-1, 1):
+        q = np.array([part + perp * side * iod * 0.1, part + perp * side * iod * 0.55 - up * iod * 0.1, part + perp * side * iod * 0.9 - up * iod * 0.9,
+                      part + perp * side * iod * 0.98 - up * iod * 2.6, part + perp * side * iod * 0.86 - up * iod * 2.6, part + perp * side * iod * 0.72 - up * iod * 0.8, part + perp * side * iod * 0.35 - up * iod * 0.05])
+        m = np.zeros(face.shape, np.uint8); cv2.fillPoly(m, [np.round(chaikin(q, 3) * 4).astype(np.int32)], 1, cv2.LINE_AA, shift=2)
+        out[(m > 0) & ink, :3] = HAIR_HI
     os.makedirs(f'{ROOT}/assets/roto/{J}/celB', exist_ok=True); cv2.imwrite(f'{ROOT}/assets/roto/{J}/celB/{i:04d}.png', out)
 def variant_C(J, i, out, frame, info, face, hair, iod):
     """(C) graphic portrait drawn over her REAL face: her photo warped to the frame's eye anchors, smoothed and
@@ -295,10 +298,9 @@ def variant_C(J, i, out, frame, info, face, hair, iod):
     sys.path.insert(0, ROOT + '/tools/likeness'); import measure as MS
     ref = ROOT + '/refs/jade/IMG_20180610_074732_mr1528617091925.jpg'
     rgb = MS.load_rgb(ref); lm = MS.landmarks(rgb); P = lm[0][:, :2]
-    src = np.float32([P[33], P[263], P[152]])
-    fd_c = info['_canthi']; ch = np.array(info['chin'])
-    dst = np.float32([fd_c[0], fd_c[1], ch])
-    A = cv2.getAffineTransform(src, dst)
+    fd_c = info['_canthi']
+    src = np.float32([P[33], P[263], P[1], P[152]]); dst = np.float32([fd_c[0], fd_c[1], info['nose'], info['chin']])
+    A, _ = cv2.estimateAffine2D(src, dst, method=cv2.LMEDS)
     warped = cv2.warpAffine(cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR), A, (W, H), flags=cv2.INTER_CUBIC)
     sm = warped
     for _ in range(4): sm = cv2.bilateralFilter(sm, 11, 30, 11)
@@ -315,11 +317,12 @@ def variant_C(J, i, out, frame, info, face, hair, iod):
         mk = cv2.morphologyEx(mk.astype(np.uint8), cv2.MORPH_OPEN, np.ones((7, 7), np.uint8))
         col = tuple(int(x) for x in cen[5 - k]) if False else tuple(int(x) for x in cen[k])
     # paint darkest-first-as-base: fill region with the lightest, then darker levels on top
-    smooth_fill(region.astype(np.uint8), (*[int(x) for x in cen[5]], 255), res, min_area=500, step=4, it=3)
+    RAMP = [(52, 44, 58), (92, 98, 140), (124, 142, 192), (150, 172, 214), (178, 199, 233), (204, 222, 244)]   # warm skin ramp (BGR), dark → light
+    smooth_fill(region.astype(np.uint8), (*RAMP[5], 255), res, min_area=500, step=4, it=3)
     for k in range(4, -1, -1):
         mk = ((L >= 0) & (L <= k)).astype(np.uint8)
         mk = cv2.morphologyEx(mk, cv2.MORPH_OPEN, np.ones((5, 5), np.uint8)) & region
-        smooth_fill(mk, (*[int(x) for x in cen[k]], 255), res, min_area=int(iod * iod * 0.004), step=3, it=3, holes=True)
+        smooth_fill(mk, (*RAMP[k], 255), res, min_area=int(iod * iod * 0.004), step=3, it=3, holes=False)
     os.makedirs(f'{ROOT}/assets/roto/{J}/celC', exist_ok=True); cv2.imwrite(f'{ROOT}/assets/roto/{J}/celC/{i:04d}.png', res)
 
 def run(J, fr=None):

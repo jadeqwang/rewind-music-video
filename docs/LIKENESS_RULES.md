@@ -51,3 +51,6 @@ animations (J1, J6). Everything else waits for morning review.
   landmarks only as anchors/pose; eyes/brows/crease are drawn from the canonical real-photo template. Mouth from the
   vocal stem. Seedance lip-sync leads by a constant ~0.29 s (cut reference audio to start at the first sung word, or
   shift video +0.29 s). Seedance needs use_virtual_avatar:true for her face (else error 7003).
+- POSE CONGRUENCE (user): head pose and body pose must agree in every composite/frame (J9 failed: face pointed a
+  different way than the body → uncanny; J6 is the good example). Performance/center-lock shots (J5, J5b) use a
+  straight-on frontal photo (yaw≈0). Measure head yaw/pitch/roll and pose the body around it; verify shoulder line.
