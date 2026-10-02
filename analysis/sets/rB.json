@@ -1,0 +1,38 @@
+[
+ {
+  "set": "defense_room",
+  "name": "c4_gpt-image-2",
+  "model": "openai/gpt-image-2",
+  "prompt": "An empty university dissertation-defense seminar room at night, symmetrical frontal composition: a long dark table runs straight across the middle of the frame with five empty chairs in a row behind it, facing the camera. In the foreground, alone in the middle of the bare floor, a single empty chair with its back to the camera faces the table, casting a long shadow. A projector on the table throws a hard white cone of light through the dark air to a blank pale screen at the left. On the back wall a large completely blank clean black chalkboard. One cold fluorescent ceiling panel above the table; everything else falls to darkness. Tall black windows at the right with a faint distant red and blue glow. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people."
+ },
+ {
+  "set": "defense_room",
+  "name": "c5_grok-2.0",
+  "model": "xai/grok-imagine-image-2.0",
+  "prompt": "An empty university dissertation-defense seminar room at night, symmetrical frontal composition: a long dark table runs straight across the middle of the frame with five empty chairs in a row behind it, facing the camera. In the foreground, alone in the middle of the bare floor, a single empty chair with its back to the camera faces the table, casting a long shadow. A projector on the table throws a hard white cone of light through the dark air to a blank pale screen at the left. On the back wall a large completely blank clean black chalkboard. One cold fluorescent ceiling panel above the table; everything else falls to darkness. Tall black windows at the right with a faint distant red and blue glow. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people."
+ },
+ {
+  "set": "grass_field",
+  "name": "c4_gpt-image-2",
+  "model": "openai/gpt-image-2",
+  "prompt": "A wide open field of tall wild grass at night beside a lakefront highway, wide shot from low in the grass. The grass is a dark silhouette mass; only its feathery tops are rim-lit where two hard white flashlight and headlight beams rake sideways across the field from the left, cutting clean bright shafts through faint mist. Above, a huge empty black sky. On the flat far horizon, a thin row of orange highway lights and the small silhouette of the Chicago skyline. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people."
+ },
+ {
+  "set": "grass_field",
+  "name": "c5_grok-quality",
+  "model": "xai/grok-imagine-image-quality",
+  "prompt": "A wide open field of tall wild grass at night beside a lakefront highway, wide shot from low in the grass. The grass is a dark silhouette mass; only its feathery tops are rim-lit where two hard white flashlight and headlight beams rake sideways across the field from the left, cutting clean bright shafts through faint mist. Above, a huge empty black sky. On the flat far horizon, a thin row of orange highway lights and the small silhouette of the Chicago skyline. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people."
+ },
+ {
+  "set": "pullover",
+  "name": "c4_gpt-image-2",
+  "model": "openai/gpt-image-2",
+  "prompt": "Seen from behind and slightly to the side of a small dark hatchback car stopped on the paved shoulder of a lakefront highway at night, its rear in the left foreground lit red by its own brake lights. Behind it, a black sedan parked with headlights blazing into the lens, hard white backlight and long shadows across smooth dark asphalt. Four tall men in identical dark suits walk from the sedan toward the hatchback in a tight formation, solid pitch-black backlit silhouettes, faces completely in shadow and featureless, outlines of sunglasses, shoulders and ties. Faint red and blue glow. Flat empty surroundings, black lake beyond. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark."
+ },
+ {
+  "set": "pullover",
+  "name": "c5_grok-2.0",
+  "model": "xai/grok-imagine-image-2.0",
+  "prompt": "Seen from behind and slightly to the side of a small dark hatchback car stopped on the paved shoulder of a lakefront highway at night, its rear in the left foreground lit red by its own brake lights. Behind it, a black sedan parked with headlights blazing into the lens, hard white backlight and long shadows across smooth dark asphalt. Four tall men in identical dark suits walk from the sedan toward the hatchback in a tight formation, solid pitch-black backlit silhouettes, faces completely in shadow and featureless, outlines of sunglasses, shoulders and ties. Faint red and blue glow. Flat empty surroundings, black lake beyond. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark."
+ }
+]

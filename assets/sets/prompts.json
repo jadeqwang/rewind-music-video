@@ -673,5 +673,315 @@
   "secs": 16.4,
   "error": null,
   "ts": "2026-10-02T05:08:51"
+ },
+ {
+  "file": "assets/sets/pullover/c1_gpt-image-2.jpg",
+  "set": "pullover",
+  "model": "openai/gpt-image-2",
+  "prompt": "Low camera at road level on the paved shoulder of a dark lakefront highway at night. In the background a black sedan is parked with its two headlights blazing straight into the lens, hard white backlight and long parallel shadows across smooth dark asphalt. Four tall men in identical dark suits walk toward the camera in a tight symmetrical V formation, seen only as solid pitch-black backlit silhouettes, faces completely in shadow and featureless, only the outlines of sunglasses, shoulders, ties and arms. Faint red and blue glow at the frame edges. Empty flat surroundings, no trees. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "size": "1536x1024",
+   "quality": "medium",
+   "output_format": "jpeg"
+  },
+  "size": [
+   1536,
+   864
+  ],
+  "est_cost_usd": 0.06,
+  "secs": 25.3,
+  "error": null,
+  "ts": "2026-10-02T05:08:54"
+ },
+ {
+  "file": "assets/sets/grass_field/c2_grok-2.0.jpg",
+  "set": "grass_field",
+  "model": "xai/grok-imagine-image-2.0",
+  "prompt": "A wide open field of tall wild grass at night beside a lakefront highway, camera low in the grass. Hard white headlight and flashlight beams rake sideways across the grass tops from the left, leaving bright streaks and deep black gaps. The flat horizon line far away holds a thin row of orange highway lights and the small silhouette of the Chicago skyline under a black sky. Vast, empty, open. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.04,
+  "secs": 14.1,
+  "error": null,
+  "ts": "2026-10-02T05:08:58"
+ },
+ {
+  "file": "assets/sets/defense_room/c3_grok-quality.jpg",
+  "set": "defense_room",
+  "model": "xai/grok-imagine-image-quality",
+  "prompt": "An empty university seminar room at night, seen from the back corner: a long dark table with five empty chairs in a row behind it, facing a single empty chair alone in the middle of the bare floor. A projector on the table throws a hard white beam through the dark air onto a blank pale screen. A large completely blank clean black chalkboard on the wall. One cold fluorescent ceiling panel lights the table from above; the rest of the room falls into darkness. Tall black windows. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json",
+   "resolution": "1k"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.05,
+  "secs": 7.3,
+  "error": null,
+  "ts": "2026-10-02T05:08:59"
+ },
+ {
+  "file": "assets/sets/defense_room/c2_grok-2.0.jpg",
+  "set": "defense_room",
+  "model": "xai/grok-imagine-image-2.0",
+  "prompt": "An empty university seminar room at night, seen from the back corner: a long dark table with five empty chairs in a row behind it, facing a single empty chair alone in the middle of the bare floor. A projector on the table throws a hard white beam through the dark air onto a blank pale screen. A large completely blank clean black chalkboard on the wall. One cold fluorescent ceiling panel lights the table from above; the rest of the room falls into darkness. Tall black windows. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.04,
+  "secs": 14.6,
+  "error": null,
+  "ts": "2026-10-02T05:09:05"
+ },
+ {
+  "file": "assets/sets/search_space/c3_grok-quality.jpg",
+  "set": "search_space",
+  "model": "xai/grok-imagine-image-quality",
+  "prompt": "Straight-down aerial view at night of a vast highway interchange: interlocking curving ramps and overpasses branching outward from one road like the branches of a tree, each road traced by lines of orange sodium streetlights against a pitch-black ground, a few white headlight streaks. Symmetric, graphic, diagram-like, like a decision tree drawn in light. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json",
+   "resolution": "1k"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.05,
+  "secs": 6.5,
+  "error": null,
+  "ts": "2026-10-02T05:09:05"
+ },
+ {
+  "file": "assets/sets/grass_field/c1_gpt-image-2.jpg",
+  "set": "grass_field",
+  "model": "openai/gpt-image-2",
+  "prompt": "A wide open field of tall wild grass at night beside a lakefront highway, camera low in the grass. Hard white headlight and flashlight beams rake sideways across the grass tops from the left, leaving bright streaks and deep black gaps. The flat horizon line far away holds a thin row of orange highway lights and the small silhouette of the Chicago skyline under a black sky. Vast, empty, open. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "size": "1536x1024",
+   "quality": "medium",
+   "output_format": "jpeg"
+  },
+  "size": [
+   1536,
+   864
+  ],
+  "est_cost_usd": 0.06,
+  "secs": 26.1,
+  "error": null,
+  "ts": "2026-10-02T05:09:09"
+ },
+ {
+  "file": "assets/sets/defense_room/c1_gpt-image-2.jpg",
+  "set": "defense_room",
+  "model": "openai/gpt-image-2",
+  "prompt": "An empty university seminar room at night, seen from the back corner: a long dark table with five empty chairs in a row behind it, facing a single empty chair alone in the middle of the bare floor. A projector on the table throws a hard white beam through the dark air onto a blank pale screen. A large completely blank clean black chalkboard on the wall. One cold fluorescent ceiling panel lights the table from above; the rest of the room falls into darkness. Tall black windows. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "size": "1536x1024",
+   "quality": "medium",
+   "output_format": "jpeg"
+  },
+  "size": [
+   1536,
+   864
+  ],
+  "est_cost_usd": 0.06,
+  "secs": 27.7,
+  "error": null,
+  "ts": "2026-10-02T05:09:14"
+ },
+ {
+  "file": "assets/sets/search_space/c2_grok-2.0.jpg",
+  "set": "search_space",
+  "model": "xai/grok-imagine-image-2.0",
+  "prompt": "Straight-down aerial view at night of a vast highway interchange: interlocking curving ramps and overpasses branching outward from one road like the branches of a tree, each road traced by lines of orange sodium streetlights against a pitch-black ground, a few white headlight streaks. Symmetric, graphic, diagram-like, like a decision tree drawn in light. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.04,
+  "secs": 21.6,
+  "error": null,
+  "ts": "2026-10-02T05:09:19"
+ },
+ {
+  "file": "assets/sets/search_space/c1_gpt-image-2.jpg",
+  "set": "search_space",
+  "model": "openai/gpt-image-2",
+  "prompt": "Straight-down aerial view at night of a vast highway interchange: interlocking curving ramps and overpasses branching outward from one road like the branches of a tree, each road traced by lines of orange sodium streetlights against a pitch-black ground, a few white headlight streaks. Symmetric, graphic, diagram-like, like a decision tree drawn in light. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "size": "1536x1024",
+   "quality": "medium",
+   "output_format": "jpeg"
+  },
+  "size": [
+   1536,
+   864
+  ],
+  "est_cost_usd": 0.06,
+  "secs": 26.0,
+  "error": null,
+  "ts": "2026-10-02T05:09:20"
+ },
+ {
+  "file": "assets/sets/grass_field/c5_grok-quality.jpg",
+  "set": "grass_field",
+  "model": "xai/grok-imagine-image-quality",
+  "prompt": "A wide open field of tall wild grass at night beside a lakefront highway, wide shot from low in the grass. The grass is a dark silhouette mass; only its feathery tops are rim-lit where two hard white flashlight and headlight beams rake sideways across the field from the left, cutting clean bright shafts through faint mist. Above, a huge empty black sky. On the flat far horizon, a thin row of orange highway lights and the small silhouette of the Chicago skyline. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json",
+   "resolution": "1k"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.05,
+  "secs": 8.2,
+  "error": null,
+  "ts": "2026-10-02T05:10:05"
+ },
+ {
+  "file": "assets/sets/defense_room/c5_grok-2.0.jpg",
+  "set": "defense_room",
+  "model": "xai/grok-imagine-image-2.0",
+  "prompt": "An empty university dissertation-defense seminar room at night, symmetrical frontal composition: a long dark table runs straight across the middle of the frame with five empty chairs in a row behind it, facing the camera. In the foreground, alone in the middle of the bare floor, a single empty chair with its back to the camera faces the table, casting a long shadow. A projector on the table throws a hard white cone of light through the dark air to a blank pale screen at the left. On the back wall a large completely blank clean black chalkboard. One cold fluorescent ceiling panel above the table; everything else falls to darkness. Tall black windows at the right with a faint distant red and blue glow. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.04,
+  "secs": 16.3,
+  "error": null,
+  "ts": "2026-10-02T05:10:13"
+ },
+ {
+  "file": "assets/sets/pullover/c5_grok-2.0.jpg",
+  "set": "pullover",
+  "model": "xai/grok-imagine-image-2.0",
+  "prompt": "Seen from behind and slightly to the side of a small dark hatchback car stopped on the paved shoulder of a lakefront highway at night, its rear in the left foreground lit red by its own brake lights. Behind it, a black sedan parked with headlights blazing into the lens, hard white backlight and long shadows across smooth dark asphalt. Four tall men in identical dark suits walk from the sedan toward the hatchback in a tight formation, solid pitch-black backlit silhouettes, faces completely in shadow and featureless, outlines of sunglasses, shoulders and ties. Faint red and blue glow. Flat empty surroundings, black lake beyond. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.04,
+  "secs": 17.5,
+  "error": null,
+  "ts": "2026-10-02T05:10:15"
+ },
+ {
+  "file": "assets/sets/grass_field/c4_gpt-image-2.jpg",
+  "set": "grass_field",
+  "model": "openai/gpt-image-2",
+  "prompt": "A wide open field of tall wild grass at night beside a lakefront highway, wide shot from low in the grass. The grass is a dark silhouette mass; only its feathery tops are rim-lit where two hard white flashlight and headlight beams rake sideways across the field from the left, cutting clean bright shafts through faint mist. Above, a huge empty black sky. On the flat far horizon, a thin row of orange highway lights and the small silhouette of the Chicago skyline. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "size": "1536x1024",
+   "quality": "medium",
+   "output_format": "jpeg"
+  },
+  "size": [
+   1536,
+   864
+  ],
+  "est_cost_usd": 0.06,
+  "secs": 24.2,
+  "error": null,
+  "ts": "2026-10-02T05:10:21"
+ },
+ {
+  "file": "assets/sets/defense_room/c4_gpt-image-2.jpg",
+  "set": "defense_room",
+  "model": "openai/gpt-image-2",
+  "prompt": "An empty university dissertation-defense seminar room at night, symmetrical frontal composition: a long dark table runs straight across the middle of the frame with five empty chairs in a row behind it, facing the camera. In the foreground, alone in the middle of the bare floor, a single empty chair with its back to the camera faces the table, casting a long shadow. A projector on the table throws a hard white cone of light through the dark air to a blank pale screen at the left. On the back wall a large completely blank clean black chalkboard. One cold fluorescent ceiling panel above the table; everything else falls to darkness. Tall black windows at the right with a faint distant red and blue glow. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "size": "1536x1024",
+   "quality": "medium",
+   "output_format": "jpeg"
+  },
+  "size": [
+   1536,
+   864
+  ],
+  "est_cost_usd": 0.06,
+  "secs": 27.1,
+  "error": null,
+  "ts": "2026-10-02T05:10:24"
+ },
+ {
+  "file": "assets/sets/pullover/c4_gpt-image-2.jpg",
+  "set": "pullover",
+  "model": "openai/gpt-image-2",
+  "prompt": "Seen from behind and slightly to the side of a small dark hatchback car stopped on the paved shoulder of a lakefront highway at night, its rear in the left foreground lit red by its own brake lights. Behind it, a black sedan parked with headlights blazing into the lens, hard white backlight and long shadows across smooth dark asphalt. Four tall men in identical dark suits walk from the sedan toward the hatchback in a tight formation, solid pitch-black backlit silhouettes, faces completely in shadow and featureless, outlines of sunglasses, shoulders and ties. Faint red and blue glow. Flat empty surroundings, black lake beyond. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "size": "1536x1024",
+   "quality": "medium",
+   "output_format": "jpeg"
+  },
+  "size": [
+   1536,
+   864
+  ],
+  "est_cost_usd": 0.06,
+  "secs": 28.4,
+  "error": null,
+  "ts": "2026-10-02T05:10:25"
  }
 ]

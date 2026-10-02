@@ -1,0 +1,212 @@
+// roto.js: roto sequence loading (assets/roto/<id>/{lines,matte,face,features,hair}/NNNN.png + meta.json)
+// and the REDACTED NOCTURNE figure components that redraw them: luminous contours, Jade (bone fill / ghost),
+// REDACTION agents (black cut-out + face bar + sunglasses glint).
+//
+// Loading is miss-driven and deterministic: get() returns a cached ImageBitmap or records a miss and returns null.
+// The engine redraws the frame after awaiting the misses, so the output never depends on cache state.
+// prefetch() warms the current shot's frames ± a window in the background; an LRU caps memory.
+import { DW, DH, PAL, clamp, fin, hash, hsig, layer, clearLayer, rgba, BOIL_FPS } from './core.js';
+
+const ROOT = '../assets/roto';
+const MAX = 160;                  // cached bitmaps (1280x720 ≈ 3.7 MB each)
+const cache = new Map();          // url -> {bmp, last}
+const pending = new Map();        // url -> Promise
+const metas = new Map();          // id -> meta | null
+let clock = 0;
+export const misses = new Set();
+
+export async function loadMeta(id) {
+  if (metas.has(id)) return metas.get(id);
+  let m = null;
+  try { const r = await fetch(`${ROOT}/${id}/meta.json`); if (r.ok) m = await r.json(); } catch (e) { /* none */ }
+  if (m) { m.fps = fin(m.fps, 15); m.layers = m.layers || ['lines', 'matte']; }
+  metas.set(id, m);
+  return m;
+}
+export const meta = id => metas.get(id) || null;
+
+const url = (id, lay, i) => `${ROOT}/${id}/${lay}/${String(i).padStart(4, '0')}.png`;
+export function frameIndex(m, clipT) { return Math.max(0, Math.min(m.frames - 1, Math.floor(fin(clipT) * m.fps + 1e-3))); }
+
+function load(u) {
+  if (cache.has(u)) return Promise.resolve();
+  if (pending.has(u)) return pending.get(u);
+  const p = fetch(u).then(r => (r.ok ? r.blob() : null)).then(b => (b ? createImageBitmap(b) : null)).then(bmp => {
+    cache.set(u, { bmp, last: ++clock }); pending.delete(u);
+    if (cache.size > MAX) {
+      const old = [...cache.entries()].sort((a, b) => a[1].last - b[1].last).slice(0, cache.size - MAX + 20);
+      for (const [k, v] of old) { if (v.bmp && v.bmp.close) v.bmp.close(); cache.delete(k); }
+    }
+  }).catch(() => { cache.set(u, { bmp: null, last: ++clock }); pending.delete(u); });
+  pending.set(u, p);
+  return p;
+}
+export function get(id, lay, clipT) {
+  const m = meta(id); if (!m || !m.layers.includes(lay)) return null;
+  const u = url(id, lay, frameIndex(m, clipT));
+  const e = cache.get(u);
+  if (e) { e.last = ++clock; return e.bmp; }
+  misses.add(u); return null;
+}
+export async function resolveMisses() { const l = [...misses]; misses.clear(); await Promise.all(l.map(load)); return l.length; }
+export function prefetch(id, clipT, ahead = 10, behind = 2) {
+  const m = meta(id); if (!m) return;
+  const f0 = frameIndex(m, clipT);
+  for (let f = Math.max(0, f0 - behind); f <= Math.min(m.frames - 1, f0 + ahead); f++) for (const l of m.layers) load(url(id, l, f));
+}
+export function perFrame(id, clipT) { const m = meta(id); if (!m || !m.per_frame) return {}; return m.per_frame[frameIndex(m, clipT)] || {}; }
+
+// ------------------------------------------------------------------------------------------------
+// helpers working at roto resolution (scratch canvases match the roto frame size)
+
+function scratch(name, m) { return layer('roto_' + name, m.w, m.h); }
+// tint a white-on-transparent bitmap into a scratch canvas
+function tinted(name, m, bmp, color, alpha = 1) {
+  const c = scratch(name, m), g = clearLayer(c);
+  g.globalAlpha = alpha; g.drawImage(bmp, 0, 0, m.w, m.h); g.globalAlpha = 1;
+  g.globalCompositeOperation = 'source-in'; g.fillStyle = color; g.fillRect(0, 0, m.w, m.h);
+  g.globalCompositeOperation = 'source-over';
+  return c;
+}
+// ring around a matte: dilate by r (8 taps) minus the matte, optionally one-sided (dir = [dx,dy] light direction)
+function ring(name, m, bmp, r, color, dir = null) {
+  const c = scratch(name, m), g = clearLayer(c);
+  if (dir) g.drawImage(bmp, -dir[0] * r, -dir[1] * r, m.w, m.h);
+  else for (let k = 0; k < 8; k++) { const a = k * Math.PI / 4; g.drawImage(bmp, Math.cos(a) * r, Math.sin(a) * r, m.w, m.h); }
+  g.globalCompositeOperation = 'destination-out'; g.drawImage(bmp, 0, 0, m.w, m.h);
+  g.globalCompositeOperation = 'source-in'; g.fillStyle = color; g.fillRect(0, 0, m.w, m.h);
+  g.globalCompositeOperation = 'source-over';
+  return c;
+}
+
+// placement: where a roto frame lands in design space ({x,y,w,h}; default full frame), with boil jitter
+export function boilSeed(shotId, lt) { return Math.floor(fin(lt) * BOIL_FPS + 1e-6); }
+function place(g, src, rect, jit) {
+  const r = rect || { x: 0, y: 0, w: DW, h: DH };
+  if (jit) {
+    g.save(); g.translate(r.x + r.w / 2 + jit.dx, r.y + r.h / 2 + jit.dy); g.rotate(jit.rot); g.scale(1 + jit.s, 1 + jit.s);
+    g.drawImage(src, -r.w / 2, -r.h / 2, r.w, r.h); g.restore();
+  } else g.drawImage(src, r.x, r.y, r.w, r.h);
+}
+export function jitter(seed, amp = 1) {
+  return { dx: hsig(seed, 1) * 1.6 * amp, dy: hsig(seed, 2) * 1.2 * amp, rot: hsig(seed, 3) * 0.0011 * amp, s: hsig(seed, 4) * 0.0018 * amp };
+}
+
+// ---- luminous contour lines -------------------------------------------------------------------
+// opts: {color, alpha, rect, boil (seed), boilAmp, double (sketchy second pass), fog:{y0,y1,min} (design y; fades lines
+//        toward the horizon), exclude (matte id to cut out), comp ('lighter' for additive)}
+export function contours(g, id, clipT, o = {}) {
+  const m = meta(id); const bmp = get(id, 'lines', clipT); if (!m || !bmp) return false;
+  const c = tinted('lines', m, bmp, o.color || PAL.bone, 1);
+  const cg = c.ctx;
+  if (o.exclude) { const mt = get(o.exclude, 'matte', clipT); if (mt) { cg.globalCompositeOperation = 'destination-out'; cg.drawImage(mt, 0, 0, m.w, m.h); cg.globalCompositeOperation = 'source-over'; } }
+  if (o.fog) {
+    const r = o.rect || { y: 0, h: DH }, k = m.h / r.h;
+    const gr = cg.createLinearGradient(0, (o.fog.y0 - r.y) * k, 0, (o.fog.y1 - r.y) * k);
+    gr.addColorStop(0, `rgba(0,0,0,${o.fog.min ?? 0.12})`); gr.addColorStop(1, 'rgba(0,0,0,1)');
+    cg.globalCompositeOperation = 'destination-in'; cg.fillStyle = gr; cg.fillRect(0, 0, m.w, m.h); cg.globalCompositeOperation = 'source-over';
+  }
+  g.save(); g.globalCompositeOperation = o.comp || 'lighter';
+  const amp = o.boilAmp ?? 1, seed = o.boil ?? 0;
+  g.globalAlpha = clamp(o.alpha ?? 1) * (o.double ? 0.75 : 1);
+  place(g, c, o.rect, amp ? jitter(seed, amp) : null);
+  if (o.double) { g.globalAlpha = clamp(o.alpha ?? 1) * 0.4; place(g, c, o.rect, jitter(seed + 0.5, amp * 1.8)); }
+  g.restore();
+  return true;
+}
+
+// ---- Jade: flat bone-white figure with sparse interior lines --------------------------------------
+// LIKENESS RULES: inside the face mask only `features` (eyes at full size, brows, nose tip, jaw/hair contours) and the
+// vocal-driven mouth are drawn; every other line is suppressed there. No texture, hatching or speckle on skin, ever.
+// opts: {rect, boil, fill, lineColor, ghost (outline-only past attempt), ghostColor, light:{color, amount, from:[x0,y0,x1,y1]},
+//        mouth (0..1 openness from the vocal envelope), alpha}
+export function jade(g, id, clipT, o = {}) {
+  const m = meta(id); const mt = get(id, 'matte', clipT); if (!m || !mt) return false;
+  const face = get(id, 'face', clipT), feat = get(id, 'features', clipT), hair = get(id, 'hair', clipT), lines = get(id, 'lines', clipT);
+  const pf = perFrame(id, clipT);
+  const A = scratch('jadeA', m), a = clearLayer(A);
+  const lineCol = o.lineColor || PAL.ink;
+  if (o.ghost) {
+    // past attempt (Braid shadow): outline only, plus the features, in ghost colour
+    const col = o.ghostColor || PAL.cyan;
+    a.drawImage(ring('jring', m, mt, 2.2, col), 0, 0);
+    if (feat) { a.globalAlpha = 0.8; a.drawImage(tinted('jfeat', m, feat, col), 0, 0); a.globalAlpha = 1; }
+  } else {
+    a.drawImage(mt, 0, 0, m.w, m.h);
+    a.globalCompositeOperation = 'source-in'; a.fillStyle = o.fill || PAL.bone; a.fillRect(0, 0, m.w, m.h);
+    a.globalCompositeOperation = 'source-atop';
+    if (o.light && o.light.amount > 0) {   // a flat wash of light across the figure (sodium sweep, siren spill)
+      const L = o.light, k = m.w / DW, gr = a.createLinearGradient(L.from[0] * k, L.from[1] * k, L.from[2] * k, L.from[3] * k);
+      gr.addColorStop(0, rgba(L.color, 0)); gr.addColorStop(0.5, rgba(L.color, L.amount)); gr.addColorStop(1, rgba(L.color, 0));
+      a.fillStyle = gr; a.fillRect(0, 0, m.w, m.h);
+    }
+    if (hair) { a.drawImage(tinted('jhair', m, hair, o.hairColor || PAL.ink), 0, 0); }
+    if (lines) {   // interior lines outside the face only
+      const B = tinted('jlines', m, lines, lineCol), b = B.ctx;
+      if (face) { b.globalCompositeOperation = 'destination-out'; b.drawImage(face, 0, 0, m.w, m.h); b.globalCompositeOperation = 'source-over'; }
+      a.drawImage(B, 0, 0);
+    }
+    if (feat) a.drawImage(tinted('jfeat', m, feat, lineCol), 0, 0);
+    if (pf.mouth) drawMouth(a, pf.mouth, clamp(o.mouth ?? 0), lineCol, pf.tilt || 0);
+    a.globalCompositeOperation = 'source-over';
+  }
+  g.save(); g.globalAlpha = clamp(o.alpha ?? 1);
+  place(g, A, o.rect, o.boil != null ? jitter(o.boil, 0.6) : null);
+  g.restore();
+  return true;
+}
+// lips from the vocal track: a closed mouth is one soft ink stroke; open = a small almond whose height follows the voice
+function drawMouth(a, [x, y, w], open, col, tilt) {
+  a.save(); a.translate(x, y); a.rotate(tilt); a.fillStyle = col; a.strokeStyle = col; a.lineCap = 'round';
+  const hw = w / 2, h = 2 + open * 15;
+  if (open < 0.08) { a.lineWidth = 2.4; a.beginPath(); a.moveTo(-hw * .8, 0); a.quadraticCurveTo(0, 2.5, hw * .8, 0); a.stroke(); }
+  else { a.beginPath(); a.moveTo(-hw * .78, 0); a.quadraticCurveTo(0, -h * .55, hw * .78, 0); a.quadraticCurveTo(0, h, -hw * .78, 0); a.fill(); }
+  a.restore();
+}
+
+// ---- REDACTION agents ----------------------------------------------------------------------------
+// black cut-outs from the matte, a one-sided rim of siren light, FOIA face bars and a sunglasses glint.
+// opts: {rect, boil, rimL (colour from the left), rimR, rimAmt, bars (true), barLabel ('(b)(6)'), glint (0..1), glintSeed}
+export function suits(g, id, clipT, o = {}) {
+  const m = meta(id); const mt = get(id, 'matte', clipT); if (!m || !mt) return false;
+  const pf = perFrame(id, clipT);
+  const A = scratch('suitA', m), a = clearLayer(A);
+  if (o.rimL) { a.globalAlpha = clamp(o.rimAmt ?? 1); a.drawImage(ring('rimL', m, mt, 3.5, o.rimL, [-1, 0]), 0, 0); }
+  if (o.rimR) { a.globalAlpha = clamp(o.rimAmt ?? 1); a.drawImage(ring('rimR', m, mt, 3.5, o.rimR, [1, 0]), 0, 0); }
+  a.globalAlpha = 1;
+  const B = tinted('suitB', m, mt, '#000000');
+  a.drawImage(B, 0, 0);
+  g.save();
+  const r = o.rect || { x: 0, y: 0, w: DW, h: DH }, kx = r.w / m.w, ky = r.h / m.h;
+  const jit = o.boil != null ? jitter(o.boil, 0.5) : null;
+  place(g, A, r, jit);
+  // face bars: wider than the head, so they cross into the light and read as redaction, not as hair
+  if (o.bars !== false && pf.faces) {
+    for (let i = 0; i < pf.faces.length; i++) {
+      const [cx, cy, fw, fh] = pf.faces[i];
+      const x = r.x + cx * kx, y = r.y + cy * ky, w = fw * kx * (o.barW ?? 1.35), h = fh * ky * (o.barH ?? 1.0);
+      const ox = hsig(i, o.boil ?? 0, 7) * 1.2;
+      g.fillStyle = '#000'; g.fillRect(x - w / 2 + ox, y - h / 2, w, h);
+      if (o.barLabel) { g.fillStyle = rgba(PAL.boneDim, 0.85); g.font = `500 ${Math.round(12 * kx * 1.5)}px JBM`; g.textBaseline = 'top'; g.fillText(o.barLabel, x + w / 2 + 6, y - h / 2); }
+    }
+  }
+  // sunglasses glint: a sharp four-point star that lives on top of the bar
+  if (pf.glints && (o.glint ?? 0) > 0) {
+    for (let i = 0; i < pf.glints.length; i++) {
+      const gi = clamp((o.glint) * (0.55 + 0.45 * hash(i, o.glintSeed ?? 0)));
+      if (gi < 0.02) continue;
+      const [gx, gy] = pf.glints[i];
+      star(g, r.x + (gx + 18 * (i % 2 ? 1 : -1)) * kx, r.y + gy * ky, 16 + 44 * gi, gi, PAL.bone);
+    }
+  }
+  g.restore();
+  return true;
+}
+export function star(g, x, y, R, a, col) {
+  g.save(); g.globalCompositeOperation = 'lighter'; g.fillStyle = rgba(col, clamp(a));
+  g.beginPath();
+  const w = Math.max(1.2, R * 0.06);
+  g.moveTo(x - R, y); g.lineTo(x - w, y - w); g.lineTo(x, y - R * 0.8); g.lineTo(x + w, y - w); g.lineTo(x + R, y); g.lineTo(x + w, y + w); g.lineTo(x, y + R * 0.8); g.lineTo(x - w, y + w); g.closePath(); g.fill();
+  g.beginPath(); g.arc(x, y, w * 1.8, 0, Math.PI * 2); g.fill();
+  g.restore();
+}

@@ -71,5 +71,5 @@ TEST_RESULT_PLACEHOLDER
 - `stale` means the cron minute passed more than 10 min ago and the relay never wrote `state:`. This can happen if a cron tick was skipped. `requeue` moves it to a new minute only if the
   `job:` key is still present, so it can't double-run.
 - The Worker runs scheduled jobs with a wall-time limit of about 15 min. Very long 720p 30 s jobs with many references could hit it. If they do, they finish as `error`.
-- Mirrored media expire after 21 days and the presigned provider URLs expire much sooner. Always `collect` promptly. Downloaded files live in `assets/gen/`, which is git-ignored for big files (keep them under 50 MB).
+- Mirrored media expire after 21 days and the presigned provider URLs expire much sooner. Always `collect` promptly. Downloaded files live in `assets/gen/`, which is not git-ignored, so never commit anything over 50 MB.
 - Do not call video models synchronously through `tools/cf.py`. The proxy cuts the call at 30 s and the job may still be billed.
