@@ -30,3 +30,7 @@ The user reports most model attempts "uglify" her: shrunken eyes, invented age s
 - Redraw: draw each brow from its own measured shape, not one mirrored brow.
 - FACE SHAPE (user correction): heart-shaped / "melon seed" (瓜子脸) — wide forehead & cheekbones, tapered jaw, narrow
   softly pointed chin. Plates E and H were wrong here (too round/wide-jawed). Gate measures jaw/cheek and chin taper.
+- FOREHEAD/UPPER HEAD (user clarification): G's face shape is nearly right; the TOP HALF OF THE HEAD must be larger —
+  a large forehead is a defining trait. NEVER prompt "raise/increase hairline" (models make her bald without growing
+  the head). Prompt "large tall broad forehead, larger upper head", or warp the whole region above the brows
+  (forehead + cranium + hair together) upward; lower face untouched.
