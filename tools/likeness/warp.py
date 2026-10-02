@@ -167,7 +167,10 @@ def correct_tiles(rgb, n, iters=3, max_yaw=35, **kw):
         if lm is None or abs(MS.pose_angles(lm[1])[0]) > max_yaw:
             reps.append(dict(face=i, skipped="no face / profile / back")); continue
         cx = (lm[0][:, 0].min() + lm[0][:, 0].max()) / 2
-        fixed, P, rep = correct(t, iters=iters, verbose=False, lat_lim=float(min(cx, t.shape[1] - cx)), **kw)
+        kk = dict(kw)
+        if abs(MS.pose_angles(lm[1])[0]) > 20:
+            kk["forehead"] = False                      # 3/4: upper-head metrics unreliable -> eyes only
+        fixed, P, rep = correct(t, iters=iters, verbose=False, lat_lim=float(min(cx, t.shape[1] - cx)), **kk)
         if P is None:
             reps.append(dict(face=i, skipped="no face")); continue
         out[:y1, x0:x1] = cv2.resize(fixed, (x1 - x0, y1), interpolation=cv2.INTER_AREA)

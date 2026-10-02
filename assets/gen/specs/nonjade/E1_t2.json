@@ -1,0 +1,16 @@
+{
+ "model": "bytedance/seedance-2.5",
+ "tag": "nj_E1_t2",
+ "notes": "continuity retake E1_t2: white 2001 Acura TL, northbound",
+ "input": {
+  "prompt": "High aerial drone shot at night above Lake Shore Drive, Chicago, looking north along the long smooth curve of the empty lakefront highway toward the small distant skyline. A single lone car, a white 2001 Acura TL, a rounded early-2000s four-door mid-size Japanese sedan with slim horizontal headlights and a smooth simple body, its white paint catching the orange streetlight, drives away from the camera, north along the curve in the lanes nearest the lake, its red tail lights and white headlight beams sweeping ahead. The flat pitch-black lake fills the right side of the frame; a dotted line of orange sodium streetlights traces the curve. The drone glides slowly forward, following the car from behind and above, keeping it in the lower middle of the frame. No people. Single continuous shot, no cuts, no transitions. Night. Graphic neo-noir cinematography, photographic. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus, no motion blur smear. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark, no subtitles.",
+  "duration": 10,
+  "resolution": "720p",
+  "aspect_ratio": "16:9",
+  "generate_audio": false,
+  "reference_images": [
+   "file:assets/sets/lake_shore_drive/2.jpg",
+   "file:assets/sets/lake_shore_drive/4.jpg"
+  ]
+ }
+}
