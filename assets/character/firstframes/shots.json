@@ -1,0 +1,49 @@
+{
+ "_common": "Keep this exact woman from the first image: her face, head angle, eyes, eyebrows, glasses and expression must stay exactly as in the photo (do not redraw or beautify her face). Long straight solid black hair with a center part styled half-up half-down (two symmetrical sections pulled back from the temples toward the crown, the rest hanging long), revealing her broad forehead. She wears a white cropped zip jacket with one clean orange horizontal band across the chest and upper sleeves (no patches, no text) over a black top. Cinematic photographic film still, 16:9 widescreen composition, soft flattering light on her face, smooth clear skin. No text, no logos, no headphones.",
+ "J1": {
+  "src": "assets/character/firstframes/cands/J1_input.jpg",
+  "set": null,
+  "real": "refs/jade/PXL_20260929_003030232.jpg",
+  "prompt": "The first image is a rough composite. Turn it into one seamless photograph WITHOUT moving her head: keep her head, side-profile angle, face, glasses and size exactly where they are in the frame. Night, seen from just outside the open driver's side window of a white 2001 Acura TL sedan (left-hand drive, simple early-2000s dashboard, no touchscreen): she sits in the driver's seat in side profile facing frame-left toward the road ahead, both hands on the steering wheel in front of her (frame-left of her). Remove the headphones and the earphone cable completely. A warm orange sodium streetlight band falls across her and the door frame; cool dim dashboard fill; dark road beyond. No police lights."
+ },
+ "J2": {
+  "src": "refs/jade/PXL_20250908_195405539.MP.jpg",
+  "set": "assets/sets/car_interior/1.jpg",
+  "prompt": "Night, inside the car, camera mounted on the windshield looking back at the driver: she sits in the left-hand driver's seat on the RIGHT side of the frame, steering wheel in front of her at the bottom of the frame, eyes glancing toward the rear-view mirror (frame-left). Cool blue dashboard glow from below, soft frontal key on her face, blurred orange streetlights in the rear window behind her. Use the second image only as a mood reference."
+ },
+ "J3": {
+  "src": "refs/jade/PXL_20250908_195352130.jpg",
+  "set": "assets/sets/pullover/1.jpg",
+  "prompt": "Night, pulled over at the roadside. Medium close-up from just outside the open driver's window of a white 2001 Acura TL (left-hand drive): she sits in the driver's seat turned toward the window and holds up a plain blank white ID badge card (completely blank, no text, no photo) beside her face toward the camera. Red and blue police lights from behind the car rim-light her hair and shoulders; her face has a soft even frontal fill. Use the second image only as a mood reference for the night roadside."
+ },
+ "J5": {
+  "src": "refs/jade/PXL_20260528_215628802.jpg",
+  "set": null,
+  "prompt": "Performance shot, center-locked: she stands centered in frame against a pure black void, facing the camera, waist-up, one hand raised beside her face at shoulder height beginning a slow circular rewind gesture. Soft frontal white key light on her face, a red rim light from frame-left and a blue rim light from frame-right on her hair and shoulders (police siren colors), faint haze. Flattering, no colored light across the face."
+ },
+ "J5b": {
+  "src": "refs/jade/IMG_20180610_074732_mr1528617091925.jpg",
+  "set": null,
+  "prompt": "Performance shot variation, center-locked: she stands centered against a black void, medium shot from the waist up, facing the camera, both hands raised in front of her chest tracing a slow counter-clockwise circle. Soft frontal white key light on her face, alternating red and blue rim light behind her on hair and shoulders, light haze. Flattering, no colored light across the face. Hair fully black."
+ },
+ "J6": {
+  "src": "refs/jade/IMG_20180610_074732_mr1528617091925.jpg",
+  "set": "assets/sets/car_interior/1.jpg",
+  "prompt": "Night, driving. Three-quarter front view through the windshield of a white 2001 Acura TL (left-hand drive): she sits in the driver's seat on the RIGHT side of the frame, both hands on the steering wheel in front of her, determined, looking ahead at the road. Cool dashboard glow from below plus a soft frontal key on her face, sodium streetlight reflections sliding over the windshield glass, dark interior and night road lights behind. Hair fully black (no dyed ends). Use the second image only as a mood reference."
+ },
+ "J8": {
+  "src": "refs/jade/PXL_20260929_001719023.jpg",
+  "set": "assets/sets/defense_room/2.jpg",
+  "prompt": "A dark empty seminar room the night before a PhD defense: she sits alone on a single black chair in the middle of the room, medium shot from the knees up, facing the camera, hands in her lap, singing softly to herself. A single soft overhead light on her, a projector beam across the room behind her, faint red and blue reflections in the dark windows. Use the second image for the room layout and mood."
+ },
+ "J8b": {
+  "src": "refs/jade/IMG_20180610_073429.jpg",
+  "set": "assets/sets/defense_room/3.jpg",
+  "prompt": "The same dark seminar room: she is turning around in her chair to look back over her shoulder toward the camera, three-quarter view, medium close-up, eyes open, a little startled. Soft overhead light on her face, projector haze and faint red/blue window reflections in the dark background. Hair fully black, half-up. Use the second image for the room and mood."
+ },
+ "J9": {
+  "src": "refs/jade/PXL_20250908_195405539.MP.jpg",
+  "set": "assets/sets/car_interior/3.jpg",
+  "prompt": "Night, driving, camera on the windshield looking back at the driver: she sits in the left-hand driver's seat on the RIGHT side of the frame, hands on the steering wheel, steady and determined, eyes on the road. Police red and blue lights glow through the rear window far behind her, rim-lighting her hair; her face has a soft cool frontal key; dashboard glow from below. Use the second image only as a mood reference."
+ }
+}

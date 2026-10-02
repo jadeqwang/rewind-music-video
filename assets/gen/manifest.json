@@ -1080,8 +1080,78 @@
    "submitted": 1790919928.4622595,
    "bytes": 365814,
    "started": 1790920069.875
+  },
+  "rewind/jade_J1_lip_t1-95a7ec6a8f": {
+   "id": "95a7ec6a8f",
+   "job": "rewind/jade_J1_lip_t1-95a7ec6a8f",
+   "tag": "jade_J1_lip_t1",
+   "model": "bytedance/seedance-2.5",
+   "notes": "J1 lip-sync validation: vocals 13.15-22.15 s ('The night before my dissertation defense,' sung 13.45-21.12)",
+   "spec_file": "assets/gen/specs/jade/J1_lip_t1.json",
+   "input": {
+    "duration": 9,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Night. She sits in the driver's seat of a white 2001 Acura TL, seen from outside the open driver's window, side profile facing frame-left, both hands on the steering wheel, driving. She sings the vocal in the reference audio, her lips moving in exact sync with each sung word, small natural breaths, calm focused eyes on the road. Warm orange sodium streetlight bands sweep slowly across her and the car door from front to back as the car moves; the camera stays locked to the car. Jade: East Asian woman, heart-shaped face with a large broad forehead, thin rectangular dark gray-teal metal glasses always on, long straight black hair half-up half-down, white cropped zip jacket with an orange chest band over a black top. Keep her face exactly as in the first frame and the reference photos; same eye size, never squinting. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/firstframes/J1.jpg",
+    "reference_images": [
+     "file:assets/character/refs_768/PXL_20260929_003030232.jpg",
+     "file:assets/character/refs_768/PXL_20250908_195405539.MP.jpg",
+     "file:assets/character/refs_768/PXL_20260528_215628802.jpg"
+    ],
+    "reference_audios": [
+     "file:analysis/slices/vocals_J1_13.15_9.0.mp3"
+    ]
+   },
+   "est_usd": 2.0808,
+   "est_basis": "9s x 0.2312 (@720p non-video input (per second))",
+   "state": "queued",
+   "bucket": 29848687,
+   "submitted": 1790921112.755722,
+   "bytes": 746219
+  },
+  "rewind/jade_J6_lip_t1-ad5c49bad5": {
+   "id": "ad5c49bad5",
+   "job": "rewind/jade_J6_lip_t1-ad5c49bad5",
+   "tag": "jade_J6_lip_t1",
+   "model": "bytedance/seedance-2.5",
+   "notes": "J6 lip-sync validation: vocals 73.25-81.25 s ('And now I'm back on the road' 73.55-80.57)",
+   "spec_file": "assets/gen/specs/jade/J6_lip_t1.json",
+   "input": {
+    "duration": 8,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Night, driving. Three-quarter front view through the windshield of a white 2001 Acura TL: she sits in the left-hand driver's seat on the right side of the frame, both hands on the steering wheel, determined, looking ahead at the road. She sings the vocal in the reference audio, her lips moving in exact sync with each sung word. Orange sodium streetlight reflections slide over the windshield; soft cool dashboard glow on her face; the camera is mounted to the car and stays steady. Jade: East Asian woman, heart-shaped face with a large broad forehead, thin rectangular dark gray-teal metal glasses always on, long straight black hair half-up half-down, white cropped zip jacket with an orange chest band over a black top. Keep her face exactly as in the first frame and the reference photos; same eye size, never squinting. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/firstframes/J6.jpg",
+    "reference_images": [
+     "file:assets/character/refs_768/IMG_20180610_074732_mr1528617091925.jpg",
+     "file:assets/character/refs_768/PXL_20250908_195405539.MP.jpg",
+     "file:assets/character/refs_768/PXL_20260528_215628802.jpg"
+    ],
+    "reference_audios": [
+     "file:analysis/slices/vocals_J6_73.25_8.0.mp3"
+    ]
+   },
+   "est_usd": 1.8496,
+   "est_basis": "8s x 0.2312 (@720p non-video input (per second))",
+   "state": "queued",
+   "bucket": 29848687,
+   "submitted": 1790921113.2129364,
+   "bytes": 718993
   }
  },
- "total_est_usd": 30.3388,
+ "total_est_usd": 34.2692,
  "total_est_usd_done": 27.102
 }

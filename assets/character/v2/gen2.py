@@ -6,7 +6,7 @@ import sys, os, json, time, io, fcntl, base64
 sys.path.insert(0, "/home/user/rewind-music-video/tools")
 from cf import run_model, save_media
 from PIL import Image, ImageOps
-ROOT = "/home/user/rewind-music-video"; D = ROOT + "/assets/character/v2"
+ROOT = "/home/user/rewind-music-video"; D = os.environ.get("GEN2_DIR", ROOT + "/assets/character/v2")
 REFMAX = int(os.environ.get("REFMAX", "768"))
 cid, prompt, refs = sys.argv[1:4]
 size = sys.argv[4] if len(sys.argv) > 4 else "1536x1024"

@@ -40,6 +40,24 @@ Canvases are uploaded with `UNPACK_FLIP_Y`, so in GL `uv (0,0)` is bottom-left. 
 uses `sy = (1-uv.y)*H/S`, which is top-down like the canvas. Every shader result passes through `safe()` (NaN/Inf → 0),
 and JS values that reach canvas or GL go through `fin()`.
 
+## Full edit (src/shots.js) — EDL v1 implementation
+- Most shots are `scene: 'comp'` — a stack of layers from `src/layers.js` (world, sirens, headlights, sodium, rain,
+  streetlights (infinite/Shepard), speedlines, jade, suits, mirror (inset with its own layers / time offset), page,
+  subtitle, mono (typed), cm (theorem setting), redact, revisions, slam (variants), tree, explode, counter, map (pursuit
+  curves), routemap, grass, runner, beams, dash, badge, pathdraw, ghosts, wall, glasses, reload, committee, sweepbars,
+  freezeOf (another shot frozen, full-frame or as a pinned print), foia, circle, star, ghostcar, drain, flash, kickflash).
+  Any numeric layer field may be a function of `env` ({lt, t, u, dur, T, k kick, b beat}).
+- Overlapping shots are allowed: `shotAt` picks the latest-starting shot covering t, so inserts (Jade on downbeats) sit
+  inside a long rewind and the rewind resumes after them. `params.over` adds layers on top of any scene.
+- `shot.hud` = global proof UI (ATTEMPT top-left, eval bar, timecode top-right); `shot.fx` = rhythm/dream layer
+  (src/rhythm.js): heart (vignette pulse every beat), kick (zoom/CA punch), strobe, soft (soft→sharp on the beat),
+  blinks [{t, skip}] (microsleep eyelids + dropped time), jerks [t] (hypnagogic jolt + flash).
+- Roto refs `'SHOT|_auto/clip|stand-in'` resolve at boot to the first existing `assets/roto/<id>/` (any key named
+  roto/jade/world/subject). The roto agent's per-shot folders (B3, J1, …) win automatically when they appear.
+- Interim roto: `tools/make_auto_roto.py clip <name>` / `plate <set>/<n>` → `assets/roto/_auto/...` (lines + lights).
+  **Format addition:** `lights/NNNN.png` = RGB light colour, alpha = brightness (drawn additively).
+- Draft: `node render.mjs --range 0 232.4 --w 960 --h 540 --dir frames/draft540` then `--encode --dir frames/draft540 --out out/draft_v1.mp4`.
+
 ## Design rules baked in (director round 2)
 - Contrast: suits never black-on-black — `sirens(side:'pair')` keeps both halves lit + `headlights()` bloom behind them; heads are solid.
 - Legibility: mono ≥ 42 px font (≈30 px cap), key HUD ≥ 56 px; eval bar 20 px; tree edges ≥ 3 px, labels 48 px. Check sheets at 480 px wide.

@@ -1,0 +1,234 @@
+[
+ {
+  "id": "J2",
+  "model": "openai/gpt-image-2",
+  "prompt": "Night, inside the car, camera mounted on the windshield looking back at the driver: she sits in the left-hand driver's seat on the RIGHT side of the frame, steering wheel in front of her at the bottom of the frame, eyes glancing toward the rear-view mirror (frame-left). Cool blue dashboard glow from below, soft frontal key on her face, blurred orange streetlights in the rear window behind her. Use the second image only as a mood reference. Keep this exact woman from the first image: her face, head angle, eyes, eyebrows, glasses and expression must stay exactly as in the photo (do not redraw or beautify her face). Long straight solid black hair with a center part styled half-up half-down (two symmetrical sections pulled back from the temples toward the crown, the rest hanging long), revealing her broad forehead. She wears a white cropped zip jacket with one clean orange horizontal band across the chest and upper sleeves (no patches, no text) over a black top. Cinematic photographic film still, 16:9 widescreen composition, soft flattering light on her face, smooth clear skin. No text, no logos, no headphones.",
+  "refs": [
+   "refs/jade/PXL_20250908_195405539.MP.jpg",
+   "assets/sets/car_interior/1.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 28.1
+   }
+  ],
+  "file": "cands/J2.jpg"
+ },
+ {
+  "id": "J1",
+  "model": "openai/gpt-image-2",
+  "prompt": "Night. Seen from just outside the open driver's side window of a white 2001 Acura TL sedan (left-hand drive, simple early-2000s dashboard, no touchscreen): she sits in the driver's seat in side profile, facing frame-left toward the road ahead, both hands on the steering wheel in front of her, her head in the right third of the frame. A warm orange sodium streetlight band falls across her and the door frame; cool dim dashboard fill; dark road and streetlights beyond. Use the second image only as a mood reference for the night car interior. Keep this exact woman from the first image: her face, head angle, eyes, eyebrows, glasses and expression must stay exactly as in the photo (do not redraw or beautify her face). Long straight solid black hair with a center part styled half-up half-down (two symmetrical sections pulled back from the temples toward the crown, the rest hanging long), revealing her broad forehead. She wears a white cropped zip jacket with one clean orange horizontal band across the chest and upper sleeves (no patches, no text) over a black top. Cinematic photographic film still, 16:9 widescreen composition, soft flattering light on her face, smooth clear skin. No text, no logos, no headphones.",
+  "refs": [
+   "refs/jade/PXL_20260929_003030232.jpg",
+   "assets/sets/car_interior/2.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 29.6
+   }
+  ],
+  "file": "cands/J1.jpg"
+ },
+ {
+  "id": "J3",
+  "model": "openai/gpt-image-2",
+  "prompt": "Night, pulled over at the roadside. Medium close-up from just outside the open driver's window of a white 2001 Acura TL (left-hand drive): she sits in the driver's seat turned toward the window and holds up a plain blank white ID badge card (completely blank, no text, no photo) beside her face toward the camera. Red and blue police lights from behind the car rim-light her hair and shoulders; her face has a soft even frontal fill. Use the second image only as a mood reference for the night roadside. Keep this exact woman from the first image: her face, head angle, eyes, eyebrows, glasses and expression must stay exactly as in the photo (do not redraw or beautify her face). Long straight solid black hair with a center part styled half-up half-down (two symmetrical sections pulled back from the temples toward the crown, the rest hanging long), revealing her broad forehead. She wears a white cropped zip jacket with one clean orange horizontal band across the chest and upper sleeves (no patches, no text) over a black top. Cinematic photographic film still, 16:9 widescreen composition, soft flattering light on her face, smooth clear skin. No text, no logos, no headphones.",
+  "refs": [
+   "refs/jade/PXL_20250908_195352130.jpg",
+   "assets/sets/pullover/1.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "low",
+  "attempts": [
+   {
+    "ok": false,
+    "secs": 30.4,
+    "err": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs."
+   },
+   {
+    "ok": false,
+    "secs": 30.2,
+    "err": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs."
+   },
+   {
+    "ok": true,
+    "secs": 15.3
+   }
+  ],
+  "file": "cands/J3.jpg"
+ },
+ {
+  "id": "J5",
+  "model": "openai/gpt-image-2",
+  "prompt": "Performance shot, center-locked: she stands centered in frame against a pure black void, facing the camera, waist-up, one hand raised beside her face at shoulder height beginning a slow circular rewind gesture. Soft frontal white key light on her face, a red rim light from frame-left and a blue rim light from frame-right on her hair and shoulders (police siren colors), faint haze. Flattering, no colored light across the face. Keep this exact woman from the first image: her face, head angle, eyes, eyebrows, glasses and expression must stay exactly as in the photo (do not redraw or beautify her face). Long straight solid black hair with a center part styled half-up half-down (two symmetrical sections pulled back from the temples toward the crown, the rest hanging long), revealing her broad forehead. She wears a white cropped zip jacket with one clean orange horizontal band across the chest and upper sleeves (no patches, no text) over a black top. Cinematic photographic film still, 16:9 widescreen composition, soft flattering light on her face, smooth clear skin. No text, no logos, no headphones.",
+  "refs": [
+   "refs/jade/PXL_20260528_215628802.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 28.1
+   }
+  ],
+  "file": "cands/J5.jpg"
+ },
+ {
+  "id": "J8",
+  "model": "openai/gpt-image-2",
+  "prompt": "A dark empty seminar room the night before a PhD defense: she sits alone on a single black chair in the middle of the room, medium shot from the knees up, facing the camera, hands in her lap, singing softly to herself. A single soft overhead light on her, a projector beam across the room behind her, faint red and blue reflections in the dark windows. Use the second image for the room layout and mood. Keep this exact woman from the first image: her face, head angle, eyes, eyebrows, glasses and expression must stay exactly as in the photo (do not redraw or beautify her face). Long straight solid black hair with a center part styled half-up half-down (two symmetrical sections pulled back from the temples toward the crown, the rest hanging long), revealing her broad forehead. She wears a white cropped zip jacket with one clean orange horizontal band across the chest and upper sleeves (no patches, no text) over a black top. Cinematic photographic film still, 16:9 widescreen composition, soft flattering light on her face, smooth clear skin. No text, no logos, no headphones.",
+  "refs": [
+   "refs/jade/PXL_20260929_001719023.jpg",
+   "assets/sets/defense_room/2.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 27.9
+   }
+  ],
+  "file": "cands/J8.jpg"
+ },
+ {
+  "id": "J6",
+  "model": "openai/gpt-image-2",
+  "prompt": "Night, driving. Three-quarter front view through the windshield of a white 2001 Acura TL (left-hand drive): she sits in the driver's seat on the RIGHT side of the frame, both hands on the steering wheel in front of her, determined, looking ahead at the road. Cool dashboard glow from below plus a soft frontal key on her face, sodium streetlight reflections sliding over the windshield glass, dark interior and night road lights behind. Hair fully black (no dyed ends). Use the second image only as a mood reference. Keep this exact woman from the first image: her face, head angle, eyes, eyebrows, glasses and expression must stay exactly as in the photo (do not redraw or beautify her face). Long straight solid black hair with a center part styled half-up half-down (two symmetrical sections pulled back from the temples toward the crown, the rest hanging long), revealing her broad forehead. She wears a white cropped zip jacket with one clean orange horizontal band across the chest and upper sleeves (no patches, no text) over a black top. Cinematic photographic film still, 16:9 widescreen composition, soft flattering light on her face, smooth clear skin. No text, no logos, no headphones.",
+  "refs": [
+   "refs/jade/IMG_20180610_074732_mr1528617091925.jpg",
+   "assets/sets/car_interior/1.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 28.5
+   }
+  ],
+  "file": "cands/J6.jpg"
+ },
+ {
+  "id": "J5b",
+  "model": "openai/gpt-image-2",
+  "prompt": "Performance shot variation, center-locked: she stands centered against a black void, medium shot from the waist up, facing the camera, both hands raised in front of her chest tracing a slow counter-clockwise circle. Soft frontal white key light on her face, alternating red and blue rim light behind her on hair and shoulders, light haze. Flattering, no colored light across the face. Hair fully black. Keep this exact woman from the first image: her face, head angle, eyes, eyebrows, glasses and expression must stay exactly as in the photo (do not redraw or beautify her face). Long straight solid black hair with a center part styled half-up half-down (two symmetrical sections pulled back from the temples toward the crown, the rest hanging long), revealing her broad forehead. She wears a white cropped zip jacket with one clean orange horizontal band across the chest and upper sleeves (no patches, no text) over a black top. Cinematic photographic film still, 16:9 widescreen composition, soft flattering light on her face, smooth clear skin. No text, no logos, no headphones.",
+  "refs": [
+   "refs/jade/IMG_20180610_074732_mr1528617091925.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 27.5
+   }
+  ],
+  "file": "cands/J5b.jpg"
+ },
+ {
+  "id": "J9",
+  "model": "openai/gpt-image-2",
+  "prompt": "Night, driving, camera on the windshield looking back at the driver: she sits in the left-hand driver's seat on the RIGHT side of the frame, hands on the steering wheel, steady and determined, eyes on the road. Police red and blue lights glow through the rear window far behind her, rim-lighting her hair; her face has a soft cool frontal key; dashboard glow from below. Use the second image only as a mood reference. Keep this exact woman from the first image: her face, head angle, eyes, eyebrows, glasses and expression must stay exactly as in the photo (do not redraw or beautify her face). Long straight solid black hair with a center part styled half-up half-down (two symmetrical sections pulled back from the temples toward the crown, the rest hanging long), revealing her broad forehead. She wears a white cropped zip jacket with one clean orange horizontal band across the chest and upper sleeves (no patches, no text) over a black top. Cinematic photographic film still, 16:9 widescreen composition, soft flattering light on her face, smooth clear skin. No text, no logos, no headphones.",
+  "refs": [
+   "refs/jade/PXL_20250908_195405539.MP.jpg",
+   "assets/sets/car_interior/3.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 28.3
+   }
+  ],
+  "file": "cands/J9.jpg"
+ },
+ {
+  "id": "J8b",
+  "model": "openai/gpt-image-2",
+  "prompt": "The same dark seminar room: she is turning around in her chair to look back over her shoulder toward the camera, three-quarter view, medium close-up, eyes open, a little startled. Soft overhead light on her face, projector haze and faint red/blue window reflections in the dark background. Hair fully black, half-up. Use the second image for the room and mood. Keep this exact woman from the first image: her face, head angle, eyes, eyebrows, glasses and expression must stay exactly as in the photo (do not redraw or beautify her face). Long straight solid black hair with a center part styled half-up half-down (two symmetrical sections pulled back from the temples toward the crown, the rest hanging long), revealing her broad forehead. She wears a white cropped zip jacket with one clean orange horizontal band across the chest and upper sleeves (no patches, no text) over a black top. Cinematic photographic film still, 16:9 widescreen composition, soft flattering light on her face, smooth clear skin. No text, no logos, no headphones.",
+  "refs": [
+   "refs/jade/IMG_20180610_073429.jpg",
+   "assets/sets/defense_room/3.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 28.8
+   }
+  ],
+  "file": "cands/J8b.jpg"
+ },
+ {
+  "id": "J1",
+  "model": "openai/gpt-image-2",
+  "prompt": "The first image is a rough composite. Turn it into one seamless photograph WITHOUT moving her head: keep her head, side-profile angle, face, glasses and size exactly where they are in the frame. Night, seen from just outside the open driver's side window of a white 2001 Acura TL sedan (left-hand drive, simple early-2000s dashboard, no touchscreen): she sits in the driver's seat in side profile facing frame-left toward the road ahead, both hands on the steering wheel in front of her (frame-left of her). Remove the headphones and the earphone cable completely. A warm orange sodium streetlight band falls across her and the door frame; cool dim dashboard fill; dark road beyond. No police lights. Keep this exact woman from the first image: her face, head angle, eyes, eyebrows, glasses and expression must stay exactly as in the photo (do not redraw or beautify her face). Long straight solid black hair with a center part styled half-up half-down (two symmetrical sections pulled back from the temples toward the crown, the rest hanging long), revealing her broad forehead. She wears a white cropped zip jacket with one clean orange horizontal band across the chest and upper sleeves (no patches, no text) over a black top. Cinematic photographic film still, 16:9 widescreen composition, soft flattering light on her face, smooth clear skin. No text, no logos, no headphones.",
+  "refs": [
+   "assets/character/firstframes/cands/J1_input.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 30.2
+   }
+  ],
+  "file": "cands/J1.jpg"
+ },
+ {
+  "id": "J7m",
+  "model": "openai/gpt-image-2",
+  "prompt": "Edit the first image: remove the flashlight completely - she runs empty-handed, hands open, arms pumping naturally. The light now comes from powerful flashlight beams held by unseen pursuers behind her and off-frame, raking across the tall grass and catching her hair and shoulders from behind; keep a soft fill on her face. Keep her face, eyes, glasses, hair, jacket, pose and the night grass field exactly the same otherwise. No text.",
+  "refs": [
+   "assets/character/v2/GRASS_RUN.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 26.4
+   }
+  ],
+  "file": "cands/J7m.jpg"
+ },
+ {
+  "id": "J7w",
+  "model": "openai/gpt-image-2",
+  "prompt": "Wide cinematic night shot of an open field of tall wild grass by a lakeshore highway, distant city skyline lights on the horizon. Small in frame (full body, about one quarter of the frame height), the woman from the reference images runs empty-handed through the grass toward frame-left, hair streaming; two harsh white flashlight beams from unseen pursuers off-frame right rake across the grass behind her. Her face, though small, lit softly. Same woman as the reference photos, accurate likeness, same face as the first reference image. Heart-shaped \"melon-seed\" face (\u74dc\u5b50\u8138): a large, tall, broad forehead and a proportionally large upper head/cranium, wide at the forehead/temples and cheekbones, tapering through the lower cheeks to a narrow, softly pointed chin (not round, not square). Eyes exactly as large and as shaped as in the first reference image (never smaller, never narrowed, never squinting), dark brown round-almond eyes with a slight thin double eyelid crease. Natural straight-ish brows with her subtle asymmetry: the brow on the viewer's left sits slightly lower and flatter, the brow on the viewer's right is slightly higher with a softer arch peaking toward the tail. Long straight solid black hair with a center part, styled half-up half-down: the top section pulled back from the temples into two symmetrical twisted sections meeting toward the crown, adding volume at the top and back of the head and revealing the broad forehead; the rest hangs long and straight past the shoulders, a few fine loose strands at the temples. Thin rectangular dark gray-teal metal frame glasses always on. Age 27, youthful, smooth clear skin, natural healthy complexion, soft even light on the face. Wearing a white cropped zip jacket with one orange horizontal band across the chest and upper sleeves, black top, black pants, white sneakers. No text.",
+  "refs": [
+   "assets/character/v2/GRASS_RUN.jpg",
+   "assets/sets/grass_field/1.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "low",
+  "attempts": [
+   {
+    "ok": false,
+    "secs": 30.1,
+    "err": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs."
+   },
+   {
+    "ok": false,
+    "secs": 30.1,
+    "err": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs."
+   },
+   {
+    "ok": true,
+    "secs": 13.7
+   }
+  ],
+  "file": "cands/J7w.jpg"
+ }
+]

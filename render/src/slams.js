@@ -70,12 +70,12 @@ export function bars(g, o) {
 export function stack(g, o) {
   const dt = Math.max(0, o.t - o.t0), text = o.text.toUpperCase(), n = o.rows ?? 4, six = (o.beat ?? 60 / 130) / 4;
   g.save(); g.textBaseline = 'alphabetic';
-  const { px, w } = fit(g, text, F.slam, 300, 1600, o.rowH ?? 210);
+  const { px, w } = fit(g, text, F.slam, 300, o.cx && o.cx < DW / 2 ? o.cx * 2 - 120 : 1600, o.rowH ?? 210);
   const rowH = px * 0.8, top = (DH - rowH * 1.04 * n) / 2 + px * 0.74;
   const landed = Math.min(n, Math.floor(dt / six + 1e-6) + 1);
   for (let i = 0; i < landed; i++) {
     const tin = dt - i * six, slide = (1 - easeOutExpo(clamp(tin / 0.07))) * (i % 2 ? -1 : 1) * 700;
-    const y = top + i * rowH * 1.04, x = DW / 2 - w / 2 + slide + (i - (n - 1) / 2) * 40;
+    const y = top + i * rowH * 1.04, x = (o.cx ?? DW / 2) - w / 2 + slide + (i - (n - 1) / 2) * 40;
     if (i === landed - 1) { g.fillStyle = o.color || PAL.bone; g.fillText(text, x, y); }
     else { g.strokeStyle = rgba(i === landed - 2 ? PAL.red : PAL.bone, 0.45 + 0.5 * (i / n)); g.lineWidth = 3; g.strokeText(text, x, y); }
   }

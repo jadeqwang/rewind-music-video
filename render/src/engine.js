@@ -13,6 +13,7 @@ import { loadFonts } from './type.js';
 import { SCENES } from './scenes/index.js';
 import { applyRhythm, skipAt } from './rhythm.js';
 import { hudOverlay } from './hud.js';
+import { drawLayers } from './layers.js';
 
 const Q = new URLSearchParams(location.search);
 export const W = +(Q.get('w') || 1920), H = +(Q.get('h') || 1080), S = H / DH;
@@ -31,7 +32,7 @@ export function shotAt(t, exclude = null) {
 export const shotById = id => E.shots.find(s => s.id === id);
 
 function defaultPost(shot) {
-  return { bloom: 0.55, bloomThr: 0.42, grain: 0.045, grainSeed: hash(shot.id) * 1000, vignette: 0.3, ca: 0.6, typeCA: 0.35,
+  return { bloom: 0.45, bloomThr: 0.72, grain: 0.045, grainSeed: hash(shot.id) * 1000, vignette: 0.3, ca: 0.6, typeCA: 0.35,
     inkC: rgb(PAL.ink), boneC: rgb(PAL.bone), cyanC: rgb(PAL.cyan), flashC: rgb(PAL.bone), ...(shot.post || {}) };
 }
 
@@ -45,8 +46,15 @@ export async function drawShot(shot, t, g, ty, post, opts = {}) {
   const sc = SCENES[shot.scene];
   if (!sc) throw new Error(`unknown scene ${shot.scene} (shot ${shot.id})`);
   g.save(); ty.save();
-  await sc.draw(ctx, lt, t, shot, { T: E.T, roto, shots: E.shots, SCENES, shotById, shotAt, drawShot, rewindOf });
+  const data = { T: E.T, roto, shots: E.shots, SCENES, shotById, shotAt, drawShot, rewindOf };
+  await sc.draw(ctx, lt, t, shot, data);
   g.restore(); ty.restore();
+  // params.over: extra layers drawn over any scene (comp-style)
+  if (shot.params.over && !(opts.rewinding && shot.params.overNoRewind)) {
+    resetCtx(g); resetCtx(ty); g.setTransform(S, 0, 0, S, 0, 0); ty.setTransform(S, 0, 0, S, 0, 0);
+    const dur = shot.t1 - shot.t0;
+    await drawLayers(ctx, shot.params.over, { lt, t, dur, u: clamp(lt / dur), T: E.T, k: E.T.kick(t, 0.08), b: E.T.beatPhase(t), shot, ctx }, data);
+  }
   resetCtx(ty); ty.setTransform(S, 0, 0, S, 0, 0);
   if (shot.hud && !opts.rewinding && !opts.noHud) hudOverlay(ty, tReal, shot, E.T);
   if (!opts.rewinding && post && post !== true && !opts.noRhythm) applyRhythm(post, tReal, shot, E.T);
@@ -71,8 +79,9 @@ export async function rewindOf(ctx, shotId, fromT, toT, progress, opts = {}) {
   };
   const L = layer('rw_scene', W, H), LT = layer('rw_type', W, H);
   const dummy = {};
-  // oldest ghost first, current frame last (on top)
-  for (let k = n; k >= 0; k--) {
+  // current frame first (opaque), then the motion-echo ghosts screened over it (they must not wash the frame out)
+  const order = [0]; for (let k = 1; k <= n; k++) order.push(k);
+  for (const k of order) {
     let tk = Math.min(fromT - 1e-4, ts + k * dt * Math.sign(fromT - toT || 1));
     const sh = pick(tk); if (!sh || SCENES[sh.scene]?.noRewind) continue;
     if (tk >= sh.t1) tk = sh.t1 - 1 / 30;
@@ -80,9 +89,8 @@ export async function rewindOf(ctx, shotId, fromT, toT, progress, opts = {}) {
     await drawShot(sh, tk, g, ty, dummy, { rewinding: true });
     resetCtx(g); g.drawImage(LT, 0, 0);
     const c = ctx.g; c.save(); c.setTransform(1, 0, 0, 1, 0, 0);
-    c.globalAlpha = k === 0 ? 1 : a0 * (1 - (k - 1) / n);
-    c.globalCompositeOperation = k === 0 ? 'source-over' : 'lighter';
-    if (k === 0 && n > 0) c.globalCompositeOperation = 'lighter';
+    c.globalAlpha = k === 0 ? 1 : a0 * 0.6 * (1 - (k - 1) / n);
+    c.globalCompositeOperation = k === 0 ? 'source-over' : 'screen';
     c.drawImage(L, 0, 0); c.restore();
   }
   return ts;

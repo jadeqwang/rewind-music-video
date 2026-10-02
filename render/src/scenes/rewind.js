@@ -9,6 +9,7 @@ import { rewindHud } from '../hud.js';
 import { subtitle, setFont, F } from '../type.js';
 
 export const noRewind = true;
+const hexRGB = h => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
 
 // map local time → source-progress with stepped speeds (each segment plays at its nominal speed, scaled to land on `to`)
 export function schedule(lt, dur, p) {
@@ -44,8 +45,13 @@ export async function draw(ctx, lt, t, shot, data) {
   if (p.overlay) {   // a second attempt rewinding at the same time, in its own colour (kept crisp on the type layer)
     const O = layer('rw_overlay', g.canvas.width, g.canvas.height), og = clearLayer(O); og.setTransform(ctx.S, 0, 0, ctx.S, 0, 0);
     await rewindOf({ ...ctx, g: og }, null, p.overlay.from, p.overlay.to, s.progress, { echo: 0 });
-    resetCtx(og); og.globalCompositeOperation = 'source-in'; og.fillStyle = p.overlay.color || PAL.red; og.fillRect(0, 0, O.width, O.height);
-    ty.save(); ty.setTransform(1, 0, 0, 1, 0, 0); ty.globalAlpha = p.overlay.alpha ?? 0.35; ty.globalCompositeOperation = 'source-over'; ty.drawImage(O, 0, 0); ty.restore();
+    resetCtx(og);
+    // luminance → alpha at quarter res, tinted: only the overlay's lines/lights survive, in their own colour
+    const Q = layer('rw_overlay_q', 480, 270), qg = clearLayer(Q); qg.drawImage(O, 0, 0, 480, 270);
+    const id = qg.getImageData(0, 0, 480, 270), d = id.data, [cr, cg, cb] = hexRGB(p.overlay.color || PAL.red);
+    for (let i = 0; i < d.length; i += 4) { const l = (d[i] * 0.3 + d[i + 1] * 0.59 + d[i + 2] * 0.11) / 255; d[i] = cr; d[i + 1] = cg; d[i + 2] = cb; d[i + 3] = Math.min(255, Math.max(0, (l - 0.12) * 1.6) * 255); }
+    qg.putImageData(id, 0, 0);
+    ty.save(); ty.setTransform(1, 0, 0, 1, 0, 0); ty.globalAlpha = p.overlay.alpha ?? 0.6; ty.drawImage(Q, 0, 0, ty.canvas.width, ty.canvas.height); ty.restore();
   }
   rewindHud(ty, { speed: p.badge ?? s.speed, tc: ts, alpha: 1 });
   // a thin progress rail along the bottom: the scrub position over the rewound span

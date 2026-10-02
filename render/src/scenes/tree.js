@@ -30,9 +30,9 @@ export function draw(ctx, lt, t, shot, { T }) {
   setFont(ty, F.mono(44, 400), 1); ty.fillStyle = rgba(PAL.boneDim, 1);
   const nodes = Math.floor(TR.nodes.length * prog * 37.3);
   ty.fillText(`SEARCH  ${nodes.toLocaleString('en-US')} lines  ✗ ${Math.floor(nodes * 0.93).toLocaleString('en-US')}`, 300, 104);
-  if (p.eval) evalBar(ty, { value: lt < (p.flipAt ?? dur) ? -9.9 : p.eval[1], mate: lt < (p.flipAt ?? dur) ? -1 : null });
+  if (p.eval && p.attempt != null) evalBar(ty, { value: lt < (p.flipAt ?? dur) ? -9.9 : p.eval[1], mate: lt < (p.flipAt ?? dur) ? -1 : null });
   const flipped = lt >= (p.flipAt ?? dur);
-  attempt(ty, { n: flipped ? (p.attempt ?? 1) + 1 : (p.attempt ?? 1), failed: flipped ? 0 : 1, sub: flipped ? 'RELOAD' : null, subColor: PAL.cyan });
+  if (p.attempt != null) attempt(ty, { n: flipped ? (p.attempt ?? 1) + 1 : (p.attempt ?? 1), failed: flipped ? 0 : 1, sub: flipped ? 'RELOAD' : null, subColor: PAL.cyan });
   if (p.lines) subtitle(ty, [].concat(...p.lines.map(i => T.lineWords(i))), t, { y: 1020 });
   ctx.post.bloom = 0.6; ctx.post.ca = 0.8; if (flipped && lt - (p.flipAt ?? dur) < 2 / 30) ctx.post.flash = 0.25;
 }

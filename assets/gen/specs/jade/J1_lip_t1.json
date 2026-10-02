@@ -1,0 +1,21 @@
+{
+ "model": "bytedance/seedance-2.5",
+ "tag": "jade_J1_lip_t1",
+ "notes": "J1 lip-sync validation: vocals 13.15-22.15 s ('The night before my dissertation defense,' sung 13.45-21.12)",
+ "input": {
+  "prompt": "Night. She sits in the driver's seat of a white 2001 Acura TL, seen from outside the open driver's window, side profile facing frame-left, both hands on the steering wheel, driving. She sings the vocal in the reference audio, her lips moving in exact sync with each sung word, small natural breaths, calm focused eyes on the road. Warm orange sodium streetlight bands sweep slowly across her and the car door from front to back as the car moves; the camera stays locked to the car. Jade: East Asian woman, heart-shaped face with a large broad forehead, thin rectangular dark gray-teal metal glasses always on, long straight black hair half-up half-down, white cropped zip jacket with an orange chest band over a black top. Keep her face exactly as in the first frame and the reference photos; same eye size, never squinting. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+  "image": "file:assets/character/firstframes/J1.jpg",
+  "reference_images": [
+   "file:assets/character/refs_768/PXL_20260929_003030232.jpg",
+   "file:assets/character/refs_768/PXL_20250908_195405539.MP.jpg",
+   "file:assets/character/refs_768/PXL_20260528_215628802.jpg"
+  ],
+  "reference_audios": [
+   "file:analysis/slices/vocals_J1_13.15_9.0.mp3"
+  ],
+  "duration": 9,
+  "resolution": "720p",
+  "aspect_ratio": "16:9",
+  "generate_audio": false
+ }
+}

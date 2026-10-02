@@ -13,3 +13,7 @@ render/node_modules/
 assets/roto/*/*/
 assets/roto/_auto/
 tools/likeness/models/
+# roto layers (tools/roto/roto.py): large per-frame PNGs stay local; commit only meta.json / face.json / preview.jpg
+assets/roto/*/*/
+assets/roto/*/.src_*
+tools/roto/models/

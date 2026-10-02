@@ -23,13 +23,13 @@ DEFAULTS = dict(
     canny_lo=14, canny_hi=34,          # on the flattened 0..255 luma
     min_len=34,            # min path length (analysis px) for an isolated path
     min_len_closed=60,     # closed loops (blobs: window dots, specks) need a larger perimeter
-    min_strength=0.10,     # min mean band-pass strength along the path
+    min_strength=0.12,     # min mean band-pass strength along the path
     density_r=10, density_max=0.20,  # local stroke density (texture) suppression
     min_lin=0.035,         # min gradient in LINEAR luma (before the gamma lift): kills lifted compression blotches
-    max_wiggle=0.10,       # max mean turning (rad/px) of the smoothed path for weak paths (noise wiggles)
+    max_wiggle=0.075,      # max mean turning (rad/px) of the smoothed path for weak paths (noise wiggles)
     w_min=1.7, w_max=3.2,  # stroke width range at 1080p (px)
     taper=14.0,            # taper length at 1080p (px)
-    smooth=2.2,            # Gaussian sigma along the path (analysis px)
+    smooth=3.2,            # Gaussian sigma along the path (analysis px)
     gap=7,                 # bridge end-to-end gaps up to this (analysis px)
 )
 

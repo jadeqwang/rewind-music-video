@@ -178,7 +178,7 @@ export const LAYERS = {
   slam(ctx, L, env, data) {
     const hits = (L.hits || [{ t: env.shot.t0 + (L.at ?? 0), text: L.text, variant: L.variant }]).filter(h => h.t <= env.t + 1e-6);
     if (!hits.length) return; const h = hits[hits.length - 1], g = L.onType ? ctx.ty : ctx.g, v = h.variant || L.variant || 'center';
-    const o = { t: env.t, t0: h.t, text: h.text, color: h.color || L.color || PAL.bone, y: L.y };
+    const o = { t: env.t, t0: h.t, text: h.text, color: h.color || L.color || PAL.bone, y: L.y, cx: L.cx };
     if (v === 'behind') V.behind(g, o, null); else if (v === 'mirror') V.mirror(g, o); else if (v === 'bars') V.bars(g, { ...o, code: h.code }); else if (v === 'stack') V.stack(g, { ...o, beat: env.T.period });
     else slam(g, { ...o, stutter: L.stutter ?? 1, seed: hits.length, maxW: L.maxW ?? 1780, maxH: L.maxH ?? 680, y: L.y ?? 830, plates: L.plates });
   },
@@ -220,7 +220,7 @@ export const LAYERS = {
     g.restore();
   },
   counter(ctx, L, env) {
-    const g = ctx.ty, v = A(L.value, env, 1); g.save(); setFont(g, F.mono(L.size ?? 120, 700), 2); g.fillStyle = L.color || PAL.bone; g.textAlign = L.align || 'right'; g.textBaseline = 'alphabetic';
+    const g = ctx.ty, v = A(L.value, env, 1); g.save(); setFont(g, F.mono(L.size ?? 120, 700), 2); g.fillStyle = A(L.color, env, PAL.bone); g.textAlign = L.align || 'right'; g.textBaseline = 'alphabetic';
     g.fillText(typeof v === 'string' ? v : String(Math.floor(v)).padStart(2, '0'), A(L.x, env, DW - 80), A(L.y, env, 200)); g.restore();
   },
   evalbar(ctx, L, env) { evalBar(ctx.ty, { value: A(L.value, env, 0), mate: A(L.mate, env, null) }); },
@@ -424,11 +424,38 @@ export const LAYERS = {
     }
   },
 };
+Object.assign(LAYERS, {
+  // the REWIND hand gesture: a counter-clockwise circular trail around her (until J5 roto exists)
+  circle(ctx, L, env) {
+    const g = ctx.g, cx = A(L.x, env, 960), cy = A(L.y, env, 540), r = A(L.r, env, 330), a0 = -env.t * (L.speed ?? 5);
+    g.save(); g.globalCompositeOperation = 'lighter'; g.lineCap = 'round';
+    for (let i = 0; i < 24; i++) { const a = a0 + i * 0.09; g.strokeStyle = rgba(L.color || PAL.cyan, (1 - i / 24) * 0.9); g.lineWidth = 14 * (1 - i / 24) + 2; g.beginPath(); g.arc(cx, cy, r, a, a + 0.1); g.stroke(); }
+    g.restore();
+  },
+  // muzzle flash frozen as a drawn star
+  star(ctx, L, env) {
+    const g = ctx.g, x = A(L.x, env, 1300), y = A(L.y, env, 460), R = A(L.r, env, 160), n = L.n ?? 9;
+    g.save(); g.globalCompositeOperation = 'lighter'; g.fillStyle = L.color || PAL.bone; g.beginPath();
+    for (let i = 0; i < n * 2; i++) { const a = i / (n * 2) * Math.PI * 2, rr = i % 2 ? R * (0.12 + 0.1 * hash(i, 3)) : R * (0.6 + 0.4 * hash(i, 2)); g.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr); }
+    g.closePath(); g.fill(); headlights(g, x, y, R * 2.2, 0.5); g.restore();
+  },
+  // an outline car (rear 3/4): the ghost of an earlier attempt
+  ghostcar(ctx, L, env) {
+    const g = ctx.g, x = A(L.x, env, 960), y = A(L.y, env, 600), s = A(L.scale, env, 1), a = A(L.alpha, env, 0.9);
+    g.save(); g.translate(x, y); g.scale(s, s); g.strokeStyle = rgba(L.color || PAL.cyan, a); g.lineWidth = 4; g.lineJoin = 'round';
+    g.beginPath(); g.moveTo(-200, 40); g.lineTo(-190, -20); g.lineTo(-120, -40); g.lineTo(-80, -100); g.lineTo(80, -100); g.lineTo(120, -40); g.lineTo(190, -20); g.lineTo(200, 40); g.closePath(); g.stroke();
+    g.beginPath(); g.moveTo(-70, -90); g.lineTo(70, -90); g.lineTo(100, -45); g.lineTo(-100, -45); g.closePath(); g.stroke();
+    g.fillStyle = rgba(PAL.red, a); g.fillRect(-185, -12, 50, 16); g.fillRect(135, -12, 50, 16);
+    g.restore();
+  },
+  // an over-everything vignette of black (drain), amount 0..1
+  drain(ctx, L, env) { const g = ctx.g, a = A(L.amount, env, env.u); const gr = g.createRadialGradient(DW / 2, DH / 2, lerp(1200, 4, a), DW / 2, DH / 2, lerp(1400, 30, a)); gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(0,0,0,1)'); g.fillStyle = gr; g.fillRect(0, 0, DW, DH); },
+});
 const TREES = new Map();
 
 // normalised Lake Shore Drive outline (lake to the right) and the aerial-curve stroke
 const LSD = [[0.35, 1], [0.4, 0.85], [0.42, 0.7], [0.5, 0.58], [0.55, 0.45], [0.52, 0.32], [0.6, 0.2], [0.7, 0.1], [0.72, 0]];
-const LSD_AERIAL = [[0.08, 1.02], [0.12, 0.85], [0.14, 0.7], [0.12, 0.55], [0.1, 0.42], [0.13, 0.3], [0.2, 0.2], [0.32, 0.12], [0.5, 0.07], [0.7, 0.04], [0.92, 0.02]];
+const LSD_AERIAL = [[0.45, 1.02], [0.38, 0.85], [0.32, 0.68], [0.3, 0.55], [0.33, 0.4], [0.4, 0.28], [0.5, 0.19], [0.65, 0.11], [0.82, 0.06], [1.0, 0.03]];
 
 function roundRect(g, x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
 
