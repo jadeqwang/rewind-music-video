@@ -422,8 +422,7 @@ function atlasLights(id, clipT) {
   }
   g.clearRect(0, 0, 480, 270); g.putImageData(out, 0, 0);
   const c2 = document.createElement('canvas'); c2.width = 160; c2.height = 90; { const g2 = c2.getContext('2d'); g2.filter = 'blur(3px)'; g2.drawImage(c, 0, 0, 160, 90); g2.filter = 'none';   // flat soft discs, no source pixels
-    const d2 = g2.getImageData(0, 0, 160, 90), q = d2.data; for (let i = 3; i < q.length; i += 4) q[i] = q[i] > 40 ? Math.min(255, 60 + q[i] * 1.2) : q[i] * 0.5; g2.putImageData(d2, 0, 0);
-    g2.globalCompositeOperation = 'lighter'; g2.filter = 'blur(1px)'; g2.globalAlpha = 0.5; g2.drawImage(c2, 0, 0); g2.globalAlpha = 1; g2.filter = 'none'; }
+    }
   atlasCache.set(key, c2); if (atlasCache.size > 60) atlasCache.delete(atlasCache.keys().next().value);
   return c2;
 }
@@ -434,7 +433,7 @@ export function lights(g, id, clipT, o = {}) {
   else if (m.layers.includes('light')) bmp = atlasLights(id, clipT);
   if (!bmp) return false;
   g.save(); g.globalCompositeOperation = o.comp || 'lighter'; g.globalAlpha = clamp(o.alpha ?? 1);
-  if (m.layers.includes('lights')) g.filter = 'blur(5px)';   // flat soft light shapes: no plate pixels
+  if (m.layers.includes('lights')) { g.filter = 'blur(3px)'; g.globalAlpha *= 0.8; }   // flat soft light shapes: no plate pixels
   place(g, bmp, o.rect, o.boil != null ? jitter(o.boil, 0.4) : null);
   g.restore(); return true;
 }
