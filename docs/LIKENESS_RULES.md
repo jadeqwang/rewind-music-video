@@ -54,3 +54,5 @@ animations (J1, J6). Everything else waits for morning review.
 - POSE CONGRUENCE (user): head pose and body pose must agree in every composite/frame (J9 failed: face pointed a
   different way than the body → uncanny; J6 is the good example). Performance/center-lock shots (J5, J5b) use a
   straight-on frontal photo (yaw≈0). Measure head yaw/pitch/roll and pose the body around it; verify shoulder line.
+- STYLE PICK (user): ladder option B — warm-skin flat cel (5 tones) — "looks like a face". C (posterized real photo)
+  rejected as splotchy. No round blush circles; soft thin brows.
