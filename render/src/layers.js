@@ -150,7 +150,7 @@ export const LAYERS = {
   page(ctx, L, env) {
     const ws = words(env.T, L, env.shot);
     const fns = (L.footnotes || []).map(f => ({ ...f, at: f.at ?? (ws.find(w => w.key === f.word)?.start ?? 0) }));
-    pageType(ctx.ty, ws, env.t, { x: L.x ?? 150, y: L.y ?? 470, w: L.measure ?? 1060, size: L.size ?? 140, maxLines: L.maxLines ?? 3, header: L.header, folio: L.folio, footnotes: fns, furniture: smooth(0, 0.4, env.lt), settle: L.settle, color: L.color, hybrid: L.hybrid, drift: L.drift });
+    pageType(ctx.ty, ws, env.t, { x: L.x ?? 150, y: L.y ?? 470, w: L.measure ?? 1060, size: L.size ?? 140, maxLines: L.maxLines ?? 3, header: L.header, headerX: env.shot.hud ? 560 : undefined, folio: L.folio, footnotes: fns, furniture: smooth(0, 0.4, env.lt), settle: L.settle, color: L.color, hybrid: L.hybrid, drift: L.drift });
   },
   subtitle(ctx, L, env) { const ws = words(env.T, L, env.shot).filter(w => w.start < env.shot.t1 + (L.tail ?? 0.01)); subtitle(ctx.ty, ws, env.t, { y: L.y ?? 1010, x: L.x, lit: L.lit, color: L.color, upper: L.upper }); },
   mono(ctx, L, env) {

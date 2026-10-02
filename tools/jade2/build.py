@@ -185,11 +185,12 @@ def build_frame(J, i, frame, meta, fd, pf):
     # ---- outfit as designed shapes: bone jacket, her orange bands (from the footage hue, cleaned), black top (ink),
     #      at most 2 large mid-tone fold shadows
     body = figure & (face == 0) & (hair_designed == 0)
-    smooth_fill(figure, (*BONE, 255), out, min_area=2000, step=5, it=3)
+    figure = cv2.morphologyEx(figure.astype(np.uint8), cv2.MORPH_OPEN, np.ones((15, 15), np.uint8)) > 0
+    smooth_fill(figure, (*BONE, 255), out, min_area=6000, step=7, it=4)
     if body.sum() > 1000:
         hsv = cv2.cvtColor(cv2.resize(small, (W, H)), cv2.COLOR_BGR2HSV); hh_, ss_, vv_ = hsv[..., 0], hsv[..., 1], hsv[..., 2]
         orange = body & (hh_ >= 4) & (hh_ <= 19) & (ss_ > 140) & (vv_ > 90)
-        v = L[body]; t_dark, t_mid = np.percentile(v, 22), np.percentile(v, 45)
+        v = L[body]; t_dark, t_mid = np.percentile(v, 12), np.percentile(v, 40)
         ink = body & (L < t_dark) & ~orange
         mid = body & (L >= t_dark) & (L < t_mid) & ~orange
         k = np.ones((13, 13), np.uint8)
@@ -201,7 +202,7 @@ def build_frame(J, i, frame, meta, fd, pf):
         orange = cv2.morphologyEx(cv2.morphologyEx(orange.astype(np.uint8), cv2.MORPH_OPEN, np.ones((7, 7), np.uint8)), cv2.MORPH_CLOSE, np.ones((15, 15), np.uint8)) & body
         smooth_fill(orange, (*ORANGE, 255), out, min_area=4000, step=8, it=4, holes=False)
         ink = cv2.morphologyEx(cv2.morphologyEx(ink.astype(np.uint8), cv2.MORPH_OPEN, k), cv2.MORPH_CLOSE, k) & body
-        smooth_fill(ink, (*INK, 255), out, min_area=3000, step=7, it=3, holes=False)
+        smooth_fill(ink, (*INK, 255), out, min_area=9000, step=8, it=4, holes=False)
     # ---- face: 2 tones max, large smooth shadow shapes only near the edge (cheekbone / jaw) — never under the eyes
     if face.sum() > 500:
         fl = cv2.GaussianBlur(L, (0, 0), 14)

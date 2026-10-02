@@ -56,10 +56,12 @@ export function page(g, words, t, o = {}) {
   if (o.page != null) cur = o.page;
   const a0 = o.furniture ?? 1;
   if (o.header) {
+    const hx = o.headerX ?? x0;   // shifted right when the proof HUD (ATTEMPT, top-left) is on
     setFont(g, F.cmu(34)); g.fillStyle = rgba(PAL.boneDim, a0);
-    g.fillText(o.header, x0, 120);
-    if (o.folio) { const fo = String(/^\d+$/.test(o.folio) ? +o.folio + cur : o.folio); setFont(g, F.cmuR(34)); const fw = g.measureText(fo).width; g.fillText(fo, x0 + measure - fw, 120); }
-    g.fillStyle = rgba(PAL.boneDim, 0.7 * a0); g.fillRect(x0, 142, measure, 2);
+    g.fillText(o.header, hx, 120); const hw = g.measureText(o.header).width;
+    const xr = Math.max(x0 + measure, hx + hw + 90);
+    if (o.folio) { const fo = String(/^\d+$/.test(o.folio) ? +o.folio + cur : o.folio); setFont(g, F.cmuR(34)); const fw = g.measureText(fo).width; g.fillText(fo, xr - fw, 120); }
+    g.fillStyle = rgba(PAL.boneDim, 0.7 * a0); g.fillRect(hx, 142, xr - hx, 2);
   }
   for (const p of placed) {
     if (p.pg !== cur) continue;
@@ -67,7 +69,7 @@ export function page(g, words, t, o = {}) {
     if (u <= 0) continue;
     const e = easeOutCubic(u);
     const sung = t >= p.w.start - 0.04 && t < (p.w.end ?? p.w.start + .4) + 0.12;
-    g.fillStyle = rgba(col, e * (sung ? 1 : (o.settle ?? 0.4)) * (o.alpha ?? 1));
+    g.fillStyle = rgba(col, e * (sung ? 1 : (o.settle ?? 0.62)) * (o.alpha ?? 1));
     setFont(g, F.cmu(size));
     g.fillText(p.s, p.x, p.y + (1 - e) * size * 0.06);
     if (p.w.note) { setFont(g, F.cmuR(size * 0.4)); g.fillStyle = rgba(o.noteColor || PAL.red, e); g.fillText(p.w.note, p.x + p.ww + 6, p.y - size * 0.5); }
