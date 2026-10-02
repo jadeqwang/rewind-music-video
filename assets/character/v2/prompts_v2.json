@@ -73,5 +73,29 @@
    }
   ],
   "file": "cands/TU1.jpg"
+ },
+ {
+  "id": "EX1",
+  "model": "openai/gpt-image-2",
+  "prompt": "Photographic expression sheet, 2x2 grid of head-and-shoulders portraits of the same woman on a plain light warm-gray studio background, soft even frontal key light, all front-facing at the same scale: top-left focused (calm concentrated gaze slightly past camera as if driving at night), top-right startled (eyebrows raised, eyes opened wide with natural iris size, lips slightly parted, not squinting), bottom-left singing softly (lips gently parted mid-note, relaxed eyes), bottom-right determined (steady direct gaze, lips pressed, slight forward lean). Same woman as the reference photos, accurate likeness, same face as the first reference image. Heart-shaped \"melon-seed\" face (\u74dc\u5b50\u8138): a large, tall, broad forehead and a proportionally large upper head/cranium, wide at the forehead/temples and cheekbones, tapering through the lower cheeks to a narrow, softly pointed chin (not round, not square). Eyes exactly as large and as shaped as in the first reference image (never smaller, never narrowed, never squinting), dark brown round-almond eyes with a slight thin double eyelid crease. Natural straight-ish brows with her subtle asymmetry: the brow on the viewer's left sits slightly lower and flatter, the brow on the viewer's right is slightly higher with a softer arch peaking toward the tail. Long straight solid black hair with a center part, styled half-up half-down: the top section pulled back from the temples into two symmetrical twisted sections meeting toward the crown, adding volume at the top and back of the head and revealing the broad forehead; the rest hangs long and straight past the shoulders, a few fine loose strands at the temples. Thin rectangular dark gray-teal metal frame glasses always on. Age 27, youthful, smooth clear skin, natural healthy complexion, soft even light on the face. Wearing the white cropped zip jacket with an orange chest band over a black top. No text, no labels.",
+  "refs": [
+   "assets/character/v2/cands/G_warp.jpg",
+   "refs/jade/PXL_20250908_195405539.MP.jpg",
+   "refs/jade/PXL_20260929_003030232.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": false,
+    "secs": 30.4,
+    "err": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs."
+   },
+   {
+    "ok": true,
+    "secs": 26.5
+   }
+  ],
+  "file": "cands/EX1.jpg"
  }
 ]

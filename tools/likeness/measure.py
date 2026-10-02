@@ -134,7 +134,8 @@ def measure_multi(src):
         return [dict(m=m, box=faces[0]["box"] if faces else None)] if m else []
     lab = face_cells(rgb, faces); out = []
     for i, f in enumerate(faces):
-        cell = rgb.copy(); cell[lab != i] = 128
+        bg = np.median(np.r_[rgb[0], rgb[-1], rgb[:, 0], rgb[:, -1]], 0).astype(np.uint8)
+        cell = rgb.copy(); cell[lab != i] = bg
         ys, xs = np.where(lab == i)
         sub = np.ascontiguousarray(cell[ys.min():ys.max() + 1, xs.min():xs.max() + 1])
         m = measure(sub)
@@ -320,7 +321,7 @@ def head_top(pts, mask):
                 break
             if mask[y, x] in (1, 2, 3, 5):
                 last = t
-            elif last is not None and t - last > 0.04 * fw:
+            elif last is not None and t - last > 0.02 * fw:
                 break
             t += 1.0
         if last is not None:

@@ -156,7 +156,8 @@ def correct_multi(rgb, iters=3, max_yaw=35, **kw):
         y0, y1, x0, x1 = ys.min(), ys.max() + 1, xs.min(), xs.max() + 1
         if abs(f["yaw"]) > max_yaw:
             reps.append(dict(face=i, skipped=f"yaw {f['yaw']:.0f}")); continue
-        sub = rgb[y0:y1, x0:x1].copy(); sub[lab[y0:y1, x0:x1] != i] = 128
+        bg = np.median(np.r_[rgb[0], rgb[-1], rgb[:, 0], rgb[:, -1]], 0).astype(np.uint8)
+        sub = rgb[y0:y1, x0:x1].copy(); sub[lab[y0:y1, x0:x1] != i] = bg
         sub = np.ascontiguousarray(sub)
         fixed, P, rep = correct(sub, iters=iters, verbose=False, **kw)
         if P is None:

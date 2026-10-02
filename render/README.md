@@ -16,13 +16,18 @@ src/post.js           WebGL2 compositor (raw GL, port of tools/prior rare_earth 
                       shake, two-tone impact invert, ±flash, rewind grades (cyanGrade positive, neg true negative), vignette
 src/engine.js         boot, shotAt, drawShot, renderAt/renderTimed/renderSheet, rewindOf(), miss-driven roto loading
 src/roto.js           roto loader (LRU, prefetch) + figure components: contours(), jade(), suits(), star()
-src/type.js           fonts + kinetic type: page() (a), slam() (b), subtitle() (c), redact()/redactedLine() (d), revisions() (e)
+src/type.js           fonts + kinetic type: page() (a, 120–170 px CMU italic, paginated via maxLines, folio advances), slam() (b,
+                      restrained centred slam: keep for the single biggest moment), subtitle() (c, ≥42 px mono), redact()/redactedLine() (d), revisions() (e)
+src/slams.js          designed drop variants: behind (depth sandwich, matte occludes the word), mirror (palindromic REWIND),
+                      bars (word knocked out of redaction bars on bone paper), stack (stutter-stack motion echo)
 src/hud.js            evalBar, attempt, annotation (?! ?? !!), foiaBanner, rewindHud (◀◀ ×N, timecode), buildTree/searchTree, cross
 src/fx.js             sirens (alternating red/blue floods on the beat), sodiumSweep/Wash, bullet, rain, fillInk
-src/scenes/*.js       page, suits, freeze, rewind, slam, tree, road, black (+ index.js registry)
+src/scenes/*.js       page, suits, freeze (→ CASE FILE dossier page: halftone print via post htRect, mono annotations, ✗ stamp),
+                      rewind, slam (hits[].variant), tree, road, black (+ index.js registry)
 src/shots.js          main edit (PLACEHOLDER: whole song with look-dev assets, every cut symbolic)
 src/shots.lookdev.js  12 s look-dev (song 36–48 s)
-fonts/                CMU Serif (Computer Modern), Anton, Big Shoulders Display, Archivo (wdth VF), JetBrains Mono + OFL texts
+fonts/                CMU Serif (Computer Modern), Anton, Big Shoulders Display, Archivo (wdth VF), JetBrains Mono + OFL texts;
+                      DejaVu Sans Mono symbol subset registered into the JBM family via unicode-range (✗ ◀ ▶ − ∎ ∴ ‖ × █)
 tools/make_stub.py    stub timing/envelopes (from whisper + a 124 BPM grid); superseded by analysis/timing.json
 tools/make_lookdev_roto.py  look-dev roto sequences (DoG lines + GrabCut matte on assets/tests images; procedural Jade)
 lookdev/              lookdev.mp4, lookdev_sheet.png, sheet_v0..v3 (iteration history), stills
@@ -34,6 +39,10 @@ All drawing uses design pixels (1920×1080). The layers are scaled by `S = H/108
 Canvases are uploaded with `UNPACK_FLIP_Y`, so in GL `uv (0,0)` is bottom-left. Any effect defined in screen pixels
 uses `sy = (1-uv.y)*H/S`, which is top-down like the canvas. Every shader result passes through `safe()` (NaN/Inf → 0),
 and JS values that reach canvas or GL go through `fin()`.
+
+## Design rules baked in (director round 2)
+- Contrast: suits never black-on-black — `sirens(side:'pair')` keeps both halves lit + `headlights()` bloom behind them; heads are solid.
+- Legibility: mono ≥ 42 px font (≈30 px cap), key HUD ≥ 56 px; eval bar 20 px; tree edges ≥ 3 px, labels 48 px. Check sheets at 480 px wide.
 
 ## Shots and scenes
 `buildShots(T)` returns `{id, t0, t1, scene, params}`. Cut times come from the TimeMap, not typed seconds:
