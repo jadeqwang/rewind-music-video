@@ -97,3 +97,9 @@ Retired: Theorem/Proof/Q.E.D., "a proof by exhaustion", thesis chapter header. N
 paper with lines from her poem "Reload" ("time stops, starts rewinding. Braid-like,"); world cards per attempt
 (1 · Time and Compliance / 2 · Time and Flight / 3 · Time and Never Stopping); "hold ◀◀ to rewind" prompt at freezes;
 she is time-immune (cyan shimmer) during rewinds; ending page = the poem's final stanza "And I never stop."
+
+## Picasso layer (user idea)
+Cubist simultaneity = multiple attempts in one face (frontal + 3/4 planes), escalating drop1 → drop2 → build3, then
+she RESOLVES into one single-view face in the final drop (the survivor). Picasso/Gjon Mili 1949 light drawings =
+rewind trails and ghost runs as continuous light-pen strokes. Guernica-inflected freezes (fractured planes, bulb-eye
+= siren). Always flattering, recognizably her (Dora Maar-era elegance, never grotesque).
