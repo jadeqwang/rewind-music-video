@@ -1,0 +1,29 @@
+[
+ {
+  "set": "lake_shore_drive",
+  "name": "a2_chase_gpt-image-2",
+  "model": "openai/gpt-image-2",
+  "refs": [
+   "assets/sets/lake_shore_drive/c_aerial1_gpt-image-2.jpg"
+  ],
+  "prompt": "Use the reference image only for the location's look, lighting and palette, but compose a completely different camera angle: chase camera about 3 meters behind and slightly above a lone dark car, the car's rear and red tail lights large in the lower center of the frame, the empty curving lakefront highway ahead lined with orange sodium streetlights, black lake on the right, distant skyline silhouette. No license plate. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people."
+ },
+ {
+  "set": "grass_field",
+  "name": "a2_ground_gpt-image-2",
+  "model": "openai/gpt-image-2",
+  "refs": [
+   "assets/sets/grass_field/c5_grok-quality.jpg"
+  ],
+  "prompt": "Use the reference image only for the location's look, lighting and palette, but compose a completely different camera angle: extreme low angle from the ground inside the tall grass looking up: a few large grass stalks as crisp black silhouettes in the foreground against a hard white flashlight beam crossing the frame diagonally overhead through faint mist, black sky. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people."
+ },
+ {
+  "set": "search_space",
+  "name": "a2_fork_gpt-image-2",
+  "model": "openai/gpt-image-2",
+  "refs": [
+   "assets/sets/search_space/c2_grok-2.0.jpg"
+  ],
+  "prompt": "Use the reference image only for the location's look, lighting and palette, but compose a completely different camera angle: straight-down view of one single highway road entering from the bottom of the frame and splitting into two diverging ramps, each of which splits again into two, a clean binary tree of four curving branches traced in orange lights on pitch black, one pair of white headlights on the leftmost branch. Very simple, lots of empty black. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people."
+ }
+]

@@ -57,7 +57,12 @@ For reference, Rare Earth spent about $142 on 103 Seedance runs. Errored runs ar
 as 15 s and then corrected to the real duration on collect.
 
 ## Validation run (2026-10-02)
-TEST_RESULT_PLACEHOLDER
+Job `rewind/test_lsd_dash-d46648d9e5` (spec `assets/gen/specs/test_lsd_dash.json`) used Seedance 2.5 at 480p, 5 s, 16:9, with `reference_audios` = `assets/tests/ref_audio_40s_5s.mp3`
+sent as a data URI and `generate_audio:false`. The prompt was the night highway by a dark lake with no people. The job body was 111 KB.
+- **Latency:** 165 s from submit until the Worker started the job (the 2 min lead plus waiting for the bucket minute), then **154 s of generation** in the Worker, so **319 s from submit to result**. Collecting took a few seconds more.
+- **Output:** `assets/gen/test_lsd_dash_d46648d9e5.mp4`, H.264, 854×480, 24 fps, 121 frames, 5.04 s, 3.6 MB, video only. ffprobe passed. The clip shows a wet windshield, the sodium bokeh and a lakeside road.
+  The reference audio was accepted without error.
+- **Cost (estimated):** $0.514, which is 5 s × $0.1028. The manifest total is $0.514. The account bill can't be read with this token.
 
 ## Limits and gotchas
 - **About 2 min queue lead plus a minute bucket.** Jobs start at the next free cron minute at least 2 min ahead, because KV `list` is eventually consistent.

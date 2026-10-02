@@ -75,7 +75,7 @@ def one(job):
 
 if __name__ == "__main__":
     jobs = json.load(open(sys.argv[1]))
-    with ThreadPoolExecutor(6) as ex:
+    with ThreadPoolExecutor(int(os.environ.get("PAR", "6"))) as ex:
         recs = list(ex.map(one, jobs))
     db = json.load(open(PJ))
     print("this batch $%.2f | total est $%.2f" % (sum(r["est_cost_usd"] or 0 for r in recs if not r["error"]),

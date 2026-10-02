@@ -4,7 +4,7 @@ S = "/tmp/claude-0/-home-user-rewind-music-video/6b28fe5a-ebc4-5b63-aa64-c3b0ecf
 D = "/home/user/rewind-music-video/assets/character/"
 DET = cv2.FaceDetectorYN.create(S + "yunet.onnx", "", (320, 320), 0.6)
 REC = cv2.FaceRecognizerSF.create(S + "sface.onnx", "")
-YOUNG = ["IMG_20180610_074732_mr1528617091925.jpg", "IMG_20180610_073429.jpg", "MVIMG_20171213_083641.jpg",
+YOUNG = ["IMG_20160827_121631_face.jpg", "IMG_20170223_162015_face.jpg", "IMG_20180610_074732_mr1528617091925.jpg", "IMG_20180610_073429.jpg", "MVIMG_20171213_083641.jpg",
          "IMG_20180209_082832.jpg"]
 REFS = ["PXL_20250908_195405539.MP.jpg", "PXL_20260528_215628802.jpg", "PXL_20250908_195352130.jpg",
         "PXL_20241109_223659531.jpg", "PXL_20260929_003030232.jpg"]
@@ -40,10 +40,10 @@ def label(t, s, col=(0, 0, 0)):
     cv2.putText(t, s, (5, 19), cv2.FONT_HERSHEY_SIMPLEX, 0.55, col, 1, cv2.LINE_AA); return t
 
 def compare(cand, out=None, young=None):
-    if young is None: young = "y28" in os.path.basename(cand)
+    if young is None: young = "_y2" in os.path.basename(cand)
     im = cv2.imread(cand); fs = faces(im)
     top = []
-    for r in (YOUNG + REFS[:1] if young else REFS):
+    for r in (YOUNG[:5] if young else REFS):
         ri = cv2.imread(D + "refs_small/" + r); rf = max(faces(ri), key=lambda a: a[2] * a[3])
         top.append(label(crop(ri, rf), "REF " + r[4:19]))
     bot, sims = [], []
@@ -58,4 +58,4 @@ def compare(cand, out=None, young=None):
 
 if __name__ == "__main__":
     for c in sys.argv[1:]:
-        o, s = compare(c); print(os.path.basename(c), "young" if "y28" in c else "cur", "faces", len(s), "id", s, "mean", round(np.mean(s), 3) if s else None, o)
+        o, s = compare(c); print(os.path.basename(c), "young" if "_y2" in c else "cur", "faces", len(s), "id", s, "mean", round(np.mean(s), 3) if s else None, o)

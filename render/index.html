@@ -1,0 +1,19 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>REWIND renderer</title>
+<style>html,body{margin:0;background:#07080A;color:#8E897F;font:12px monospace}#out{display:block;max-width:100vw;height:auto}
+#ui{position:fixed;left:0;right:0;bottom:0;padding:6px 10px;background:rgba(0,0,0,.6);display:flex;gap:10px;align-items:center}#scrub{flex:1}</style>
+</head><body>
+<canvas id="out"></canvas>
+<div id="ui" hidden><input id="scrub" type="range" step="0.0333333" value="0"><span id="tt"></span></div>
+<script type="module">
+import { boot } from './src/engine.js';
+const Q = new URLSearchParams(location.search);
+boot().then(E => {
+  if (Q.has('render')) return;
+  const ui = document.getElementById('ui'), scrub = document.getElementById('scrub'), tt = document.getElementById('tt');
+  ui.hidden = false; scrub.min = E.range[0]; scrub.max = E.range[1]; scrub.value = +(Q.get('t') || E.range[0]);
+  let busy = false, want = +scrub.value;
+  const go = async () => { if (busy) return; busy = true; const t = want, a = performance.now(); await window.renderAt(t, null); tt.textContent = `${t.toFixed(2)}s  ${(performance.now() - a).toFixed(0)} ms`; busy = false; if (t !== want) go(); };
+  scrub.oninput = () => { want = +scrub.value; go(); }; go();
+}).catch(e => { console.error(e); document.body.insertAdjacentHTML('beforeend', `<pre style="color:#f55">${e.stack}</pre>`); window.bootError = String(e.stack || e); });
+</script></body></html>

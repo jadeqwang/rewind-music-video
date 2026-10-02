@@ -92,7 +92,13 @@ void main(){
   col.b = texture(tScene, uv - o1 * .6 - c2).b;
   col = safe(col);
   if (bloom > 0.) col += safe(texture(tBloom, uv).rgb) * bloom;
-  // type layer (straight alpha) with its own, smaller CA
+  // rewind grade: negative, mapped into an ink→cyan→bone duotone
+  if (neg > 0.) {
+    float l = 1. - clamp(luma(col), 0., 1.);
+    vec3 duo = l < .55 ? mix(inkC * .6, cyanC * .55, l / .55) : mix(cyanC * .55, mix(cyanC, boneC, .55), (l - .55) / .45);
+    col = mix(col, duo, neg);
+  }
+  // type layer (straight alpha) with its own, smaller CA; drawn after the grade so HUD/type keep their colours
   vec2 tc = c2 * typeCA;
   vec4 ty = texture(tType, uv);
   float tar = texture(tType, uv + tc).a, tab = texture(tType, uv - tc).a;
@@ -100,12 +106,6 @@ void main(){
   vec3 ta = vec3(tar, ty.a, tab);
   col = mix(col, tcol * typeDim, ta);
   col = safe(col);
-  // rewind grade: negative, mapped into an ink→cyan→bone duotone
-  if (neg > 0.) {
-    float l = 1. - clamp(luma(col), 0., 1.);
-    vec3 duo = l < .55 ? mix(inkC * .6, cyanC * .55, l / .55) : mix(cyanC * .55, mix(cyanC, boneC, .55), (l - .55) / .45);
-    col = mix(col, duo, neg);
-  }
   // per-shot static grain (2 design-px cells), weighted toward darks
   float g = hash12(floor(vUv * res / (2. * S)) + fract(grainSeed * .1371) * 1000.) - .5;
   col += g * grain * (.35 + .65 * (1. - luma(col)));

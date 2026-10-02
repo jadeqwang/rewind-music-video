@@ -3,7 +3,7 @@ LIKE = ("The exact woman in the reference photos: same face as the reference pho
         "and as shaped as in the photos (not narrowed, not smaller), her nose and mouth unchanged. Long straight solid black hair "
         "with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin "
         "rectangular dark gray-teal metal frame glasses. Smooth clear skin, natural healthy complexion.")
-AGE = (" She is shown as she looked at age 28, matching the younger reference photos: youthful, smooth clear skin, but identical "
+AGE = (" She is shown as she looked at age 27, matching the youngest reference photos (her eyes are wide and round-almond there, keep them exactly that large): youthful, smooth clear skin, but identical "
        "facial structure, identical eye shape and eye size, same nose, same mouth, same round face and full cheeks, "
        "unmistakably the same person. Hair entirely black, no dyed ends.")
 OUTFIT_TOP = " Wearing a white cropped zip jacket with a few bold orange horizontal bands across the chest and sleeves, over a black top."
@@ -12,3 +12,6 @@ R_CUR = ["PXL_20250908_195405539.MP.jpg", "PXL_20260528_215628802.jpg", "PXL_202
          "PXL_20260929_003030232.jpg", "jade_trace_jacket_hp_2.jpg"]
 R_Y = ["IMG_20180610_074732_mr1528617091925.jpg", "IMG_20180610_073429.jpg", "MVIMG_20171213_083641.jpg",
        "IMG_20180209_082832.jpg", "PXL_20250908_195405539.MP.jpg"]
+R_Y27 = ["IMG_20160827_121631_face.jpg", "IMG_20170223_162015_face.jpg", "IMG_20180610_074732_mr1528617091925.jpg",
+         "IMG_20180610_073429.jpg", "PXL_20250908_195405539.MP.jpg"]
+GLASSES = (" She wears her modern thin rectangular dark gray-teal metal frame glasses exactly as in the 2025-2026 reference photos, in every view.")

@@ -29,13 +29,37 @@
    },
    "est_usd": 0.514,
    "est_basis": "5s x 0.1028 (@480p non-video input (per second))",
-   "state": "running",
+   "state": "done",
    "bucket": 29848630,
    "submitted": 1790917684.3795178,
    "bytes": 111219,
-   "started": 1790917849.863
+   "started": 1790917849.863,
+   "state_relay": "done",
+   "gen_secs": 153.9,
+   "finished": 1790918003.747,
+   "latency_secs": 319.4,
+   "files": [
+    "assets/gen/test_lsd_dash_d46648d9e5.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 5.042,
+     "bytes": 3632028,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 854,
+       "height": 480,
+       "r_frame_rate": "24/1",
+       "nb_frames": "121"
+      }
+     ]
+    }
+   ],
+   "collected": 1790918062.0453253
   }
  },
  "total_est_usd": 0.514,
- "total_est_usd_done": 0
+ "total_est_usd_done": 0.514
 }
