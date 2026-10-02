@@ -92,3 +92,70 @@ E4: 91 frames @15fps from assets/clips/E4.mp4 (1470x630), layers=['lines', 'matt
   E4   80/91 0.37s  flow=0.05 matte=0.00 ground=0.02 face=0.00 lines=0.16 write=0.13
   E4   50/91 0.35s  flow=0.07 matte=0.00 ground=0.03 face=0.00 lines=0.14 write=0.10
   E4   90/91 0.39s  flow=0.08 matte=0.00 ground=0.02 face=0.00 lines=0.15 write=0.13
+E4: done 91/91 frames, wall 13.4s, 11.2 MB, mean s/frame (per worker): flow=0.062, matte=0.005, ground=0.024, face=0.0, lines=0.156, write=0.123, total=0.37
+E5: 151 frames @15fps from assets/clips/E5.mp4 (1280x720), layers=['lines', 'matte', 'light', 'flow'], workers=3, tone={'hi': 0.8117647171020508, 'gamma': 0.5045741070750236}
+  E5    0/151 0.96s  flow=0.16 matte=0.01 ground=0.00 face=0.00 lines=0.63 write=0.15
+  E5   50/151 0.52s  flow=0.05 matte=0.00 ground=0.00 face=0.00 lines=0.29 write=0.17
+  E5  100/151 1.00s  flow=0.22 matte=0.00 ground=0.00 face=0.00 lines=0.41 write=0.37
+  E5   10/151 0.52s  flow=0.13 matte=0.00 ground=0.00 face=0.00 lines=0.25 write=0.13
+  E5   60/151 0.91s  flow=0.11 matte=0.00 ground=0.00 face=0.00 lines=0.46 write=0.33
+  E5  110/151 0.69s  flow=0.06 matte=0.01 ground=0.00 face=0.00 lines=0.38 write=0.25
+  E5   70/151 0.71s  flow=0.05 matte=0.00 ground=0.00 face=0.00 lines=0.35 write=0.30
+  E5   20/151 1.34s  flow=0.21 matte=0.01 ground=0.00 face=0.00 lines=0.73 write=0.40
+  E5  120/151 0.70s  flow=0.06 matte=0.00 ground=0.00 face=0.00 lines=0.34 write=0.30
+  E5   80/151 0.77s  flow=0.06 matte=0.00 ground=0.00 face=0.00 lines=0.43 write=0.28
+  E5   30/151 0.66s  flow=0.12 matte=0.01 ground=0.00 face=0.00 lines=0.35 write=0.19
+  E5  130/151 0.77s  flow=0.13 matte=0.00 ground=0.00 face=0.00 lines=0.46 write=0.18
+  E5   90/151 0.48s  flow=0.11 matte=0.04 ground=0.00 face=0.00 lines=0.22 write=0.12
+  E5   40/151 0.63s  flow=0.19 matte=0.00 ground=0.00 face=0.00 lines=0.23 write=0.21
+  E5  140/151 0.61s  flow=0.13 matte=0.00 ground=0.00 face=0.00 lines=0.31 write=0.16
+  E5  150/151 0.39s  flow=0.06 matte=0.00 ground=0.00 face=0.00 lines=0.18 write=0.14
+E5: done 151/151 frames, wall 43.4s, 23.5 MB, mean s/frame (per worker): flow=0.135, matte=0.01, ground=0.0, face=0.0, lines=0.401, write=0.248, total=0.794
+Epull: 61 frames @15fps from assets/clips/Epull.mp4 (1280x720), layers=['lines', 'matte', 'light', 'flow'], workers=3, tone={'hi': 0.6235294342041016, 'gamma': 0.35}
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+  Epull    0/61 10.52s  flow=0.28 matte=9.29 ground=0.00 face=0.00 lines=0.39 write=0.56
+  Epull   40/61 6.25s  flow=0.05 matte=5.13 ground=0.00 face=0.00 lines=0.37 write=0.70
+  Epull   20/61 8.47s  flow=0.18 matte=7.25 ground=0.00 face=0.00 lines=0.59 write=0.45
+  Epull   10/61 3.62s  flow=0.06 matte=3.14 ground=0.00 face=0.00 lines=0.23 write=0.19
+  Epull   50/61 4.85s  flow=0.06 matte=4.16 ground=0.00 face=0.00 lines=0.31 write=0.33
+  Epull   30/61 5.26s  flow=0.06 matte=4.41 ground=0.00 face=0.00 lines=0.41 write=0.37
+  Epull   60/61 3.62s  flow=0.05 matte=3.16 ground=0.00 face=0.00 lines=0.17 write=0.24
+Epull: done 61/61 frames, wall 92.4s, 11.3 MB, mean s/frame (per worker): flow=0.088, matte=2.717, ground=0.0, face=0.0, lines=0.296, write=0.385, total=3.486
+S1: 76 frames @15fps from assets/clips/S1.mp4 (1280x720), layers=['lines', 'matte', 'light', 'flow'], workers=3, tone={'hi': 0.8901960849761963, 'gamma': 0.43741503629256656}
+  S1    0/76 1.39s  flow=0.04 matte=0.73 ground=0.00 face=0.00 lines=0.23 write=0.38
+  S1   50/76 1.46s  flow=0.05 matte=0.48 ground=0.00 face=0.00 lines=0.42 write=0.50
+  S1   30/76 1.42s  flow=0.08 matte=0.59 ground=0.00 face=0.00 lines=0.32 write=0.43
+  S1   10/76 1.45s  flow=0.08 matte=0.57 ground=0.00 face=0.00 lines=0.45 write=0.35
+  S1   60/76 1.28s  flow=0.08 matte=0.53 ground=0.00 face=0.00 lines=0.30 write=0.37
+  S1   40/76 1.25s  flow=0.08 matte=0.47 ground=0.00 face=0.00 lines=0.29 write=0.41
+  S1   20/76 1.35s  flow=0.05 matte=0.60 ground=0.00 face=0.00 lines=0.35 write=0.35
+  S1   70/76 1.44s  flow=0.08 matte=0.46 ground=0.00 face=0.00 lines=0.42 write=0.49
+S1: done 76/76 frames, wall 39.4s, 31.3 MB, mean s/frame (per worker): flow=0.081, matte=0.502, ground=0.0, face=0.0, lines=0.328, write=0.383, total=1.295
+S2: 61 frames @15fps from assets/clips/S2.mp4 (1280x720), layers=['lines', 'matte', 'light', 'flow'], workers=3, tone={'hi': 0.9333333373069763, 'gamma': 0.35}
+  S2    0/61 0.99s  flow=0.04 matte=0.50 ground=0.00 face=0.00 lines=0.20 write=0.25
+  S2   20/61 0.83s  flow=0.04 matte=0.35 ground=0.00 face=0.00 lines=0.20 write=0.24
+  S2   40/61 0.88s  flow=0.05 matte=0.34 ground=0.00 face=0.00 lines=0.24 write=0.25
+  S2   10/61 0.77s  flow=0.05 matte=0.33 ground=0.00 face=0.00 lines=0.17 write=0.22
+  S2   50/61 0.85s  flow=0.05 matte=0.34 ground=0.00 face=0.00 lines=0.22 write=0.24
+  S2   30/61 0.86s  flow=0.05 matte=0.34 ground=0.00 face=0.00 lines=0.22 write=0.25
+  S2   60/61 0.88s  flow=0.06 matte=0.36 ground=0.00 face=0.00 lines=0.16 write=0.30
+S2: done 61/61 frames, wall 22.2s, 19.3 MB, mean s/frame (per worker): flow=0.055, matte=0.348, ground=0.0, face=0.0, lines=0.217, write=0.253, total=0.873
+S3: 91 frames @15fps from assets/clips/S3.mp4 (1280x720), layers=['lines', 'matte', 'light', 'flow'], workers=3, tone={'hi': 0.7058823704719543, 'gamma': 0.40939515150413053}
+  S3    0/91 1.37s  flow=0.07 matte=0.97 ground=0.02 face=0.00 lines=0.09 write=0.21
+  S3   30/91 1.24s  flow=0.05 matte=0.79 ground=0.02 face=0.00 lines=0.13 write=0.25
+  S3   60/91 1.38s  flow=0.05 matte=0.85 ground=0.02 face=0.00 lines=0.12 write=0.33
+  S3   10/91 1.24s  flow=0.05 matte=0.82 ground=0.02 face=0.00 lines=0.12 write=0.23
+  S3   40/91 1.34s  flow=0.06 matte=0.85 ground=0.02 face=0.00 lines=0.14 write=0.27
+  S3   70/91 1.27s  flow=0.05 matte=0.81 ground=0.02 face=0.00 lines=0.14 write=0.25
+  S3   20/91 1.26s  flow=0.05 matte=0.79 ground=0.02 face=0.00 lines=0.14 write=0.26
+  S3   80/91 1.40s  flow=0.05 matte=0.88 ground=0.02 face=0.00 lines=0.19 write=0.26
+  S3   50/91 1.34s  flow=0.06 matte=0.83 ground=0.02 face=0.00 lines=0.18 write=0.25
+  S3   90/91 1.20s  flow=0.05 matte=0.75 ground=0.02 face=0.00 lines=0.12 write=0.25
+S3: done 91/91 frames, wall 45.9s, 19.9 MB, mean s/frame (per worker): flow=0.055, matte=0.804, ground=0.021, face=0.0, lines=0.14, write=0.26, total=1.281
+S4: 151 frames @15fps from assets/clips/S4.mp4 (1280x720), layers=['lines', 'matte', 'light', 'flow'], workers=1, tone={'hi': 0.8274509906768799, 'gamma': 0.4804947261993399}
+  S4    0/151 1.65s  flow=0.04 matte=1.26 ground=0.00 face=0.00 lines=0.14 write=0.20
+  S4   10/151 1.69s  flow=0.05 matte=1.05 ground=0.00 face=0.00 lines=0.33 write=0.25
+  S4   20/151 1.49s  flow=0.06 matte=0.97 ground=0.00 face=0.00 lines=0.22 write=0.25
+  S4   30/151 1.56s  flow=0.04 matte=1.00 ground=0.00 face=0.00 lines=0.22 write=0.30
