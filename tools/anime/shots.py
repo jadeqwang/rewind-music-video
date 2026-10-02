@@ -48,6 +48,12 @@ FIX = ("Edit this anime film frame minimally: remove the round '1420 MHz' patch 
        "white with only the orange band. Keep EVERYTHING else exactly identical: face, eyes and their size, hair, pose, lighting, "
        "background, composition, line weight and colours. ")
 JOBS = {
+ "J9fix": (OUT + "/cands/J9_1.jpg", FIX),
+ "J3fix": (OUT + "/cands/J3_1.jpg", "Edit this anime film frame minimally: remove the police car and its light bar at the top-left "
+   "(replace with dark night road and distant city lights). The red and blue police light now comes from BEHIND her car "
+   "(frame-right, beyond the rear door), washing red/blue over the rear of the car, her hair rim and the dark figure at the right "
+   "edge. Keep EVERYTHING else exactly identical: her face, eyes and their size, hair, pose, the blank ID card, car, composition, "
+   "line weight and colours. "),
  "J1fix": (OUT + "/cands/J1_0.jpg", FIX), "J2fix": (OUT + "/cands/J2_0.jpg", FIX),
  # --- car shots (single input: approved K_drive_1 keyframe) ---
  "J1": (KDRIVE, "Edit this anime film frame. " + CAR + "New camera: mounted on the passenger-side dashboard looking back-left "

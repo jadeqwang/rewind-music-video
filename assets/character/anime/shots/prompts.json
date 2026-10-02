@@ -178,5 +178,17 @@
   "attempts": 2,
   "est_cost_usd": 0.14,
   "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/shots/cands/J3_1.jpg",
+  "job": "J3",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "src": "K_drive_1.jpg",
+  "prompt": "Edit this anime film frame. Keep the art style, her face (same eyes, same size), hair, outfit and patches exactly as in the input image. The car is a white 2001 Acura TL, US LEFT-HAND DRIVE: she sits in the LEFT front seat behind the steering wheel; simple early-2000s dashboard with analog gauges, no touchscreen. The round '1420 MHz' patch is ONLY on her LEFT sleeve; her RIGHT sleeve is plain white with the orange band (no patch). New scene: the car is stopped on the road shoulder at night. Camera outside the car next to the open driver's window (her LEFT side), at window height, medium shot: the window is rolled fully down, she sits in the driver's seat turned slightly toward the camera and holds up her driver's license card in her left hand at the window opening: a plain horizontal ID card with a blank face (no readable text). Her other hand rests on the wheel. Strong red and blue police light floods from behind the car (frame-left/back), rimming her hair and the car door; her face stays softly, evenly lit. Calm compliant expression, lips closed, eyes looking up at someone standing just off-frame right. Same art style as the sheet: clean thin confident lineart, flat cel shading with 2-3 tones, premium anime feature film (Satoshi Kon / Makoto Shinkai). Night lighting, but her face is lit by a soft, even, gentle fill (clean, youthful, no harsh shadows on the face) with a coloured rim light on hair and shoulders. Full-bleed single frame, 16:9 cinematic composition: keep her head and hands inside the central horizontal band (top and bottom 8% of the canvas may be cropped). No text, no captions, no panels, no borders. ",
+  "secs": 30.2,
+  "attempts": 3,
+  "est_cost_usd": 0.21000000000000002,
+  "error": null
  }
 ]
