@@ -30,3 +30,4 @@ v2 (2026-10-02): measured likeness gate + approved-candidate sheet in assets/cha
 ## ANIME JADE (user decision — supersedes the realistic spec for on-screen Jade)
 Canonical: refs/jade/Pasted image.png (her anime self from a previous video). For REWIND: keep the "1420 MHz" and
 pale-blue-dot patches; NO antenna, NO glasses, NO headphones; black pants. Any pose/angle allowed.
+- APPROVED (user): anime Jade for all on-screen shots.
