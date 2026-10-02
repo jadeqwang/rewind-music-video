@@ -98,6 +98,32 @@ After each frame the current shot is prefetched for about 10 frames ahead and 2 
   (docs/LIKENESS_RULES.md). `ghost: true` gives the outline-only past self, `rim` gives an edge light, `light` gives a sodium/siren wash.
 - `suits()`: black cut-out, one-sided siren rim, FOIA face bars wider than the head plus a `(b)(6)` label, sunglasses glint stars.
 
+#### Production roto (`tools/roto/roto.py`, see tools/roto/README.md)
+`assets/roto/<CLIP>/` (E1, E2_calm, S1, J6, ...) at 15 fps, **1920x1080** (bitmaps are 8.3 MB decoded: consider MAX ≈ 80).
+Layers: `lines` (vector-traced contours), `matte` (primary subject alpha), `mattes` (opaque RGB: R jade, G suits, B car),
+`light` (opaque 960x270 atlas; left R red / G sodium / B blue, right R cold white / G grass ground / B luma),
+`flow` (240x135, R/G = dx/dy in 1080p px per drawing, `v = sign(c-128)*((|c-128|/127)^2)*128`), and for J shots
+`face`, `features`, `hair` + `face.json`. `meta.json` documents all codes (`light_atlas`, `flow_code`, `channels`).
+Suits: `per_frame[i].faces/glints` come from head peaks on the suit matte.
+
+**Jade face (J shots): template eyes, footage anchors.** Seedance shrinks her eyes within a clip (iris −7..−19 %, opening
+−12..−45 %), so `features` never trace the footage eyes. The eye lids, iris, fine double-eyelid crease and each brow
+(per side, pixel-measured, asymmetric, tapered) are drawn from her canonical real-photo template
+(`tools/roto/templates/jade_front.json`, built by `tools/roto/template.py build` from the core real photos), rotated by the
+footage head pose (MediaPipe transformation matrix: yaw/pitch/roll, far eye foreshortened / dropped past ±42° yaw),
+anchored at the footage canthi midpoint and scaled by footage face width × her real IOD/face-width ratio (median of 9).
+Openness is always her real mean; only a real blink (blendshape > 0.6) closes the lids. Gaze = footage iris offset, clamped.
+Profile shots (MediaPipe cannot see them, e.g. J1): `tools/roto/anchors/<SHOT>.json` gives iris centre E / nose tip N /
+mouth corner on frame 0; the head is KLT-tracked (RANSAC similarity) and the hand-annotated profile template
+(`jade_profile.json`, from refs/jade/PXL_20260929_003030232.jpg) is mapped E,N→E,N. Footage is used only for the lower
+jaw, nose-tip mark, face oval / skin mask (lines suppressed inside) and hair.
+`face.json[i]` = per frame `{mode: front|profile|front_hold, eye_R_upper/lower/crease/iris/closure, eye_L_*, brow_R, brow_L
+(closed polygons), jaw, nose, lips, yaw, template_scale_px}` (profile: `eye_near_*`, `brow_near`, `E`, `N`), all 1080p px.
+Mouth: `per_frame[i].mouth=[x,y,w]`, `tilt`, `mouth_open_raw` (footage inner-lip gap / IOD at t) and `mouth_open` =
+raw(t − 0.29 s), i.e. the footage track shifted +0.29 s because Seedance lip-sync leads the audio; `T.e('vocal')` stays
+the primary mouth driver. `per_frame[i].likeness` = tools/likeness gate on the footage every 3rd frame (advisory, it
+measures the shrinking footage, not our drawing); failing frames are listed in `meta.likeness_flags`.
+
 ## CLI
 ```
 node render.mjs --list [--shots lookdev]

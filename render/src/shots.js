@@ -35,7 +35,7 @@ export function buildShots(T) {
   // suit black at right with bar + glint, the bullet suspended between them
   const tableau = () => [{ type: 'rect', x: 0, w: DW / 2, color: '#C81E22' }, { type: 'rect', x: DW / 2, w: DW / 2, color: '#2347D6' },
     jade('J3', { cam: { from: [0.76, 0.42, 1.0], to: [0.76, 0.42, 1.0], dx: -500, dy: 30 }, mouth: false }),
-    { type: 'suits', roto: R.suits('B6'), cam: { from: [0.416, 0.3, 1.7], to: [0.416, 0.3, 1.7], dx: 470, dy: 20 }, rimL: PAL.bone, rimR: PAL.bone, glint: 1 },
+    { type: 'suits', roto: R.suits('B6'), cam: { from: [0.416, 0.3, 2.4], to: [0.416, 0.3, 2.4], dx: 470, dy: 150 }, rimL: PAL.bone, rimR: PAL.bone, glint: 1 },
     { type: 'bullet', x: 700, y: 420, len: 560, angle: Math.PI, color: PAL.bone }];
 
   // =============================== 0 · INTRO 0 – 13.45 (the hook) ===============================
@@ -44,8 +44,8 @@ export function buildShots(T) {
   // frame 0 = the thumbnail: one clear read. red | blue, her white figure, the black redacted suit (bar + glint), the
   // suspended bullet between them; ATTEMPT 01 ✗ on a calm ink band. No HUD.
   C('H0_tableau', 0, bt(1), [...tableau(), { type: 'rect', y: 800, h: 280, color: PAL.ink },
-    { type: 'slam', text: 'ATTEMPT 01', variant: 'center', at: 0, x: 110, align: 'left', y: 1040, maxH: 230, maxW: 1300, stutter: 0, color: PAL.bone },
-    { type: 'glyph', ch: '✗', x: 1480, y: 950, size: 300, color: PAL.red, onType: false }],
+    { type: 'slam', text: 'ATTEMPT 01', variant: 'center', at: 0, x: 110, align: 'left', y: 1052, maxH: 200, maxW: 1250, stutter: 0, color: PAL.bone },
+    { type: 'glyph', ch: '✗', x: 1500, y: 955, size: 270, color: PAL.red, onType: false }],
     { fx: { heart: 0 } }, { post: { bloom: 0.15, ca: 0.8, vignette: 0.15 } });
   // H1: the whole video backwards at ×64 — a trailer in reverse; lands on the dark road
   add('H1_scrub', bt(1), bt(9), 'rewind', { from: sec('end').start - 0.5, to: v1, speeds: [64], segs: [1], hold: 0, echo: 0, badge: 64 }, { fx: { jerks: [bt(1)] } });

@@ -59,7 +59,7 @@ export function perFrame(id, clipT) { const m = meta(id); if (!m || !m.per_frame
 // ------------------------------------------------------------------------------------------------
 // helpers working at roto resolution (scratch canvases match the roto frame size)
 
-function scratch(name, m) { return layer('roto_' + name, m.w, m.h); }
+function scratch(name, m) { const c = layer('roto_' + name, m.w, m.h); if (!c.ctxR) { c.ctxR = true; c.ctx = c.getContext('2d', { willReadFrequently: true }); } return c; }
 // tint a white-on-transparent bitmap into a scratch canvas
 function tinted(name, m, bmp, color, alpha = 1, times = 1) {
   const c = scratch(name, m), g = clearLayer(c);
@@ -72,10 +72,12 @@ function tinted(name, m, bmp, color, alpha = 1, times = 1) {
 function ring(name, m, bmp, r, color, dir = null) {
   const c = scratch(name, m), g = clearLayer(c);
   if (dir) g.drawImage(bmp, -dir[0] * r, -dir[1] * r, m.w, m.h);
+  else if (false) {}
   else for (let k = 0; k < 8; k++) { const a = k * Math.PI / 4; g.drawImage(bmp, Math.cos(a) * r, Math.sin(a) * r, m.w, m.h); }
-  g.globalCompositeOperation = 'destination-out'; g.drawImage(bmp, 0, 0, m.w, m.h);
+  hardAlpha(c); g.globalCompositeOperation = 'destination-out'; g.drawImage(bmp, 0, 0, m.w, m.h); g.drawImage(bmp, 0, 0, m.w, m.h);
   g.globalCompositeOperation = 'source-in'; g.fillStyle = color; g.fillRect(0, 0, m.w, m.h);
   g.globalCompositeOperation = 'source-over';
+  hardAlpha(c);
   return c;
 }
 
@@ -134,7 +136,7 @@ export function jade(g, id, clipT, o = {}) {
   } else {
     if (o.rim) { a.globalAlpha = clamp(o.rim.alpha ?? 0.6); a.drawImage(ring('jrim', m, mt, o.rim.w ?? 1.6, o.rim.color || PAL.bone), 0, 0); a.globalAlpha = 1; }
     const F0 = scratch('jadeF', m), f0 = clearLayer(F0);
-    for (let k = 0; k < 3; k++) f0.drawImage(mt, 0, 0, m.w, m.h);
+    f0.drawImage(mt, 0, 0, m.w, m.h); hardAlpha(F0);
     f0.globalCompositeOperation = 'source-in'; f0.fillStyle = o.fill || PAL.bone; f0.fillRect(0, 0, m.w, m.h);
     f0.globalCompositeOperation = 'source-over';
     a.drawImage(F0, 0, 0);
@@ -178,7 +180,8 @@ export function suits(g, id, clipT, o = {}) {
   if (o.rimL) { a.globalAlpha = clamp(o.rimAmt ?? 1); a.drawImage(ring('rimL', m, mt, 3.5, o.rimL, [-1, 0]), 0, 0); }
   if (o.rimR) { a.globalAlpha = clamp(o.rimAmt ?? 1); a.drawImage(ring('rimR', m, mt, 3.5, o.rimR, [1, 0]), 0, 0); }
   a.globalAlpha = 1;
-  const B = tinted('suitB', m, mt, '#000000', 1, 3);
+  const B = tinted('suitB', m, mt, '#000000', 1, 1);
+  hardAlpha(B);   // flat cut-out: no soft/partial matte lets the world show through as smudge
   a.drawImage(B, 0, 0);
   g.save();
   const r = o.rect || { x: 0, y: 0, w: DW, h: DH }, kx = r.w / m.w, ky = r.h / m.h;
@@ -217,6 +220,12 @@ export function star(g, x, y, R, a, col) {
   g.restore();
 }
 
+// threshold a scratch canvas' alpha (ramp 70..130) so mattes are FLAT shapes, never textured
+export function hardAlpha(c) {
+  const g = c.ctx, im = g.getImageData(0, 0, c.width, c.height), d = im.data;
+  for (let i = 3; i < d.length; i += 4) { const a = d[i]; d[i] = a < 96 ? 0 : a > 112 ? 255 : (a - 96) * 15.9; }
+  g.putImageData(im, 0, 0);
+}
 // ---- light layer (format addition): RGB = the light's own colour, alpha = brightness; drawn additively ----
 // tools/roto atlas ('light', 960x270): left half R siren_red G sodium B siren_blue, right half R cold_white G ground B luma.
 // Colourised once per frame into a 480x270 RGBA canvas (cached), then drawn additively like 'lights'.
