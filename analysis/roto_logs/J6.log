@@ -15,3 +15,11 @@ W0000 00:00:1790923844.890152   10868 inference_feedback_manager.cc:121] Feedbac
   J6   30/121 2.32s  flow=0.05 matte=0.36 ground=0.00 face=1.16 lines=0.22 write=0.52
   J6   40/121 1.57s  flow=0.05 matte=0.33 ground=0.00 face=0.43 lines=0.24 write=0.53
   J6   50/121 2.24s  flow=0.07 matte=0.40 ground=0.00 face=0.92 lines=0.23 write=0.62
+  J6   60/121 2.92s  flow=0.06 matte=0.42 ground=0.00 face=1.55 lines=0.27 write=0.62
+  J6   70/121 2.43s  flow=0.07 matte=0.44 ground=0.00 face=1.05 lines=0.25 write=0.62
+  J6   80/121 1.75s  flow=0.06 matte=0.35 ground=0.00 face=0.46 lines=0.29 write=0.59
+  J6   90/121 4.76s  flow=0.07 matte=0.60 ground=0.00 face=3.13 lines=0.40 write=0.56
+  J6  100/121 2.71s  flow=0.07 matte=0.45 ground=0.00 face=1.39 lines=0.25 write=0.57
+  J6  110/121 2.20s  flow=0.09 matte=0.34 ground=0.00 face=1.04 lines=0.25 write=0.48
+  J6  120/121 2.80s  flow=0.05 matte=0.37 ground=0.00 face=1.56 lines=0.27 write=0.55
+J6: done 121/121 frames, wall 302.8s, 67.5 MB, mean s/frame (per worker): flow=0.061, matte=0.385, ground=0.0, face=1.214, lines=0.277, write=0.563, total=2.5

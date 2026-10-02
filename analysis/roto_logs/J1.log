@@ -1,0 +1,26 @@
+J1: 136 frames @15fps from assets/gen/jade_J1_lip_t3_7730ba5879.mp4 (1280x720), layers=['lines', 'matte', 'light', 'flow', 'face'], workers=1, tone={'hi': 0.8039215803146362, 'gamma': 0.5469008124040329}
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+WARNING: Logging before InitGoogle() is written to STDERR
+W0000 00:00:1790924150.651635   12147 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790924151.184846   12153 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+W0000 00:00:1790924151.192335   12155 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790924151.211059   12157 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790924152.114564   12165 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+W0000 00:00:1790924152.127732   12167 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790924152.143251   12167 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790924152.198280   12172 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+  J1    0/136 3.50s  flow=0.06 matte=0.45 ground=0.00 face=2.17 lines=0.30 write=0.52
+  J1   10/136 2.48s  flow=0.05 matte=0.39 ground=0.00 face=1.18 lines=0.32 write=0.53
+  J1   20/136 2.74s  flow=0.05 matte=0.42 ground=0.00 face=1.28 lines=0.24 write=0.75
+  J1   30/136 2.01s  flow=0.07 matte=0.35 ground=0.00 face=0.58 lines=0.43 write=0.58
+  J1   40/136 2.68s  flow=0.06 matte=0.35 ground=0.00 face=1.37 lines=0.28 write=0.62
+  J1   50/136 1.79s  flow=0.05 matte=0.31 ground=0.00 face=0.57 lines=0.29 write=0.57
+  J1   60/136 3.19s  flow=0.06 matte=0.48 ground=0.00 face=1.57 lines=0.38 write=0.69
+  J1   70/136 1.97s  flow=0.09 matte=0.37 ground=0.00 face=0.62 lines=0.26 write=0.64
+  J1   80/136 2.02s  flow=0.04 matte=0.38 ground=0.00 face=0.56 lines=0.40 write=0.64
+  J1   90/136 2.24s  flow=0.05 matte=0.35 ground=0.00 face=0.99 lines=0.36 write=0.50
+  J1  100/136 2.12s  flow=0.05 matte=0.33 ground=0.00 face=0.96 lines=0.24 write=0.55
+  J1  110/136 2.31s  flow=0.05 matte=0.37 ground=0.00 face=1.01 lines=0.34 write=0.54
+  J1  120/136 3.51s  flow=0.17 matte=0.50 ground=0.00 face=1.73 lines=0.50 write=0.62
+  J1  130/136 1.71s  flow=0.08 matte=0.33 ground=0.00 face=0.45 lines=0.37 write=0.48
+J1: done 136/136 frames, wall 320.8s, 91.1 MB, mean s/frame (per worker): flow=0.064, matte=0.388, ground=0.0, face=0.976, lines=0.323, write=0.606, total=2.357

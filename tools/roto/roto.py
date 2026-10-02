@@ -73,7 +73,7 @@ SHOTS = {
 
 def shot_cfg(shot):
     key = shot.replace('Epull', 'E-pull').replace('E_pull', 'E-pull')
-    c = dict(SHOTS.get(key, {}))
+    c = dict(SHOTS.get(key) or SHOTS.get(key.replace('_alt', '').rstrip('0123456789_') if key.endswith(tuple('0123456789')) and '_alt' in key else key.replace('_alt', ''), {}))
     if not c:
         if shot.startswith('J'):
             c = dict(persons='jade', rvm=0.4, face=True)
@@ -671,7 +671,7 @@ def mouth_track(per, src, start, lead):
     if os.path.exists(lj) and np.isfinite(raw).mean() < 0.5:
         L = json.load(open(lj)); ms = np.array(L['mouth'], float); tf = np.arange(len(ms)) / L.get('fps', 24)
         lo, hi = np.nanpercentile(ms, 5), np.nanpercentile(ms, 95)
-        raw = np.interp(t, tf, (ms - lo) / max(1e-6, hi - lo) * 0.25)
+        raw = np.interp(t, tf, np.clip((ms - lo) / max(1e-6, hi - lo), 0, 1) * 0.25)
         src_kind = 'lipsync.json dark-gap (normalised to ~0..0.25 IOD)'
     ok = np.isfinite(raw)
     if ok.sum() < 2:
