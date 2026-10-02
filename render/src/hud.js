@@ -31,7 +31,7 @@ export function glyph(g, ch, x, y, px, col, w = 700) { g.save(); setFont(g, F.mo
 // ---- chess-engine evaluation bar (left edge) ----
 // value: pawns from Jade's side (+ good). mate: if set (e.g. -1) shows "−#1" and the bar empties.
 export function evalBar(g, o) {
-  const x = o.x ?? 44, y0 = o.y ?? 190, h = o.h ?? 760, w = o.w ?? 20, a = o.alpha ?? 1;
+  const x = o.x ?? 44, y0 = o.y ?? 250, h = o.h ?? 700, w = o.w ?? 20, a = o.alpha ?? 1;
   const v = fin(o.value, 0), mate = o.mate;
   const p = mate != null ? (mate > 0 ? 1 : 0) : clamp(0.5 + Math.atan(v / 2.2) / Math.PI);   // share of the bar that is "hers"
   g.save();

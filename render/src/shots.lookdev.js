@@ -15,7 +15,7 @@ export function buildShots(T) {
     { id: 'ld_page', t0: LOOKDEV_START, t1: With.start, scene: 'page',
       params: { roto: ['ld_jade', 'ld_road'], jade: 'ld_jade', world: 'ld_road', lines: [L], notes: { id: '2' },
         footnotes: [{ mark: '2', text: 'NASA badge. Valid through tomorrow, 9:00 a.m.', word: 'id' }],
-        header: 'Chapter 3.  Proof by Exhaustion', folio: '47', eval: [0.3, -0.9], size: 150, y: 420, measure: 1060, maxLines: 2 } },
+        header: 'Chapter 3.  Proof by Exhaustion', folio: '47', eval: [0.3, -0.9], size: 150, y: 500, measure: 1060, maxLines: 2 } },
     { id: 'ld_suits', t0: With.start, t1: shot.start, scene: 'suits',
       params: { roto: 'ld_suits', lines: [With.line_idx], eval: [-0.9, -6], mate: -1, attempt: 1, move: { n: 1, move: 'pull over', nag: '?!', at: 0.4 } } },
     { id: 'ld_freeze', t0: shot.start, t1: andTime.start, scene: 'freeze',

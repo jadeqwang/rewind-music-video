@@ -19,3 +19,7 @@ Best references:
   jade_trace_base.jpg
 - Outfit turnaround from an earlier video (anime-styled; use for OUTFIT only, not face; pants here should be black):
   refs/jade/Pasted image.png
+
+## Car & continuity
+Her car: WHITE 2001 ACURA (early-2000s Japanese sedan; simple dash, no touchscreen). US left-hand drive — she sits on
+the LEFT; traffic on the right. Pursuers: dark sedan. Reject any mirrored / right-hand-drive interiors.

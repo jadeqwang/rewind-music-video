@@ -124,7 +124,8 @@ def correct(rgb, ref=None, iters=3, eyes=True, forehead=True, shape=True, verbos
                 want.append(ref["upper_head"] / m["upper_head"])
             if want:
                 k = float(np.exp(np.mean(np.log(want))))
-                if abs(k - 1) > fh_tol:
+                too_big = (m.get("forehead") or 0) > 1.08 * ref["forehead"] or (m.get("upper_head") or 0) > 1.12 * ref.get("upper_head", 9)
+                if k > 1 + fh_tol or (k < 1 and too_big):   # never shrink a large forehead unless beyond the gate
                     P["top_scale"] = float(np.clip(P["top_scale"] * k, 0.95, 1.25)); changed = True
         if shape and ref.get("forehead_w") and m.get("forehead_w"):
             jr = m["jaw_w"] / ref["jaw_w"] - 1 if m.get("jaw_w") else 0
@@ -140,14 +141,49 @@ def correct(rgb, ref=None, iters=3, eyes=True, forehead=True, shape=True, verbos
     return out, P, dict(before=m0, after=m, hist=hist)
 
 
+def correct_multi(rgb, iters=3, max_yaw=35, **kw):
+    """Correct every face of a multi-panel sheet: each face is solved on its own Voronoi cell and the
+    corrected cell is pasted back (warps are identity well before the cell borders). Faces with
+    |yaw| > max_yaw (profiles) are left untouched - the mesh is unreliable there - and reported."""
+    faces = MS.all_faces(rgb)
+    if len(faces) <= 1:
+        out, P, rep = correct(rgb, iters=iters, **kw)
+        return out, [dict(params=P, report=rep)]
+    lab = MS.face_cells(rgb, faces)
+    out = rgb.copy(); reps = []
+    for i, f in enumerate(faces):
+        ys, xs = np.where(lab == i)
+        y0, y1, x0, x1 = ys.min(), ys.max() + 1, xs.min(), xs.max() + 1
+        if abs(f["yaw"]) > max_yaw:
+            reps.append(dict(face=i, skipped=f"yaw {f['yaw']:.0f}")); continue
+        sub = rgb[y0:y1, x0:x1].copy(); sub[lab[y0:y1, x0:x1] != i] = 128
+        sub = np.ascontiguousarray(sub)
+        fixed, P, rep = correct(sub, iters=iters, verbose=False, **kw)
+        if P is None:
+            reps.append(dict(face=i, skipped="no face in cell")); continue
+        msk = (lab[y0:y1, x0:x1] == i)
+        out[y0:y1, x0:x1][msk] = fixed[msk]
+        reps.append(dict(face=i, params={k: round(v, 4) for k, v in P.items()},
+                         before={k: rep["before"].get(k) for k in MS.KEYS}, after={k: rep["after"].get(k) for k in MS.KEYS}))
+    return out, reps
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("inp"); ap.add_argument("out")
     ap.add_argument("--iters", type=int, default=3)
     ap.add_argument("--no-eyes", action="store_true"); ap.add_argument("--no-forehead", action="store_true")
     ap.add_argument("--no-shape", action="store_true"); ap.add_argument("--report")
+    ap.add_argument("--multi", action="store_true", help="character sheet with several faces")
     a = ap.parse_args()
     rgb = MS.load_rgb(a.inp)
+    if a.multi:
+        out, reps = correct_multi(rgb, iters=a.iters, eyes=not a.no_eyes, forehead=not a.no_forehead, shape=not a.no_shape)
+        cv2.imwrite(a.out, cv2.cvtColor(out, cv2.COLOR_RGB2BGR), [cv2.IMWRITE_JPEG_QUALITY, 95])
+        if a.report:
+            json.dump(reps, open(a.report, "w"), indent=1, default=float)
+        for r in reps: print(r.get("face"), r.get("params") or r.get("skipped"))
+        return
     out, P, rep = correct(rgb, iters=a.iters, eyes=not a.no_eyes, forehead=not a.no_forehead, shape=not a.no_shape)
     cv2.imwrite(a.out, cv2.cvtColor(out, cv2.COLOR_RGB2BGR), [cv2.IMWRITE_JPEG_QUALITY, 95])
     if a.report:

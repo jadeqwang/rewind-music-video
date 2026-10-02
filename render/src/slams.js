@@ -73,7 +73,7 @@ export function stack(g, o) {
   g.save(); g.textBaseline = 'alphabetic';
   const { px, w } = fit(g, text, F.slam, 300, 1500, o.rowH ?? 196);
   const rowH = px * 0.8, top = (DH - rowH * n) / 2 + px * 0.74;
-  const pos = tt => lerp(DW * 0.62, 0, easeOutExpo(clamp(tt / 0.45)));   // slide-in offset over time
+  const pos = tt => lerp(DW * 0.62, 0, easeOutExpo(clamp(tt / 0.2)));   // slide-in offset over time
   for (let k = n - 1; k >= 0; k--) {
     const tk = dt - k * step; if (tk < 0) continue;
     const y = top + (n - 1 - k) * rowH * 1.04, x = DW / 2 - w / 2 + pos(tk);

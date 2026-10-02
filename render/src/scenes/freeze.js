@@ -54,7 +54,7 @@ export async function draw(ctx, lt, t, shot, { drawShot, shotById }) {
   const su = clamp((lt - 0.12) / 0.12);
   if (su > 0) {
     const sc = lerp(1.35, 1, easeOutBack(su));
-    ty.save(); ty.globalAlpha = clamp(su * 2) * 0.92; ty.translate(PH.x + PH.w - 230, PH.y + PH.h - 170); ty.rotate(-0.12); ty.scale(sc, sc);
+    ty.save(); ty.globalAlpha = clamp(su * 2) * 0.92; ty.translate(PH.x + PH.w - 230, PH.y + PH.h - 250); ty.rotate(-0.12); ty.scale(sc, sc);
     setFont(ty, F.mono(300, 700)); ty.fillStyle = PAL.red; ty.textAlign = 'center'; ty.textBaseline = 'middle'; ty.fillText('✗', 0, 0);
     setFont(ty, F.mono(52, 700), 6); const tw = ty.measureText('TERMINATED').width;
     ty.strokeStyle = PAL.red; ty.lineWidth = 6; ty.strokeRect(-tw / 2 - 22, 150, tw + 44, 82); ty.fillText('TERMINATED', 0, 193);

@@ -27,7 +27,7 @@ export function draw(ctx, lt, t, shot, { T, roto }) {
     P.bloom = 0.35; P.bloomThr = 0.5;
   } else if (v === 'bars') {
     fillInk(g, PAL.bone); V.bars(g, { t, t0: h.t, text: h.text, code: h.code });
-    P.vignette = 0.12; P.bloom = 0;
+    P.vignette = 0.12; P.bloom = 0; P.caMul = 0.3;
   } else if (v === 'stack') {
     fillInk(g); V.stack(g, { t, t0: h.t, text: h.text, color: PAL.bone });
   } else {
@@ -41,5 +41,5 @@ export function draw(ctx, lt, t, shot, { T, roto }) {
   }
   const kick = Math.max(Math.exp(-dt / 0.09), kk * 0.45);
   P.zoom = 1 + 0.04 * kick; P.shakeX = hsig(k, Math.floor(dt * 30)) * 9 * kick; P.shakeY = hsig(k, Math.floor(dt * 30), 2) * 5 * kick;
-  P.ca += 4 * kick;
+  P.ca = (P.ca + 4 * kick) * (P.caMul ?? 1);
 }

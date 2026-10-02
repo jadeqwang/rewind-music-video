@@ -60,8 +60,12 @@ def suits(n=50):
     for i in range(1, nn):
         if st[i, 4] > 5000: mm[lab == i] = 255
     # heads solid: the matte misses the hair, so add a head ellipse over each face (no floating hair outlines)
-    for (hx, hy, ax, ay) in [(255, 352, 56, 64), (515, 326, 60, 66), (737, 320, 56, 64)]:
+    for (hx, hy, ax, ay) in [(255, 350, 45, 60), (515, 323, 47, 62), (737, 318, 44, 60)]:
         cv2.ellipse(mm, (hx, hy), (ax, ay), 0, 0, 360, 255, -1, cv2.LINE_AA)
+    # fill interior holes (anything not connected to the frame border is subject)
+    inv_ = (mm < 128).astype(np.uint8); nlab, lab2 = cv2.connectedComponents(inv_)
+    border = set(np.unique(np.concatenate([lab2[0], lab2[-1], lab2[:, 0], lab2[:, -1]])))
+    holes = (inv_ > 0) & ~np.isin(lab2, list(border)); mm[holes] = 255
     mm = cv2.GaussianBlur(mm, (0, 0), 0.7)
     # boost local contrast so the dark suits still give folds/lapels
     lab_ = cv2.cvtColor(im, cv2.COLOR_BGR2LAB)

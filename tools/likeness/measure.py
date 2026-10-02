@@ -73,7 +73,7 @@ def _mp():
         _det["mp"] = mp
         _det["fl"] = vision.FaceLandmarker.create_from_options(vision.FaceLandmarkerOptions(
             base_options=mpt.BaseOptions(model_asset_path=_model("face_landmarker.task")),
-            output_face_blendshapes=True, output_facial_transformation_matrixes=True, num_faces=3))
+            output_face_blendshapes=True, output_facial_transformation_matrixes=True, num_faces=8))
         _det["seg"] = vision.ImageSegmenter.create_from_options(vision.ImageSegmenterOptions(
             base_options=mpt.BaseOptions(model_asset_path=_model("selfie_multiclass_256x256.tflite")),
             output_category_mask=True))
@@ -100,6 +100,46 @@ def landmarks(rgb):
     M = np.array(res.facial_transformation_matrixes[best]) if res.facial_transformation_matrixes else np.eye(4)
     bs = {c.category_name: c.score for c in res.face_blendshapes[best]} if res.face_blendshapes else {}
     return pts, M, bs
+
+
+def all_faces(rgb):
+    """All detected faces: list of dict(pts, M, bs, box=(x0,y0,x1,y1), yaw)."""
+    d = _mp(); mp = d["mp"]
+    res = d["fl"].detect(mp.Image(image_format=mp.ImageFormat.SRGB, data=np.ascontiguousarray(rgb)))
+    h, w = rgb.shape[:2]; out = []
+    for i, fl in enumerate(res.face_landmarks or []):
+        pts = np.array([[p.x * w, p.y * h, p.z * w] for p in fl])
+        M = np.array(res.facial_transformation_matrixes[i])
+        bs = {c.category_name: c.score for c in res.face_blendshapes[i]}
+        out.append(dict(pts=pts, M=M, bs=bs, yaw=pose_angles(M)[0],
+                        box=(pts[:, 0].min(), pts[:, 1].min(), pts[:, 0].max(), pts[:, 1].max())))
+    return sorted(out, key=lambda f: (round(f["box"][1] / (0.5 * h)), f["box"][0]))
+
+
+def face_cells(rgb, faces):
+    """Voronoi label map (index of nearest face centre) for multi-panel sheets."""
+    h, w = rgb.shape[:2]
+    yy, xx = np.mgrid[0:h, 0:w]
+    cs = [((f["box"][0] + f["box"][2]) / 2, (f["box"][1] + f["box"][3]) / 2) for f in faces]
+    dist = np.stack([(xx - cx) ** 2 + (yy - cy) ** 2 for cx, cy in cs])
+    return np.argmin(dist, 0)
+
+
+def measure_multi(src):
+    """Measure every face in a sheet: each face is measured on its own Voronoi cell (other cells greyed)."""
+    rgb = load_rgb(src)
+    faces = all_faces(rgb)
+    if len(faces) <= 1:
+        m = measure(rgb)
+        return [dict(m=m, box=faces[0]["box"] if faces else None)] if m else []
+    lab = face_cells(rgb, faces); out = []
+    for i, f in enumerate(faces):
+        cell = rgb.copy(); cell[lab != i] = 128
+        ys, xs = np.where(lab == i)
+        sub = np.ascontiguousarray(cell[ys.min():ys.max() + 1, xs.min():xs.max() + 1])
+        m = measure(sub)
+        out.append(dict(m=m, box=[float(v) for v in f["box"]], cell=[int(xs.min()), int(ys.min()), int(xs.max()), int(ys.max())]))
+    return out
 
 
 def seg_mask(rgb):
@@ -426,6 +466,7 @@ def main():
     ap.add_argument("imgs", nargs="*")
     ap.add_argument("--json"); ap.add_argument("--debug"); ap.add_argument("--gate", action="store_true")
     ap.add_argument("--video"); ap.add_argument("--every", type=int, default=12)
+    ap.add_argument("--multi", action="store_true", help="measure every face (character sheets)")
     a = ap.parse_args()
     items = [(p, p) for p in a.imgs]
     if a.video:
@@ -441,6 +482,15 @@ def main():
     for name, src in items:
         dbg = os.path.join(a.debug, os.path.basename(str(name)).replace("#", "_") + ".dbg.jpg") if a.debug else None
         if dbg: os.makedirs(a.debug, exist_ok=True)
+        if a.multi:
+            ms = measure_multi(src)
+            for j, e in enumerate(ms):
+                if e["m"] and a.gate:
+                    e["m"]["gate_ok"], e["m"]["gate_dev"], e["m"]["brow_check"] = gate(e["m"])
+                res[f"{name}#face{j}"] = e
+                mm = e["m"]
+                print(f"{name}#face{j}", json.dumps({k: mm.get(k) for k in ["yaw"] + KEYS + ["gate_ok", "gate_dev"]} if mm else None))
+            continue
         m = measure(src, dbg)
         if m and a.gate:
             m["gate_ok"], m["gate_dev"], m["brow_check"] = gate(m)
