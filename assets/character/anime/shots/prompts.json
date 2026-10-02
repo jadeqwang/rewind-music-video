@@ -154,5 +154,29 @@
   "attempts": 1,
   "est_cost_usd": 0.07,
   "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/shots/cands/J7m_1.jpg",
+  "job": "J7m",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "src": "board:1.jpg",
+  "prompt": "The input is a reference board: LEFT = the official model sheet of the character (front and three-quarter view), TOP-RIGHT = her face close-up, BOTTOM-RIGHT = a photo of the location. Draw ONE new anime film frame (not a board) of this exact character in that location, the location redrawn in the same anime style. same anime face as the model sheet: large dark-brown eyes with the SAME size, shape and highlights (never smaller), soft thin brows, small nose, heart-shaped face, long straight black center-parted hair with curtain bangs falling past the shoulders; same outfit: white cropped bomber jacket with orange horizontal bands on chest and sleeves, round '1420 MHz' patch ONLY on her LEFT upper sleeve (her right sleeve has NO patch), pale-blue dot patch on her LEFT chest, black high-neck crop top, black cargo trousers, white sneakers. No glasses, no headphones, no antenna. MEDIUM shot at night (waist-up), tracking camera slightly BEHIND her and to her left: she runs AWAY from the camera through tall grass toward the frame-right background, and twists to look back over her LEFT shoulder at the camera (at her pursuers) with wide alert eyes, lips slightly parted; her upper body twists with her head (congruent), we see her left side and part of her back, hair flying. Hard white flashlight beams from behind her flare across the grass and rim her hair. Hands empty. Same art style as the sheet: clean thin confident lineart, flat cel shading with 2-3 tones, premium anime feature film (Satoshi Kon / Makoto Shinkai). Night lighting, but her face is lit by a soft, even, gentle fill (clean, youthful, no harsh shadows on the face) with a coloured rim light on hair and shoulders. Full-bleed single frame, 16:9 cinematic composition: keep her head and hands inside the central horizontal band (top and bottom 8% of the canvas may be cropped). No text, no captions, no panels, no borders. ",
+  "secs": 30.7,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/shots/cands/J2fix_1.jpg",
+  "job": "J2fix",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "src": "J2_0.jpg",
+  "prompt": "Edit this anime film frame minimally: remove the round '1420 MHz' patch from her RIGHT sleeve, so that sleeve is plain white with only the orange band. Keep EVERYTHING else exactly identical: face, eyes and their size, hair, pose, lighting, background, composition, line weight and colours. ",
+  "secs": 28.8,
+  "attempts": 2,
+  "est_cost_usd": 0.14,
+  "error": null
  }
 ]
