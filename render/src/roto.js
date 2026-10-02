@@ -214,3 +214,20 @@ export function star(g, x, y, R, a, col) {
   g.beginPath(); g.arc(x, y, w * 1.8, 0, Math.PI * 2); g.fill();
   g.restore();
 }
+
+// ---- light layer (format addition): RGB = the light's own colour, alpha = brightness; drawn additively ----
+export function lights(g, id, clipT, o = {}) {
+  const m = meta(id); if (!m || !m.layers.includes('lights')) return false;
+  const bmp = get(id, 'lights', clipT); if (!bmp) return false;
+  g.save(); g.globalCompositeOperation = o.comp || 'lighter'; g.globalAlpha = clamp(o.alpha ?? 1);
+  place(g, bmp, o.rect, o.boil != null ? jitter(o.boil, 0.4) : null);
+  g.restore(); return true;
+}
+// clip time for a shot-local time: speed, offset, loop / ping-pong / hold
+export function clipTime(id, lt, o = {}) {
+  const m = meta(id); if (!m) return 0;
+  const dur = m.frames / m.fps; let x = lt * (o.speed ?? 1) + (o.offset ?? 0);
+  if (o.loop === 'pingpong') { const p = x % (2 * dur); x = p < dur ? p : 2 * dur - p; }
+  else if (o.loop) x = ((x % dur) + dur) % dur;
+  return Math.max(0, Math.min(dur - 1e-3, x));
+}

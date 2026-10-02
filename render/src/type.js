@@ -9,6 +9,7 @@ export const FONTS = [
   ['CMU', 'fonts/cmu-serif-500-italic.ttf', { style: 'italic', weight: '500' }],
   ['CMU', 'fonts/cmu-serif-700-italic.ttf', { style: 'italic', weight: '700' }],
   ['CMU', 'fonts/cmu-serif-500-roman.ttf', { style: 'normal', weight: '500' }],
+  ['CMUB', 'fonts/cmu-serif-700-roman.ttf', { style: 'normal', weight: '700' }],
   ['Anton', 'fonts/anton-latin-400-normal.woff2', { weight: '400' }],
   ['BigShoulders', 'fonts/big-shoulders-display-latin-800-normal.woff2', { weight: '800' }],
   ['BigShoulders', 'fonts/big-shoulders-display-latin-900-normal.woff2', { weight: '900' }],
@@ -22,7 +23,7 @@ export const FONTS = [
 export async function loadFonts() {
   await Promise.all(FONTS.map(async ([fam, u, d]) => { const f = new FontFace(fam, `url(${u})`, d); await f.load(); document.fonts.add(f); }));
   await document.fonts.ready;
-  for (const s of ['italic 500 40px CMU', 'italic 700 40px CMU', '500 40px CMU', '40px Anton', '900 40px BigShoulders', '800 40px Archivo', '400 20px JBM', '700 20px JBM'])
+  for (const s of ['italic 500 40px CMU', 'italic 700 40px CMU', '500 40px CMU', '700 40px CMUB', '40px Anton', '900 40px BigShoulders', '800 40px Archivo', '400 20px JBM', '700 20px JBM'])
     await document.fonts.load(s, 'Aa1✗◀−∎');
 }
 export const F = {

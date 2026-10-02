@@ -7,4 +7,5 @@ import * as slam from './slam.js';
 import * as tree from './tree.js';
 import * as black from './black.js';
 import * as road from './road.js';
-export const SCENES = { page, suits, freeze, rewind, slam, tree, black, road };
+import * as comp from './comp.js';
+export const SCENES = { page, suits, freeze, rewind, slam, tree, black, road, comp };

@@ -167,5 +167,104 @@
    }
   ],
   "file": "cands/FS2.jpg"
+ },
+ {
+  "id": "WI1",
+  "model": "openai/gpt-image-2",
+  "prompt": "Cinematic film still at night, medium close-up from just outside the open driver's window of a white 2001 Acura TL sedan (left-hand drive, early-2000s interior, simple dashboard, no touchscreen). The woman sits in the driver's seat, turned toward the open window, holding up a plain blank white ID badge card (completely blank, no text, no photo, no logo) beside her face toward the camera, calm slightly anxious expression, eyes open naturally. Red and blue police emergency lights glow from behind the car, rim-lighting her hair and shoulders in red and blue; her face is softly and evenly lit by a gentle frontal fill so it stays clear and flattering. Dark roadside at night, shallow depth of field. Same woman as the reference photos, accurate likeness, same face as the first reference image. Heart-shaped \"melon-seed\" face (\u74dc\u5b50\u8138): a large, tall, broad forehead and a proportionally large upper head/cranium, wide at the forehead/temples and cheekbones, tapering through the lower cheeks to a narrow, softly pointed chin (not round, not square). Eyes exactly as large and as shaped as in the first reference image (never smaller, never narrowed, never squinting), dark brown round-almond eyes with a slight thin double eyelid crease. Natural straight-ish brows with her subtle asymmetry: the brow on the viewer's left sits slightly lower and flatter, the brow on the viewer's right is slightly higher with a softer arch peaking toward the tail. Long straight solid black hair with a center part, styled half-up half-down: the top section pulled back from the temples into two symmetrical twisted sections meeting toward the crown, adding volume at the top and back of the head and revealing the broad forehead; the rest hangs long and straight past the shoulders, a few fine loose strands at the temples. Thin rectangular dark gray-teal metal frame glasses always on. Age 27, youthful, smooth clear skin, natural healthy complexion, soft even light on the face. Wearing a white cropped zip jacket with one orange horizontal band across the chest and upper sleeves, black top. No text anywhere.",
+  "refs": [
+   "assets/character/v2/cands/G_warp.jpg",
+   "assets/character/v2/cands/FS1_w.jpg",
+   "refs/jade/PXL_20250908_195405539.MP.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 30.0
+   }
+  ],
+  "file": "cands/WI1.jpg"
+ },
+ {
+  "id": "GR1",
+  "model": "openai/gpt-image-2",
+  "prompt": "Cinematic film still at night, medium shot (waist up), the woman running through tall wild grass in an open field toward camera-left, hair streaming behind her, holding a flashlight whose bright beam cuts through the dark and lights the grass ahead; cool moonlight, soft fill on her face so it stays clear and flattering, eyes open naturally looking ahead, determined. Motion energy, slight motion blur in the grass only, her face sharp. Same woman as the reference photos, accurate likeness, same face as the first reference image. Heart-shaped \"melon-seed\" face (\u74dc\u5b50\u8138): a large, tall, broad forehead and a proportionally large upper head/cranium, wide at the forehead/temples and cheekbones, tapering through the lower cheeks to a narrow, softly pointed chin (not round, not square). Eyes exactly as large and as shaped as in the first reference image (never smaller, never narrowed, never squinting), dark brown round-almond eyes with a slight thin double eyelid crease. Natural straight-ish brows with her subtle asymmetry: the brow on the viewer's left sits slightly lower and flatter, the brow on the viewer's right is slightly higher with a softer arch peaking toward the tail. Long straight solid black hair with a center part, styled half-up half-down: the top section pulled back from the temples into two symmetrical twisted sections meeting toward the crown, adding volume at the top and back of the head and revealing the broad forehead; the rest hangs long and straight past the shoulders, a few fine loose strands at the temples. Thin rectangular dark gray-teal metal frame glasses always on. Age 27, youthful, smooth clear skin, natural healthy complexion, soft even light on the face. Wearing a white cropped zip jacket with one orange horizontal band across the chest and upper sleeves, black top, black pants. No text.",
+  "refs": [
+   "assets/character/v2/cands/G_warp.jpg",
+   "assets/character/v2/cands/FS1_w.jpg",
+   "refs/jade/PXL_20250908_195405539.MP.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "low",
+  "attempts": [
+   {
+    "ok": false,
+    "secs": 30.5,
+    "err": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs."
+   },
+   {
+    "ok": false,
+    "secs": 30.1,
+    "err": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs."
+   },
+   {
+    "ok": true,
+    "secs": 14.8
+   }
+  ],
+  "file": "cands/GR1.jpg"
+ },
+ {
+  "id": "GR2",
+  "model": "openai/gpt-image-2",
+  "prompt": "Cinematic film still at night, medium shot (waist up), the woman running through tall wild grass in an open field, hair streaming behind her, holding a flashlight whose bright beam cuts through the dark and lights the grass ahead; cool moonlight, soft fill on her face so it stays clear and flattering, eyes open naturally looking ahead, determined. Slight motion blur in the grass only, her face sharp. Same woman as the reference photos, accurate likeness, same face as the first reference image. Heart-shaped \"melon-seed\" face (\u74dc\u5b50\u8138): a large, tall, broad forehead and a proportionally large upper head/cranium, wide at the forehead/temples and cheekbones, tapering through the lower cheeks to a narrow, softly pointed chin (not round, not square). Eyes exactly as large and as shaped as in the first reference image (never smaller, never narrowed, never squinting), dark brown round-almond eyes with a slight thin double eyelid crease. Natural straight-ish brows with her subtle asymmetry: the brow on the viewer's left sits slightly lower and flatter, the brow on the viewer's right is slightly higher with a softer arch peaking toward the tail. Long straight solid black hair with a center part, styled half-up half-down: the top section pulled back from the temples into two symmetrical twisted sections meeting toward the crown, adding volume at the top and back of the head and revealing the broad forehead; the rest hangs long and straight past the shoulders, a few fine loose strands at the temples. Thin rectangular dark gray-teal metal frame glasses always on. Age 27, youthful, smooth clear skin, natural healthy complexion, soft even light on the face. Wearing a white cropped zip jacket with one orange horizontal band across the chest and upper sleeves, black top, black pants. No text.",
+  "refs": [
+   "assets/character/v2/cands/WI1.jpg",
+   "assets/character/v2/cands/G_warp.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": false,
+    "secs": 30.3,
+    "err": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs."
+   },
+   {
+    "ok": true,
+    "secs": 31.1
+   }
+  ],
+  "file": "cands/GR2.jpg"
+ },
+ {
+  "id": "GR3",
+  "model": "openai/gpt-image-2",
+  "prompt": "Cinematic film still at night, medium shot (waist up), the woman running through tall wild grass in an open field, hair streaming behind her, holding a flashlight whose bright beam cuts through the dark and lights the grass ahead; cool moonlight, soft fill on her face so it stays clear and flattering, eyes open naturally looking ahead, determined. Slight motion blur in the grass only, her face sharp. Same woman as the reference photos, accurate likeness, same face as the first reference image. Heart-shaped \"melon-seed\" face (\u74dc\u5b50\u8138): a large, tall, broad forehead and a proportionally large upper head/cranium, wide at the forehead/temples and cheekbones, tapering through the lower cheeks to a narrow, softly pointed chin (not round, not square). Eyes exactly as large and as shaped as in the first reference image (never smaller, never narrowed, never squinting), dark brown round-almond eyes with a slight thin double eyelid crease. Natural straight-ish brows with her subtle asymmetry: the brow on the viewer's left sits slightly lower and flatter, the brow on the viewer's right is slightly higher with a softer arch peaking toward the tail. Long straight solid black hair with a center part, styled half-up half-down: the top section pulled back from the temples into two symmetrical twisted sections meeting toward the crown, adding volume at the top and back of the head and revealing the broad forehead; the rest hangs long and straight past the shoulders, a few fine loose strands at the temples. Thin rectangular dark gray-teal metal frame glasses always on. Age 27, youthful, smooth clear skin, natural healthy complexion, soft even light on the face. Wearing a white cropped zip jacket with one orange horizontal band across the chest and upper sleeves, black top, black pants. No text.",
+  "refs": [
+   "assets/character/v2/cands/WI1.jpg",
+   "assets/character/v2/cands/G_warp.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "low",
+  "attempts": [
+   {
+    "ok": false,
+    "secs": 30.4,
+    "err": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs."
+   },
+   {
+    "ok": false,
+    "secs": 30.4,
+    "err": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs."
+   },
+   {
+    "ok": true,
+    "secs": 12.5
+   }
+  ],
+  "file": "cands/GR3.jpg"
  }
 ]

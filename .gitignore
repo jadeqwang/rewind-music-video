@@ -12,3 +12,4 @@ render/node_modules/
 # roto frame sequences are regenerable from assets/clips via tools/roto/roto.py
 assets/roto/*/*/
 assets/roto/_auto/
+tools/likeness/models/

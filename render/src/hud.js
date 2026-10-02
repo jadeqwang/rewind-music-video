@@ -160,3 +160,27 @@ export function searchTree(g, T, o) {
   g.restore();
   return { P };
 }
+
+// ---- global HUD overlay (the proof's UI): ATTEMPT top-left, eval bar left edge, timecode top-right ----
+// shot.hud = {attempt, failed, eval: v | [v0, v1], mate, tc (true | 'song' | number offset), alpha, label}
+export function hudOverlay(g, t, shot, T) {
+  const h = shot.hud, a = h.alpha ?? 1, lt = t - shot.t0, u = clamp(lt / Math.max(0.001, shot.t1 - shot.t0));
+  if (h.attempt != null) {
+    g.save(); g.textBaseline = 'alphabetic';
+    setFont(g, F.mono(MONO_MIN, 400), 2); g.fillStyle = rgba(h.ink ? PAL.ink : PAL.boneDim, a); g.fillText(h.label ?? 'ATTEMPT', 96, 96);
+    const lw = g.measureText(h.label ?? 'ATTEMPT').width;
+    setFont(g, F.mono(64, 700), 1); g.fillStyle = rgba(h.ink ? PAL.ink : PAL.bone, a);
+    const n = typeof h.attempt === 'function' ? h.attempt(t) : h.attempt;
+    g.fillText(String(n).padStart(2, '0'), 96 + lw + 18, 96);
+    if (h.failed) { const nw = g.measureText(String(n).padStart(2, '0')).width; g.fillStyle = rgba(PAL.red, a); g.fillText('✗', 96 + lw + 30 + nw, 96); }
+    g.restore();
+  }
+  if (h.eval != null || h.mate != null) {
+    const v = Array.isArray(h.eval) ? lerp(h.eval[0], h.eval[1], u * u) : typeof h.eval === 'function' ? h.eval(t) : h.eval;
+    evalBar(g, h.mate != null && (h.mateAt == null || lt >= h.mateAt) ? { mate: h.mate, alpha: a } : { value: v, alpha: a });
+  }
+  if (h.tc) {
+    g.save(); setFont(g, F.mono(46, 400), 1); g.fillStyle = rgba(h.ink ? PAL.ink : PAL.boneDim, a); g.textAlign = 'right'; g.textBaseline = 'alphabetic';
+    g.fillText(timecode(typeof h.tc === 'number' ? t + h.tc : t), DW - 72, 96); g.restore();
+  }
+}

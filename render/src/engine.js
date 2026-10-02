@@ -11,6 +11,8 @@ import { Post } from './post.js';
 import * as roto from './roto.js';
 import { loadFonts } from './type.js';
 import { SCENES } from './scenes/index.js';
+import { applyRhythm, skipAt } from './rhythm.js';
+import { hudOverlay } from './hud.js';
 
 const Q = new URLSearchParams(location.search);
 export const W = +(Q.get('w') || 1920), H = +(Q.get('h') || 1080), S = H / DH;
@@ -35,6 +37,8 @@ function defaultPost(shot) {
 
 // Draw one shot at global time t into the given layers. Used for the main pass and for rewind re-renders.
 export async function drawShot(shot, t, g, ty, post, opts = {}) {
+  const tReal = t;
+  t = t + skipAt(shot.fx, t);           // microsleep: dropped time after a blink
   const lt = t - shot.t0;
   const boil = Math.floor(Math.max(0, lt) * BOIL_FPS + 1e-6);
   const ctx = { g, ty, post, boil, seed: hash(shot.id, boil), W: DW, H: DH, rewinding: !!opts.rewinding, mode: opts.mode || null, engine: E, S, shot };
@@ -43,6 +47,9 @@ export async function drawShot(shot, t, g, ty, post, opts = {}) {
   g.save(); ty.save();
   await sc.draw(ctx, lt, t, shot, { T: E.T, roto, shots: E.shots, SCENES, shotById, shotAt, drawShot, rewindOf });
   g.restore(); ty.restore();
+  resetCtx(ty); ty.setTransform(S, 0, 0, S, 0, 0);
+  if (shot.hud && !opts.rewinding && !opts.noHud) hudOverlay(ty, tReal, shot, E.T);
+  if (!opts.rewinding && post && post !== true && !opts.noRhythm) applyRhythm(post, tReal, shot, E.T);
   resetCtx(g); resetCtx(ty); g.setTransform(S, 0, 0, S, 0, 0); ty.setTransform(S, 0, 0, S, 0, 0);
 }
 
@@ -56,13 +63,19 @@ function beginLayer(c) { const g = c.getContext('2d'); resetCtx(g); g.clearRect(
 export async function rewindOf(ctx, shotId, fromT, toT, progress, opts = {}) {
   const ts = fromT + (toT - fromT) * clamp(progress);
   const n = opts.echo ?? 3, dt = opts.echoDt ?? 0.18, a0 = opts.echoAlpha ?? 0.42;
-  const pick = tt => (shotId ? shotById(shotId) : null) || shotAt(tt, ctx.shot);
+  const pick = tt => {
+    if (shotId) return shotById(shotId);
+    let sh = shotAt(tt, ctx.shot), guard = 0;
+    while (sh && SCENES[sh.scene]?.noRewind && guard++ < 6) sh = shotAt(sh.t0 - 1e-3, ctx.shot);   // skip other rewinds
+    return sh;
+  };
   const L = layer('rw_scene', W, H), LT = layer('rw_type', W, H);
   const dummy = {};
   // oldest ghost first, current frame last (on top)
   for (let k = n; k >= 0; k--) {
-    const tk = Math.min(fromT - 1e-4, ts + k * dt * Math.sign(fromT - toT || 1));
+    let tk = Math.min(fromT - 1e-4, ts + k * dt * Math.sign(fromT - toT || 1));
     const sh = pick(tk); if (!sh || SCENES[sh.scene]?.noRewind) continue;
+    if (tk >= sh.t1) tk = sh.t1 - 1 / 30;
     const g = beginLayer(L), ty = beginLayer(LT);
     await drawShot(sh, tk, g, ty, dummy, { rewinding: true });
     resetCtx(g); g.drawImage(LT, 0, 0);
@@ -97,7 +110,7 @@ export async function renderFrame(t) {
   if (r) {
     E.post.render(E.scene, E.type, r.post, t);
     // background warm-up for the next frames of this shot (does not affect this frame's pixels)
-    for (const id of (r.shot.params?.roto ? [].concat(r.shot.params.roto) : [])) roto.prefetch(id, t - r.shot.t0 + (r.shot.params.rotoOffset || 0));
+    for (const id of (r.shot._rotos || [])) roto.prefetch(id, t - r.shot.t0 + (r.shot.params.rotoOffset || 0));
   }
   return r;
 }
@@ -122,6 +135,25 @@ window.renderSheet = (times, cols = 4, w = 480) => serial(async () => {
   return { url: C.toDataURL('image/png'), ms };
 });
 
+// roto references: any value under a key named `roto`/`jade`/`world`/`matte` may be 'A|B|C' = first sequence that exists
+// (e.g. 'B3|_auto/S1|ld_suits': the roto agent's shot, else the interim auto-roto of the base clip, else the stand-in).
+const ROTO_KEYS = new Set(['roto', 'jade', 'world', 'subject']);
+async function resolveRef(v) {
+  for (const c of String(v).split('|')) if (await roto.loadMeta(c)) return c;
+  return String(v).split('|').pop();
+}
+async function resolveRotos(o, acc = new Set()) {
+  if (!o || typeof o !== 'object') return [...acc];
+  for (const k of Object.keys(o)) {
+    const v = o[k];
+    if (ROTO_KEYS.has(k) && (typeof v === 'string' || Array.isArray(v))) {
+      if (Array.isArray(v)) { for (let i = 0; i < v.length; i++) { v[i] = await resolveRef(v[i]); acc.add(v[i]); } }
+      else { o[k] = await resolveRef(v); acc.add(o[k]); }
+    } else if (typeof v === 'object') await resolveRotos(v, acc);
+  }
+  return [...acc];
+}
+
 export async function boot() {
   const which = Q.get('shots') || 'main';
   E.T = await TimeMap.load('..');
@@ -132,7 +164,7 @@ export async function boot() {
   for (const s of E.shots) {
     if (ids.has(s.id)) throw new Error('duplicate shot id ' + s.id); ids.add(s.id);
     if (!(s.t1 > s.t0)) throw new Error(`shot ${s.id} has t1 <= t0 (${s.t0}, ${s.t1})`);
-    for (const id of (s.params.roto ? [].concat(s.params.roto) : [])) await roto.loadMeta(id);
+    s._rotos = await resolveRotos(s.params);
   }
   E.scene = mkCanvas(W, H); E.type = mkCanvas(W, H);
   E.out = document.getElementById('out'); E.out.width = W; E.out.height = H;

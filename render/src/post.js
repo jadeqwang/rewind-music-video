@@ -61,7 +61,7 @@ precision highp float; in vec2 vUv; out vec4 o; ${LIB}
 uniform sampler2D tScene, tType, tBloom;
 uniform vec2 res; uniform float S; uniform float time;
 uniform float bloom, ca, misreg, grain, grainSeed, scan, invert, flash, vignette, fade, zoom, spin;
-uniform float cyanGrade; uniform vec4 htRect; uniform float htAmt, htCell;
+uniform float cyanGrade; uniform float blink, soft; uniform vec4 htRect; uniform float htAmt, htCell;
 uniform vec2 shake; uniform float ripple, ripplePhase, warble, warbleSeed, tracking, neg, typeCA, typeDim, dither;
 uniform vec3 inkC, boneC, cyanC, flashC;
 vec2 distort(vec2 uv){
@@ -97,6 +97,12 @@ void main(){
   col.g = texture(tScene, uv).g;
   col.b = texture(tScene, uv - o1 * .6 - c2).b;
   col = safe(col);
+  // soft focus (drowsy edges): an 8-tap ring blur, snapped back to sharp on the beat by the rhythm layer
+  if (soft > 0.) {
+    vec3 acc = col; float r = soft * 4. * S;
+    for (int i = 0; i < 8; i++) { float a = float(i) * .785398; acc += texture(tScene, uv + vec2(cos(a), sin(a)) * r / res).rgb; }
+    col = mix(col, safe(acc / 9.), clamp(soft * 1.5, 0., 1.));
+  }
   if (bloom > 0.) col += safe(texture(tBloom, uv).rgb) * bloom;
   // rewind grade: negative, mapped into an ink→cyan→bone duotone
   if (neg > 0.) {
@@ -135,6 +141,12 @@ void main(){
   if (invert > 0.) { float l = luma(col); vec3 hard = mix(boneC, inkC, step(.42, l)); col = mix(col, hard, invert); }
   col = flash >= 0. ? mix(col, flashC, flash) : mix(col, inkC, -flash);
   vec2 vq = vUv - .5; col *= 1. - vignette * dot(vq, vq) * 1.6;
+  // blink: eyelids close from top and bottom (slightly curved lids), a microsleep
+  if (blink > 0.) {
+    float x = vUv.x * 2. - 1.; float lid = blink * (.5 + .06 * (1. - x * x)) ;
+    float yy = min(vUv.y, 1. - vUv.y);
+    col *= smoothstep(lid - .012, lid + .004, yy);
+  }
   col *= fade;
   col += (hash12(vUv * res + 7.) - .5) * dither / 255.;
   o = vec4(clamp(safe(col), 0., 1.), 1.);
@@ -216,7 +228,7 @@ export class Post {
     const f1 = (k, d) => u[k] && gl.uniform1f(u[k], n(k, d));
     f1('bloom', 0.6); f1('ca', 0); f1('misreg', 0); f1('grain', 0.05); f1('grainSeed', 0); f1('scan', 0); f1('invert', 0); f1('flash', 0);
     f1('vignette', 0.25); f1('fade', 1); f1('zoom', 1); f1('spin', 0); f1('ripple', 0); f1('ripplePhase', 0); f1('warble', 0);
-    f1('warbleSeed', 0); f1('tracking', 0); f1('neg', 0); f1('cyanGrade', 0); f1('htAmt', 0); f1('htCell', 7);
+    f1('warbleSeed', 0); f1('tracking', 0); f1('neg', 0); f1('cyanGrade', 0); f1('blink', 0); f1('soft', 0); f1('htAmt', 0); f1('htCell', 7);
     { const r = P.htRect || [0, 0, 0, 0]; gl.uniform4f(u.htRect, r[0], r[1], r[2], r[3]); } f1('typeCA', 0.35); f1('typeDim', 1); f1('dither', 1.5);
     gl.uniform2f(u.shake, n('shakeX', 0), n('shakeY', 0));
     const c3 = (k, v) => gl.uniform3f(u[k], v[0], v[1], v[2]);

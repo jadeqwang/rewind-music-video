@@ -29,7 +29,7 @@ export function draw(ctx, lt, t, shot, { T, roto }) {
     fillInk(g, PAL.bone); V.bars(g, { t, t0: h.t, text: h.text, code: h.code });
     P.vignette = 0.12; P.bloom = 0; P.caMul = 0.3;
   } else if (v === 'stack') {
-    fillInk(g); V.stack(g, { t, t0: h.t, text: h.text, color: PAL.bone });
+    fillInk(g); V.stack(g, { t, t0: h.t, text: h.text, color: PAL.bone, beat: T.period });
   } else {
     fillInk(g, h.style === 'flood' ? PAL.red : PAL.ink);
     if (h.style !== 'flood' && kk > 0.05) { g.fillStyle = kb.i % 2 ? `rgba(47,91,255,${0.22 * kk})` : `rgba(255,42,42,${0.22 * kk})`; g.fillRect(0, 0, DW, DH); }

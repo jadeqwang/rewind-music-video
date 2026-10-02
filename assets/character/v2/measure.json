@@ -965,5 +965,957 @@
    "PXL_20260929_003045414.jpg": null
   }
  },
- "method": "Likeness gate for Jade: MediaPipe Face Landmarker + multiclass selfie segmenter.\n\nUsage:\n  python3 tools/likeness/measure.py IMG [IMG ...] [--json out.json] [--debug DIR] [--gate]\n  python3 tools/likeness/measure.py --video clip.mp4 --every 12 --gate        # sample video frames\n\nAs a library:\n  from measure import measure, gate, REAL\n  m = measure(\"frame.jpg\")            # dict of ratios (None if no face)\n  ok, devs = gate(m)                  # compare to the real-photo mean (assets/character/v2/measure.json)\n\nRatios (all pose-normalized: in-plane roll removed; eye ratios use 3-D landmarks de-rotated with the\nface transformation matrix so yaw/pitch mostly cancel; vertical ratios are 2-D along the face axis):\n  eye_w_iod     mean eye width (inner->outer canthus) / outer-canthal distance (33-263)\n  eye_open      mean lid opening (3 vertical pairs) / eye width\n  eye_w_face    mean eye width / face width (234-454, cheek-to-cheek)\n  iris_face     mean iris diameter / face width   (lid-independent eye-size check)\n  forehead      (brow line -> hairline) / (hairline -> chin)\n  browchin_face (brow line -> chin) / face height (hairline -> chin)  == 1 - forehead\n  mid_third     (brow line -> subnasale) / (brow line -> chin)\n  face_hw       face height (hairline -> chin) / face width\nHairline: the selfie_multiclass_256x256 segmenter (classes 0 bg,1 hair,2 body,3 face-skin,4 clothes,5 other);\nfrom the glabella we walk up the face axis in several columns (+-0.08..0.30 face width off the midline,\nskipping the centre part) until face-skin ends; the median column is the hairline.\n"
+ "method": "Likeness gate for Jade: MediaPipe Face Landmarker + multiclass selfie segmenter.\n\nUsage:\n  python3 tools/likeness/measure.py IMG [IMG ...] [--json out.json] [--debug DIR] [--gate]\n  python3 tools/likeness/measure.py --video clip.mp4 --every 12 --gate        # sample video frames\n\nAs a library:\n  from measure import measure, gate, REAL\n  m = measure(\"frame.jpg\")            # dict of ratios (None if no face)\n  ok, devs = gate(m)                  # compare to the real-photo mean (assets/character/v2/measure.json)\n\nRatios (all pose-normalized: in-plane roll removed; eye ratios use 3-D landmarks de-rotated with the\nface transformation matrix so yaw/pitch mostly cancel; vertical ratios are 2-D along the face axis):\n  eye_w_iod     mean eye width (inner->outer canthus) / outer-canthal distance (33-263)\n  eye_open      mean lid opening (3 vertical pairs) / eye width\n  eye_w_face    mean eye width / face width (234-454, cheek-to-cheek)\n  iris_face     mean iris diameter / face width   (lid-independent eye-size check)\n  forehead      (brow line -> hairline) / (hairline -> chin)\n  browchin_face (brow line -> chin) / face height (hairline -> chin)  == 1 - forehead\n  mid_third     (brow line -> subnasale) / (brow line -> chin)\n  face_hw       face height (hairline -> chin) / face width\nHairline: the selfie_multiclass_256x256 segmenter (classes 0 bg,1 hair,2 body,3 face-skin,4 clothes,5 other);\nfrom the glabella we walk up the face axis in several columns (+-0.08..0.30 face width off the midline,\nskipping the centre part) until face-skin ends; the median column is the hairline.\n",
+ "outputs": {
+  "refs/jade/PXL_20250908_195405539.MP.jpg": {
+   "m": {
+    "yaw": -15.0,
+    "eye_w_iod": 0.3012,
+    "eye_open": 0.3343,
+    "eye_w_face": 0.2014,
+    "iris_face": 0.0929,
+    "forehead": 0.3218,
+    "browchin_face": 0.6782,
+    "mid_third": 0.5811,
+    "face_hw": 1.5106,
+    "forehead_w": 0.9365,
+    "temple_w": 1.0188,
+    "jaw_w": 0.7691,
+    "lowjaw_w": 0.6554,
+    "chin_w": 0.2148,
+    "chin_angle": 126.4706,
+    "chin_tip_angle": 172.0484,
+    "upper_head": 0.6454
+   },
+   "gate_ok": true,
+   "dev": {
+    "eye_w_face": -0.003,
+    "iris_face": -0.0293,
+    "eye_open": -0.0672,
+    "forehead": -0.0129,
+    "upper_head": -0.0779,
+    "forehead_w": 0.0135,
+    "jaw_w": 0.0061,
+    "chin_w": 0.0092
+   },
+   "brow": {
+    "height": {
+     "got": -0.029,
+     "expected": -0.0335,
+     "z": 0.2
+    },
+    "peak_height": {
+     "got": -0.0353,
+     "expected": -0.0387,
+     "z": 0.1
+    },
+    "arch": {
+     "got": -0.0217,
+     "expected": -0.0172,
+     "z": -0.16
+    },
+    "peak_pos": {
+     "got": 0.051,
+     "expected": -0.0373,
+     "z": 0.63
+    }
+   }
+  },
+  "assets/character/DRIVER_PLATE_y27.jpg": {
+   "m": {
+    "yaw": -23.3,
+    "eye_w_iod": 0.3087,
+    "eye_open": 0.3354,
+    "eye_w_face": 0.1948,
+    "iris_face": 0.0857,
+    "forehead": 0.3002,
+    "browchin_face": 0.6998,
+    "mid_third": 0.5692,
+    "face_hw": 1.4658,
+    "forehead_w": 0.8966,
+    "temple_w": 0.9882,
+    "jaw_w": 0.7627,
+    "lowjaw_w": 0.6489,
+    "chin_w": 0.2116,
+    "chin_angle": 132.7536,
+    "chin_tip_angle": 173.9858,
+    "upper_head": 0.6228
+   },
+   "gate_ok": false,
+   "dev": {
+    "eye_w_face": -0.0356,
+    "iris_face": -0.1045,
+    "eye_open": -0.0642,
+    "forehead": -0.0791,
+    "upper_head": -0.1102,
+    "forehead_w": -0.018,
+    "jaw_w": -0.0101,
+    "chin_w": 0.0228
+   },
+   "brow": {
+    "height": {
+     "got": -0.0297,
+     "expected": -0.0445,
+     "z": 0.65
+    },
+    "peak_height": {
+     "got": -0.0461,
+     "expected": -0.0475,
+     "z": 0.04
+    },
+    "arch": {
+     "got": -0.0444,
+     "expected": -0.0207,
+     "z": -0.86
+    },
+    "peak_pos": {
+     "got": 0.154,
+     "expected": 0.0123,
+     "z": 1.01
+    }
+   }
+  },
+  "assets/character/v2/cands/G_warp.jpg": {
+   "m": {
+    "yaw": -23.3,
+    "eye_w_iod": 0.3214,
+    "eye_open": 0.3566,
+    "eye_w_face": 0.2082,
+    "iris_face": 0.0928,
+    "forehead": 0.3276,
+    "browchin_face": 0.6724,
+    "mid_third": 0.5667,
+    "face_hw": 1.5179,
+    "forehead_w": 0.9051,
+    "temple_w": 0.9961,
+    "jaw_w": 0.763,
+    "lowjaw_w": 0.6486,
+    "chin_w": 0.2093,
+    "chin_angle": 134.4209,
+    "chin_tip_angle": 174.4998,
+    "upper_head": 0.6982
+   },
+   "gate_ok": true,
+   "dev": {
+    "eye_w_face": 0.0307,
+    "iris_face": -0.0303,
+    "eye_open": -0.005,
+    "forehead": 0.0049,
+    "upper_head": -0.0024,
+    "forehead_w": -0.0087,
+    "jaw_w": -0.0097,
+    "chin_w": 0.0117
+   },
+   "brow": {
+    "height": {
+     "got": -0.0333,
+     "expected": -0.0445,
+     "z": 0.49
+    },
+    "peak_height": {
+     "got": -0.0497,
+     "expected": -0.0475,
+     "z": -0.07
+    },
+    "arch": {
+     "got": -0.0443,
+     "expected": -0.0207,
+     "z": -0.85
+    },
+    "peak_pos": {
+     "got": 0.042,
+     "expected": 0.0123,
+     "z": 0.21
+    }
+   }
+  },
+  "assets/character/v2/cands/G_edit_b.jpg": {
+   "m": {
+    "yaw": -19.7,
+    "eye_w_iod": 0.3118,
+    "eye_open": 0.3387,
+    "eye_w_face": 0.2042,
+    "iris_face": 0.0893,
+    "forehead": 0.346,
+    "browchin_face": 0.654,
+    "mid_third": 0.5577,
+    "face_hw": 1.4951,
+    "forehead_w": 0.9143,
+    "temple_w": 1.0039,
+    "jaw_w": 0.7527,
+    "lowjaw_w": 0.6411,
+    "chin_w": 0.2163,
+    "chin_angle": 133.6096,
+    "chin_tip_angle": 174.0904,
+    "upper_head": 0.7485
+   },
+   "gate_ok": true,
+   "dev": {
+    "eye_w_face": 0.0109,
+    "iris_face": -0.0669,
+    "eye_open": -0.055,
+    "forehead": 0.0613,
+    "upper_head": 0.0694,
+    "forehead_w": -0.0039,
+    "jaw_w": -0.0197,
+    "chin_w": 0.0326
+   },
+   "brow": {
+    "height": {
+     "got": -0.0356,
+     "expected": -0.0397,
+     "z": 0.18
+    },
+    "peak_height": {
+     "got": -0.0518,
+     "expected": -0.0437,
+     "z": -0.24
+    },
+    "arch": {
+     "got": -0.0406,
+     "expected": -0.0192,
+     "z": -0.77
+    },
+    "peak_pos": {
+     "got": -0.104,
+     "expected": -0.0092,
+     "z": -0.67
+    }
+   }
+  },
+  "assets/character/v2/cands/G_edit_b_warp.jpg": {
+   "m": {
+    "yaw": -19.8,
+    "eye_w_iod": 0.3147,
+    "eye_open": 0.3643,
+    "eye_w_face": 0.2072,
+    "iris_face": 0.0913,
+    "forehead": 0.3466,
+    "browchin_face": 0.6534,
+    "mid_third": 0.5584,
+    "face_hw": 1.4978,
+    "forehead_w": 0.9161,
+    "temple_w": 1.0061,
+    "jaw_w": 0.7512,
+    "lowjaw_w": 0.639,
+    "chin_w": 0.2151,
+    "chin_angle": 133.6132,
+    "chin_tip_angle": 174.1044,
+    "upper_head": 0.7498
+   },
+   "gate_ok": true,
+   "dev": {
+    "eye_w_face": 0.0257,
+    "iris_face": -0.046,
+    "eye_open": 0.0165,
+    "forehead": 0.0632,
+    "upper_head": 0.0713,
+    "forehead_w": -0.0018,
+    "jaw_w": -0.0218,
+    "chin_w": 0.0272
+   },
+   "brow": {
+    "height": {
+     "got": -0.034,
+     "expected": -0.0398,
+     "z": 0.26
+    },
+    "peak_height": {
+     "got": -0.0506,
+     "expected": -0.0438,
+     "z": -0.2
+    },
+    "arch": {
+     "got": -0.0451,
+     "expected": -0.0192,
+     "z": -0.93
+    },
+    "peak_pos": {
+     "got": -0.084,
+     "expected": -0.0086,
+     "z": -0.54
+    }
+   }
+  },
+  "assets/character/v2/FACE_SHEET.jpg": [
+   {
+    "face": 0,
+    "m": {
+     "yaw": -7.0,
+     "eye_w_iod": 0.3125,
+     "eye_open": 0.3876,
+     "eye_w_face": 0.2021,
+     "iris_face": 0.0937,
+     "forehead": 0.3246,
+     "browchin_face": 0.6754,
+     "mid_third": 0.5587,
+     "face_hw": 1.447,
+     "forehead_w": 0.8968,
+     "temple_w": 0.9833,
+     "jaw_w": 0.7515,
+     "lowjaw_w": 0.6387,
+     "chin_w": 0.2113,
+     "chin_angle": 129.4578,
+     "chin_tip_angle": 171.8719,
+     "upper_head": 0.7829
+    },
+    "gate_ok": true,
+    "dev": {
+     "eye_w_face": 0.0005,
+     "iris_face": -0.0209,
+     "eye_open": 0.0815,
+     "forehead": -0.0043,
+     "upper_head": 0.1186,
+     "forehead_w": -0.0405,
+     "jaw_w": -0.0095,
+     "chin_w": -0.0333
+    },
+    "brow": {
+     "height": {
+      "got": -0.0179,
+      "expected": -0.0229,
+      "z": 0.22
+     },
+     "peak_height": {
+      "got": -0.0238,
+      "expected": -0.0302,
+      "z": 0.19
+     },
+     "arch": {
+      "got": -0.0189,
+      "expected": -0.0138,
+      "z": -0.18
+     },
+     "peak_pos": {
+      "got": 0.099,
+      "expected": -0.085,
+      "z": 1.31
+     }
+    }
+   },
+   {
+    "face": 1,
+    "m": {
+     "yaw": -26.6,
+     "eye_w_iod": 0.3207,
+     "eye_open": 0.3617,
+     "eye_w_face": 0.2076,
+     "iris_face": 0.0906,
+     "forehead": 0.334,
+     "browchin_face": 0.666,
+     "mid_third": 0.5538,
+     "face_hw": 1.6437,
+     "forehead_w": 0.8736,
+     "temple_w": 0.9697,
+     "jaw_w": 0.7649,
+     "lowjaw_w": 0.648,
+     "chin_w": 0.212,
+     "chin_angle": 128.2179,
+     "chin_tip_angle": 173.3429,
+     "upper_head": 0.67
+    },
+    "gate_ok": true,
+    "dev": {
+     "eye_w_face": 0.0277,
+     "iris_face": -0.0533,
+     "eye_open": 0.0092,
+     "forehead": 0.0245,
+     "upper_head": -0.0427,
+     "forehead_w": -0.0386,
+     "jaw_w": -0.0103,
+     "chin_w": 0.0366
+    },
+    "brow": {
+     "height": {
+      "got": -0.0077,
+      "expected": -0.0488,
+      "z": 1.81
+     },
+     "peak_height": {
+      "got": -0.0099,
+      "expected": -0.051,
+      "z": 1.22
+     },
+     "arch": {
+      "got": -0.0108,
+      "expected": -0.0221,
+      "z": 0.41
+     },
+     "peak_pos": {
+      "got": 0.145,
+      "expected": 0.032,
+      "z": 0.8
+     }
+    }
+   },
+   {
+    "face": 2,
+    "m": {
+     "yaw": 24.5,
+     "eye_w_iod": 0.3182,
+     "eye_open": 0.398,
+     "eye_w_face": 0.2043,
+     "iris_face": 0.0915,
+     "forehead": 0.3243,
+     "browchin_face": 0.6757,
+     "mid_third": 0.561,
+     "face_hw": 1.5635,
+     "forehead_w": 0.887,
+     "temple_w": 0.9794,
+     "jaw_w": 0.7743,
+     "lowjaw_w": 0.6568,
+     "chin_w": 0.2088,
+     "chin_angle": 131.4304,
+     "chin_tip_angle": 173.7697,
+     "upper_head": 0.7153
+    },
+    "gate_ok": true,
+    "dev": {
+     "eye_w_face": 0.0114,
+     "iris_face": -0.0439,
+     "eye_open": 0.1105,
+     "forehead": -0.0052,
+     "upper_head": 0.022,
+     "forehead_w": -0.0269,
+     "jaw_w": 0.0039,
+     "chin_w": 0.0135
+    },
+    "brow": {
+     "height": {
+      "got": -0.0081,
+      "expected": 0.0186,
+      "z": -1.18
+     },
+     "peak_height": {
+      "got": -0.0277,
+      "expected": 0.0032,
+      "z": -0.92
+     },
+     "arch": {
+      "got": -0.0234,
+      "expected": -0.0006,
+      "z": -0.82
+     },
+     "peak_pos": {
+      "got": -0.14,
+      "expected": -0.2731,
+      "z": 0.94
+     }
+    }
+   }
+  ],
+  "assets/character/v2/EXPRESSIONS.jpg": [
+   {
+    "face": 0,
+    "m": {
+     "yaw": -19.4,
+     "eye_w_iod": 0.3171,
+     "eye_open": 0.3511,
+     "eye_w_face": 0.2034,
+     "iris_face": 0.0903,
+     "forehead": 0.3305,
+     "browchin_face": 0.6695,
+     "mid_third": 0.5613,
+     "face_hw": 1.5104,
+     "forehead_w": 0.9054,
+     "temple_w": 0.9968,
+     "jaw_w": 0.7553,
+     "lowjaw_w": 0.6403,
+     "chin_w": 0.2105,
+     "chin_angle": 126.6076,
+     "chin_tip_angle": 171.8079,
+     "upper_head": 0.7459
+    },
+    "gate_ok": true,
+    "dev": {
+     "eye_w_face": 0.0069,
+     "iris_face": -0.0564,
+     "eye_open": -0.0204,
+     "forehead": 0.0138,
+     "upper_head": 0.0657,
+     "forehead_w": -0.014,
+     "jaw_w": -0.0161,
+     "chin_w": 0.0039
+    },
+    "brow": {
+     "height": {
+      "got": -0.0348,
+      "expected": -0.0393,
+      "z": 0.2
+     },
+     "peak_height": {
+      "got": -0.0418,
+      "expected": -0.0434,
+      "z": 0.05
+     },
+     "arch": {
+      "got": -0.0165,
+      "expected": -0.019,
+      "z": 0.09
+     },
+     "peak_pos": {
+      "got": -0.027,
+      "expected": -0.011,
+      "z": -0.11
+     }
+    }
+   },
+   {
+    "face": 1,
+    "m": {
+     "yaw": -12.3,
+     "eye_w_iod": 0.3153,
+     "eye_open": 0.3912,
+     "eye_w_face": 0.2058,
+     "iris_face": 0.0961,
+     "forehead": 0.3147,
+     "browchin_face": 0.6853,
+     "mid_third": 0.5621,
+     "face_hw": 1.4898,
+     "forehead_w": 0.9103,
+     "temple_w": 0.9983,
+     "jaw_w": 0.7381,
+     "lowjaw_w": 0.6222,
+     "chin_w": 0.2105,
+     "chin_angle": 121.6466,
+     "chin_tip_angle": 168.5683,
+     "upper_head": 0.7337
+    },
+    "gate_ok": true,
+    "dev": {
+     "eye_w_face": 0.0188,
+     "iris_face": 0.0042,
+     "eye_open": 0.0915,
+     "forehead": -0.0347,
+     "upper_head": 0.0483,
+     "forehead_w": -0.0187,
+     "jaw_w": -0.032,
+     "chin_w": -0.0199
+    },
+    "brow": {
+     "height": {
+      "got": -0.0205,
+      "expected": -0.0299,
+      "z": 0.42
+     },
+     "peak_height": {
+      "got": -0.0218,
+      "expected": -0.0358,
+      "z": 0.42
+     },
+     "arch": {
+      "got": -0.001,
+      "expected": -0.0161,
+      "z": 0.54
+     },
+     "peak_pos": {
+      "got": 0.123,
+      "expected": -0.0534,
+      "z": 1.25
+     }
+    }
+   },
+   {
+    "face": 2,
+    "m": {
+     "yaw": -12.5,
+     "eye_w_iod": 0.3154,
+     "eye_open": 0.3447,
+     "eye_w_face": 0.2047,
+     "iris_face": 0.0919,
+     "forehead": 0.3181,
+     "browchin_face": 0.6819,
+     "mid_third": 0.5232,
+     "face_hw": 1.5213,
+     "forehead_w": 0.9071,
+     "temple_w": 0.9937,
+     "jaw_w": 0.7469,
+     "lowjaw_w": 0.6362,
+     "chin_w": 0.2185,
+     "chin_angle": 118.7753,
+     "chin_tip_angle": 167.8357,
+     "upper_head": 0.706
+    },
+    "gate_ok": true,
+    "dev": {
+     "eye_w_face": 0.0134,
+     "iris_face": -0.0397,
+     "eye_open": -0.0382,
+     "forehead": -0.0242,
+     "upper_head": 0.0087,
+     "forehead_w": -0.0219,
+     "jaw_w": -0.0207,
+     "chin_w": 0.018
+    },
+    "brow": {
+     "height": {
+      "got": -0.0194,
+      "expected": -0.0302,
+      "z": 0.48
+     },
+     "peak_height": {
+      "got": -0.0188,
+      "expected": -0.036,
+      "z": 0.51
+     },
+     "arch": {
+      "got": -0.0124,
+      "expected": -0.0162,
+      "z": 0.14
+     },
+     "peak_pos": {
+      "got": -0.077,
+      "expected": -0.0522,
+      "z": -0.18
+     }
+    }
+   },
+   {
+    "face": 3,
+    "m": {
+     "yaw": -10.1,
+     "eye_w_iod": 0.3129,
+     "eye_open": 0.3577,
+     "eye_w_face": 0.2053,
+     "iris_face": 0.0934,
+     "forehead": 0.3481,
+     "browchin_face": 0.6519,
+     "mid_third": 0.584,
+     "face_hw": 1.4394,
+     "forehead_w": 0.9275,
+     "temple_w": 1.0119,
+     "jaw_w": 0.745,
+     "lowjaw_w": 0.6345,
+     "chin_w": 0.2137,
+     "chin_angle": 128.1738,
+     "chin_tip_angle": 172.0864,
+     "upper_head": 0.9285
+    },
+    "gate_ok": true,
+    "dev": {
+     "eye_w_face": 0.0163,
+     "iris_face": -0.024,
+     "eye_open": -0.002,
+     "forehead": 0.0678,
+     "upper_head": 0.3266,
+     "forehead_w": -0.0033,
+     "jaw_w": -0.0209,
+     "chin_w": -0.0123
+    },
+    "brow": {
+     "height": {
+      "got": -0.0173,
+      "expected": -0.027,
+      "z": 0.43
+     },
+     "peak_height": {
+      "got": -0.0155,
+      "expected": -0.0335,
+      "z": 0.54
+     },
+     "arch": {
+      "got": -0.0123,
+      "expected": -0.0151,
+      "z": 0.1
+     },
+     "peak_pos": {
+      "got": 0.109,
+      "expected": -0.0665,
+      "z": 1.25
+     }
+    }
+   }
+  ],
+  "assets/character/v2/TURNAROUND.jpg": [
+   {
+    "face": 0,
+    "m": {
+     "yaw": -4.6,
+     "eye_w_iod": 0.3163,
+     "eye_open": 0.3895,
+     "eye_w_face": 0.2024,
+     "iris_face": 0.0925,
+     "forehead": 0.318,
+     "browchin_face": 0.682,
+     "mid_third": 0.5432,
+     "face_hw": 1.4263,
+     "forehead_w": 0.8931,
+     "temple_w": 0.9788,
+     "jaw_w": 0.7561,
+     "lowjaw_w": 0.6446,
+     "chin_w": 0.2115,
+     "chin_angle": 126.2927,
+     "chin_tip_angle": 170.63,
+     "upper_head": 0.7475
+    },
+    "gate_ok": true,
+    "dev": {
+     "eye_w_face": 0.002,
+     "iris_face": -0.0334,
+     "eye_open": 0.0868,
+     "forehead": -0.0245,
+     "upper_head": 0.068,
+     "forehead_w": -0.0477,
+     "jaw_w": -0.0012,
+     "chin_w": -0.0399
+    },
+    "brow": {
+     "height": {
+      "got": -0.0146,
+      "expected": -0.0198,
+      "z": 0.23
+     },
+     "peak_height": {
+      "got": -0.0195,
+      "expected": -0.0277,
+      "z": 0.24
+     },
+     "arch": {
+      "got": 0.0036,
+      "expected": -0.0128,
+      "z": 0.59
+     },
+     "peak_pos": {
+      "got": 0.025,
+      "expected": -0.0993,
+      "z": 0.88
+     }
+    }
+   },
+   {
+    "face": 1,
+    "m": {
+     "yaw": -29.8,
+     "eye_w_iod": 0.3167,
+     "eye_open": 0.3757,
+     "eye_w_face": 0.2002,
+     "iris_face": 0.0858,
+     "forehead": 0.3083,
+     "browchin_face": 0.6917,
+     "mid_third": 0.5332,
+     "face_hw": 1.524,
+     "forehead_w": 0.8583,
+     "temple_w": 0.9587,
+     "jaw_w": 0.7769,
+     "lowjaw_w": 0.6585,
+     "chin_w": 0.2072,
+     "chin_angle": 132.1022,
+     "chin_tip_angle": 172.3169,
+     "upper_head": 0.5655
+    },
+    "gate_ok": false,
+    "dev": {
+     "eye_w_face": -0.0089,
+     "iris_face": -0.1034,
+     "eye_open": 0.0483,
+     "forehead": -0.0543,
+     "upper_head": -0.192,
+     "forehead_w": -0.051,
+     "jaw_w": 0.0023,
+     "chin_w": 0.0246
+    },
+    "brow": {
+     "height": {
+      "got": -0.0043,
+      "expected": -0.053,
+      "z": 2.15
+     },
+     "peak_height": {
+      "got": -0.0071,
+      "expected": -0.0544,
+      "z": 1.41
+     },
+     "arch": {
+      "got": -0.0043,
+      "expected": -0.0234,
+      "z": 0.69
+     },
+     "peak_pos": {
+      "got": 0.271,
+      "expected": 0.0511,
+      "z": 1.56
+     }
+    }
+   }
+  ],
+  "assets/character/v2/DRIVER_PLATE.jpg": [
+   {
+    "face": 0,
+    "m": {
+     "yaw": -23.3,
+     "eye_w_iod": 0.3214,
+     "eye_open": 0.3566,
+     "eye_w_face": 0.2082,
+     "iris_face": 0.0928,
+     "forehead": 0.3276,
+     "browchin_face": 0.6724,
+     "mid_third": 0.5667,
+     "face_hw": 1.5179,
+     "forehead_w": 0.9051,
+     "temple_w": 0.9961,
+     "jaw_w": 0.763,
+     "lowjaw_w": 0.6486,
+     "chin_w": 0.2093,
+     "chin_angle": 134.4209,
+     "chin_tip_angle": 174.4998,
+     "upper_head": 0.6982
+    },
+    "gate_ok": true,
+    "dev": {
+     "eye_w_face": 0.0307,
+     "iris_face": -0.0303,
+     "eye_open": -0.005,
+     "forehead": 0.0049,
+     "upper_head": -0.0024,
+     "forehead_w": -0.0087,
+     "jaw_w": -0.0097,
+     "chin_w": 0.0117
+    },
+    "brow": {
+     "height": {
+      "got": -0.0333,
+      "expected": -0.0445,
+      "z": 0.49
+     },
+     "peak_height": {
+      "got": -0.0497,
+      "expected": -0.0475,
+      "z": -0.07
+     },
+     "arch": {
+      "got": -0.0443,
+      "expected": -0.0207,
+      "z": -0.85
+     },
+     "peak_pos": {
+      "got": 0.042,
+      "expected": 0.0123,
+      "z": 0.21
+     }
+    }
+   }
+  ],
+  "assets/character/v2/WINDOW_ID.jpg": [
+   {
+    "face": 0,
+    "m": {
+     "yaw": -21.4,
+     "eye_w_iod": 0.3192,
+     "eye_open": 0.3606,
+     "eye_w_face": 0.2069,
+     "iris_face": 0.0926,
+     "forehead": 0.3295,
+     "browchin_face": 0.6705,
+     "mid_third": 0.5811,
+     "face_hw": 1.5167,
+     "forehead_w": 0.9063,
+     "temple_w": 0.9989,
+     "jaw_w": 0.7672,
+     "lowjaw_w": 0.6535,
+     "chin_w": 0.21,
+     "chin_angle": 131.5558,
+     "chin_tip_angle": 174.0938,
+     "upper_head": 0.7486
+    },
+    "gate_ok": true,
+    "dev": {
+     "eye_w_face": 0.0243,
+     "iris_face": -0.0324,
+     "eye_open": 0.0061,
+     "forehead": 0.0107,
+     "upper_head": 0.0696,
+     "forehead_w": -0.0101,
+     "jaw_w": -0.0024,
+     "chin_w": 0.0084
+    },
+    "brow": {
+     "height": {
+      "got": -0.0193,
+      "expected": -0.0419,
+      "z": 1.0
+     },
+     "peak_height": {
+      "got": -0.0213,
+      "expected": -0.0455,
+      "z": 0.72
+     },
+     "arch": {
+      "got": -0.0232,
+      "expected": -0.0199,
+      "z": -0.12
+     },
+     "peak_pos": {
+      "got": 0.157,
+      "expected": 0.001,
+      "z": 1.11
+     }
+    }
+   }
+  ],
+  "assets/character/v2/GRASS_RUN.jpg": [
+   {
+    "face": 0,
+    "m": {
+     "yaw": -23.9,
+     "eye_w_iod": 0.321,
+     "eye_open": 0.3708,
+     "eye_w_face": 0.2081,
+     "iris_face": 0.0916,
+     "forehead": 0.3176,
+     "browchin_face": 0.6824,
+     "mid_third": 0.5585,
+     "face_hw": 1.5104,
+     "forehead_w": 0.8947,
+     "temple_w": 0.9863,
+     "jaw_w": 0.7609,
+     "lowjaw_w": 0.6401,
+     "chin_w": 0.2017,
+     "chin_angle": 136.3394,
+     "chin_tip_angle": 174.1156,
+     "upper_head": 0.743
+    },
+    "gate_ok": true,
+    "dev": {
+     "eye_w_face": 0.0302,
+     "iris_face": -0.0428,
+     "eye_open": 0.0346,
+     "forehead": -0.0258,
+     "upper_head": 0.0616,
+     "forehead_w": -0.0193,
+     "jaw_w": -0.013,
+     "chin_w": -0.023
+    },
+    "brow": {
+     "height": {
+      "got": -0.0381,
+      "expected": -0.0452,
+      "z": 0.31
+     },
+     "peak_height": {
+      "got": -0.0455,
+      "expected": -0.0481,
+      "z": 0.08
+     },
+     "arch": {
+      "got": -0.0157,
+      "expected": -0.0209,
+      "z": 0.19
+     },
+     "peak_pos": {
+      "got": 0.184,
+      "expected": 0.0159,
+      "z": 1.19
+     }
+    }
+   }
+  ]
+ },
+ "selection": {
+  "DRIVER_PLATE": "cands/G_warp.jpg (G + warp)",
+  "FACE_SHEET": "cands/FS1_w.jpg",
+  "EXPRESSIONS": "cands/EX1_w.jpg",
+  "TURNAROUND": "cands/TU1_w.jpg",
+  "WINDOW_ID": "cands/WI1_w.jpg",
+  "GRASS_RUN": "cands/GR2_w.jpg"
+ }
 }
