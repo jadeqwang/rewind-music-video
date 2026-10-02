@@ -450,5 +450,28 @@
    }
   ],
   "file": "cands/J2k.jpg"
+ },
+ {
+  "id": "J9k",
+  "model": "openai/gpt-image-2",
+  "prompt": "Night, driving, camera on the windshield looking back at the driver: she sits in the left-hand driver's seat on the RIGHT side of the frame, hands on the steering wheel, steady and determined, eyes on the road. Police red and blue lights glow through the rear window far behind her, rim-lighting her hair; her face has a soft cool frontal key; dashboard glow from below. Use the second image only as a mood reference. IMPORTANT: keep her head AND upper body exactly in the pose of the first image - same head angle, same shoulder line, same torso direction, same camera height; only replace her clothing with the jacket, extend the frame sideways to 16:9, and replace the room with the car interior; add the steering wheel rim low in the foreground with her hands on it. Do not re-pose her. Keep this exact woman from the first image: her face, head angle, eyes, eyebrows, glasses and expression must stay exactly as in the photo (do not redraw or beautify her face). Long straight solid black hair with a center part styled half-up half-down (two symmetrical sections pulled back from the temples toward the crown, the rest hanging long), revealing her broad forehead. She wears a white cropped zip jacket with one clean orange horizontal band across the chest and upper sleeves (no patches, no text) over a black top. Cinematic photographic film still, 16:9 widescreen composition, soft flattering light on her face, smooth clear skin. No text, no logos, no headphones.",
+  "refs": [
+   "refs/jade/PXL_20250908_195352130.jpg",
+   "assets/sets/car_interior/3.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": false,
+    "secs": 30.5,
+    "err": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs."
+   },
+   {
+    "ok": true,
+    "secs": 27.8
+   }
+  ],
+  "file": "cands/J9k.jpg"
  }
 ]
