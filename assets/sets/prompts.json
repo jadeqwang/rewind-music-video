@@ -508,5 +508,170 @@
   "secs": 5.8,
   "error": null,
   "ts": "2026-10-02T05:08:29"
+ },
+ {
+  "file": "assets/sets/lake_shore_drive/c_pov2_grok-2.0.jpg",
+  "set": "lake_shore_drive",
+  "model": "xai/grok-imagine-image-2.0",
+  "prompt": "Driver's point of view through the windshield of a car speeding north on Lake Shore Drive, Chicago: a wide empty multi-lane highway sweeps in a long smooth curve to the left, a single row of tall sodium-vapor streetlights along the median throws evenly spaced pools of orange light onto smooth dark asphalt, crisp white lane dashes, the flat black void of Lake Michigan on the right side with a thin low concrete seawall, the Chicago skyline small and distant on the horizon as a dark silhouette. Only the top edge of the black dashboard at the bottom of frame. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.04,
+  "secs": 17.6,
+  "error": null,
+  "ts": "2026-10-02T05:08:35"
+ },
+ {
+  "file": "assets/sets/car_interior/c2_grok-2.0.jpg",
+  "set": "car_interior",
+  "model": "xai/grok-imagine-image-2.0",
+  "prompt": "Inside a dark car at night, from the empty driver's seat looking forward over the steering wheel; nobody is in the car. A large rear-view mirror hangs prominently at the top center of the frame and fills with a bright burst of red and blue emergency light from a vehicle far behind. Through the windshield a dark empty highway with a row of orange sodium streetlights. Dashboard almost black, the steering wheel a clean black silhouette ring, minimal dials. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.04,
+  "secs": 18.5,
+  "error": null,
+  "ts": "2026-10-02T05:08:36"
+ },
+ {
+  "file": "assets/sets/lake_shore_drive/c_pov1_gpt-image-2.jpg",
+  "set": "lake_shore_drive",
+  "model": "openai/gpt-image-2",
+  "prompt": "Driver's point of view through the windshield of a car speeding north on Lake Shore Drive, Chicago: a wide empty multi-lane highway sweeps in a long smooth curve to the left, a single row of tall sodium-vapor streetlights along the median throws evenly spaced pools of orange light onto smooth dark asphalt, crisp white lane dashes, the flat black void of Lake Michigan on the right side with a thin low concrete seawall, the Chicago skyline small and distant on the horizon as a dark silhouette. Only the top edge of the black dashboard at the bottom of frame. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "size": "1536x1024",
+   "quality": "medium",
+   "output_format": "jpeg"
+  },
+  "size": [
+   1536,
+   864
+  ],
+  "est_cost_usd": 0.06,
+  "secs": 25.3,
+  "error": null,
+  "ts": "2026-10-02T05:08:43"
+ },
+ {
+  "file": "assets/sets/pullover/c3_grok-quality.jpg",
+  "set": "pullover",
+  "model": "xai/grok-imagine-image-quality",
+  "prompt": "Low camera at road level on the paved shoulder of a dark lakefront highway at night. In the background a black sedan is parked with its two headlights blazing straight into the lens, hard white backlight and long parallel shadows across smooth dark asphalt. Four tall men in identical dark suits walk toward the camera in a tight symmetrical V formation, seen only as solid pitch-black backlit silhouettes, faces completely in shadow and featureless, only the outlines of sunglasses, shoulders, ties and arms. Faint red and blue glow at the frame edges. Empty flat surroundings, no trees. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json",
+   "resolution": "1k"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.05,
+  "secs": 7.7,
+  "error": null,
+  "ts": "2026-10-02T05:08:43"
+ },
+ {
+  "file": "assets/sets/car_interior/c1_gpt-image-2.jpg",
+  "set": "car_interior",
+  "model": "openai/gpt-image-2",
+  "prompt": "Inside a dark car at night, from the empty driver's seat looking forward over the steering wheel; nobody is in the car. A large rear-view mirror hangs prominently at the top center of the frame and fills with a bright burst of red and blue emergency light from a vehicle far behind. Through the windshield a dark empty highway with a row of orange sodium streetlights. Dashboard almost black, the steering wheel a clean black silhouette ring, minimal dials. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "size": "1536x1024",
+   "quality": "medium",
+   "output_format": "jpeg"
+  },
+  "size": [
+   1536,
+   864
+  ],
+  "est_cost_usd": 0.06,
+  "secs": 26.7,
+  "error": null,
+  "ts": "2026-10-02T05:08:44"
+ },
+ {
+  "file": "assets/sets/lake_shore_drive/c_aerial1_gpt-image-2.jpg",
+  "set": "lake_shore_drive",
+  "model": "openai/gpt-image-2",
+  "prompt": "High aerial drone view at night looking down along Lake Shore Drive, Chicago: a lone car with two white headlight beams drives north on a long curving empty lakefront highway, a dotted line of orange sodium streetlights traces the curve, to the right of the road the vast flat pitch-black lake fills a third of the frame with a clean shoreline edge, to the left a dark strip of park, and the Chicago skyline far away at the top of the frame as a silhouette. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "size": "1536x1024",
+   "quality": "medium",
+   "output_format": "jpeg"
+  },
+  "size": [
+   1536,
+   864
+  ],
+  "est_cost_usd": 0.06,
+  "secs": 28.9,
+  "error": null,
+  "ts": "2026-10-02T05:08:46"
+ },
+ {
+  "file": "assets/sets/grass_field/c3_grok-quality.jpg",
+  "set": "grass_field",
+  "model": "xai/grok-imagine-image-quality",
+  "prompt": "A wide open field of tall wild grass at night beside a lakefront highway, camera low in the grass. Hard white headlight and flashlight beams rake sideways across the grass tops from the left, leaving bright streaks and deep black gaps. The flat horizon line far away holds a thin row of orange highway lights and the small silhouette of the Chicago skyline under a black sky. Vast, empty, open. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json",
+   "resolution": "1k"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.05,
+  "secs": 6.0,
+  "error": null,
+  "ts": "2026-10-02T05:08:50"
+ },
+ {
+  "file": "assets/sets/pullover/c2_grok-2.0.jpg",
+  "set": "pullover",
+  "model": "xai/grok-imagine-image-2.0",
+  "prompt": "Low camera at road level on the paved shoulder of a dark lakefront highway at night. In the background a black sedan is parked with its two headlights blazing straight into the lens, hard white backlight and long parallel shadows across smooth dark asphalt. Four tall men in identical dark suits walk toward the camera in a tight symmetrical V formation, seen only as solid pitch-black backlit silhouettes, faces completely in shadow and featureless, only the outlines of sunglasses, shoulders, ties and arms. Faint red and blue glow at the frame edges. Empty flat surroundings, no trees. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.04,
+  "secs": 16.4,
+  "error": null,
+  "ts": "2026-10-02T05:08:51"
  }
 ]

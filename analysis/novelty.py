@@ -12,7 +12,7 @@ Fb=librosa.util.sync(F,bf,aggregate=np.median)
 Fb=Fb/np.linalg.norm(Fb,axis=0,keepdims=True)
 SSM=Fb.T@Fb
 K=8
-g=np.outer(np.r_[-np.ones(K),np.ones(K)],np.r_[-np.ones(K),np.ones(K)])*-1
+g=np.outer(np.r_[-np.ones(K),np.ones(K)],np.r_[-np.ones(K),np.ones(K)])
 n=SSM.shape[0]; nov=np.zeros(n)
 for i in range(K,n-K):
     nov[i]=np.sum(SSM[i-K:i+K,i-K:i+K]*g)
