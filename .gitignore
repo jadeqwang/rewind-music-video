@@ -17,3 +17,5 @@ tools/likeness/models/
 assets/roto/*/*/
 assets/roto/*/.src_*
 tools/roto/models/
+render/out/draft_v[2-9]*.mp4
+render/out/draft_v[1-9][0-9]*.mp4

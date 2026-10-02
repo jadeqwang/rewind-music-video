@@ -66,7 +66,7 @@ SHOTS = {
     'S1':        dict(persons='suits', rvm=0.4),
     'S2':        dict(persons='suits', rvm=0.4),
     'S3':        dict(persons='suits', rvm=0.7, grass=True),
-    'S4':        dict(persons='suits', rvm=0.8, mgain=2.6),   # seated dark suits: RVM gives soft 0.3-0.7 alpha
+    'S4':        dict(persons='suits', rvm=0.8, mgain=2.6, hold=0.996),   # seated dark suits: RVM gives soft 0.3-0.7 alpha
     'S5':        dict(persons='suits', rvm=0.4),
 }
 
@@ -508,7 +508,10 @@ def run_chunk(job):
             for k, a in ch.items():
                 alpha_new = 0.65 if k != 'car' else 0.45
                 if k in ema:
-                    a = alpha_new * a + (1 - alpha_new) * warp(ema[k], fb)
+                    wp = warp(ema[k], fb)
+                    a = alpha_new * a + (1 - alpha_new) * wp
+                    if cfg.get('hold') and k != 'car':      # static seated figures fade out of RVM: hold what was seen
+                        a = np.maximum(a, wp * cfg['hold'])
                 ema[k] = a
                 r = cv2.ximgproc.guidedFilter(guide, a.astype(np.float32), 3, 1e-3)
                 ch[k] = np.clip((r - 0.5) * 1.6 + 0.5, 0, 1)        # firm the edge after the soft filter
