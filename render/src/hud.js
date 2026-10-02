@@ -177,7 +177,7 @@ export function hudOverlay(g, t, shot, T) {
   }
   if (h.eval != null || h.mate != null) {
     const v = Array.isArray(h.eval) ? lerp(h.eval[0], h.eval[1], u * u) : typeof h.eval === 'function' ? h.eval(t) : h.eval;
-    evalBar(g, h.mate != null && (h.mateAt == null || lt >= h.mateAt) ? { mate: h.mate, alpha: a } : { value: v, alpha: a, inf: v === Infinity });
+    evalBar(g, h.mate != null && (h.mateAt == null || lt >= h.mateAt) ? { mate: h.mate, alpha: a, ink: h.ink } : { value: v, alpha: a, inf: v === Infinity, ink: h.ink });
   }
   if (h.tc) {
     g.save(); setFont(g, F.mono(46, 400), 1); g.fillStyle = rgba(h.ink ? PAL.ink : PAL.boneDim, a); g.textAlign = 'right'; g.textBaseline = 'alphabetic';

@@ -305,7 +305,7 @@ export function buildShots(T) {
   const n2 = DB(1), n3 = DB(8), n4 = DB(12), n5 = DB(16), n6 = sec('instrumental').start, qed = ev('braam', 9), end = sec('end').start;
   const drive = { kick: 1, strobe: 0.7, downInvert: 1, strobeColor: [1, 0.624, 0.11] };
   C('N1_found', fd, n2, [ink, { type: 'mono', text: 'ATTEMPT 03 — LINE FOUND', y: 300, size: 64, weight: 700, color: PAL.cyan },
-    { type: 'slam', hits: [{ t: fd + P, text: 'NEVER STOP', variant: 'center' }], y: 860, maxH: 420 }], { hud: { attempt: 3, ok: true, tc: true, eval: 9 }, fx: { kick: 1, jerks: [fd] } });
+    { type: 'slam', hits: [{ t: fd + P, text: 'NEVER STOP', variant: 'center' }], y: 860, maxH: 420, maxW: 1620 }], { hud: { attempt: 3, ok: true, tc: true, eval: 9 }, fx: { kick: 1, jerks: [fd] } });
   const lane = (o = {}) => [ink, { type: 'world', roto: R.road, alpha: 0.8, lights: 0.6, speed: 2.2 }, { type: 'kickflash', color: PAL.sodium, amount: 0.55 },
     { type: 'streetlights', speed: 2.8 }, { type: 'lanewords', speed: 2.0, words: o.words }, { type: 'speedlines', amount: 0.5, vy: 430 }];
   const insert = (kind, i) => kind === 'jade' ? [ink, { type: 'sodium', period: P, amount: 0.9, kick: 1, alpha: 0.4 }, jade('J9', { light: 'sodium', late: P / 2, cam: { from: [0.76, 0.42, 1.05], to: [0.76, 0.42, 1.12] } })]

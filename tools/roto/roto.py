@@ -170,7 +170,7 @@ def mp_task(kind):
     elif kind == 'face':
         _M[kind] = V.FaceLandmarker.create_from_options(V.FaceLandmarkerOptions(
             base_options=mpt.BaseOptions(model_asset_path=model('face_landmarker.task')), num_faces=1,
-            output_facial_transformation_matrixes=True, min_face_detection_confidence=0.3))
+            output_facial_transformation_matrixes=True, output_face_blendshapes=True, min_face_detection_confidence=0.3))
     elif kind == 'seg':
         _M[kind] = V.ImageSegmenter.create_from_options(V.ImageSegmenterOptions(
             base_options=mpt.BaseOptions(model_asset_path=model('selfie_multiclass_256x256.tflite')), output_confidence_masks=True))
@@ -319,105 +319,8 @@ def heads_from_matte(m, min_area_frac=0.002):
     return faces, glints
 
 
-# ---------------------------------------------------------------------------------------------------------------
-# face (Jade shots)
-FACE_OVAL = [10, 338, 297, 332, 284, 251, 389, 356, 454, 323, 361, 288, 397, 365, 379, 378, 400, 377, 152, 148, 176, 149, 150,
-             136, 172, 58, 132, 93, 234, 127, 162, 21, 54, 103, 67, 109]
-JAW = [132, 58, 172, 136, 150, 149, 176, 148, 152, 377, 400, 378, 379, 365, 397, 288, 361]   # lower jaw only (cheek edges meet hair)
-# subject-right eye = image-left in an un-mirrored frame (MediaPipe numbering)
-EYE_R_UP = [33, 246, 161, 160, 159, 158, 157, 173, 133]
-EYE_R_LO = [33, 7, 163, 144, 145, 153, 154, 155, 133]
-EYE_L_UP = [263, 466, 388, 387, 386, 385, 384, 398, 362]
-EYE_L_LO = [263, 249, 390, 373, 374, 380, 381, 382, 362]
-BROW_R_UP, BROW_R_LO = [107, 66, 105, 63, 70], [55, 65, 52, 53, 46]
-BROW_L_UP, BROW_L_LO = [336, 296, 334, 293, 300], [285, 295, 282, 283, 276]
-NOSE = [98, 97, 2, 326, 327]
-LIPS_OUT = [61, 185, 40, 39, 37, 0, 267, 269, 270, 409, 291, 375, 321, 405, 314, 17, 84, 181, 91, 146]
-IRIS_R, IRIS_L = [468, 469, 470, 471, 472], [473, 474, 475, 476, 477]
-
-
-def chaikin(pts, it=2, closed=False):
-    P = np.asarray(pts, np.float32)
-    for _ in range(it):
-        Q = np.roll(P, -1, 0) if closed else P[1:]
-        P0 = P if closed else P[:-1]
-        a = 0.75 * P0 + 0.25 * Q; b = 0.25 * P0 + 0.75 * Q
-        mid = np.stack([a, b], 1).reshape(-1, 2)
-        P = mid if closed else np.concatenate([P[:1], mid, P[-1:]])
-    return P
-
-
-def face_layers(bgr_full, prev=None):
-    """bgr_full: 1080p frame. Returns dict(face, features, hair (float maps), poly (json), mouth, tilt) or None."""
-    fl = mp_task('face'); seg = mp_task('seg')
-    res = fl.detect(mp_image(bgr_full))
-    sres = seg.segment(mp_image(bgr_full))
-    conf = [np.squeeze(c.numpy_view()) for c in sres.confidence_masks]
-    hair = cv2.resize(conf[1], (OW, OH)) if len(conf) > 1 else np.zeros((OH, OW), np.float32)
-    gg = cv2.cvtColor(bgr_full, cv2.COLOR_BGR2GRAY).astype(np.float32) / 255
-    hair = np.clip((cv2.ximgproc.guidedFilter(gg, hair.astype(np.float32), 8, 2e-3) - 0.5) * 2.2 + 0.5, 0, 1)
-    if not res.face_landmarks:
-        return dict(face=np.zeros((OH, OW), np.float32), features=np.zeros((OH, OW), np.float32), hair=hair, poly=None,
-                    mouth=None, tilt=None)
-    P = np.array([[p.x * OW, p.y * OH] for p in res.face_landmarks[0]], np.float32)
-    S = 4
-    can = np.zeros((OH * S, OW * S), np.uint8)
-    face = np.zeros((OH, OW), np.uint8)
-    iod = float(np.linalg.norm(P[33] - P[263]))
-    lw = max(1.4, iod / 70)                                   # base stroke at 1080p, scales with the face
-
-    def pl(pts, w, closed=False):
-        Q = np.round(np.asarray(pts) * S * 4).astype(np.int32)
-        cv2.polylines(can, [Q], closed, 255, max(1, int(round(w * S))), cv2.LINE_AA, shift=2)
-
-    poly = {}
-    for side, up, lo, iris, bu, bl in (('R', EYE_R_UP, EYE_R_LO, IRIS_R, BROW_R_UP, BROW_R_LO),
-                                       ('L', EYE_L_UP, EYE_L_LO, IRIS_L, BROW_L_UP, BROW_L_LO)):
-        U, Lo = chaikin(P[up]), chaikin(P[lo])
-        pl(U, lw * 1.6); pl(Lo, lw * 0.8)
-        # fine double-eyelid crease: the upper lid lifted by ~38% of the eye opening, inner 30% -> outer end
-        eh = float(np.linalg.norm(P[up[4]] - P[lo[4]]))
-        nrm = P[up[4]] - P[lo[4]]; nrm = nrm / (np.linalg.norm(nrm) + 1e-6)
-        k0 = int(len(U) * 0.3)
-        crease = U[k0:] + nrm * max(2.0, eh * 0.38)
-        pl(crease, lw * 0.55)
-        ic = P[iris[0]]; ir = float(np.mean([np.linalg.norm(P[j] - ic) for j in iris[1:]]))
-        cv2.circle(can, (int(ic[0] * S), int(ic[1] * S)), int(ir * 0.92 * S), 255, -1, cv2.LINE_AA)
-        # brow: filled shape from its own upper + lower contour (never mirrored)
-        bu_, bl_ = chaikin(P[bu]), chaikin(P[bl])
-        mid = (bu_ + bl_) / 2                                # landmark brows are too thick: keep 60% of the band
-        brow = np.concatenate([mid + (bu_ - mid) * 0.6, (mid + (bl_ - mid) * 0.6)[::-1]])
-        cv2.fillPoly(can, [np.round(brow * S * 4).astype(np.int32)], 255, cv2.LINE_AA, shift=2)
-        poly[f'eye_{side}_upper'] = U.round(1).tolist(); poly[f'eye_{side}_lower'] = Lo.round(1).tolist()
-        poly[f'crease_{side}'] = crease.round(1).tolist()
-        poly[f'brow_{side}'] = brow.round(1).tolist(); poly[f'iris_{side}'] = [round(float(ic[0]), 1), round(float(ic[1]), 1), round(ir, 1)]
-    # nose-tip mark: a short arc under the tip (~40% of the alar span), never the whole nose base (reads as a mouth)
-    c2 = P[2]; nose = chaikin([c2 * 0.62 + P[98] * 0.38 - (0, iod * 0.012), c2 + (0, iod * 0.012), c2 * 0.62 + P[327] * 0.38 - (0, iod * 0.012)])
-    pl(nose, lw * 1.1)
-    jaw = chaikin(P[JAW], 2); pl(jaw, lw * 1.2)
-    poly['nose'] = nose.round(1).tolist(); poly['jaw'] = jaw.round(1).tolist()
-    poly['lips'] = chaikin(P[LIPS_OUT], 1, True).round(1).tolist()
-    oval = chaikin(P[FACE_OVAL], 2, True)
-    cv2.fillPoly(face, [np.round(oval * 4).astype(np.int32)], 255, cv2.LINE_AA, shift=2)
-    face = cv2.dilate(face, np.ones((5, 5), np.uint8)).astype(np.float32) / 255
-    face = face * (1 - np.clip((hair - 0.5) * 2, 0, 1))
-    feats = cv2.resize(can, (OW, OH), interpolation=cv2.INTER_AREA).astype(np.float32) / 255
-    mouth = [round(float((P[61][0] + P[291][0]) / 2), 1), round(float((P[13][1] + P[14][1]) / 2), 1),
-             round(float(np.linalg.norm(P[61] - P[291])), 1)]
-    tilt = float(math.atan2(P[263][1] - P[33][1], P[263][0] - P[33][0]))
-    # glasses zone (frames are part of her likeness): a band around both eyes, minus the eyes and brows themselves.
-    # The lines pass keeps long strokes there and adds them to `features`.
-    gz = np.zeros((OH, OW), np.uint8)
-    ew = float(np.linalg.norm(P[33] - P[133]))
-    for side in ((33, 133, 159, 145), (263, 362, 386, 374)):
-        c = (P[side[0]] + P[side[1]]) / 2
-        cv2.ellipse(gz, (int(c[0]), int(c[1])), (int(ew * 1.05), int(ew * 0.78)), math.degrees(tilt), 0, 360, 255, -1)
-    cv2.line(gz, tuple(int(v) for v in P[133]), tuple(int(v) for v in P[362]), 255, max(3, int(ew * 0.35)))
-    for side in ((33, 133, 159, 145), (263, 362, 386, 374)):
-        c = (P[side[0]] + P[side[1]]) / 2
-        cv2.ellipse(gz, (int(c[0]), int(c[1])), (int(ew * 0.62), int(ew * 0.32)), math.degrees(tilt), 0, 360, 0, -1)
-    return dict(face=face, features=feats, hair=hair, poly=poly, mouth=mouth, tilt=round(tilt, 4),
-                glasses=gz.astype(np.float32) / 255)
+# face (Jade shots): tools/roto/face.py (template eyes, footage anchors)
+import face as FC  # noqa: E402
 
 
 def likeness_gate(bgr_full):
@@ -457,7 +360,7 @@ def run_chunk(job):
     s0 = max(0, first - WARMUP)          # warm-up frames may come from the previous chunk (flow, EMA, RVM state)
     rvm = RVM(cfg['rvm']) if ('matte' in layers and cfg['persons']) else None
     dis = cv2.DISOpticalFlow_create(cv2.DISOPTICAL_FLOW_PRESET_MEDIUM)
-    prev_g = None; ema = {}; car_box = None; car_box_age = 99; stats = []
+    prev_g = None; ema = {}; car_box = None; car_box_age = 99; stats = []; trk = None
     lp = cfg.get('lines', {})
     for i in range(s0, i1):
         write = (i >= first) and (force or not done(i))
@@ -532,9 +435,14 @@ def run_chunk(job):
         # face (Jade)
         t = time.time(); fx = None
         if 'face' in layers and cfg['face']:
-            fx = face_layers(big)
+            if trk is None:
+                trk = FC.FaceTracker(shot, OW / w)
+            fx = FC.face_layers(big, src, trk, i)
             if fx['mouth']:
                 pf['mouth'] = fx['mouth']; pf['tilt'] = fx['tilt']
+            pf['face_mode'] = fx['mode']
+            if fx['mouth_open'] is not None:
+                pf['mouth_open_raw'] = fx['mouth_open']
             if write and i % 3 == 0:
                 pf['likeness'] = likeness_gate(big)
         T['face'] = time.time() - t
@@ -683,8 +591,8 @@ def process(shot, start=0.0, dur=None, layers=None, workers=3, force=False, src=
     stats = []
     if not preview_only:
         k = max(1, min(workers, n // 8 or 1))
-        if cfg.get('hold'):
-            k = 1          # the matte hold needs the whole history in one process
+        if cfg.get('hold') or (cfg['face'] and 'face' in layers):
+            k = 1          # the matte hold / face tracker need the whole history in one process
         bounds = np.linspace(0, n, k + 1).astype(int)
         jobs = [(shot, d, cache, (h, w), n, int(bounds[j]), int(bounds[j + 1]), layers, cfg, tn, force) for j in range(k)]
         print(f'{shot}: {n} frames @15fps from {os.path.relpath(src, ROOT)} ({w}x{h}), layers={layers}, workers={k}, tone={tn}', flush=True)
@@ -705,6 +613,8 @@ def process(shot, start=0.0, dur=None, layers=None, workers=3, force=False, src=
         for kk, v in (p.get('t') or {}).items():
             tsum.setdefault(kk, []).append(v)
     face_poly = [p.pop('poly', None) for p in per] if cfg['face'] else None
+    if cfg['face']:
+        mouth_track(per, src, start, cfg.get('lip_lead', 0.29))
     prim = primary_of(cfg)
     lay_out = []
     if 'lines' in layers: lay_out.append('lines')
@@ -741,6 +651,32 @@ def process(shot, start=0.0, dur=None, layers=None, workers=3, force=False, src=
     print(f'{shot}: done {sum(1 for p in per if p)}/{n} frames, wall {wall:.1f}s, {sz / 1e6:.1f} MB, '
           f'mean s/frame (per worker): ' + ', '.join(f'{k}={v}' for k, v in meta['timing']['sec_per_frame_mean'].items()), flush=True)
     return meta
+
+
+def mouth_track(per, src, start, lead):
+    """Footage mouth openness, shifted +lead s (Seedance lip-sync leads the audio by ~0.29 s): mouth_open[i] =
+    raw(t_i - lead). raw = inner-lip gap / IOD from landmarks; profile frames use tools/likeness/lipsync.py's tracked
+    dark-gap series (assets/gen/<clip>_lipsync.json) when present. The renderer's vocal envelope stays the primary
+    mouth driver; this is the footage track for reference / blending."""
+    import re
+    n = len(per); t = start + np.arange(n) / FPS
+    raw = np.array([p.get('mouth_open_raw', np.nan) for p in per], float)
+    base = re.sub(r'_[0-9a-f]{10}$', '', os.path.splitext(os.path.basename(src))[0])
+    lj = os.path.join(os.path.dirname(src), base + '_lipsync.json')
+    src_kind = 'landmarks'
+    if os.path.exists(lj) and np.isfinite(raw).mean() < 0.5:
+        L = json.load(open(lj)); ms = np.array(L['mouth'], float); tf = np.arange(len(ms)) / L.get('fps', 24)
+        lo, hi = np.nanpercentile(ms, 5), np.nanpercentile(ms, 95)
+        raw = np.interp(t, tf, (ms - lo) / max(1e-6, hi - lo) * 0.25)
+        src_kind = 'lipsync.json dark-gap (normalised to ~0..0.25 IOD)'
+    ok = np.isfinite(raw)
+    if ok.sum() < 2:
+        return
+    raw = np.interp(np.arange(n), np.nonzero(ok)[0], raw[ok])
+    sh = np.interp(t - lead, t, raw)
+    for i, p in enumerate(per):
+        p['mouth_open_raw'] = round(float(raw[i]), 4); p['mouth_open'] = round(float(sh[i]), 4)
+    per[0]['mouth_track'] = dict(lead_s=lead, source=src_kind)
 
 
 def clip_name(path):
