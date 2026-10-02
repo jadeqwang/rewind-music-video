@@ -203,6 +203,11 @@ for k, (w, n, li) in enumerate(lw):
     else:
         s2, e2 = refine(s, e, nxt)
     words.append(dict(w=w, start=s2, end=e2, line_idx=li))
+# segment-initial words whose whisper start is padded into a chop-filled gap: snap to the strong vocal onset
+START_FIX = {(10, 0): 85.07, (12, 0): 95.25, (13, 0): 99.95}
+for (li, wi), t in START_FIX.items():
+    ws = [w for w in words if w['line_idx'] == li]
+    ws[wi]['start'] = t
 # enforce monotonic
 for k in range(1, len(words)):
     if words[k]['start'] < words[k - 1]['start']:

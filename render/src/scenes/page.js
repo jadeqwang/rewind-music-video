@@ -36,5 +36,5 @@ export function draw(ctx, lt, t, shot, { T, roto }) {
   // HUD (quiet)
   if (p.eval) evalBar(ty, { value: lerp(p.eval[0], p.eval[1], smooth(0, dur, lt)), alpha: 0.85, caption: 'EVAL · DEPTH 24' });
   if (p.attempt) attempt(ty, { n: p.attempt, alpha: 0.85, sub: p.attemptSub });
-  ctx.post.bloom = 0.5; ctx.post.ca = 0.5;
+  ctx.post.bloom = 0.35; ctx.post.bloomThr = 0.8; ctx.post.ca = 0.5;
 }

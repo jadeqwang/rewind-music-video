@@ -56,6 +56,7 @@ precision highp float; in vec2 vUv; out vec4 o; ${LIB}
 uniform sampler2D tScene, tType, tBloom;
 uniform vec2 res; uniform float S; uniform float time;
 uniform float bloom, ca, misreg, grain, grainSeed, scan, invert, flash, vignette, fade, zoom, spin;
+uniform float cyanGrade;
 uniform vec2 shake; uniform float ripple, ripplePhase, warble, warbleSeed, tracking, neg, typeCA, typeDim, dither;
 uniform vec3 inkC, boneC, cyanC, flashC;
 vec2 distort(vec2 uv){
@@ -97,6 +98,13 @@ void main(){
     float l = 1. - clamp(luma(col), 0., 1.);
     vec3 duo = l < .55 ? mix(inkC * .6, cyanC * .55, l / .55) : mix(cyanC * .55, mix(cyanC, boneC, .55), (l - .55) / .45);
     col = mix(col, duo, neg);
+  }
+  // rewind grade, positive: luminance → deep teal → cyan → bone-white (reversed time is cyan; darks stay dark)
+  if (cyanGrade > 0.) {
+    float l = clamp(luma(col) * 1.25, 0., 1.);
+    vec3 m = mix(inkC * vec3(.35, 1.1, 1.2) + vec3(0., .012, .016), cyanC * .8, smoothstep(.0, .55, l));
+    m = mix(m, mix(cyanC, boneC, .7), smoothstep(.55, 1., l));
+    col = mix(col, m, cyanGrade);
   }
   // type layer (straight alpha) with its own, smaller CA; drawn after the grade so HUD/type keep their colours
   vec2 tc = c2 * typeCA;
@@ -194,7 +202,7 @@ export class Post {
     const f1 = (k, d) => u[k] && gl.uniform1f(u[k], n(k, d));
     f1('bloom', 0.6); f1('ca', 0); f1('misreg', 0); f1('grain', 0.05); f1('grainSeed', 0); f1('scan', 0); f1('invert', 0); f1('flash', 0);
     f1('vignette', 0.25); f1('fade', 1); f1('zoom', 1); f1('spin', 0); f1('ripple', 0); f1('ripplePhase', 0); f1('warble', 0);
-    f1('warbleSeed', 0); f1('tracking', 0); f1('neg', 0); f1('typeCA', 0.35); f1('typeDim', 1); f1('dither', 1.5);
+    f1('warbleSeed', 0); f1('tracking', 0); f1('neg', 0); f1('cyanGrade', 0); f1('typeCA', 0.35); f1('typeDim', 1); f1('dither', 1.5);
     gl.uniform2f(u.shake, n('shakeX', 0), n('shakeY', 0));
     const c3 = (k, v) => gl.uniform3f(u[k], v[0], v[1], v[2]);
     c3('inkC', P.inkC || [0.027, 0.031, 0.039]); c3('boneC', P.boneC || [0.925, 0.902, 0.847]);

@@ -23,6 +23,12 @@ export function schedule(lt, dur, p) {
   return { progress: acc / total, speed: lt < hold ? 1 : sp, moving: lt >= hold };
 }
 
+function speedChangeFrames(dur, p) {
+  const segs = p.segs || [0.3, 0.33, 0.37], hold = p.hold ?? 0.1, run = dur - hold; let a = 0; const r = [];
+  for (let i = 0; i < segs.length - 1; i++) { a += segs[i]; r.push(Math.floor((hold + a * run) * 30 + 1e-3)); }
+  return r;
+}
+
 export async function draw(ctx, lt, t, shot, { T, rewindOf }) {
   const { g, ty } = ctx, p = shot.params, dur = shot.t1 - shot.t0;
   const from = p.from ?? shot.t0, to = p.to;
@@ -35,9 +41,12 @@ export async function draw(ctx, lt, t, shot, { T, rewindOf }) {
   ty.fillStyle = PAL.cyan; ty.fillRect(120 + (DW - 240) * (1 - s.progress), 1040, 3, 14);
   if (p.lines) subtitle(ty, [].concat(...p.lines.map(i => T.lineWords(i))), t, { y: 990, size: 28, lit: PAL.cyan, color: PAL.cyan });
   const P = ctx.post;
-  P.neg = p.neg ?? 0.92;
+  // cyan positive grade throughout; true negative on the freeze-break and on every speed change (2 frames)
+  const f = Math.floor(lt * 30 + 1e-3), sc = speedChangeFrames(dur, p);
+  P.cyanGrade = 1;
+  P.neg = (f < 3 || sc.some(c => f >= c && f < c + 2)) ? 1 : 0;
   P.flash = lt < 1 / 30 ? 0.6 : 0; P.flashC = [0.24, 0.95, 0.9];
   P.warble = 0.6 + 0.6 * (s.speed / 8); P.warbleSeed = Math.floor(lt * 30); P.tracking = 0.5 + 0.5 * hash(Math.floor(lt * 30), 5);
   P.scan = 0.55; P.ripple = lerp(1.0, 0.25, smooth(0, 0.6, lt)); P.ripplePhase = lt * 14;
-  P.ca = 2.5 + s.speed * 0.3; P.bloom = 0.35; P.grain = 0.06; P.vignette = 0.45;
+  P.ca = 2.5 + s.speed * 0.3; P.bloom = 0.6; P.bloomThr = 0.5; P.grain = 0.06; P.vignette = 0.45;
 }

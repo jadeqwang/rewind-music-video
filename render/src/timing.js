@@ -38,7 +38,13 @@ export class TimeMap {
     this.events = d.events || [];
     this.env = env || {};
     this.envFps = fin(this.env.fps, 30);
+    this.kicks = (d.kicks || []).map(bt).filter(Number.isFinite);
   }
+  // try a symbolic reference, fall back when the timing data doesn't have it (e.g. the stub has no events)
+  opt(fn, dflt) { try { const v = fn(this); return Number.isFinite(v) ? v : dflt; } catch (e) { return dflt; } }
+  downbeatIndex(t) { return TimeMap._last(this.downbeats, t); }
+  // kick envelope (falls back to the beat pulse when no kick list exists)
+  kick(t, decay = 0.1) { if (!this.kicks.length) return this.pulse(t, decay); const k = TimeMap._last(this.kicks, t); return k < 0 ? 0 : Math.exp(-(t - this.kicks[k]) / decay); }
 
   // ---- symbolic lookups (throw loudly when a reference doesn't resolve: a silent 0 would put a cut in the wrong place) ----
   // word("defense") → first occurrence; word("rewind", 2) → second; word("stop", 1, {after: 43}) → first after 43 s

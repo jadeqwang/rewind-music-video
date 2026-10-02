@@ -810,5 +810,154 @@
   "aspect": "3:2",
   "file": "cands/v6_gpt_turn_y27.jpg",
   "secs": 30.6
+ },
+ {
+  "id": "v6_grok_expr_y27",
+  "model": "xai/grok-imagine-image-2.0",
+  "kind": "face_expr",
+  "prompt": "Character expression reference photograph, four head-and-shoulders portraits side by side on a plain light gray studio background, soft even frontal lighting, all front-facing: 1 focused calm gaze looking ahead as if driving, 2 startled with eyes opened wide (natural iris size) and eyebrows raised, 3 singing softly with lips slightly parted, 4 determined with a firm closed mouth. The exact woman in the reference photos: same face as the reference photos, same eye shape and size, accurate likeness. Keep her wide, round, soft face with full cheeks and soft rounded jaw exactly as in the photos, her eyes exactly as large and as shaped as in the photos (not narrowed, not smaller), her nose and mouth unchanged. Long straight solid black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses. Smooth clear skin, natural healthy complexion. She is shown as she looked at age 27, matching the youngest reference photos (her eyes are wide and round-almond there, keep them exactly that large): youthful, smooth clear skin, but identical facial structure, identical eye shape and eye size, same nose, same mouth, same round face and full cheeks, unmistakably the same person. Hair entirely black, no dyed ends. She wears her modern thin rectangular dark gray-teal metal frame glasses exactly as in the 2025-2026 reference photos, in every view. Wearing a white cropped zip jacket with a few bold orange horizontal bands across the chest and sleeves, over a black top. Photographic cinematic realism, sharp focus. No text, no labels, no captions.",
+  "refs": [
+   "IMG_20160827_121631_face.jpg",
+   "IMG_20170223_162015_face.jpg",
+   "IMG_20180610_074732_mr1528617091925.jpg",
+   "IMG_20180610_073429.jpg",
+   "PXL_20250908_195405539.MP.jpg"
+  ],
+  "seed": 653764704,
+  "aspect": "16:9",
+  "file": "cands/v6_grok_expr_y27.jpg",
+  "secs": 16.0
+ },
+ {
+  "id": "v7_sd45_views_y27",
+  "model": "bytedance/seedream-4.5",
+  "kind": "face_views",
+  "prompt": "Character turnaround reference photograph, four head-and-shoulders portraits side by side on a plain light gray studio background, soft even frontal lighting, neutral calm expression in all four: front view, three-quarter view facing left, three-quarter view facing right, side profile facing left. The exact woman in the reference photos: same face as the reference photos, same eye shape and size, accurate likeness. Keep her wide, round, soft face with full cheeks and soft rounded jaw exactly as in the photos, her eyes exactly as large and as shaped as in the photos (not narrowed, not smaller), her nose and mouth unchanged. Long straight solid black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses. Smooth clear skin, natural healthy complexion. She is shown as she looked at age 27, matching the youngest reference photos (her eyes are wide and round-almond there, keep them exactly that large): youthful, smooth clear skin, but identical facial structure, identical eye shape and eye size, same nose, same mouth, same round face and full cheeks, unmistakably the same person. Hair entirely black, no dyed ends. She wears her modern thin rectangular dark gray-teal metal frame glasses exactly as in the 2025-2026 reference photos, in every view. Wearing a white cropped zip jacket with a few bold orange horizontal bands across the chest and sleeves, over a black top. Photographic cinematic realism, sharp focus. No text, no labels, no captions.",
+  "refs": [
+   "IMG_20160827_121631_face.jpg",
+   "IMG_20170223_162015_face.jpg",
+   "IMG_20180610_074732_mr1528617091925.jpg",
+   "IMG_20180610_073429.jpg"
+  ],
+  "seed": 26800290,
+  "aspect": "16:9",
+  "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+  "secs": 9.9
+ },
+ {
+  "id": "v7_sd45_views_cur",
+  "model": "bytedance/seedream-4.5",
+  "kind": "face_views",
+  "prompt": "Character turnaround reference photograph, four head-and-shoulders portraits side by side on a plain light gray studio background, soft even frontal lighting, neutral calm expression in all four: front view, three-quarter view facing left, three-quarter view facing right, side profile facing left. The exact woman in the reference photos: same face as the reference photos, same eye shape and size, accurate likeness. Keep her wide, round, soft face with full cheeks and soft rounded jaw exactly as in the photos, her eyes exactly as large and as shaped as in the photos (not narrowed, not smaller), her nose and mouth unchanged. Long straight solid black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses. Smooth clear skin, natural healthy complexion. Wearing a white cropped zip jacket with a few bold orange horizontal bands across the chest and sleeves, over a black top. Photographic cinematic realism, sharp focus. No text, no labels, no captions.",
+  "refs": [
+   "PXL_20250908_195405539.MP.jpg",
+   "PXL_20260528_215628802.jpg",
+   "PXL_20250908_195352130.jpg"
+  ],
+  "seed": 1877007981,
+  "aspect": "16:9",
+  "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+  "secs": 11.1
+ },
+ {
+  "id": "v7_gpt_views_y27b",
+  "model": "openai/gpt-image-2",
+  "kind": "face_views",
+  "prompt": "Character turnaround reference photograph, four head-and-shoulders portraits side by side on a plain light gray studio background, soft even frontal lighting, neutral calm expression in all four: front view, three-quarter view facing left, three-quarter view facing right, side profile facing left. The exact woman in the reference photos: same face as the reference photos, same eye shape and size, accurate likeness. Keep her wide, round, soft face with full cheeks and soft rounded jaw exactly as in the photos, her eyes exactly as large and as shaped as in the photos (not narrowed, not smaller), her nose and mouth unchanged. Long straight solid black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses. Smooth clear skin, natural healthy complexion. She is shown as she looked at age 27, matching the youngest reference photos (her eyes are wide and round-almond there, keep them exactly that large): youthful, smooth clear skin, but identical facial structure, identical eye shape and eye size, same nose, same mouth, same round face and full cheeks, unmistakably the same person. Hair entirely black, no dyed ends. She wears her modern thin rectangular dark gray-teal metal frame glasses exactly as in the 2025-2026 reference photos, in every view. Wearing a white cropped zip jacket with a few bold orange horizontal bands across the chest and sleeves, over a black top. Photographic cinematic realism, sharp focus. No text, no labels, no captions.",
+  "refs": [
+   "IMG_20160827_121631_face.jpg",
+   "IMG_20170223_162015_face.jpg",
+   "IMG_20180610_074732_mr1528617091925.jpg",
+   "IMG_20180610_073429.jpg",
+   "PXL_20250908_195405539.MP.jpg"
+  ],
+  "seed": 932715186,
+  "aspect": "3:2",
+  "error": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs.",
+  "secs": 30.4
+ },
+ {
+  "id": "v7_gpt_views_y27a",
+  "model": "openai/gpt-image-2",
+  "kind": "face_views",
+  "prompt": "Character turnaround reference photograph, four head-and-shoulders portraits side by side on a plain light gray studio background, soft even frontal lighting, neutral calm expression in all four: front view, three-quarter view facing left, three-quarter view facing right, side profile facing left. The exact woman in the reference photos: same face as the reference photos, same eye shape and size, accurate likeness. Keep her wide, round, soft face with full cheeks and soft rounded jaw exactly as in the photos, her eyes exactly as large and as shaped as in the photos (not narrowed, not smaller), her nose and mouth unchanged. Long straight solid black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses. Smooth clear skin, natural healthy complexion. She is shown as she looked at age 27, matching the youngest reference photos (her eyes are wide and round-almond there, keep them exactly that large): youthful, smooth clear skin, but identical facial structure, identical eye shape and eye size, same nose, same mouth, same round face and full cheeks, unmistakably the same person. Hair entirely black, no dyed ends. She wears her modern thin rectangular dark gray-teal metal frame glasses exactly as in the 2025-2026 reference photos, in every view. Wearing a white cropped zip jacket with a few bold orange horizontal bands across the chest and sleeves, over a black top. Photographic cinematic realism, sharp focus. No text, no labels, no captions.",
+  "refs": [
+   "IMG_20160827_121631_face.jpg",
+   "IMG_20170223_162015_face.jpg",
+   "IMG_20180610_074732_mr1528617091925.jpg",
+   "IMG_20180610_073429.jpg",
+   "PXL_20250908_195405539.MP.jpg"
+  ],
+  "seed": 206598765,
+  "aspect": "3:2",
+  "file": "cands/v7_gpt_views_y27a.jpg",
+  "secs": 30.8
+ },
+ {
+  "id": "v8_gpt_expr_y27",
+  "model": "openai/gpt-image-2",
+  "kind": "face_expr",
+  "prompt": "Character expression reference photograph, four head-and-shoulders portraits side by side on a plain light gray studio background, soft even frontal lighting, all front-facing: 1 focused calm gaze looking ahead as if driving, 2 startled with eyes opened wide (natural iris size) and eyebrows raised, 3 singing softly with lips slightly parted, 4 determined with a firm closed mouth. The exact woman in the reference photos: same face as the reference photos, same eye shape and size, accurate likeness. Keep her wide, round, soft face with full cheeks and soft rounded jaw exactly as in the photos, her eyes exactly as large and as shaped as in the photos (not narrowed, not smaller), her nose and mouth unchanged. Long straight solid black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses. Smooth clear skin, natural healthy complexion. She is shown as she looked at age 27, matching the youngest reference photos (her eyes are wide and round-almond there, keep them exactly that large): youthful, smooth clear skin, but identical facial structure, identical eye shape and eye size, same nose, same mouth, same round face and full cheeks, unmistakably the same person. Hair entirely black, no dyed ends. She wears her modern thin rectangular dark gray-teal metal frame glasses exactly as in the 2025-2026 reference photos, in every view. Her eyes are large, wide-open, round-almond shaped exactly as in the 2016 and 2017 reference photos, with the visible upper lid; keep them that large in every view. Wearing a white cropped zip jacket with a few bold orange horizontal bands across the chest and sleeves, over a black top. Photographic cinematic realism, sharp focus. No text, no labels, no captions.",
+  "refs": [
+   "IMG_20160827_121631_face.jpg",
+   "IMG_20170223_162015_face.jpg",
+   "IMG_20180610_074732_mr1528617091925.jpg",
+   "../cands/v3_gpt_expr_y28.jpg",
+   "PXL_20250908_195405539.MP.jpg"
+  ],
+  "seed": 1219700157,
+  "aspect": "3:2",
+  "file": "cands/v8_gpt_expr_y27.jpg",
+  "secs": 28.9
+ },
+ {
+  "id": "v8_gpt_drive_cur",
+  "model": "openai/gpt-image-2",
+  "kind": "driver",
+  "prompt": "Cinematic film still, inside a car at night. The woman from the reference photos sits in the driver's seat with both hands on the steering wheel, head-and-shoulders framing from a front three-quarter angle through the windshield, calm focused gaze on the road ahead. Cool blue dashboard instrument glow from below gently illuminates her face, plus a soft even key light so her face is clearly and flatteringly lit; softly blurred orange streetlights and city lights in the dark windows behind her. The exact woman in the reference photos: same face as the reference photos, same eye shape and size, accurate likeness. Keep her wide, round, soft face with full cheeks and soft rounded jaw exactly as in the photos, her eyes exactly as large and as shaped as in the photos (not narrowed, not smaller), her nose and mouth unchanged. Long straight solid black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses. Smooth clear skin, natural healthy complexion. Wearing a white cropped zip jacket with a few bold orange horizontal bands across the chest and sleeves, over a black top. Photographic cinematic realism, sharp focus. No text, no labels, no captions.",
+  "refs": [
+   "PXL_20250908_195405539.MP.jpg",
+   "PXL_20260528_215628802.jpg",
+   "PXL_20250908_195352130.jpg",
+   "../cands/v2_gpt_expr_cur.jpg"
+  ],
+  "seed": 765293578,
+  "aspect": "3:2",
+  "error": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs.",
+  "secs": 30.4
+ },
+ {
+  "id": "v8_gpt_drive_y27",
+  "model": "openai/gpt-image-2",
+  "kind": "driver",
+  "prompt": "Cinematic film still, inside a car at night. The woman from the reference photos sits in the driver's seat with both hands on the steering wheel, head-and-shoulders framing from a front three-quarter angle through the windshield, calm focused gaze on the road ahead. Cool blue dashboard instrument glow from below gently illuminates her face, plus a soft even key light so her face is clearly and flatteringly lit; softly blurred orange streetlights and city lights in the dark windows behind her. The exact woman in the reference photos: same face as the reference photos, same eye shape and size, accurate likeness. Keep her wide, round, soft face with full cheeks and soft rounded jaw exactly as in the photos, her eyes exactly as large and as shaped as in the photos (not narrowed, not smaller), her nose and mouth unchanged. Long straight solid black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses. Smooth clear skin, natural healthy complexion. She is shown as she looked at age 27, matching the youngest reference photos (her eyes are wide and round-almond there, keep them exactly that large): youthful, smooth clear skin, but identical facial structure, identical eye shape and eye size, same nose, same mouth, same round face and full cheeks, unmistakably the same person. Hair entirely black, no dyed ends. She wears her modern thin rectangular dark gray-teal metal frame glasses exactly as in the 2025-2026 reference photos, in every view. Her eyes are large, wide-open, round-almond shaped exactly as in the 2016 and 2017 reference photos, with the visible upper lid; keep them that large in every view. Wearing a white cropped zip jacket with a few bold orange horizontal bands across the chest and sleeves, over a black top. Photographic cinematic realism, sharp focus. No text, no labels, no captions.",
+  "refs": [
+   "IMG_20160827_121631_face.jpg",
+   "IMG_20170223_162015_face.jpg",
+   "IMG_20180610_074732_mr1528617091925.jpg",
+   "../cands/v3_gpt_expr_y28.jpg",
+   "PXL_20250908_195405539.MP.jpg"
+  ],
+  "seed": 1276610546,
+  "aspect": "3:2",
+  "error": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs.",
+  "secs": 30.4
+ },
+ {
+  "id": "v8_gpt_views_y27",
+  "model": "openai/gpt-image-2",
+  "kind": "face_views",
+  "prompt": "Character turnaround reference photograph, four head-and-shoulders portraits side by side on a plain light gray studio background, soft even frontal lighting, neutral calm expression in all four: front view, three-quarter view facing left, three-quarter view facing right, side profile facing left. The exact woman in the reference photos: same face as the reference photos, same eye shape and size, accurate likeness. Keep her wide, round, soft face with full cheeks and soft rounded jaw exactly as in the photos, her eyes exactly as large and as shaped as in the photos (not narrowed, not smaller), her nose and mouth unchanged. Long straight solid black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses. Smooth clear skin, natural healthy complexion. She is shown as she looked at age 27, matching the youngest reference photos (her eyes are wide and round-almond there, keep them exactly that large): youthful, smooth clear skin, but identical facial structure, identical eye shape and eye size, same nose, same mouth, same round face and full cheeks, unmistakably the same person. Hair entirely black, no dyed ends. She wears her modern thin rectangular dark gray-teal metal frame glasses exactly as in the 2025-2026 reference photos, in every view. Her eyes are large, wide-open, round-almond shaped exactly as in the 2016 and 2017 reference photos, with the visible upper lid; keep them that large in every view. Wearing a white cropped zip jacket with a few bold orange horizontal bands across the chest and sleeves, over a black top. Photographic cinematic realism, sharp focus. No text, no labels, no captions.",
+  "refs": [
+   "IMG_20160827_121631_face.jpg",
+   "IMG_20170223_162015_face.jpg",
+   "IMG_20180610_074732_mr1528617091925.jpg",
+   "../cands/v3_gpt_expr_y28.jpg",
+   "PXL_20250908_195405539.MP.jpg"
+  ],
+  "seed": 1042621934,
+  "aspect": "3:2",
+  "error": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs.",
+  "secs": 30.5
  }
 ]

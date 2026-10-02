@@ -14,6 +14,8 @@ seed = random.randint(1, 2**31 - 1)
 sizes = {"16:9": "1536x1024", "3:2": "1536x1024", "1:1": "1024x1024", "3:4": "1024x1536", "2:3": "1024x1536"}
 if model.startswith("google/nano-banana"):
     p = {"prompt": prompt, "image_input": uris[:14], "aspect_ratio": aspect, "output_format": "jpg", "image_size": "1K"}
+elif model in ("bytedance/seedream-4.5", "bytedance/seedream-4.0", "bytedance/seedream-5-lite"):
+    p = {"prompt": prompt, "image_input": uris, "size": "2K", "aspect_ratio": aspect}
 elif model.startswith("bytedance/seedream"):
     wh = {"16:9": "2048x1152", "1:1": "2048x2048", "3:2": "2048x1365", "3:4": "1728x2304", "2:3": "1664x2496"}[aspect]
     p = {"prompt": prompt, "image": uris, "size": wh, "watermark": False}

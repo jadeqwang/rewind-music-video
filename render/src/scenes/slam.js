@@ -19,5 +19,5 @@ export function draw(ctx, lt, t, shot, { T }) {
   const kick = Math.exp(-dt / 0.09);
   const P = ctx.post;
   P.zoom = 1 + 0.045 * kick; P.shakeX = hsig(k, Math.floor(dt * 30)) * 10 * kick; P.shakeY = hsig(k, Math.floor(dt * 30), 2) * 6 * kick;
-  P.ca = 1.5 + 5 * kick; P.bloom = 0.5; P.invert = (h.style === 'outline' && dt < 2 / 30) ? 1 : 0; P.grain = 0.05;
+  P.ca = 1.5 + 5 * kick; P.bloom = h.style === 'flood' ? 0 : 0.22; P.bloomThr = 0.7; P.invert = (h.style === 'outline' && dt < 2 / 30) ? 1 : 0; P.grain = 0.05;
 }

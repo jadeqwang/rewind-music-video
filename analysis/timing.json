@@ -2449,7 +2449,7 @@
   },
   {
    "text": "A shadow chasing me like it's a race",
-   "start": 84.56,
+   "start": 85.07,
    "end": 88.92
   },
   {
@@ -2459,12 +2459,12 @@
   },
   {
    "text": "they chase me and they're just too fast",
-   "start": 94.16,
+   "start": 95.25,
    "end": 99.38
   },
   {
    "text": "With no warning I get shot … and time stops",
-   "start": 99.38,
+   "start": 99.95,
    "end": 104.8
   },
   {
@@ -2935,10 +2935,10 @@
   },
   {
    "w": "A",
-   "start": 84.56,
+   "start": 85.07,
    "end": 85.46,
    "line_idx": 10,
-   "voc_db": -23.8
+   "voc_db": -24.7
   },
   {
    "w": "shadow",
@@ -3040,7 +3040,7 @@
   },
   {
    "w": "they",
-   "start": 94.16,
+   "start": 95.25,
    "end": 95.6,
    "line_idx": 12,
    "voc_db": -23.3
@@ -3096,7 +3096,7 @@
   },
   {
    "w": "With",
-   "start": 99.38,
+   "start": 99.95,
    "end": 100.26,
    "line_idx": 13,
    "voc_db": -20.2
@@ -3549,6 +3549,24 @@
    "start": 79.13,
    "end": 79.81,
    "peak_db": -35.2,
+   "heard": ""
+  },
+  {
+   "start": 84.61,
+   "end": 85.02,
+   "peak_db": -23.8,
+   "heard": ""
+  },
+  {
+   "start": 94.21,
+   "end": 94.89,
+   "peak_db": -27.1,
+   "heard": ""
+  },
+  {
+   "start": 99.43,
+   "end": 99.9,
+   "peak_db": -23.7,
    "heard": ""
   },
   {

@@ -109,7 +109,7 @@ SS = 2  # supersample
 def P(pts, s=SS):
     return (np.array(pts, np.float32) * s).astype(np.int32)
 
-def jade(n=60):
+def jade(n=72):
     d = OUT + '/ld_jade'
     meta = dict(fps=FPS, frames=n, w=W, h=H, layers=['lines', 'matte', 'face', 'features', 'hair'],
                 note='procedural stand-in figure for look-dev; not a likeness', per_frame=[])
