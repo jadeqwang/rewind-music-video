@@ -633,5 +633,89 @@
  },
  "J-eyes": {
   "measurable": false
+ },
+ "J5_v3": {
+  "gate_ok": false,
+  "dev_vs_real_mean": {
+   "eye_w_face": -0.0005,
+   "iris_face": -0.0742,
+   "eye_open": -0.0098,
+   "forehead": 0.0221,
+   "upper_head": 0.2039,
+   "forehead_w": -0.053,
+   "jaw_w": -0.0139,
+   "chin_w": -0.0046
+  },
+  "dev_vs_source": {
+   "eye_w_face": 0.0207,
+   "eye_w_iod": 0.0306,
+   "iris_face": -0.0264,
+   "eye_open": -0.0114,
+   "forehead": 0.0033,
+   "upper_head": 0.0706
+  },
+  "congruence": {
+   "head_yaw": 1.2,
+   "torso_yaw": 12.5,
+   "delta": -11.3,
+   "congruent": true
+  },
+  "src": "refs/jade/derived/IMG_20180209_082832_glasses.jpg"
+ },
+ "J5b_v3": {
+  "gate_ok": false,
+  "dev_vs_real_mean": {
+   "eye_w_face": 0.002,
+   "iris_face": -0.0752,
+   "eye_open": -0.0017,
+   "forehead": 0.0071,
+   "upper_head": 0.1037,
+   "forehead_w": -0.045,
+   "jaw_w": -0.0234,
+   "chin_w": -0.0021
+  },
+  "dev_vs_source": {
+   "eye_w_face": 0.0233,
+   "eye_w_iod": 0.0335,
+   "iris_face": -0.0275,
+   "eye_open": -0.0033,
+   "forehead": -0.0114,
+   "upper_head": -0.0184
+  },
+  "congruence": {
+   "head_yaw": 1.0,
+   "torso_yaw": 5.9,
+   "delta": -4.9,
+   "congruent": true
+  },
+  "src": "refs/jade/derived/IMG_20180209_082832_glasses.jpg"
+ },
+ "J8_v3": {
+  "gate_ok": false,
+  "dev_vs_real_mean": {
+   "eye_w_face": -0.0153,
+   "iris_face": -0.0888,
+   "eye_open": 0.0536,
+   "forehead": 0.0552,
+   "upper_head": 0.1777,
+   "forehead_w": -0.0586,
+   "jaw_w": -0.0122,
+   "chin_w": 0.0004
+  },
+  "dev_vs_source": {
+   "eye_w_face": 0.0056,
+   "eye_w_iod": 0.0264,
+   "iris_face": -0.0418,
+   "eye_open": 0.0518,
+   "forehead": 0.0358,
+   "upper_head": 0.0474
+  },
+  "congruence": {
+   "head_yaw": 1.5,
+   "torso_yaw": 3.2,
+   "delta": -1.7,
+   "congruent": true
+  },
+  "src": "refs/jade/derived/IMG_20180209_082832_glasses.jpg"
  }
 }

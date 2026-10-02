@@ -1,0 +1,19 @@
+[
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/cands/D_grok_0.jpg",
+  "job": "D_grok",
+  "model": "xai/grok-imagine-image-quality",
+  "refs": [
+   "PXL_20260528_215628802.jpg",
+   "IMG_20180610_074732_mr1528617091925.jpg",
+   "PXL_20250908_195405539.MP.jpg",
+   "jade_trace_jacket_hp_2.jpg"
+  ],
+  "size": "1536x1024",
+  "prompt": "Anime redraw of the woman in the reference photos (Jade), keeping her exact face shape and features. Modern premium anime feature-film character design, in the spirit of Satoshi Kon (Paprika, Perfect Blue) crossed with Makoto Shinkai: clean confident thin lineart, flat cel shading with only 2-3 tones per colour, subtle soft rim highlights, restrained realistic adult proportions. An adult woman about 27 years old, NOT chibi, NOT moe, not a generic anime girl: a specific, recognisable person drawn in anime style. Her likeness must be unmistakable: heart-shaped 'melon-seed' face (wide temples and high wide cheekbones, the lower cheeks tapering to a narrow, softly pointed chin, not round, not square, not long); a LARGE, tall, broad forehead and a proportionally large upper head/cranium; long straight solid black hair with a center part, styled half-up half-down: two symmetrical sections from left and right of the center part gathered back toward the crown (visible as volume at the crown in 3/4, profile and back views), the rest hanging long and straight well past the shoulders, a few fine loose strands at the temples; thin rectangular dark gray-teal metal-frame glasses ALWAYS on, in every view; dark brown round-almond eyes with a slight thin double-eyelid crease (eyes as large as in her photos or a little larger, never smaller or narrowed); fuller warm dark-brown natural brows that are NOT mirror images: the brow on the viewer's left sits slightly lower and flatter, the brow on the viewer's right is slightly higher with its peak further out toward the tail; small soft nose, natural full lips; a calm, neutral 'resting oblivious' expression. Smooth clear skin, youthful, soft even frontal light on the face, warm natural skin tone. Character model sheet, 2x2 grid of head-and-shoulders portraits of the SAME woman on a plain light warm-gray background, each head large in its cell, same scale and same eye height: top-left exact front view; top-right three-quarter view facing the viewer's left; bottom-left three-quarter view facing the viewer's right; bottom-right clean side profile facing the viewer's left. She wears a black crew-neck top. No text, no labels, no logos. No text, no captions, no watermark.",
+  "secs": 0.3,
+  "attempts": 4,
+  "est_cost": 0.2,
+  "error": "HTTP 400: {\"errors\":[{\"message\":\"Model execution failed (User Input Error): {\\\"code\\\":\\\"invalid-argument\\\",\\\"error\\\":\\\"This model supports at most 3 input image(s), but 4 were provided.\\\"}\",\"code\":700"
+ }
+]

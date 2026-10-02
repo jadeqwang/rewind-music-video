@@ -602,5 +602,28 @@
    }
   ],
   "file": "cands/J5b_v3.jpg"
+ },
+ {
+  "id": "J8_v3",
+  "model": "openai/gpt-image-2",
+  "prompt": "A dark empty seminar room the night before a PhD defense: she sits alone on a single black chair in the middle of the room, centered, medium shot from the knees up, facing the camera straight on, seated square to the camera, hands in her lap, singing softly to herself. A single soft overhead light on her, a projector beam across the room behind her, faint red and blue reflections in the dark windows. Use the second image for the room layout and mood. POSE: her head faces the camera straight on (turned only ~2.6 degrees, essentially frontal) exactly as in the first image; her torso and shoulders are square to the camera, level and symmetric, turned the same tiny amount - no twist between head and body. Keep her face, glasses and lipstick exactly as in the first image. Keep this exact woman from the first image: her face, head angle, eyes, eyebrows, glasses and expression must stay exactly as in the photo (do not redraw or beautify her face). Long straight solid black hair with a center part styled half-up half-down (two symmetrical sections pulled back from the temples toward the crown, the rest hanging long), revealing her broad forehead. She wears a white cropped zip jacket with one clean orange horizontal band across the chest and upper sleeves (no patches, no text) over a black top. Cinematic photographic film still, 16:9 widescreen composition, soft flattering light on her face, smooth clear skin. No text, no logos, no headphones.",
+  "refs": [
+   "refs/jade/derived/IMG_20180209_082832_glasses.jpg",
+   "assets/sets/defense_room/2.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": false,
+    "secs": 30.5,
+    "err": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs."
+   },
+   {
+    "ok": true,
+    "secs": 29.2
+   }
+  ],
+  "file": "cands/J8_v3.jpg"
  }
 ]

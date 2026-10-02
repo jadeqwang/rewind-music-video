@@ -140,3 +140,18 @@ repo root. Encoding uses libx264 at CRF 17, yuv420p, AAC 256k, `-ss/-t` on "Rewi
 Performance at 1080p: about 0.75–0.8 s per frame per worker in-page (render + GL + JPEG). With 3 workers that is about 0.28 s per frame
 effective, so the full song (6,974 frames) takes about 33 minutes. Rewind frames cost the most (4 re-renders), about 1.2 s each.
 Output is deterministic: the same frame from different processes and in a different order is byte-identical.
+
+## Jade style (LOCKED — user-approved, round "B final")
+Built offline by `tools/jade2/build.py <J>` → `assets/roto/<J>/cel/NNNN.png` + `cel.json`; drawn by `roto.jade2()`.
+- **Flat warm-skin cel ("B")**: skin #ECCBB6-ish, skin shadow, a large very-low-contrast cheekbone tone (no blush circles),
+  ink hair with a second hair tone on the curtains, bone jacket with her orange bands, ink top. No photographic texture.
+- **Face shape** from her real-photo template (`tools/jade2/jade_shape.json`; forehead lift 1.48, lower face ×0.93, cheeks ×1.03),
+  fitted to the template eye anchors; profile from `tools/jade2/jade_profile_shape.json` (hand-annotated on her profile photo).
+- **Eyes/brows/crease** from `tools/roto/templates/jade_front.json` via `face.json` (full size, opening 0.358 measured, iris 0.096·face).
+  **Brows = "B1"**: the template polygons as-is, colour #3A2E2C (user: "the eyebrows on B1 is good"). Do not thin them.
+- Nose: soft side shadow + nostril hints. Lips: rose tone + mouth line, opening from `T.e('vocal')`.
+- **Glasses** always on: thin dark grey-teal rectangles (front) / slim lens + temple arm (profile).
+- **Crown**: two smooth half-up lobes (no gather scribble). Scene light is multiplied on (never lifts/blows out the skin).
+- Likeness tooling: `render/tools/likeness_review.py [--v2 --v3]`, `render/tools/likeness_ladder.py`, `tools/likeness/measure.py`.
+- Picasso devices (cubist planes front+profile, escalating: case files 2 → 4 planes, build 3 = 6 planes cycling, final drop resolves),
+  Gjon-Mili light-pen ghosts, Guernica freeze planes + lamp-eye: layers `cubist`, `guernica`, `ghosts` in `src/layers.js`.
