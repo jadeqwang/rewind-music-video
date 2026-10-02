@@ -1,0 +1,5 @@
+analysis/stems/
+*.wav
+node_modules/
+render/frames/
+__pycache__/
