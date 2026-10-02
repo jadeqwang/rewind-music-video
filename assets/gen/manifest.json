@@ -2058,11 +2058,35 @@
    },
    "est_usd": 1.8496,
    "est_basis": "8s x 0.2312 (@720p non-video input (per second))",
-   "state": "running",
+   "state": "done",
    "bucket": 29849112,
    "submitted": 1790946424.4205682,
    "bytes": 492491,
-   "started": 1790946763.813
+   "started": 1790946763.813,
+   "state_relay": "done",
+   "gen_secs": 184.0,
+   "finished": 1790946947.764,
+   "latency_secs": 523.3,
+   "files": [
+    "assets/gen/anime_J8_t1_a2b3ec577f.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 8.042,
+     "bytes": 7308649,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "193"
+      }
+     ]
+    }
+   ],
+   "collected": 1790946997.654963
   },
   "rewind/anime_J8b_t1-540ebe109f": {
    "id": "540ebe109f",
@@ -2086,11 +2110,35 @@
    },
    "est_usd": 1.3872,
    "est_basis": "6s x 0.2312 (@720p non-video input (per second))",
-   "state": "running",
+   "state": "done",
    "bucket": 29849113,
    "submitted": 1790946424.862332,
    "bytes": 209850,
-   "started": 1790946820.683
+   "started": 1790946820.683,
+   "state_relay": "done",
+   "gen_secs": 151.4,
+   "finished": 1790946972.086,
+   "latency_secs": 547.2,
+   "files": [
+    "assets/gen/anime_J8b_t1_540ebe109f.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 6.042,
+     "bytes": 4210039,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "145"
+      }
+     ]
+    }
+   ],
+   "collected": 1790947014.7852895
   },
   "rewind/anime_J9_t1-bba668eb89": {
    "id": "bba668eb89",
@@ -2114,11 +2162,15 @@
    },
    "est_usd": 1.8496,
    "est_basis": "8s x 0.2312 (@720p non-video input (per second))",
-   "state": "running",
+   "state": "ready",
    "bucket": 29849113,
    "submitted": 1790946425.349831,
    "bytes": 331727,
-   "started": 1790946820.787
+   "started": 1790946820.787,
+   "state_relay": "done",
+   "gen_secs": 163.1,
+   "finished": 1790946983.934,
+   "latency_secs": 558.6
   },
   "rewind/anime_Jeyes_t1-6f7802de1d": {
    "id": "6f7802de1d",
@@ -2150,5 +2202,5 @@
   }
  },
  "total_est_usd": 69.4116,
- "total_est_usd_done": 50.222
+ "total_est_usd_done": 53.4588
 }
