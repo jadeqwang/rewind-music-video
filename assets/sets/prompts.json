@@ -1,0 +1,64 @@
+[
+ {
+  "file": "assets/sets/_modeltest/grok-imagine-image-quality.jpg",
+  "set": "_modeltest",
+  "model": "xai/grok-imagine-image-quality",
+  "prompt": "Driver's point of view from inside a car speeding north on Lake Shore Drive in Chicago at night: the multi-lane highway curves gently left ahead, a row of tall sodium-vapor streetlights casting pools of orange light on the empty asphalt, white lane dashes, a black empty lake on the right side under a dark sky, the Chicago skyline small and far away on the horizon. Only the top edge of the dashboard visible at the bottom. Cinematic night photograph, 16:9 wide frame, high contrast, deep black shadows, hard directional light, clean readable geometry, strong silhouettes, minimal clutter, sharp focus, anamorphic film still. No text, no signs, no lettering, no logos, no license plates, no people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json",
+   "resolution": "1k"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.05,
+  "secs": 7.4,
+  "error": null,
+  "ts": "2026-10-02T05:04:13"
+ },
+ {
+  "file": "assets/sets/_modeltest/grok-imagine-image.jpg",
+  "set": "_modeltest",
+  "model": "xai/grok-imagine-image",
+  "prompt": "Driver's point of view from inside a car speeding north on Lake Shore Drive in Chicago at night: the multi-lane highway curves gently left ahead, a row of tall sodium-vapor streetlights casting pools of orange light on the empty asphalt, white lane dashes, a black empty lake on the right side under a dark sky, the Chicago skyline small and far away on the horizon. Only the top edge of the dashboard visible at the bottom. Cinematic night photograph, 16:9 wide frame, high contrast, deep black shadows, hard directional light, clean readable geometry, strong silhouettes, minimal clutter, sharp focus, anamorphic film still. No text, no signs, no lettering, no logos, no license plates, no people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json",
+   "resolution": "1k"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.02,
+  "secs": 7.7,
+  "error": null,
+  "ts": "2026-10-02T05:04:13"
+ },
+ {
+  "file": "assets/sets/_modeltest/flux-2-pro-preview.jpg",
+  "set": "_modeltest",
+  "model": "black-forest-labs/flux-2-pro-preview",
+  "prompt": "Driver's point of view from inside a car speeding north on Lake Shore Drive in Chicago at night: the multi-lane highway curves gently left ahead, a row of tall sodium-vapor streetlights casting pools of orange light on the empty asphalt, white lane dashes, a black empty lake on the right side under a dark sky, the Chicago skyline small and far away on the horizon. Only the top edge of the dashboard visible at the bottom. Cinematic night photograph, 16:9 wide frame, high contrast, deep black shadows, hard directional light, clean readable geometry, strong silhouettes, minimal clutter, sharp focus, anamorphic film still. No text, no signs, no lettering, no logos, no license plates, no people.",
+  "seed": 1367194067,
+  "seed_note": null,
+  "params": {
+   "width": 1536,
+   "height": 864,
+   "seed": 1367194067,
+   "output_format": "jpeg",
+   "safety_tolerance": 2
+  },
+  "size": null,
+  "est_cost_usd": 0.045,
+  "secs": 11.6,
+  "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+  "ts": "2026-10-02T05:04:17"
+ }
+]
