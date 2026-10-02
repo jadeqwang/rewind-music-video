@@ -1,0 +1,14 @@
+{
+ "cur": {
+  "views": "v3_gpt_views_cur",
+  "expr": "v2_gpt_expr_cur",
+  "drive": "v9_gpt_drive_cur",
+  "turn": "v6_gpt_turn_cur"
+ },
+ "y27": {
+  "views": "v7_gpt_views_y27a",
+  "expr": "v8_gpt_expr_y27",
+  "drive": "v5_gpt_drive_y27",
+  "turn": "v6_gpt_turn_y27"
+ }
+}

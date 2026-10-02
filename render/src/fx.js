@@ -44,11 +44,11 @@ export function bullet(g, o) {
   g.save(); g.translate(x, y); g.rotate(ang); g.globalCompositeOperation = 'lighter';
   const gr = g.createLinearGradient(-len, 0, 0, 0);
   gr.addColorStop(0, rgba(PAL.bone, 0)); gr.addColorStop(0.85, rgba(PAL.bone, 0.55)); gr.addColorStop(1, rgba(PAL.bone, 1));
-  g.fillStyle = gr; g.fillRect(-len, -1, len, 2);
-  g.fillStyle = PAL.bone; g.beginPath(); g.ellipse(0, 0, 9, 3, 0, 0, Math.PI * 2); g.fill();
+  g.fillStyle = gr; g.fillRect(-len, -1.5, len, 3);
+  g.fillStyle = PAL.bone; g.beginPath(); g.ellipse(0, 0, 16, 4.5, 0, 0, Math.PI * 2); g.fill();
   // pressure rings around the slug (time is stopped: they hold still)
   g.strokeStyle = rgba(PAL.bone, 0.35); g.lineWidth = 1;
-  for (let k = 1; k <= 3; k++) { g.beginPath(); g.ellipse(-k * 26, 0, 6 + k * 3, 10 + k * 9, 0, -Math.PI / 2, Math.PI / 2); g.stroke(); }
+  for (let k = 1; k <= 4; k++) { g.beginPath(); g.ellipse(-k * 34, 0, 6 + k * 3, 12 + k * 11, 0, -Math.PI / 2, Math.PI / 2); g.stroke(); }
   g.restore();
 }
 

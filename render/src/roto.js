@@ -132,8 +132,12 @@ export function jade(g, id, clipT, o = {}) {
     a.drawImage(ring('jring', m, mt, 2.2, col), 0, 0);
     if (feat) { a.globalAlpha = 0.8; a.drawImage(tinted('jfeat', m, feat, col), 0, 0); a.globalAlpha = 1; }
   } else {
-    a.drawImage(mt, 0, 0, m.w, m.h);
-    a.globalCompositeOperation = 'source-in'; a.fillStyle = o.fill || PAL.bone; a.fillRect(0, 0, m.w, m.h);
+    if (o.rim) { a.globalAlpha = clamp(o.rim.alpha ?? 0.6); a.drawImage(ring('jrim', m, mt, o.rim.w ?? 1.6, o.rim.color || PAL.bone), 0, 0); a.globalAlpha = 1; }
+    const F0 = scratch('jadeF', m), f0 = clearLayer(F0);
+    f0.drawImage(mt, 0, 0, m.w, m.h);
+    f0.globalCompositeOperation = 'source-in'; f0.fillStyle = o.fill || PAL.bone; f0.fillRect(0, 0, m.w, m.h);
+    f0.globalCompositeOperation = 'source-over';
+    a.drawImage(F0, 0, 0);
     a.globalCompositeOperation = 'source-atop';
     if (o.light && o.light.amount > 0) {   // a flat wash of light across the figure (sodium sweep, siren spill)
       const L = o.light, k = m.w / DW, gr = a.createLinearGradient(L.from[0] * k, L.from[1] * k, L.from[2] * k, L.from[3] * k);
@@ -184,7 +188,7 @@ export function suits(g, id, clipT, o = {}) {
   if (o.bars !== false && pf.faces) {
     for (let i = 0; i < pf.faces.length; i++) {
       const [cx, cy, fw, fh] = pf.faces[i];
-      const x = r.x + cx * kx, y = r.y + cy * ky, w = fw * kx * (o.barW ?? 1.35), h = fh * ky * (o.barH ?? 1.0);
+      const x = r.x + cx * kx, y = r.y + cy * ky, w = fw * kx * (o.barW ?? 1.55), h = fh * ky * (o.barH ?? 1.0);
       const ox = hsig(i, o.boil ?? 0, 7) * 1.2;
       g.fillStyle = '#000'; g.fillRect(x - w / 2 + ox, y - h / 2, w, h);
       if (o.barLabel) { g.fillStyle = rgba(PAL.boneDim, 0.85); g.font = `500 ${Math.round(12 * kx * 1.5)}px JBM`; g.textBaseline = 'top'; g.fillText(o.barLabel, x + w / 2 + 6, y - h / 2); }

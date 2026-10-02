@@ -48,7 +48,28 @@
   "seed": 1457991517,
   "aspect": "16:9",
   "file": "cands/f1_grokimagin_cur.jpg",
-  "secs": 13.4
+  "secs": 13.4,
+  "score": {
+   "eyes": 7,
+   "face_shape": 7,
+   "hair": 8,
+   "glasses": 8,
+   "skin": 8,
+   "overall": 7,
+   "flattering": 7,
+   "min_likeness": 7
+  },
+  "verdict": "reject (<8 on a likeness axis)",
+  "sface_id_sim": [
+   0.66,
+   0.612,
+   0.615,
+   0.536,
+   0.632,
+   0.616,
+   0.648,
+   0.652
+  ]
  },
  {
   "id": "f1_grokimagin_y28",
@@ -65,7 +86,29 @@
   "seed": 965717681,
   "aspect": "16:9",
   "file": "cands/f1_grokimagin_y28.jpg",
-  "secs": 15.4
+  "secs": 15.4,
+  "score": {
+   "eyes": 7,
+   "face_shape": 6,
+   "hair": 8,
+   "glasses": 8,
+   "skin": 9,
+   "overall": 6,
+   "flattering": 8,
+   "min_likeness": 6
+  },
+  "verdict": "reject (<8 on a likeness axis)",
+  "note": "generic younger face, jaw narrowed",
+  "sface_id_sim": [
+   0.529,
+   0.514,
+   0.511,
+   0.321,
+   0.496,
+   0.464,
+   0.494,
+   0.476
+  ]
  },
  {
   "id": "f1_seedream5p_y28",
@@ -150,7 +193,29 @@
   "seed": 29990029,
   "aspect": "16:9",
   "file": "cands/f1_gptimage2_y28.jpg",
-  "secs": 30.7
+  "secs": 30.7,
+  "score": {
+   "eyes": 7,
+   "face_shape": 8,
+   "hair": 9,
+   "glasses": 9,
+   "skin": 8,
+   "overall": 8,
+   "flattering": 7,
+   "min_likeness": 7
+  },
+  "verdict": "reject (<8 on a likeness axis)",
+  "note": "barely de-aged",
+  "sface_id_sim": [
+   0.551,
+   0.583,
+   0.534,
+   0.294,
+   0.598,
+   0.493,
+   0.537,
+   0.585
+  ]
  },
  {
   "id": "f1_gptimage2_cur",
@@ -167,7 +232,28 @@
   "seed": 907209968,
   "aspect": "16:9",
   "file": "cands/f1_gptimage2_cur.jpg",
-  "secs": 30.9
+  "secs": 30.9,
+  "score": {
+   "eyes": 8,
+   "face_shape": 8,
+   "hair": 9,
+   "glasses": 9,
+   "skin": 8,
+   "overall": 8,
+   "flattering": 7,
+   "min_likeness": 8
+  },
+  "verdict": "pass",
+  "sface_id_sim": [
+   0.669,
+   0.639,
+   0.618,
+   0.415,
+   0.682,
+   0.61,
+   0.555,
+   0.623
+  ]
  },
  {
   "id": "f2_nanobanana2_cur",
@@ -197,7 +283,29 @@
   "seed": 1150724491,
   "aspect": "16:9",
   "file": "cands/f2_nanobanana_cur.jpg",
-  "secs": 23.2
+  "secs": 23.2,
+  "score": {
+   "eyes": 8,
+   "face_shape": 7,
+   "hair": 8,
+   "glasses": 8,
+   "skin": 8,
+   "overall": 7,
+   "flattering": 7,
+   "min_likeness": 7
+  },
+  "verdict": "reject (<8 on a likeness axis)",
+  "note": "face elongated, stripe pattern wrong",
+  "sface_id_sim": [
+   0.666,
+   0.614,
+   0.608,
+   0.306,
+   0.629,
+   0.568,
+   0.559,
+   0.549
+  ]
  },
  {
   "id": "f2_nanobanana_y28",
@@ -212,7 +320,28 @@
   "seed": 1615410241,
   "aspect": "16:9",
   "file": "cands/f2_nanobanana_y28.jpg",
-  "secs": 23.6
+  "secs": 23.6,
+  "score": {
+   "eyes": 8,
+   "face_shape": 7,
+   "hair": 8,
+   "glasses": 8,
+   "skin": 9,
+   "overall": 7,
+   "flattering": 8,
+   "min_likeness": 7
+  },
+  "verdict": "reject (<8 on a likeness axis)",
+  "sface_id_sim": [
+   0.555,
+   0.532,
+   0.552,
+   0.396,
+   0.502,
+   0.536,
+   0.481,
+   0.397
+  ]
  },
  {
   "id": "f2_flux2max_cur",
@@ -272,7 +401,24 @@
   "seed": 906387017,
   "aspect": "16:9",
   "file": "cands/v2_nbp_expr_y28.jpg",
-  "secs": 21.4
+  "secs": 21.4,
+  "score": {
+   "eyes": 7,
+   "face_shape": 7,
+   "hair": 8,
+   "glasses": 8,
+   "skin": 9,
+   "overall": 7,
+   "flattering": 7,
+   "min_likeness": 7
+  },
+  "verdict": "reject (<8 on a likeness axis)",
+  "sface_id_sim": [
+   0.572,
+   0.568,
+   0.543,
+   0.554
+  ]
  },
  {
   "id": "v2_nbp_views_y28",
@@ -287,7 +433,24 @@
   "seed": 1118605097,
   "aspect": "16:9",
   "file": "cands/v2_nbp_views_y28.jpg",
-  "secs": 24.1
+  "secs": 24.1,
+  "score": {
+   "eyes": 8,
+   "face_shape": 7,
+   "hair": 8,
+   "glasses": 8,
+   "skin": 9,
+   "overall": 7,
+   "flattering": 8,
+   "min_likeness": 7
+  },
+  "verdict": "reject (<8 on a likeness axis)",
+  "sface_id_sim": [
+   0.587,
+   0.564,
+   0.535,
+   0.279
+  ]
  },
  {
   "id": "v2_gpt_expr_y28",
@@ -304,7 +467,25 @@
   "seed": 2011492099,
   "aspect": "3:2",
   "file": "cands/v2_gpt_expr_y28.jpg",
-  "secs": 27.6
+  "secs": 27.6,
+  "score": {
+   "eyes": 7,
+   "face_shape": 8,
+   "hair": 9,
+   "glasses": 9,
+   "skin": 8,
+   "overall": 8,
+   "flattering": 8,
+   "min_likeness": 7
+  },
+  "verdict": "reject (<8 on a likeness axis)",
+  "note": "barely de-aged; startled pupils pinned",
+  "sface_id_sim": [
+   0.611,
+   0.576,
+   0.585,
+   0.59
+  ]
  },
  {
   "id": "v2_gpt_expr_cur",
@@ -321,7 +502,24 @@
   "seed": 1177077759,
   "aspect": "3:2",
   "file": "cands/v2_gpt_expr_cur.jpg",
-  "secs": 30.2
+  "secs": 30.2,
+  "score": {
+   "eyes": 9,
+   "face_shape": 9,
+   "hair": 9,
+   "glasses": 9,
+   "skin": 9,
+   "overall": 9,
+   "flattering": 8,
+   "min_likeness": 9
+  },
+  "verdict": "pass",
+  "sface_id_sim": [
+   0.727,
+   0.671,
+   0.667,
+   0.718
+  ]
  },
  {
   "id": "v2_gpt_views_cur",
@@ -448,7 +646,24 @@
   "seed": 276440891,
   "aspect": "3:2",
   "file": "cands/v3_gpt_views_cur.jpg",
-  "secs": 30.4
+  "secs": 30.4,
+  "score": {
+   "eyes": 8,
+   "face_shape": 8,
+   "hair": 9,
+   "glasses": 9,
+   "skin": 9,
+   "overall": 8,
+   "flattering": 8,
+   "min_likeness": 8
+  },
+  "verdict": "pass",
+  "sface_id_sim": [
+   0.685,
+   0.721,
+   0.66,
+   0.436
+  ]
  },
  {
   "id": "v3_nbp_views_y28",
@@ -463,7 +678,24 @@
   "seed": 42096503,
   "aspect": "16:9",
   "file": "cands/v3_nbp_views_y28.jpg",
-  "secs": 21.2
+  "secs": 21.2,
+  "score": {
+   "eyes": 8,
+   "face_shape": 7,
+   "hair": 8,
+   "glasses": 8,
+   "skin": 9,
+   "overall": 7,
+   "flattering": 8,
+   "min_likeness": 7
+  },
+  "verdict": "reject (<8 on a likeness axis)",
+  "sface_id_sim": [
+   0.658,
+   0.617,
+   0.603,
+   0.316
+  ]
  },
  {
   "id": "v3_nbp_expr_y28",
@@ -478,7 +710,25 @@
   "seed": 1293503345,
   "aspect": "16:9",
   "file": "cands/v3_nbp_expr_y28.jpg",
-  "secs": 21.7
+  "secs": 21.7,
+  "score": {
+   "eyes": 7,
+   "face_shape": 7,
+   "hair": 8,
+   "glasses": 8,
+   "skin": 9,
+   "overall": 7,
+   "flattering": 7,
+   "min_likeness": 7
+  },
+  "verdict": "reject (<8 on a likeness axis)",
+  "note": "face narrower, startled eyes bulge, determined = squint-frown",
+  "sface_id_sim": [
+   0.647,
+   0.638,
+   0.596,
+   0.6
+  ]
  },
  {
   "id": "v3_gpt_expr_y28",
@@ -495,7 +745,24 @@
   "seed": 520951553,
   "aspect": "3:2",
   "file": "cands/v3_gpt_expr_y28.jpg",
-  "secs": 28.9
+  "secs": 28.9,
+  "score": {
+   "eyes": 9,
+   "face_shape": 9,
+   "hair": 9,
+   "glasses": 9,
+   "skin": 9,
+   "overall": 9,
+   "flattering": 8,
+   "min_likeness": 9
+  },
+  "verdict": "pass",
+  "sface_id_sim": [
+   0.651,
+   0.63,
+   0.657,
+   0.659
+  ]
  },
  {
   "id": "v4_gpt_turn_cur",
@@ -512,7 +779,23 @@
   "seed": 1334604558,
   "aspect": "3:2",
   "file": "cands/v4_gpt_turn_cur.jpg",
-  "secs": 29.3
+  "secs": 29.3,
+  "score": {
+   "eyes": 8,
+   "face_shape": 8,
+   "hair": 8,
+   "glasses": 8,
+   "skin": 9,
+   "overall": 8,
+   "flattering": 7,
+   "min_likeness": 8
+  },
+  "verdict": "pass",
+  "sface_id_sim": [
+   0.572,
+   0.615,
+   0.409
+  ]
  },
  {
   "id": "v4_gpt_drive_cur",
@@ -529,7 +812,21 @@
   "seed": 1114087881,
   "aspect": "3:2",
   "file": "cands/v4_gpt_drive_cur.jpg",
-  "secs": 29.7
+  "secs": 29.7,
+  "score": {
+   "eyes": 8,
+   "face_shape": 7,
+   "hair": 9,
+   "glasses": 9,
+   "skin": 8,
+   "overall": 7,
+   "flattering": 7,
+   "min_likeness": 7
+  },
+  "verdict": "reject (<8 on a likeness axis)",
+  "sface_id_sim": [
+   0.719
+  ]
  },
  {
   "id": "v4_gpt_views_y28",
@@ -546,7 +843,24 @@
   "seed": 305047604,
   "aspect": "3:2",
   "file": "cands/v4_gpt_views_y28.jpg",
-  "secs": 30.3
+  "secs": 30.3,
+  "score": {
+   "eyes": 8,
+   "face_shape": 8,
+   "hair": 9,
+   "glasses": 9,
+   "skin": 9,
+   "overall": 8,
+   "flattering": 8,
+   "min_likeness": 8
+  },
+  "verdict": "pass",
+  "sface_id_sim": [
+   0.619,
+   0.631,
+   0.64,
+   0.382
+  ]
  },
  {
   "id": "v4_gpt_drive_y28",
@@ -612,7 +926,21 @@
   "seed": 1071014648,
   "aspect": "16:9",
   "file": "cands/v4_grok_drive_cur.jpg",
-  "secs": 13.9
+  "secs": 13.9,
+  "score": {
+   "eyes": 7,
+   "face_shape": 8,
+   "hair": 8,
+   "glasses": 8,
+   "skin": 9,
+   "overall": 7,
+   "flattering": 8,
+   "min_likeness": 7
+  },
+  "verdict": "reject (<8 on a likeness axis)",
+  "sface_id_sim": [
+   0.687
+  ]
  },
  {
   "id": "v5_gpt_views_y27",
@@ -646,7 +974,21 @@
   "seed": 1456811069,
   "aspect": "3:2",
   "file": "cands/v5_gpt_drive_y27.jpg",
-  "secs": 30.3
+  "secs": 30.3,
+  "score": {
+   "eyes": 8,
+   "face_shape": 9,
+   "hair": 9,
+   "glasses": 9,
+   "skin": 9,
+   "overall": 8,
+   "flattering": 9,
+   "min_likeness": 8
+  },
+  "verdict": "pass",
+  "sface_id_sim": [
+   0.65
+  ]
  },
  {
   "id": "v5_gpt_expr_y27",
@@ -663,7 +1005,24 @@
   "seed": 1645734124,
   "aspect": "3:2",
   "file": "cands/v5_gpt_expr_y27.jpg",
-  "secs": 30.4
+  "secs": 30.4,
+  "score": {
+   "eyes": 9,
+   "face_shape": 8,
+   "hair": 9,
+   "glasses": 9,
+   "skin": 8,
+   "overall": 8,
+   "flattering": 8,
+   "min_likeness": 8
+  },
+  "verdict": "pass",
+  "sface_id_sim": [
+   0.647,
+   0.608,
+   0.641,
+   0.622
+  ]
  },
  {
   "id": "v5_grok_drive_y27",
@@ -680,7 +1039,21 @@
   "seed": 1203970777,
   "aspect": "16:9",
   "file": "cands/v5_grok_drive_y27.jpg",
-  "secs": 12.5
+  "secs": 12.5,
+  "score": {
+   "eyes": 7,
+   "face_shape": 8,
+   "hair": 8,
+   "glasses": 8,
+   "skin": 9,
+   "overall": 7,
+   "flattering": 8,
+   "min_likeness": 7
+  },
+  "verdict": "reject (<8 on a likeness axis)",
+  "sface_id_sim": [
+   0.59
+  ]
  },
  {
   "id": "v5_gpt_turn_y27",
@@ -697,7 +1070,23 @@
   "seed": 419584765,
   "aspect": "3:2",
   "file": "cands/v5_gpt_turn_y27.jpg",
-  "secs": 29.3
+  "secs": 29.3,
+  "score": {
+   "eyes": 7,
+   "face_shape": 7,
+   "hair": 9,
+   "glasses": 8,
+   "skin": 9,
+   "overall": 7,
+   "flattering": 8,
+   "min_likeness": 7
+  },
+  "verdict": "reject (<8 on a likeness axis)",
+  "sface_id_sim": [
+   0.4,
+   0.427,
+   0.259
+  ]
  },
  {
   "id": "v5_gpt_drive_cur",
@@ -714,7 +1103,21 @@
   "seed": 2087315382,
   "aspect": "3:2",
   "file": "cands/v5_gpt_drive_cur.jpg",
-  "secs": 30.3
+  "secs": 30.3,
+  "score": {
+   "eyes": 8,
+   "face_shape": 8,
+   "hair": 9,
+   "glasses": 9,
+   "skin": 9,
+   "overall": 8,
+   "flattering": 8,
+   "min_likeness": 8
+  },
+  "verdict": "pass",
+  "sface_id_sim": [
+   0.743
+  ]
  },
  {
   "id": "v5_nbp_drive_y27",
@@ -729,7 +1132,22 @@
   "seed": 1474515908,
   "aspect": "16:9",
   "file": "cands/v5_nbp_drive_y27.jpg",
-  "secs": 19.6
+  "secs": 19.6,
+  "score": {
+   "eyes": 7,
+   "face_shape": 6,
+   "hair": 8,
+   "glasses": 8,
+   "skin": 9,
+   "overall": 6,
+   "flattering": 8,
+   "min_likeness": 6
+  },
+  "verdict": "reject (<8 on a likeness axis)",
+  "note": "far framing, generic",
+  "sface_id_sim": [
+   0.579
+  ]
  },
  {
   "id": "v6_gpt_turn_cur",
@@ -745,7 +1163,23 @@
   "seed": 1785587051,
   "aspect": "3:2",
   "file": "cands/v6_gpt_turn_cur.jpg",
-  "secs": 29.7
+  "secs": 29.7,
+  "score": {
+   "eyes": 8,
+   "face_shape": 8,
+   "hair": 9,
+   "glasses": 8,
+   "skin": 9,
+   "overall": 8,
+   "flattering": 8,
+   "min_likeness": 8
+  },
+  "verdict": "pass",
+  "sface_id_sim": [
+   0.587,
+   0.594,
+   0.283
+  ]
  },
  {
   "id": "v6_sd45_views_cur",
@@ -809,7 +1243,23 @@
   "seed": 1417119266,
   "aspect": "3:2",
   "file": "cands/v6_gpt_turn_y27.jpg",
-  "secs": 30.6
+  "secs": 30.6,
+  "score": {
+   "eyes": 8,
+   "face_shape": 8,
+   "hair": 9,
+   "glasses": 8,
+   "skin": 9,
+   "overall": 8,
+   "flattering": 9,
+   "min_likeness": 8
+  },
+  "verdict": "pass",
+  "sface_id_sim": [
+   0.598,
+   0.496,
+   0.242
+  ]
  },
  {
   "id": "v6_grok_expr_y27",
@@ -826,7 +1276,25 @@
   "seed": 653764704,
   "aspect": "16:9",
   "file": "cands/v6_grok_expr_y27.jpg",
-  "secs": 16.0
+  "secs": 16.0,
+  "score": {
+   "eyes": 7,
+   "face_shape": 8,
+   "hair": 8,
+   "glasses": 8,
+   "skin": 8,
+   "overall": 7,
+   "flattering": 7,
+   "min_likeness": 7
+  },
+  "verdict": "reject (<8 on a likeness axis)",
+  "note": "eyes slightly smaller, head tilt",
+  "sface_id_sim": [
+   0.631,
+   0.587,
+   0.632,
+   0.598
+  ]
  },
  {
   "id": "v7_sd45_views_y27",
@@ -891,7 +1359,24 @@
   "seed": 206598765,
   "aspect": "3:2",
   "file": "cands/v7_gpt_views_y27a.jpg",
-  "secs": 30.8
+  "secs": 30.8,
+  "score": {
+   "eyes": 8,
+   "face_shape": 8,
+   "hair": 9,
+   "glasses": 9,
+   "skin": 9,
+   "overall": 8,
+   "flattering": 9,
+   "min_likeness": 8
+  },
+  "verdict": "pass",
+  "sface_id_sim": [
+   0.626,
+   0.62,
+   0.628,
+   0.213
+  ]
  },
  {
   "id": "v8_gpt_expr_y27",
@@ -908,7 +1393,24 @@
   "seed": 1219700157,
   "aspect": "3:2",
   "file": "cands/v8_gpt_expr_y27.jpg",
-  "secs": 28.9
+  "secs": 28.9,
+  "score": {
+   "eyes": 9,
+   "face_shape": 9,
+   "hair": 9,
+   "glasses": 9,
+   "skin": 9,
+   "overall": 9,
+   "flattering": 9,
+   "min_likeness": 9
+  },
+  "verdict": "pass",
+  "sface_id_sim": [
+   0.629,
+   0.587,
+   0.628,
+   0.619
+  ]
  },
  {
   "id": "v8_gpt_drive_cur",
@@ -959,5 +1461,84 @@
   "aspect": "3:2",
   "error": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs.",
   "secs": 30.5
+ },
+ {
+  "id": "v9_gpt_drive_y27",
+  "model": "openai/gpt-image-2",
+  "kind": "driver",
+  "prompt": "Cinematic film still, inside a car at night. The woman from the reference photos sits in the driver's seat with both hands on the steering wheel, head-and-shoulders framing from a front three-quarter angle through the windshield, calm focused gaze on the road ahead. Cool blue dashboard instrument glow from below gently illuminates her face, plus a soft even key light so her face is clearly and flatteringly lit; softly blurred orange streetlights and city lights in the dark windows behind her. The exact woman in the reference photos: same face as the reference photos, same eye shape and size, accurate likeness. Keep her wide, round, soft face with full cheeks and soft rounded jaw exactly as in the photos, her eyes exactly as large and as shaped as in the photos (not narrowed, not smaller), her nose and mouth unchanged. Long straight solid black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses. Smooth clear skin, natural healthy complexion. She is shown as she looked at age 27, matching the youngest reference photos (her eyes are wide and round-almond there, keep them exactly that large): youthful, smooth clear skin, but identical facial structure, identical eye shape and eye size, same nose, same mouth, same round face and full cheeks, unmistakably the same person. Hair entirely black, no dyed ends. She wears her modern thin rectangular dark gray-teal metal frame glasses exactly as in the 2025-2026 reference photos, in every view. Her eyes are large, wide-open, round-almond shaped exactly as in the 2016 and 2017 reference photos, with the visible upper lid; keep them that large in every view. Wearing a white cropped zip jacket with a few bold orange horizontal bands across the chest and sleeves, over a black top. Photographic cinematic realism, sharp focus. No text, no labels, no captions.",
+  "refs": [
+   "IMG_20160827_121631_face.jpg",
+   "IMG_20170223_162015_face.jpg",
+   "IMG_20180610_074732_mr1528617091925.jpg",
+   "../cands/v3_gpt_expr_y28.jpg",
+   "PXL_20250908_195405539.MP.jpg"
+  ],
+  "seed": 2130558743,
+  "aspect": "3:2",
+  "file": "cands/v9_gpt_drive_y27.jpg",
+  "secs": 28.5,
+  "score": {
+   "eyes": 8,
+   "face_shape": 7,
+   "hair": 9,
+   "glasses": 9,
+   "skin": 9,
+   "overall": 7,
+   "flattering": 9,
+   "min_likeness": 7
+  },
+  "verdict": "reject (<8 on a likeness axis)",
+  "note": "face narrowed/glamorized",
+  "sface_id_sim": [
+   0.623
+  ]
+ },
+ {
+  "id": "v9_gpt_drive_cur",
+  "model": "openai/gpt-image-2",
+  "kind": "driver",
+  "prompt": "Cinematic film still, inside a car at night. The woman from the reference photos sits in the driver's seat with both hands on the steering wheel, head-and-shoulders framing from a front three-quarter angle through the windshield, calm focused gaze on the road ahead. Cool blue dashboard instrument glow from below gently illuminates her face, plus a soft even key light so her face is clearly and flatteringly lit; softly blurred orange streetlights and city lights in the dark windows behind her. The exact woman in the reference photos: same face as the reference photos, same eye shape and size, accurate likeness. Keep her wide, round, soft face with full cheeks and soft rounded jaw exactly as in the photos, her eyes exactly as large and as shaped as in the photos (not narrowed, not smaller), her nose and mouth unchanged. Long straight solid black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses. Smooth clear skin, natural healthy complexion. Wearing a white cropped zip jacket with a few bold orange horizontal bands across the chest and sleeves, over a black top. Photographic cinematic realism, sharp focus. No text, no labels, no captions.",
+  "refs": [
+   "PXL_20250908_195405539.MP.jpg",
+   "PXL_20260528_215628802.jpg",
+   "PXL_20250908_195352130.jpg",
+   "../cands/v2_gpt_expr_cur.jpg"
+  ],
+  "seed": 363620498,
+  "aspect": "3:2",
+  "file": "cands/v9_gpt_drive_cur.jpg",
+  "secs": 29.6,
+  "score": {
+   "eyes": 8,
+   "face_shape": 9,
+   "hair": 9,
+   "glasses": 9,
+   "skin": 8,
+   "overall": 9,
+   "flattering": 8,
+   "min_likeness": 8
+  },
+  "verdict": "pass",
+  "sface_id_sim": [
+   0.759
+  ]
+ },
+ {
+  "id": "v9_gpt_views_y27",
+  "model": "openai/gpt-image-2",
+  "kind": "face_views",
+  "prompt": "Character turnaround reference photograph, four head-and-shoulders portraits side by side on a plain light gray studio background, soft even frontal lighting, neutral calm expression in all four: front view, three-quarter view facing left, three-quarter view facing right, side profile facing left. The exact woman in the reference photos: same face as the reference photos, same eye shape and size, accurate likeness. Keep her wide, round, soft face with full cheeks and soft rounded jaw exactly as in the photos, her eyes exactly as large and as shaped as in the photos (not narrowed, not smaller), her nose and mouth unchanged. Long straight solid black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses. Smooth clear skin, natural healthy complexion. She is shown as she looked at age 27, matching the youngest reference photos (her eyes are wide and round-almond there, keep them exactly that large): youthful, smooth clear skin, but identical facial structure, identical eye shape and eye size, same nose, same mouth, same round face and full cheeks, unmistakably the same person. Hair entirely black, no dyed ends. She wears her modern thin rectangular dark gray-teal metal frame glasses exactly as in the 2025-2026 reference photos, in every view. Her eyes are large, wide-open, round-almond shaped exactly as in the 2016 and 2017 reference photos, with the visible upper lid; keep them that large in every view. Wearing a white cropped zip jacket with a few bold orange horizontal bands across the chest and sleeves, over a black top. Photographic cinematic realism, sharp focus. No text, no labels, no captions.",
+  "refs": [
+   "IMG_20160827_121631_face.jpg",
+   "IMG_20170223_162015_face.jpg",
+   "IMG_20180610_074732_mr1528617091925.jpg",
+   "../cands/v3_gpt_expr_y28.jpg",
+   "PXL_20250908_195405539.MP.jpg"
+  ],
+  "seed": 1999151031,
+  "aspect": "3:2",
+  "error": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs.",
+  "secs": 30.3
  }
 ]

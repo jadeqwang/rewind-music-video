@@ -26,7 +26,7 @@ export function buildShots(T) {
     { id: 'ld_slam', t0: drop, t1: T.beat(kb + 3), scene: 'slam',
       params: { hits: [{ t: drop, text: 'STOPS', style: 'ink' }, { t: T.beat(kb + 2), text: 'STOPS', style: 'flood' }] } },
     { id: 'ld_tree', t0: T.beat(kb + 3), t1: LOOKDEV_END, scene: 'tree',
-      params: { seed: 7, depth: 6, dead: 1, grow: 0.8, attempt: 1, flipAt: LOOKDEV_END - T.beat(kb + 3) - 0.35, eval: [-9, 0.3],
+      params: { seed: 7, depth: 5, dead: 1, grow: 0.8, attempt: 1, flipAt: LOOKDEV_END - T.beat(kb + 3) - 0.35, eval: [-9, 0.3],
         labels: [{ node: 1, text: '1. pull over?!', color: '#FF2A2A' }, { node: 2, text: '1. bolt?' }, { node: 3, text: '1. keep driving!!', color: '#3DF2E6' }] } },
   ];
 }

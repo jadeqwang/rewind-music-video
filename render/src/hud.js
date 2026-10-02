@@ -81,12 +81,12 @@ export function foiaBanner(g, o = {}) {
 export function rewindHud(g, o) {
   const a = o.alpha ?? 1, x = o.x ?? 120, y = o.y ?? 120;
   g.save(); g.textBaseline = 'alphabetic';
-  transport(g, x + 26, y - 18, 34, rgba(PAL.cyan, a), -1, 2);
-  setFont(g, F.mono(30, 700), 6); g.fillStyle = rgba(PAL.cyan, a); g.fillText('REWIND', x + 70, y - 6);
-  const sp = `×${o.speed ?? 2}`; setFont(g, F.mono(30, 700), 1);
-  const bx = x + 290, bw = g.measureText(sp).width + 22;
-  g.fillStyle = rgba(PAL.cyan, a); g.fillRect(bx, y - 36, bw, 40); g.fillStyle = PAL.ink; g.fillText(sp, bx + 11, y - 6);
-  setFont(g, F.mono(26, 400), 2); g.fillStyle = rgba(PAL.cyan, a * 0.9);
+  transport(g, x + 40, y - 22, 52, rgba(PAL.cyan, a), -1, 2);
+  setFont(g, F.mono(44, 700), 8); g.fillStyle = rgba(PAL.cyan, a); g.fillText('REWIND', x + 104, y - 4);
+  const sp = `×${o.speed ?? 2}`; setFont(g, F.mono(44, 700), 1);
+  const bx = x + 420, bw = g.measureText(sp).width + 28;
+  g.fillStyle = rgba(PAL.cyan, a); g.fillRect(bx, y - 46, bw, 56); g.fillStyle = PAL.ink; g.fillText(sp, bx + 14, y - 4);
+  setFont(g, F.mono(40, 400), 2); g.fillStyle = rgba(PAL.cyan, a * 0.9);
   g.textAlign = 'right'; g.fillText(timecode(o.tc ?? 0), DW - 110, y - 6);
   setFont(g, F.mono(12), 3); g.fillStyle = rgba(PAL.cyan, a * 0.6); g.fillText(o.tcLabel ?? 'SRC TC', DW - 110, y - 46);
   g.restore();
@@ -126,28 +126,31 @@ export function searchTree(g, T, o) {
     const isLit = alive.has(n.i);
     g.strokeStyle = isLit && lit > 0 ? rgba(o.litColor || PAL.bone, a * lerp(0.35, 1, lit)) : rgba(PAL.boneDim, a * 0.38);
     g.lineWidth = isLit && lit > 0 ? lerp(1.2, 3, lit) : 1.1;
-    // elbow connector (engine-tree look): horizontal, vertical, horizontal; partially drawn by u
-    const L1 = mx - p0[0], L2 = Math.abs(p1[1] - p0[1]), L3 = p1[0] - mx, Lt = L1 + L2 + L3, s = u * Lt;
-    g.beginPath(); g.moveTo(p0[0], p0[1]);
-    if (s <= L1) g.lineTo(p0[0] + s, p0[1]);
-    else if (s <= L1 + L2) { g.lineTo(mx, p0[1]); g.lineTo(mx, p0[1] + Math.sign(p1[1] - p0[1]) * (s - L1)); }
-    else { g.lineTo(mx, p0[1]); g.lineTo(mx, p1[1]); g.lineTo(mx + (s - L1 - L2), p1[1]); }
-    g.stroke();
+    if (o.elbow) {   // elbow connector (bracket look), partially drawn by u
+      const L1 = mx - p0[0], L2 = Math.abs(p1[1] - p0[1]), L3 = p1[0] - mx, Lt = L1 + L2 + L3, s = u * Lt;
+      g.beginPath(); g.moveTo(p0[0], p0[1]);
+      if (s <= L1) g.lineTo(p0[0] + s, p0[1]);
+      else if (s <= L1 + L2) { g.lineTo(mx, p0[1]); g.lineTo(mx, p0[1] + Math.sign(p1[1] - p0[1]) * (s - L1)); }
+      else { g.lineTo(mx, p0[1]); g.lineTo(mx, p1[1]); g.lineTo(mx + (s - L1 - L2), p1[1]); }
+      g.stroke();
+    } else {         // game-tree look: straight edges fanning out from each node
+      g.beginPath(); g.moveTo(p0[0], p0[1]); g.lineTo(lerp(p0[0], p1[0], u), lerp(p0[1], p1[1], u)); g.stroke();
+    }
     if (u >= 1) {
       if (!n.kids.length && !alive.has(n.i)) {
         const st = clamp((grow - n.d - (n.r ?? 0) * 0.35) * 2.2);
-        if (st > 0) cross(g, p1[0] + 9, p1[1], 5.5, rgba(PAL.red, a * 0.95), 1.8, st);
-      } else { g.fillStyle = isLit && lit > 0 ? rgba(PAL.bone, a) : rgba(PAL.boneDim, a * 0.7); g.fillRect(p1[0] - 2, p1[1] - 2, 4, 4); }
+        if (st > 0) cross(g, p1[0] + 10, p1[1], 6, rgba(PAL.red, a * 0.95), 2, st);
+      } else { g.fillStyle = isLit && lit > 0 ? rgba(PAL.bone, a) : rgba(PAL.boneDim, a * 0.8); g.beginPath(); g.arc(p1[0], p1[1], n.d === 1 ? 5 : 3, 0, Math.PI * 2); g.fill(); }
     }
   }
   const r0 = P(nodes[0]); g.fillStyle = rgba(PAL.bone, a); g.fillRect(r0[0] - 3, r0[1] - 3, 6, 6);
   if (o.labels) {
-    setFont(g, F.mono(15), 1); g.textBaseline = 'alphabetic';
+    setFont(g, F.mono(o.labelSize ?? 22), 1); g.textBaseline = 'alphabetic';
     for (const lb of o.labels) {
       const n = nodes[lb.node]; if (!n) continue; const p = P(n);
       if (grow - n.d < 0.6) continue;
       g.fillStyle = rgba(lb.color || PAL.bone, a * clamp((grow - n.d - 0.6) * 3));
-      g.fillText(lb.text, p[0] + 10, p[1] - 8);
+      g.fillText(lb.text, p[0] + 14, p[1] - 12);
     }
   }
   g.restore();

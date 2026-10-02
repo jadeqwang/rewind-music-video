@@ -13,6 +13,7 @@ export async function draw(ctx, lt, t, shot, { drawShot, shotById }) {
   await drawShot(src, hold, g, ty, dummy, { rewinding: false, frozen: true });
   // the world desaturates toward bone/ink while frozen (light stops moving)
   g.save(); g.globalCompositeOperation = 'saturation'; g.fillStyle = `rgba(0,0,0,${0.55 * smooth(0.05, 0.35, lt)})`; g.fillRect(0, 0, DW, DH); g.restore();
+  g.fillStyle = `rgba(7,8,10,${0.4 * smooth(0.05, 0.4, lt)})`; g.fillRect(0, 0, DW, DH);
   const b = p.bullet || { x: 760, y: 470, len: 1100, angle: 0.03 };
   if (lt >= 2 / 30) bullet(g, { ...b, x: b.x - 6 * lt });
   if (p.attempt) { ty.save(); ty.clearRect(DW - 400, 0, 400, 180); ty.restore(); attempt(ty, { n: p.attempt, failed: smooth(0.08, 0.3, lt), sub: 'TERMINATED' }); }

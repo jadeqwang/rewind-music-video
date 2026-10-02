@@ -46,7 +46,7 @@ def suits(n=50):
     h, w = im.shape[:2]
     mask = np.full((h, w), cv2.GC_BGD, np.uint8)
     mask[250:1024, 70:920] = cv2.GC_PR_FGD
-    for (x0, y0, x1, y1) in [(150, 450, 330, 900), (420, 430, 640, 950), (680, 420, 860, 880), (470, 300, 560, 400), (220, 330, 290, 420), (700, 290, 770, 400)]:
+    for (x0, y0, x1, y1) in [(170, 520, 310, 900), (440, 500, 620, 950), (700, 500, 840, 880), (485, 310, 545, 390), (230, 340, 280, 410), (712, 300, 762, 390)]:
         mask[y0:y1, x0:x1] = cv2.GC_FGD
     for (x0, y0, x1, y1) in [(300, 250, 430, 460), (340, 780, 410, 1024), (630, 820, 670, 1024), (0, 0, 1024, 250)]:
         mask[y0:y1, x0:x1] = cv2.GC_BGD
@@ -64,7 +64,7 @@ def suits(n=50):
     lab_ = cv2.cvtColor(im, cv2.COLOR_BGR2LAB)
     cl = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8, 8)).apply(lab_[..., 0])
     glasses = [(255, 375), (515, 348), (737, 342)]   # sunglasses centres (source px)
-    faces = [(255, 372, 150, 46), (515, 346, 160, 48), (737, 340, 145, 44)]
+    faces = [(255, 374, 104, 34), (515, 348, 112, 36), (737, 342, 100, 34)]
     meta = dict(fps=FPS, frames=n, w=W, h=H, layers=['lines', 'matte'], src='assets/tests/flux_schnell.jpg', per_frame=[])
     for i in range(n):
         u = i / (n - 1)
@@ -109,81 +109,91 @@ SS = 2  # supersample
 def P(pts, s=SS):
     return (np.array(pts, np.float32) * s).astype(np.int32)
 
+def chaikin(pts, it=3, closed=True):
+    pts = np.array(pts, np.float32)
+    for _ in range(it):
+        q = np.roll(pts, -1, 0) if closed else pts[1:]
+        p0 = pts if closed else pts[:-1]
+        a = 0.75 * p0 + 0.25 * q; b = 0.25 * p0 + 0.75 * q
+        pts = np.stack([a, b], 1).reshape(-1, 2)
+    return pts.tolist()
+
 def jade(n=72):
     d = OUT + '/ld_jade'
     meta = dict(fps=FPS, frames=n, w=W, h=H, layers=['lines', 'matte', 'face', 'features', 'hair'],
                 note='procedural stand-in figure for look-dev; not a likeness', per_frame=[])
     for i in range(n):
         t = i / FPS
-        br = np.sin(t * 2 * np.pi * 0.28) * 3.0                  # breathing
-        turn = 0.5 + 0.5 * np.sin(t * 2 * np.pi * 0.12 - 1.2)     # 0 = toward camera, 1 = toward road
-        tilt = np.sin(t * 2 * np.pi * 0.09) * 0.04
-        cx, cy = 960 - 18 * turn, 300 + br * 0.4                  # head centre
-        hw, hh = 78, 100
+        br = np.sin(t * 2 * np.pi * 0.25) * 2.0                   # breathing
+        look = np.sin(t * 2 * np.pi * 0.11 - 0.6)                 # head yaw −1..1 (toward the text ↔ toward the road)
+        tilt = np.sin(t * 2 * np.pi * 0.07) * 0.03
+        cx, cy = 978 + 6 * look, 292 + br * 0.3
+        hw, hh = 60, 78
         Hs, Ws = H * SS, W * SS
         matte = np.zeros((Hs, Ws), np.uint8); face = np.zeros_like(matte); hair = np.zeros_like(matte)
         lines = np.zeros_like(matte); feat = np.zeros_like(matte)
         def rot(p):
-            x, y = p[0] - cx, p[1] - cy
-            c, s_ = np.cos(tilt), np.sin(tilt)
+            x, y = p[0] - cx, p[1] - cy; c, s_ = np.cos(tilt), np.sin(tilt)
             return [cx + c * x - s_ * y, cy + s_ * x + c * y]
-        # torso / shoulders (seated, wheel in front)
-        sh_y = 470 + br
-        torso = [(700, 720), (735, sh_y + 60), (800, sh_y + 8), (900, sh_y - 18), (cx - 30, 395), (cx + 34, 395),
-                 (1030, sh_y - 14), (1130, sh_y + 10), (1195, sh_y + 70), (1225, 720)]
-        cv2.fillPoly(matte, [P(torso)], 255, cv2.LINE_AA)
-        # neck
-        cv2.fillPoly(matte, [P([(cx - 30, 360), (cx + 30, 360), (cx + 36, 420), (cx - 34, 420)])], 255, cv2.LINE_AA)
-        # face oval (3/4: jaw shifted left with turn)
+        L = lambda pts, wdt=2, img=lines: cv2.polylines(img, [P(pts)], False, 255, max(1, int(wdt * SS)), cv2.LINE_AA)
+        # torso: seated, shoulders slightly hunched toward the wheel
+        sy = 452 + br
+        torso = [(770, 720), (790, sy + 70), (835, sy + 18), (905, sy - 4), (cx - 26, 392), (cx + 26, 392),
+                 (1052, sy - 4), (1120, sy + 18), (1165, sy + 70), (1185, 720)]
+        cv2.fillPoly(matte, [P(chaikin(torso[1:-1], 2, False) and [torso[0]] + chaikin(torso[1:-1], 2, False) + [torso[-1]])], 255, cv2.LINE_AA)
+        cv2.fillPoly(matte, [P([(cx - 25, 340), (cx + 25, 340), (cx + 28, 405), (cx - 28, 405)])], 255, cv2.LINE_AA)  # neck
+        # face: soft oval with a gentle chin, yaw squeezes the far side
         jaw = []
-        for a in np.linspace(0, 2 * np.pi, 80, endpoint=False):
-            x = np.cos(a) * hw * (1 - 0.10 * turn * (np.cos(a) > 0)); y = np.sin(a) * hh
-            if np.sin(a) > 0: x *= 1 - 0.28 * np.sin(a) ** 2; y *= 1.02  # chin taper
-            jaw.append(rot((cx + x - 8 * turn * np.sin(a), cy + y)))
-        cv2.fillPoly(matte, [P(jaw)], 255, cv2.LINE_AA)
-        cv2.fillPoly(face, [P(jaw)], 255, cv2.LINE_AA)
-        # hair: long, behind shoulders, side part, frames the face
-        hair_out = [rot(p) for p in [(cx - 96, cy - 40), (cx - 80, cy - 112), (cx - 20, cy - 138), (cx + 60, cy - 128), (cx + 100, cy - 70),
-                                     (cx + 108, cy + 40), (cx + 116, cy + 150), (cx + 132, cy + 245), (cx + 70, cy + 235), (cx + 62, cy + 120),
-                                     (cx + 70, cy + 10), (cx + 55, cy - 70), (cx - 10, cy - 92), (cx - 60, cy - 60), (cx - 72, cy + 30),
-                                     (cx - 88, cy + 140), (cx - 120, cy + 230), (cx - 150, cy + 215), (cx - 110, cy + 120), (cx - 104, cy + 20)]]
-        cv2.fillPoly(hair, [P(hair_out)], 255, cv2.LINE_AA)
-        cv2.fillPoly(matte, [P(hair_out)], 255, cv2.LINE_AA)
+        for a_ in np.linspace(0, 2 * np.pi, 96, endpoint=False):
+            ca, sa = np.cos(a_), np.sin(a_)
+            x = ca * hw * (1 - 0.08 * look * np.sign(ca)); y = sa * hh
+            if sa > 0: x *= 1 - 0.22 * sa ** 3
+            jaw.append(rot((cx + x, cy + y)))
+        cv2.fillPoly(matte, [P(jaw)], 255, cv2.LINE_AA); cv2.fillPoly(face, [P(jaw)], 255, cv2.LINE_AA)
+        # hair: long, straight, centre part; falls in front of the shoulders
+        part = cx + 4 + 4 * look
+        outer = [(cx - 70, cy + 10), (cx - 76, cy - 40), (cx - 50, cy - 88), (part, cy - 100), (cx + 52, cy - 88), (cx + 78, cy - 40),
+                 (cx + 74, cy + 30), (cx + 80, cy + 120), (cx + 92, sy + 40), (cx + 96, sy + 120), (cx + 58, sy + 128),
+                 (cx + 52, sy + 30), (cx + 50, cy + 100), (cx + 56, cy + 10), (cx + 48, cy - 50), (part + 6, cy - 78),
+                 (part - 6, cy - 78), (cx - 48, cy - 50), (cx - 56, cy + 10), (cx - 50, cy + 100), (cx - 52, sy + 30),
+                 (cx - 58, sy + 128), (cx - 96, sy + 120), (cx - 92, sy + 40), (cx - 80, cy + 120), (cx - 74, cy + 30)]
+        outer = chaikin([rot(p) for p in outer], 3)
+        cv2.fillPoly(hair, [P(outer)], 255, cv2.LINE_AA); cv2.fillPoly(matte, [P(outer)], 255, cv2.LINE_AA)
         face = cv2.bitwise_and(face, cv2.bitwise_not(hair))
-        # interior lines (outside the face): collar, seams, the wheel rim she holds, fingers
-        L = lambda pts, wdt=2, img=lines: cv2.polylines(img, [P(pts)], False, 255, wdt * SS, cv2.LINE_AA)
-        L([(cx - 34, 420), (cx - 6, 470 + br), (cx + 34, 420)])                      # collar V
-        L([(cx - 6, 470 + br), (cx - 2, 720)], 1)                                     # zip line
-        L([(800, sh_y + 10), (830, 640), (842, 720)], 1)                              # sleeve seam
-        L([(1130, sh_y + 12), (1105, 640), (1098, 720)], 1)
-        # steering wheel rim (world line, part of the drawing)
-        ax = (cx - 30) * SS, 820 * SS
-        cv2.ellipse(lines, (int(ax[0]), int(ax[1])), (int(330 * SS), int(150 * SS)), 0, 196, 344, 255, 3 * SS, cv2.LINE_AA)
-        # hands on wheel at ten-and-two
-        for hx, hy, sgn in [(745, 690, -1), (1110, 676, 1)]:
-            hand = [(hx - 34, hy - 6), (hx - 8, hy - 30), (hx + 26, hy - 26), (hx + 40, hy + 4), (hx + 22, hy + 28), (hx - 24, hy + 24)]
+        # interior lines outside the face: collar, zip, sleeve seams, the wheel she holds, knuckles
+        L([(cx - 28, 405), (cx - 2, 448 + br), (cx + 28, 405)])
+        L([(cx - 2, 448 + br), (cx, 720)], 1.2)
+        L([(842, sy + 24), (868, 610), (876, 720)], 1.2); L([(1113, sy + 24), (1088, 610), (1080, 720)], 1.2)
+        cv2.ellipse(lines, (int(cx * SS), int(812 * SS)), (int(300 * SS), int(150 * SS)), 0, 200, 340, 255, int(3 * SS), cv2.LINE_AA)
+        for hx, hy in [(752 + 0, 676), (1204, 676)]:
+            hx = cx + (hx - 978)
+            hand = [(hx - 30, hy - 4), (hx - 8, hy - 26), (hx + 24, hy - 22), (hx + 34, hy + 4), (hx + 18, hy + 24), (hx - 22, hy + 20)]
             cv2.fillPoly(matte, [P(hand)], 255, cv2.LINE_AA)
-            for k in range(3): L([(hx - 18 + k * 14, hy - 18), (hx - 14 + k * 14, hy + 16)], 1)
-        # hair/jaw contours (allowed inside the face rule): hair edge strands
-        L([rot(p) for p in [(cx - 10, cy - 92), (cx + 30, cy - 60), (cx + 56, cy + 10)]], 2, feat)
-        L([rot(p) for p in [(cx - 60, cy - 60), (cx - 74, cy + 10)]], 2, feat)
-        # features: eyes at full size (almond), brows, nose tip, (lips are drawn live from the vocal track)
-        ex = 34 - 6 * turn
-        blink = 1.0 if (t % 3.1) > 0.12 else 0.15
+            for k in range(3): L([(hx - 14 + k * 12, hy - 14), (hx - 11 + k * 12, hy + 12)], 1)
+        # features (the only lines allowed inside the face): eyes at full size, brows, nose tip; hair-edge strands
+        L([rot((part, cy - 78)), rot((cx - 30, cy - 62)), rot((cx - 52, cy - 30))], 1.6, feat)
+        L([rot((part, cy - 78)), rot((cx + 32, cy - 62)), rot((cx + 52, cy - 30))], 1.6, feat)
+        blink = 1.0 if (t % 3.4) > 0.13 else 0.12
+        ex = 27
         for side in (-1, 1):
-            e_c = rot((cx - 14 * turn + side * ex, cy - 6))
-            ew, eh = 24 - (6 * turn if side > 0 else 0), 11 * blink
-            cv2.ellipse(feat, (int(e_c[0] * SS), int(e_c[1] * SS)), (int(ew * SS), int(eh * SS)), np.degrees(tilt), 0, 360, 255, int(2.4 * SS), cv2.LINE_AA)
+            sq = 1 - 0.10 * look * side
+            ecx, ecy = cx + side * ex * sq - 3 * look, cy - 4
+            ew, eh = 17 * sq, 8.5 * blink
+            # upper lid (heavier), lower lid (light) — almond, never thinned
+            up = [rot((ecx + ew * np.cos(a_), ecy - eh * np.sin(a_))) for a_ in np.linspace(0, np.pi, 18)]
+            lo = [rot((ecx + ew * np.cos(a_), ecy + eh * 0.8 * np.sin(a_))) for a_ in np.linspace(0.15, np.pi - 0.15, 14)]
+            L(up, 2.6, feat); L(lo, 1.2, feat)
             if blink > 0.5:
-                cv2.circle(feat, (int((e_c[0] - 4 * turn - 2) * SS), int(e_c[1] * SS)), int(7.5 * SS), 255, -1, cv2.LINE_AA)
-            b0 = rot((cx - 14 * turn + side * ex - 22, cy - 32)); b1 = rot((cx - 14 * turn + side * ex + 4, cy - 38)); b2 = rot((cx - 14 * turn + side * ex + 24, cy - 33))
-            L([b0, b1, b2], 3, feat)
-        L([rot((cx - 26 * turn - 4, cy + 34)), rot((cx - 26 * turn + 6, cy + 38))], 2, feat)   # nose tip
-        mouth = rot((cx - 22 * turn, cy + 62))
-        down = lambda a: cv2.resize(a, (W, H), interpolation=cv2.INTER_AREA).astype(np.float32) / 255
+                ic = rot((ecx - 3.5 * look, ecy + 0.5))
+                cv2.circle(feat, (int(ic[0] * SS), int(ic[1] * SS)), int(6.8 * SS), 255, -1, cv2.LINE_AA)
+            L([rot((ecx - 18 * side * -1 if False else ecx - 17, ecy - 19)), rot((ecx, ecy - 23)), rot((ecx + 17, ecy - 20))], 2.4, feat)
+        nx = cx - 6 * look
+        L([rot((nx - 5, cy + 28)), rot((nx + 1, cy + 31)), rot((nx + 6, cy + 28))], 1.8, feat)
+        mouth = rot((cx - 4 * look, cy + 50))
+        down = lambda a_: cv2.resize(a_, (W, H), interpolation=cv2.INTER_AREA).astype(np.float32) / 255
         save(d, 'matte', i, down(matte)); save(d, 'face', i, down(face)); save(d, 'hair', i, down(hair))
         save(d, 'lines', i, down(lines)); save(d, 'features', i, down(feat))
-        meta['per_frame'].append(dict(mouth=[float(mouth[0]), float(mouth[1]), 38.0], tilt=float(tilt)))
+        meta['per_frame'].append(dict(mouth=[float(mouth[0]), float(mouth[1]), 30.0], tilt=float(tilt)))
     json.dump(meta, open(d + '/meta.json', 'w'))
     print('jade', n)
 
