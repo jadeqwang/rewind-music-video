@@ -75,7 +75,7 @@ export async function rewindOf(ctx, shotId, fromT, toT, progress, opts = {}) {
   const pick = tt => {
     if (shotId) return shotById(shotId);
     let sh = shotAt(tt, ctx.shot), guard = 0;
-    while (sh && SCENES[sh.scene]?.noRewind && guard++ < 6) sh = shotAt(sh.t0 - 1e-3, ctx.shot);   // skip other rewinds
+    while (sh && (SCENES[sh.scene]?.noRewind || sh.params.isRewind) && guard++ < 12) sh = shotAt(sh.t0 - 1e-3, ctx.shot);   // skip other rewinds
     return sh;
   };
   const L = layer('rw_scene', W, H), LT = layer('rw_type', W, H);
@@ -84,7 +84,7 @@ export async function rewindOf(ctx, shotId, fromT, toT, progress, opts = {}) {
   const order = [0]; for (let k = 1; k <= n; k++) order.push(k);
   for (const k of order) {
     let tk = Math.min(fromT - 1e-4, ts + k * dt * Math.sign(fromT - toT || 1));
-    const sh = pick(tk); if (!sh || SCENES[sh.scene]?.noRewind) continue;
+    const sh = pick(tk); if (!sh || SCENES[sh.scene]?.noRewind || sh.params.isRewind) continue;
     if (tk >= sh.t1) tk = sh.t1 - 1 / 30;
     const g = beginLayer(L), ty = beginLayer(LT);
     await drawShot(sh, tk, g, ty, dummy, { rewinding: true });

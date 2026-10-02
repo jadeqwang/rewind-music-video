@@ -297,21 +297,35 @@ export const LAYERS = {
   },
   dash(ctx, L, env) { const g = ctx.g, a = A(L.amount, env, 0.3); const gr = g.createLinearGradient(0, DH, 0, DH * 0.55); gr.addColorStop(0, rgba(L.color || PAL.sodium, a)); gr.addColorStop(1, rgba(L.color || PAL.sodium, 0)); g.save(); g.globalCompositeOperation = 'lighter'; g.fillStyle = gr; g.fillRect(0, 0, DW, DH); g.restore(); },
 
-  // a NASA ID badge (our drawing; no real insignia) held by a bone hand
+  // her driver license: a generic horizontal card (no real state design, seals or logos), held by a bone hand
   badge(ctx, L, env) {
     const g = ctx.g, x = A(L.x, env, 1240), y = A(L.y, env, 560), s = A(L.scale, env, 1), r = A(L.rot, env, -0.06);
     g.save(); g.translate(x, y); g.rotate(r); g.scale(s, s);
-    g.fillStyle = PAL.bone; roundRect(g, -230, -330, 460, 660, 26); g.fill();
-    g.fillStyle = PAL.ink; g.fillRect(-230, -330, 460, 120);
-    setFont(g, F.mono(70, 700), 10); g.fillStyle = PAL.bone; g.textAlign = 'center'; g.fillText('NASA', 0, -245);
-    g.fillStyle = '#B8B2A6'; g.fillRect(-150, -180, 300, 300);                       // photo: a silhouette
-    g.fillStyle = PAL.ink; g.beginPath(); g.ellipse(0, -60, 70, 88, 0, 0, Math.PI * 2); g.fill(); g.fillRect(-120, 40, 240, 80);
-    g.fillStyle = PAL.ink; g.fillRect(-170, 160, 340, 34); g.fillRect(-170, 214, 220, 28);
-    setFont(g, F.mono(42, 700), 4); g.fillStyle = PAL.red; g.fillText('VISITOR', 0, 300);
+    const W0 = 640, H0 = 404;
+    g.fillStyle = PAL.bone; roundRect(g, -W0 / 2, -H0 / 2, W0, H0, 24); g.fill();
+    g.fillStyle = PAL.ink; g.fillRect(-W0 / 2, -H0 / 2 + 22, W0, 70);
+    setFont(g, F.mono(46, 700), 6); g.fillStyle = PAL.bone; g.textAlign = 'left'; g.textBaseline = 'alphabetic'; g.fillText('DRIVER LICENSE', -W0 / 2 + 30, -H0 / 2 + 74);
+    // portrait: her as a tiny bone figure (ink hair, bone face, glasses)
+    const px = -W0 / 2 + 36, py = -H0 / 2 + 116, pw = 190, ph = 240;
+    g.fillStyle = '#B9B3A7'; g.fillRect(px, py, pw, ph);
+    g.fillStyle = PAL.ink; g.beginPath(); g.ellipse(px + pw / 2, py + 108, 70, 84, 0, 0, Math.PI * 2); g.fill(); g.fillRect(px + 26, py + 108, 138, 132);
+    g.fillStyle = PAL.bone; g.beginPath(); g.ellipse(px + pw / 2, py + 120, 46, 58, 0, 0, Math.PI * 2); g.fill();
+    g.fillRect(px + 52, py + 196, 86, 44);
+    g.strokeStyle = '#1C2E31'; g.lineWidth = 3; g.strokeRect(px + 58, py + 108, 34, 16); g.strokeRect(px + 98, py + 108, 34, 16);
+    // fields: label + value, sensitive ones redacted
+    setFont(g, F.mono(26, 700), 1); const fx = px + pw + 30;
+    const fields = [['DL', null, 'K4471'], ['EXP', null, null], ['DOB', null, null], ['CLASS', 'D'], ['NAME', 'WANG, J.']];
+    fields.forEach(([k, v, tail], i) => {
+      const fy = py + 30 + i * 46; g.fillStyle = 'rgba(7,8,10,0.55)'; g.fillText(k, fx, fy);
+      const vx = fx + 100;
+      if (v) { g.fillStyle = PAL.ink; g.fillText(v, vx, fy); }
+      else { g.fillStyle = '#000'; g.fillRect(vx, fy - 24, 150, 30); if (tail) { g.fillStyle = PAL.ink; g.fillText(tail, vx + 160, fy); } }
+    });
+    setFont(g, F.mono(20, 700), 2); g.fillStyle = PAL.red; g.fillText('DONOR', fx, py + ph - 4);
     // hand: thumb over the edge
     g.fillStyle = PAL.bone; g.strokeStyle = PAL.ink; g.lineWidth = 4;
-    g.beginPath(); g.moveTo(-260, 260); g.quadraticCurveTo(-300, 380, -200, 470); g.lineTo(20, 470); g.quadraticCurveTo(40, 380, -60, 340); g.lineTo(-170, 280); g.closePath(); g.fill(); g.stroke();
-    g.beginPath(); g.moveTo(-170, 300); g.quadraticCurveTo(-120, 250, -60, 300); g.stroke();
+    g.beginPath(); g.moveTo(-W0 / 2 - 40, H0 / 2 - 60); g.quadraticCurveTo(-W0 / 2 - 70, H0 / 2 + 80, -W0 / 2 + 50, H0 / 2 + 150); g.lineTo(-W0 / 2 + 230, H0 / 2 + 150); g.quadraticCurveTo(-W0 / 2 + 250, H0 / 2 + 60, -W0 / 2 + 140, H0 / 2 + 20); g.lineTo(-W0 / 2 + 40, H0 / 2 - 40); g.closePath(); g.fill(); g.stroke();
+    g.beginPath(); g.moveTo(-W0 / 2 + 40, H0 / 2 - 20); g.quadraticCurveTo(-W0 / 2 + 90, H0 / 2 - 60, -W0 / 2 + 140, H0 / 2 + 20); g.stroke();
     g.restore();
   },
   // self-drawing pen stroke (the winning line / the theorem's road) with a moving light at the head
@@ -571,6 +585,87 @@ Object.assign(LAYERS, {
 Object.assign(LAYERS, {
   rect(ctx, L, env) { const g = L.onType ? ctx.ty : ctx.g; g.fillStyle = L.color || PAL.ink; g.fillRect(A(L.x, env, 0), A(L.y, env, 0), A(L.w, env, DW), A(L.h, env, DH)); },
   glyph(ctx, L, env) { glyph(L.onType === false ? ctx.g : ctx.ty, L.ch, A(L.x, env, 960), A(L.y, env, 540), L.size ?? 200, L.color || PAL.red, L.weight ?? 700); },
+});
+Object.assign(LAYERS, {
+  // MANY RUNS: Monte Carlo rollouts / phase-space trajectories from 'now'. Thin luminous noisy curves, density-shaded;
+  // deaths are red terminal ticks at the kill points, the survivor (if any) is cyan. Labels attach to bundles.
+  // L: {n, seed, x, y, w, h, kills:[{at (0..1 along x), share, dy (bundle offset), label}], survive (share of runs that reach the end),
+  //     survivor (draw the one surviving run), kill (0..1: kill everything but the survivor), progress, ink (paper), alpha, rect}
+  rollouts(ctx, L, env) {
+    const g = L.onType ? ctx.ty : ctx.g, n = Math.max(0, Math.floor(A(L.n, env, 60))), R0 = rng(L.seed ?? 5);
+    const x0 = A(L.x, env, 240), y0 = A(L.y, env, 560), W0 = A(L.w, env, 1500), H0 = A(L.h, env, 760), prog = clamp(A(L.progress, env, 1)), killAll = clamp(A(L.kill, env, 0));
+    const kills = L.kills || [{ at: 0.45, share: 0.85, dy: -0.25, label: 'pull over ??' }];
+    const ink = !!L.ink, aBase = A(L.alpha, env, 1) * clamp(2.6 / Math.sqrt(Math.max(1, n)) + 0.04, 0.05, 0.6);
+    const STEPS = 28, ends = [];
+    g.save(); g.lineCap = 'round'; g.lineJoin = 'round';
+    g.globalCompositeOperation = ink ? 'source-over' : 'lighter';
+    const runs = [];
+    for (let i = 0; i < n; i++) {
+      const r = R0(); let acc = 0, fate = -1;
+      for (let k = 0; k < kills.length; k++) { acc += kills[k].share; if (r < acc) { fate = k; break; } }
+      const seed = R0() * 1000, amp = 0.05 + R0() * 0.12, drift = (R0() - 0.5) * 0.5;
+      let end = fate >= 0 ? kills[fate].at * (0.88 + R0() * 0.2) : 1;
+      if (fate < 0 && killAll > 0 && i > 0) end = Math.min(end, 0.25 + R0() * 0.75 * (1 - killAll) + killAll * R0() * 0.6);
+      runs.push({ fate, seed, amp, drift, end, dy: fate >= 0 ? (kills[fate].dy ?? 0) : (L.surviveDy ?? 0.22) });
+    }
+    const path = (ru, upto) => {
+      const pts = [], m = Math.max(2, Math.ceil(STEPS * upto));
+      for (let s = 0; s <= m; s++) {
+        const u = Math.min(upto, s / STEPS), fan = Math.pow(u, 0.8);
+        const yy = (ru.dy * fan + ru.drift * fan * fan + noise1(u * 3 + ru.seed, 3) * ru.amp * fan + noise1(u * 9 + ru.seed, 4) * ru.amp * 0.3 * fan) * H0;
+        pts.push([x0 + u * W0, y0 + yy]);
+      }
+      return pts;
+    };
+    // density-shaded bundles
+    g.lineWidth = L.lw ?? 1.6;
+    for (const ru of runs) {
+      const upto = Math.min(ru.end, prog); if (upto <= 0) continue;
+      const pts = path(ru, upto);
+      g.strokeStyle = rgba(ink ? PAL.ink : PAL.bone, ink ? aBase * 1.4 : aBase);
+      g.beginPath(); pts.forEach((p, i) => (i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1]))); g.stroke();
+      if (ru.end < 1 && prog >= ru.end) ends.push(pts[pts.length - 1]);
+    }
+    g.globalCompositeOperation = 'source-over';
+    // deaths: red terminal ticks
+    g.strokeStyle = rgba(PAL.red, Math.min(1, 0.5 + aBase * 2)); g.lineWidth = L.tick ?? 3;
+    g.beginPath(); for (const [x, y] of ends) { g.moveTo(x - 6, y - 6); g.lineTo(x + 6, y + 6); g.moveTo(x + 6, y - 6); g.lineTo(x - 6, y + 6); } g.stroke();
+    // the survivor
+    if (L.survivor && prog > 0) {
+      const ru = { seed: 77.7, amp: 0.06, drift: -0.05, dy: L.surviveDy ?? 0.22, end: 1 };
+      const pts = path(ru, prog); g.strokeStyle = PAL.cyan; g.lineWidth = L.survivorW ?? 6;
+      g.beginPath(); pts.forEach((p, i) => (i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1]))); g.stroke();
+      env.survivorHead = pts[pts.length - 1];
+    }
+    // origin + bundle labels (at most 3)
+    g.fillStyle = ink ? PAL.ink : PAL.bone; g.beginPath(); g.arc(x0, y0, 9, 0, Math.PI * 2); g.fill();
+    if (L.labels !== false) {
+      setFont(g, F.mono(L.labelSize ?? 48, 700), 0); g.textBaseline = 'alphabetic';
+      for (const k of kills.slice(0, 3)) if (k.label && prog > k.at * 0.8) {
+        const lx = x0 + k.at * W0 + 26, ly = y0 + (k.dy ?? 0) * Math.pow(k.at, 0.8) * H0 - 30;
+        g.fillStyle = PAL.red; g.fillText(k.label, lx, ly);
+      }
+      if (L.surviveLabel && prog > 0.85) { g.fillStyle = PAL.cyan; g.fillText(L.surviveLabel, x0 + W0 * 0.86, y0 + (L.surviveDy ?? 0.22) * H0 + 70); }
+    }
+    g.restore();
+  },
+  // continuous reverse playback of earlier footage as the base of a rewind section: kick-stepped, with motion echo,
+  // graded rewind-cyan (on dark) or multiplied as ink (on paper / red fills). Spans a whole section: the source time is
+  // a function of the global time, so consecutive shots continue the same reverse motion.
+  async rewindbase(ctx, L, env, data) {
+    let t = env.t;
+    if (L.kick) { const ks = env.T.kicksIn(L.a, t + 1e-6); if (ks.length) t = ks[ks.length - 1] + Math.min(t - ks[ks.length - 1], 0.12) * (L.slide ?? 1); }
+    const p = clamp((t - L.a) / (L.b - L.a));
+    const Lr = layer('rwbase', ctx.g.canvas.width, ctx.g.canvas.height), rg = clearLayer(Lr); rg.setTransform(ctx.S, 0, 0, ctx.S, 0, 0);
+    rg.fillStyle = PAL.ink; rg.fillRect(0, 0, DW, DH);
+    await data.rewindOf({ ...ctx, g: rg }, null, L.from, L.to, p, { echo: L.echo ?? 3, echoDt: L.echoDt ?? 0.12, echoAlpha: 0.55 });
+    resetCtx(rg);
+    if (L.mode !== 'multiply') { rg.globalCompositeOperation = 'color'; rg.fillStyle = L.tint || '#1FA9A1'; rg.fillRect(0, 0, Lr.width, Lr.height); rg.globalCompositeOperation = 'source-over'; }
+    const g = ctx.g; g.save(); g.setTransform(1, 0, 0, 1, 0, 0);
+    g.globalAlpha = A(L.alpha, env, L.mode === 'multiply' ? 0.45 : 0.85); g.globalCompositeOperation = L.mode === 'multiply' ? 'multiply' : 'source-over';
+    g.drawImage(Lr, 0, 0); g.restore();
+    env.rewindTs = L.from + (L.to - L.from) * p;
+  },
 });
 const TREES = new Map();
 

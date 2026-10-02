@@ -91,3 +91,9 @@ impacts, speed lines, stutter frames on vocal chops, never a static frame > 2 ba
   motion of earlier footage + ghost multiples of her past runs as the base layer; type/case files are overlays.
 - (user) The MANY-RUNS rollout visual (dense fan of possible game states) replaces the simple node tree as the search
   language, escalating: tens (drop 1) → hundreds (drop 2) → thousands (build 3) → one survivor = the road.
+
+## REFRAME (user): Braid-like, not "proof by exhaustion"
+Retired: Theorem/Proof/Q.E.D., "a proof by exhaustion", thesis chapter header. New grammar: storybook pages on bone
+paper with lines from her poem "Reload" ("time stops, starts rewinding. Braid-like,"); world cards per attempt
+(1 · Time and Compliance / 2 · Time and Flight / 3 · Time and Never Stopping); "hold ◀◀ to rewind" prompt at freezes;
+she is time-immune (cyan shimmer) during rewinds; ending page = the poem's final stanza "And I never stop."

@@ -324,5 +324,113 @@
    }
   ],
   "file": "cands/J3.jpg"
+ },
+ {
+  "id": "J9",
+  "model": "openai/gpt-image-2",
+  "prompt": "Night, driving, camera on the windshield looking back at the driver: she sits in the left-hand driver's seat on the RIGHT side of the frame, hands on the steering wheel, steady and determined, eyes on the road. Police red and blue lights glow through the rear window far behind her, rim-lighting her hair; her face has a soft cool frontal key; dashboard glow from below. Use the second image only as a mood reference. POSE (measured from the photo): her head is turned about 18 degrees to her right (nose toward frame-left) and the camera is slightly above her eye line; her torso and shoulders must be turned the SAME way, about 18 degrees to her right (toward frame-left), congruent with the head - the shoulder line follows the head direction, no twist between head and body. Keep this exact woman from the first image: her face, head angle, eyes, eyebrows, glasses and expression must stay exactly as in the photo (do not redraw or beautify her face). Long straight solid black hair with a center part styled half-up half-down (two symmetrical sections pulled back from the temples toward the crown, the rest hanging long), revealing her broad forehead. She wears a white cropped zip jacket with one clean orange horizontal band across the chest and upper sleeves (no patches, no text) over a black top. Cinematic photographic film still, 16:9 widescreen composition, soft flattering light on her face, smooth clear skin. No text, no logos, no headphones.",
+  "refs": [
+   "refs/jade/PXL_20250908_195405539.MP.jpg",
+   "assets/sets/car_interior/3.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 27.7
+   }
+  ],
+  "file": "cands/J9.jpg"
+ },
+ {
+  "id": "J8",
+  "model": "openai/gpt-image-2",
+  "prompt": "A dark empty seminar room the night before a PhD defense: she sits alone on a single black chair in the middle of the room, medium shot from the knees up, facing the camera, hands in her lap, singing softly to herself. A single soft overhead light on her, a projector beam across the room behind her, faint red and blue reflections in the dark windows. Use the second image for the room layout and mood. POSE (measured from the photo): her head is turned about 14 degrees to her right (nose toward frame-left) and the camera is slightly above her eye line; her torso and shoulders must be turned the SAME way, about 14 degrees to her right (toward frame-left), congruent with the head - the shoulder line follows the head direction, no twist between head and body. Her head also tilts slightly toward her left shoulder; let the shoulders tilt with it. Keep this exact woman from the first image: her face, head angle, eyes, eyebrows, glasses and expression must stay exactly as in the photo (do not redraw or beautify her face). Long straight solid black hair with a center part styled half-up half-down (two symmetrical sections pulled back from the temples toward the crown, the rest hanging long), revealing her broad forehead. She wears a white cropped zip jacket with one clean orange horizontal band across the chest and upper sleeves (no patches, no text) over a black top. Cinematic photographic film still, 16:9 widescreen composition, soft flattering light on her face, smooth clear skin. No text, no logos, no headphones.",
+  "refs": [
+   "refs/jade/PXL_20260929_001719023.jpg",
+   "assets/sets/defense_room/2.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 29.8
+   }
+  ],
+  "file": "cands/J8.jpg"
+ },
+ {
+  "id": "J9_a",
+  "model": "openai/gpt-image-2",
+  "prompt": "Night, driving, camera on the windshield looking back at the driver: she sits in the left-hand driver's seat on the RIGHT side of the frame, hands on the steering wheel, steady and determined, eyes on the road. Police red and blue lights glow through the rear window far behind her, rim-lighting her hair; her face has a soft cool frontal key; dashboard glow from below. Use the second image only as a mood reference. POSE: her face is angled toward frame-left (about 18 degrees). Her whole upper body - chest, shoulders and arms - is angled toward frame-left by the same amount, exactly like her face: the shoulder on the frame-right side is slightly farther from the camera and the frame-left shoulder is nearer; head and torso point the same direction with no twist at the neck; the steering wheel is in front of her chest. Camera slightly above her eye line. Keep this exact woman from the first image: her face, head angle, eyes, eyebrows, glasses and expression must stay exactly as in the photo (do not redraw or beautify her face). Long straight solid black hair with a center part styled half-up half-down (two symmetrical sections pulled back from the temples toward the crown, the rest hanging long), revealing her broad forehead. She wears a white cropped zip jacket with one clean orange horizontal band across the chest and upper sleeves (no patches, no text) over a black top. Cinematic photographic film still, 16:9 widescreen composition, soft flattering light on her face, smooth clear skin. No text, no logos, no headphones.",
+  "refs": [
+   "refs/jade/PXL_20250908_195405539.MP.jpg",
+   "assets/sets/car_interior/3.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 29.6
+   }
+  ],
+  "file": "cands/J9_a.jpg"
+ },
+ {
+  "id": "J2_a",
+  "model": "openai/gpt-image-2",
+  "prompt": "Night, inside the car, camera mounted on the windshield looking back at the driver: she sits in the left-hand driver's seat on the RIGHT side of the frame, steering wheel in front of her at the bottom of the frame, eyes glancing toward the rear-view mirror (frame-left). Cool blue dashboard glow from below, soft frontal key on her face, blurred orange streetlights in the rear window behind her. Use the second image only as a mood reference. POSE: her face is angled toward frame-left (about 18 degrees). Her whole upper body - chest, shoulders and arms - is angled toward frame-left by the same amount, exactly like her face: the shoulder on the frame-right side is slightly farther from the camera and the frame-left shoulder is nearer; head and torso point the same direction with no twist at the neck; the steering wheel is in front of her chest. Camera slightly above her eye line. Keep this exact woman from the first image: her face, head angle, eyes, eyebrows, glasses and expression must stay exactly as in the photo (do not redraw or beautify her face). Long straight solid black hair with a center part styled half-up half-down (two symmetrical sections pulled back from the temples toward the crown, the rest hanging long), revealing her broad forehead. She wears a white cropped zip jacket with one clean orange horizontal band across the chest and upper sleeves (no patches, no text) over a black top. Cinematic photographic film still, 16:9 widescreen composition, soft flattering light on her face, smooth clear skin. No text, no logos, no headphones.",
+  "refs": [
+   "refs/jade/PXL_20250908_195405539.MP.jpg",
+   "assets/sets/car_interior/1.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 30.0
+   }
+  ],
+  "file": "cands/J2_a.jpg"
+ },
+ {
+  "id": "J9_b",
+  "model": "openai/gpt-image-2",
+  "prompt": "Night, driving, camera on the windshield looking back at the driver: she sits in the left-hand driver's seat on the RIGHT side of the frame, hands on the steering wheel, steady and determined, eyes on the road. Police red and blue lights glow through the rear window far behind her, rim-lighting her hair; her face has a soft cool frontal key; dashboard glow from below. Use the second image only as a mood reference. POSE: her face is angled toward frame-left (about 18 degrees). Her whole upper body - chest, shoulders and arms - is angled toward frame-left by the same amount, exactly like her face: the shoulder on the frame-right side is slightly farther from the camera and the frame-left shoulder is nearer; head and torso point the same direction with no twist at the neck; the steering wheel is in front of her chest. Camera slightly above her eye line. Keep this exact woman from the first image: her face, head angle, eyes, eyebrows, glasses and expression must stay exactly as in the photo (do not redraw or beautify her face). Long straight solid black hair with a center part styled half-up half-down (two symmetrical sections pulled back from the temples toward the crown, the rest hanging long), revealing her broad forehead. She wears a white cropped zip jacket with one clean orange horizontal band across the chest and upper sleeves (no patches, no text) over a black top. Cinematic photographic film still, 16:9 widescreen composition, soft flattering light on her face, smooth clear skin. No text, no logos, no headphones.",
+  "refs": [
+   "refs/jade/PXL_20250908_195405539.MP.jpg",
+   "assets/sets/car_interior/3.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 30.1
+   }
+  ],
+  "file": "cands/J9_b.jpg"
+ },
+ {
+  "id": "J2_b",
+  "model": "openai/gpt-image-2",
+  "prompt": "Night, inside the car, camera mounted on the windshield looking back at the driver: she sits in the left-hand driver's seat on the RIGHT side of the frame, steering wheel in front of her at the bottom of the frame, eyes glancing toward the rear-view mirror (frame-left). Cool blue dashboard glow from below, soft frontal key on her face, blurred orange streetlights in the rear window behind her. Use the second image only as a mood reference. POSE: her face is angled toward frame-left (about 18 degrees). Her whole upper body - chest, shoulders and arms - is angled toward frame-left by the same amount, exactly like her face: the shoulder on the frame-right side is slightly farther from the camera and the frame-left shoulder is nearer; head and torso point the same direction with no twist at the neck; the steering wheel is in front of her chest. Camera slightly above her eye line. Keep this exact woman from the first image: her face, head angle, eyes, eyebrows, glasses and expression must stay exactly as in the photo (do not redraw or beautify her face). Long straight solid black hair with a center part styled half-up half-down (two symmetrical sections pulled back from the temples toward the crown, the rest hanging long), revealing her broad forehead. She wears a white cropped zip jacket with one clean orange horizontal band across the chest and upper sleeves (no patches, no text) over a black top. Cinematic photographic film still, 16:9 widescreen composition, soft flattering light on her face, smooth clear skin. No text, no logos, no headphones.",
+  "refs": [
+   "refs/jade/PXL_20250908_195405539.MP.jpg",
+   "assets/sets/car_interior/1.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 30.8
+   }
+  ],
+  "file": "cands/J2_b.jpg"
  }
 ]

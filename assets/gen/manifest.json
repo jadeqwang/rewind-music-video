@@ -1526,13 +1526,37 @@
    },
    "est_usd": 1.8496,
    "est_basis": "8s x 0.2312 (@720p non-video input (per second))",
-   "state": "running",
+   "state": "done",
    "bucket": 29849030,
    "submitted": 1790941691.881728,
    "bytes": 691537,
-   "started": 1790941852.395
+   "started": 1790941852.395,
+   "state_relay": "done",
+   "gen_secs": 173.2,
+   "finished": 1790942025.626,
+   "latency_secs": 333.7,
+   "files": [
+    "assets/gen/jade_J1b_lip_t1_e37fa5ca06.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 8.042,
+     "bytes": 6987989,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 720,
+       "height": 1280,
+       "r_frame_rate": "24/1",
+       "nb_frames": "193"
+      }
+     ]
+    }
+   ],
+   "collected": 1790942150.1200793
   }
  },
  "total_est_usd": 49.066,
- "total_est_usd_done": 34.2692
+ "total_est_usd_done": 36.1188
 }
