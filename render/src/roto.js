@@ -8,6 +8,7 @@
 import { DW, DH, PAL, clamp, fin, hash, hsig, layer, clearLayer, rgba, BOIL_FPS } from './core.js';
 
 const ROOT = '../assets/roto';
+const FORCE_V1 = new URLSearchParams(location.search).has('jadev1');
 const MAX = 80;                  // cached bitmaps (1280x720 ≈ 3.7 MB each)
 const cache = new Map();          // url -> {bmp, last}
 const pending = new Map();        // url -> Promise
@@ -20,6 +21,7 @@ export async function loadMeta(id) {
   let m = null;
   try { const r = await fetch(`${ROOT}/${id}/meta.json`); if (r.ok) m = await r.json(); } catch (e) { /* none */ }
   if (m) { m.fps = fin(m.fps, 15); m.layers = m.layers || ['lines', 'matte']; }
+  if (m && m.layers.includes('cel')) { try { const r = await fetch(`${ROOT}/${id}/cel.json`); if (r.ok) m.celData = (await r.json()).frames; } catch (e) { /* none */ } }
   if (m && m.layers.includes('face')) { try { const r = await fetch(`${ROOT}/${id}/face.json`); if (r.ok) m.faceData = await r.json(); } catch (e) { /* no template data */ } }
   metas.set(id, m);
   return m;
@@ -124,7 +126,9 @@ export function contours(g, id, clipT, o = {}) {
 // opts: {rect, boil, fill, lineColor, ghost (outline-only past attempt), ghostColor, light:{color, amount, from:[x0,y0,x1,y1]},
 //        mouth (0..1 openness from the vocal envelope), alpha}
 export function jade(g, id, clipT, o = {}) {
-  const m = meta(id); const mt = get(id, 'matte', clipT); if (!m || !mt) return false;
+  const m0 = meta(id);
+  if (m0 && m0.layers.includes('cel') && !o.v1 && !o.ghost && !FORCE_V1) return jade2(g, id, clipT, o);
+  const m = m0; const mt = get(id, 'matte', clipT); if (!m || !mt) return false;
   const face = get(id, 'face', clipT), feat = get(id, 'features', clipT), hair = get(id, 'hair', clipT), lines = get(id, 'lines', clipT);
   const pf = perFrame(id, clipT);
   const A = scratch('jadeA', m), a = clearLayer(A);
@@ -213,6 +217,85 @@ function drawGlasses(a, fd, o) {
     a.strokeStyle = GL; a.lineWidth = lwid; a.beginPath(); const x0 = cx - dir * w / 2; a.moveTo(x0, cy - h * 0.3); a.lineTo(x0 - dir * w * 2.2, cy - h * 0.18); a.stroke();
   }
   a.restore();
+}
+
+// ---- Jade v2: 3-tone cel figure (tools/jade2/build.py) + template features drawn as vectors from face.json ----
+const FEAT = '#3A2E2C', LIDC = '#1E1716', LIP = '#C99B94', LIPD = '#6A4440';
+function poly(a, pts, close) { a.beginPath(); pts.forEach((p, i) => (i ? a.lineTo(p[0], p[1]) : a.moveTo(p[0], p[1]))); if (close) a.closePath(); }
+function smoothPath(a, pts) {   // quadratic midpoint smoothing
+  if (pts.length < 3) return poly(a, pts);
+  a.beginPath(); a.moveTo(pts[0][0], pts[0][1]);
+  for (let i = 1; i < pts.length - 1; i++) { const mx = (pts[i][0] + pts[i + 1][0]) / 2, my = (pts[i][1] + pts[i + 1][1]) / 2; a.quadraticCurveTo(pts[i][0], pts[i][1], mx, my); }
+  const l = pts[pts.length - 1]; a.lineTo(l[0], l[1]);
+}
+function eye(a, up, lo, crease, iris, closure, sc) {
+  if (!up) return;
+  const open = closure == null ? 1 : clamp(closure);
+  // white of the eye (bone) clipped by the lids, iris dark with a catchlight
+  a.save();
+  poly(a, [...up, ...(lo || []).slice().reverse()], true); a.fillStyle = '#F4EFE6'; a.fill(); a.clip();
+  if (iris && open > 0.3) {
+    const [ix, iy, ir] = iris.length >= 3 ? iris : [iris[0], iris[1], sc * 0.07];
+    a.fillStyle = '#2A1F1C'; a.beginPath(); a.arc(ix, iy, ir, 0, Math.PI * 2); a.fill();
+    a.fillStyle = '#0B0807'; a.beginPath(); a.arc(ix, iy, ir * 0.48, 0, Math.PI * 2); a.fill();
+    a.fillStyle = '#FFFFFF'; a.beginPath(); a.arc(ix - ir * 0.32, iy - ir * 0.36, Math.max(1.4, ir * 0.2), 0, Math.PI * 2); a.fill();
+  }
+  a.restore();
+  a.lineCap = 'round'; a.lineJoin = 'round';
+  smoothPath(a, up); a.strokeStyle = LIDC; a.lineWidth = Math.max(2.4, sc * 0.03); a.stroke();
+  if (lo) { smoothPath(a, lo); a.strokeStyle = 'rgba(58,46,44,0.55)'; a.lineWidth = Math.max(1, sc * 0.009); a.stroke(); }
+  if (crease) { smoothPath(a, crease); a.strokeStyle = 'rgba(58,46,44,0.6)'; a.lineWidth = Math.max(1, sc * 0.008); a.stroke(); }
+}
+export function jade2(g, id, clipT, o = {}) {
+  const m = meta(id), fi = frameIndex(m, clipT), cel = get(id, 'cel', clipT); if (!cel) return false;
+  const fd = m.faceData && m.faceData[fi] || {}, cd = m.celData && (m.celData[fi] || m.celData[String(fi)]) || {}, pf = perFrame(id, clipT);
+  const A = scratch('jade2', m), a = clearLayer(A);
+  a.drawImage(cel, 0, 0, m.w, m.h);
+  // scene light: a restrained wash on the figure only (keeps the 3 tones readable)
+  if (o.light && o.light.amount > 0) {   // multiply: tints bone/mid, never lifts the ink
+    const L = o.light, k = m.w / DW, gr = a.createLinearGradient(L.from[0] * k, L.from[1] * k, L.from[2] * k, L.from[3] * k);
+    gr.addColorStop(0, rgba(L.color, 0)); gr.addColorStop(0.5, rgba(L.color, L.amount * 0.35)); gr.addColorStop(1, rgba(L.color, 0));
+    a.globalCompositeOperation = 'multiply'; a.fillStyle = gr; a.fillRect(0, 0, m.w, m.h); a.globalCompositeOperation = 'destination-in'; a.drawImage(cel, 0, 0, m.w, m.h); a.globalCompositeOperation = 'source-over';
+  }
+  const sc = fd.template_scale_px || (cd.iod) || 150;
+  // brows: filled tapered polygons (her own asymmetric template)
+  a.fillStyle = FEAT;
+  for (const b of [fd.brow_R, fd.brow_L, fd.brow_near]) if (b && b.length > 2) { poly(a, b, true); a.fill(); }
+  eye(a, fd.eye_R_upper, fd.eye_R_lower, fd.eye_R_crease, fd.eye_R_iris, fd.eye_R_closure, sc);
+  eye(a, fd.eye_L_upper, fd.eye_L_lower, fd.eye_L_crease, fd.eye_L_iris, fd.eye_L_closure, sc);
+  eye(a, fd.eye_near_upper, fd.eye_near_lower, fd.eye_near_crease, fd.eye_near_iris, 1, sc * 1.4);
+  // nose tip: a short soft mark
+  if (fd.nose && fd.nose.length > 2) { const n = fd.nose; const lo = n.slice(Math.floor(n.length * 0.55)); smoothPath(a, lo); a.strokeStyle = 'rgba(58,46,44,0.6)'; a.lineWidth = Math.max(1.5, sc * 0.014); a.stroke(); }
+  // lips: two soft tone shapes + the mouth line; openness from the vocal envelope
+  const open = clamp(o.mouth ?? 0);
+  if (cd.lips) {
+    const cx = cd.lips.outer.reduce((s, p) => s + p[0], 0) / cd.lips.outer.length, cy = cd.lips.inner.reduce((s, p) => s + p[1], 0) / cd.lips.inner.length;
+    const shr = p => [cx + (p[0] - cx) * 0.86, cy + (p[1] - cy) * 0.86];
+    const lo = cd.lips.outer.map(shr), li = cd.lips.inner.map(shr), h = Math.max(3, sc * 0.07) * open;
+    const mv = p => [p[0], p[1] > cy ? p[1] + h : p[1]];
+    poly(a, lo.map(mv), true); a.fillStyle = LIP; a.fill();
+    if (open > 0.12) { const xs = li.map(p => p[0]), w2 = (Math.max(...xs) - Math.min(...xs)) * 0.42; a.fillStyle = LIPD; a.beginPath(); a.ellipse(cx, cy + h * 0.4, w2, Math.max(1.5, h * 0.55), 0, 0, Math.PI * 2); a.fill(); }
+    // mouth line (the meeting of the lips)
+    const n = li.length, upperIn = li.slice(0, Math.ceil(n / 2) + 1);
+    smoothPath(a, upperIn); a.strokeStyle = LIPD; a.lineWidth = Math.max(1.6, sc * 0.016); a.stroke();
+  } else if (pf.mouth && cd.E) {
+    const [mx, my] = pf.mouth, back = cd.back || 1, dd = Math.hypot(cd.N[0] - cd.E[0], cd.N[1] - cd.E[1]);
+    a.fillStyle = LIP; a.beginPath(); a.ellipse(mx - back * dd * 0.18, my + 1, dd * 0.2, dd * 0.07 + open * dd * 0.06, 0, 0, Math.PI * 2); a.fill();
+    a.strokeStyle = LIPD; a.lineWidth = Math.max(1.6, dd * 0.03); a.beginPath(); a.moveTo(mx, my); a.lineTo(mx - back * dd * 0.36, my - dd * 0.02); a.stroke();
+  }
+  // glasses: front = rectangular frames from the eye anchors; profile = foreshortened lens + temple arm to the ear
+  if (o.glasses !== false) {
+    if (cd.glasses && cd.glasses.kind === 'profile') {
+      const q = cd.glasses.lens, lw = Math.max(3.5, sc * 0.03);
+      poly(a, q, true); a.fillStyle = 'rgba(61,242,230,0.06)'; a.fill(); a.strokeStyle = GL; a.lineWidth = lw; a.lineJoin = 'round'; a.stroke();
+      const [p0, p1] = cd.glasses.arm; a.beginPath(); a.moveTo(p0[0], p0[1]); a.lineTo(p1[0], p1[1]); a.stroke();
+      a.strokeStyle = 'rgba(255,255,255,0.7)'; a.lineWidth = lw * 0.6; a.beginPath(); a.moveTo(q[0][0] * 0.7 + q[3][0] * 0.3, q[0][1] * 0.7 + q[3][1] * 0.3); a.lineTo(q[0][0] * 0.85 + q[1][0] * 0.15, q[0][1] * 0.85 + q[1][1] * 0.15); a.stroke();
+    } else drawGlasses(a, fd, o);
+  }
+  g.save(); g.globalAlpha = clamp(o.alpha ?? 1);
+  place(g, A, o.rect, null);   // no boil on her: the likeness stays steady
+  g.restore();
+  return true;
 }
 
 // lips from the vocal track: a closed mouth is one soft ink stroke; open = a small almond whose height follows the voice

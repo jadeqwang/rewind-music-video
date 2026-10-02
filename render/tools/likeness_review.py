@@ -1,6 +1,6 @@
 # Likeness review: renderer Jade (1080p) | her real reference photo | the shot's first-frame still, same-scale face crops.
 # usage: python3 render/tools/likeness_review.py   → render/out/likeness_review.jpg
-import cv2, json, subprocess, os, numpy as np
+import cv2, json, subprocess, os, sys, numpy as np
 R = os.path.abspath(os.path.dirname(__file__) + '/../..')
 OUT = R + '/render/out/likeness'
 SHOTS = [  # (time, roto, shot t0, cam dx, zoom0, zoom1, shot dur, ref photo, first frame)
@@ -27,7 +27,9 @@ def face_crop(im, box=None, k=2.6):
     return cv2.resize(pad[y0 + 800:y0 + 800 + int(s), x0 + 800:x0 + 800 + int(s)], (S, S), interpolation=cv2.INTER_AREA)
 
 times = ','.join(str(t) for t, *_ in SHOTS)
-subprocess.run(['node', R + '/render/render.mjs', '--stills', times, '--out', OUT], check=True, cwd=R + '/render', stdout=subprocess.DEVNULL)
+V2 = '--v2' in sys.argv
+subprocess.run(['node', R + '/render/render.mjs', '--stills', times, '--out', OUT, '--query', 'jadev1'], check=True, cwd=R + '/render', stdout=subprocess.DEVNULL)
+if V2: subprocess.run(['node', R + '/render/render.mjs', '--stills', times, '--out', OUT + '_v2'], check=True, cwd=R + '/render', stdout=subprocess.DEVNULL)
 rows = []
 for (t, rid, t0, dx, z0, z1, dur, ref, ff) in SHOTS:
     im = cv2.imread(f'{OUT}/t{t:.3f}'.replace('.', '_', 1) + '.jpg')
@@ -40,9 +42,14 @@ for (t, rid, t0, dx, z0, z1, dur, ref, ff) in SHOTS:
     X = lambda x: (x - 960) * z + 960 + dx; Y = lambda y: (y - 540) * z + 540
     cxp, cyp = X((x0 + x1) / 2), Y((y0 + y1) / 2); bw = (220 if f.get('mode') == 'profile' else max(x1 - x0, 140)) * z
     box = (cxp - bw / 2, cyp - bw * 0.55, bw, bw)
-    tiles = [face_crop(im, box, 2.4), face_crop(cv2.imread(f'{R}/{ref}'), MANUAL.get(ref)), face_crop(cv2.imread(f'{R}/{ff}'), MANUAL.get(ff))]
-    for tile, lab in zip(tiles, [f'render {rid} t={t}', 'reference photo', f'first frame {rid}']):
+    if V2:
+        im2 = cv2.imread(f'{OUT}_v2/t{t:.3f}'.replace('.', '_', 1) + '.jpg')
+        tiles = [face_crop(im, box, 2.4), face_crop(im2, box, 2.4), face_crop(cv2.imread(f'{R}/{ref}'), MANUAL.get(ref))]; labs = [f'v1 {rid} t={t}', f'v2 {rid} t={t}', 'reference photo']
+    else:
+        tiles = [face_crop(im, box, 2.4), face_crop(cv2.imread(f'{R}/{ref}'), MANUAL.get(ref)), face_crop(cv2.imread(f'{R}/{ff}'), MANUAL.get(ff))]; labs = [f'render {rid} t={t}', 'reference photo', f'first frame {rid}']
+    for tile, lab in zip(tiles, labs):
         cv2.putText(tile, lab, (10, 26), 0, 0.7, (0, 230, 255), 2)
     rows.append(np.hstack(tiles))
-cv2.imwrite(R + '/render/out/likeness_review.jpg', np.vstack(rows), [cv2.IMWRITE_JPEG_QUALITY, 92])
-print('wrote render/out/likeness_review.jpg')
+name = 'likeness_review_v2.jpg' if V2 else 'likeness_review.jpg'
+cv2.imwrite(R + '/render/out/' + name, np.vstack(rows), [cv2.IMWRITE_JPEG_QUALITY, 92])
+print('wrote render/out/' + name)

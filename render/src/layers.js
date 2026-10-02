@@ -106,8 +106,9 @@ export const LAYERS = {
       const ct2 = roto.clipTime(id, env.lt - L.late, { speed: L.speed ?? 1, offset: L.offset ?? 0, loop: L.loop ?? 'pingpong' });
       roto.jade(ctx.g, id, ct2, { rect: { ...rect, x: rect.x + (L.lateDx ?? 26) }, ghost: true, ghostColor: L.lateColor || PAL.cyan, boil: ctx.seed, alpha: 0.75 });
     }
+    if (roto.meta(id).layers.includes('cel') && !L.v1) { ctx.post.bloom = Math.min(ctx.post.bloom ?? 0.3, 0.1); }
     roto.jade(ctx.g, id, ct, L.ghost ? { rect, ghost: true, ghostColor: L.ghostColor || PAL.cyan, boil: ctx.seed, alpha: A(L.alpha, env, 1) }
-      : { rect, boil: ctx.seed, mouth: L.mouth === false ? 0 : clamp((env.T.e('vocal', env.t) - 0.18) * 1.6), light, rim: { color: L.rimColor || PAL.bone, alpha: 0.55, w: 1.4 }, alpha: A(L.alpha, env, 1) });
+      : { rect, v1: L.v1, boil: ctx.seed, mouth: L.mouth === false ? 0 : clamp((env.T.e('vocal', env.t) - 0.18) * 1.6), light, rim: { color: L.rimColor || PAL.bone, alpha: 0.55, w: 1.4 }, alpha: A(L.alpha, env, 1) });
   },
 
   suits(ctx, L, env, { roto }) {

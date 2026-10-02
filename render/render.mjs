@@ -78,7 +78,7 @@ async function openPage(tag = '') {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
   page.on('console', m => { if ((['error', 'warning'].includes(m.type()) && !/Failed to load resource/.test(m.text())) || args.verbose) console.log(`[page${tag}] ${m.text()}`); });
   page.on('pageerror', e => console.log(`[page error${tag}] ${e.message}`));
-  await page.goto(`http://127.0.0.1:${PORT}/render/index.html?render&shots=${SHOTS}&w=${W}&h=${H}`, { waitUntil: 'load' });
+  await page.goto(`http://127.0.0.1:${PORT}/render/index.html?render&shots=${SHOTS}&w=${W}&h=${H}${args.query ? '&' + args.query : ''}`, { waitUntil: 'load' });
   await page.waitForFunction('window.ready === true || window.bootError', null, { timeout: 120000, polling: 100 });
   const err = await page.evaluate('window.bootError'); if (err) throw new Error('boot failed: ' + err);
   if (args.verbose) console.log(await page.evaluate('JSON.stringify(window.timingInfo)'));
