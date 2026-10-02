@@ -1,0 +1,92 @@
+[
+ {
+  "file": "/home/user/rewind-music-video/analysis/car/cands/rear_0.jpg",
+  "view": "rear",
+  "model": "openai/gpt-image-2",
+  "prompt": "Exactly straight-on rear view at bumper height, perfectly symmetrical, seen from directly behind. Both wide red tail lights are switched on and glowing bright red, the rear window dark. The car: a white 2001 Acura TL, the second-generation 1999-2003 Acura TL four-door mid-size Japanese luxury sedan: soft rounded late-1990s body with smooth curved panels and no sharp creases, a gently sloping rounded nose, slim narrow horizontal wraparound headlights, a small chrome-accented grille with a simple chrome caliper-shaped badge, short rounded trunk deck, wide horizontal tail lights wrapping around the rear corners, a long greenhouse with six side windows and thin chrome window trim, body-coloured bumpers, modest 16-inch five-spoke alloy wheels with tall sidewall tyres. Clean glossy white paint. An authentic early-2000s car, not a modern car. The car is alone, centered with generous margin, isolated on a plain seamless flat dark charcoal-gray studio background with a faint soft floor shadow, nothing else in the frame. Night lighting: dark low-key studio, hard cold white rim lights outline the whole body silhouette in crisp highlights, high contrast.  Photographic, sharp focus, product-shot clarity. No text, no lettering, no badges with letters, no license plate (blank smooth plate area), no watermark, no people.",
+  "secs": 23.6,
+  "cost": 0.06,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/analysis/car/cands/front34_0.jpg",
+  "view": "front34",
+  "model": "openai/gpt-image-2",
+  "prompt": "Low front three-quarter view from the front-left, headlights switched on and glowing hard white, showing the slim headlights, the grille and the left flank. The car: a white 2001 Acura TL, the second-generation 1999-2003 Acura TL four-door mid-size Japanese luxury sedan: soft rounded late-1990s body with smooth curved panels and no sharp creases, a gently sloping rounded nose, slim narrow horizontal wraparound headlights, a small chrome-accented grille with a simple chrome caliper-shaped badge, short rounded trunk deck, wide horizontal tail lights wrapping around the rear corners, a long greenhouse with six side windows and thin chrome window trim, body-coloured bumpers, modest 16-inch five-spoke alloy wheels with tall sidewall tyres. Clean glossy white paint. An authentic early-2000s car, not a modern car. The car is alone, centered with generous margin, isolated on a plain seamless flat dark charcoal-gray studio background with a faint soft floor shadow, nothing else in the frame. Night lighting: dark low-key studio, hard cold white rim lights outline the whole body silhouette in crisp highlights, high contrast.  Photographic, sharp focus, product-shot clarity. No text, no lettering, no badges with letters, no license plate (blank smooth plate area), no watermark, no people.",
+  "secs": 24.0,
+  "cost": 0.06,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/analysis/car/cands/rear34_0.jpg",
+  "view": "rear34",
+  "model": "openai/gpt-image-2",
+  "prompt": "Elevated rear three-quarter view from behind and above, like a drone following the car at about 30 degrees above, looking down at the roof, rear window, trunk lid and the rear-left corner. The red tail lights are glowing. The car: a white 2001 Acura TL, the second-generation 1999-2003 Acura TL four-door mid-size Japanese luxury sedan: soft rounded late-1990s body with smooth curved panels and no sharp creases, a gently sloping rounded nose, slim narrow horizontal wraparound headlights, a small chrome-accented grille with a simple chrome caliper-shaped badge, short rounded trunk deck, wide horizontal tail lights wrapping around the rear corners, a long greenhouse with six side windows and thin chrome window trim, body-coloured bumpers, modest 16-inch five-spoke alloy wheels with tall sidewall tyres. Clean glossy white paint. An authentic early-2000s car, not a modern car. The car is alone, centered with generous margin, isolated on a plain seamless flat dark charcoal-gray studio background with a faint soft floor shadow, nothing else in the frame. Night lighting: dark low-key studio, hard cold white rim lights outline the whole body silhouette in crisp highlights, high contrast.  Photographic, sharp focus, product-shot clarity. No text, no lettering, no badges with letters, no license plate (blank smooth plate area), no watermark, no people.",
+  "secs": 24.5,
+  "cost": 0.06,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/analysis/car/cands/side_0.jpg",
+  "view": "side",
+  "model": "openai/gpt-image-2",
+  "prompt": "Exact side profile view from the driver's (left) side, car facing left, perfectly orthographic-looking flat side elevation, camera at door height, the whole length of the car visible. Tail lights glowing red, headlights on. The car: a white 2001 Acura TL, the second-generation 1999-2003 Acura TL four-door mid-size Japanese luxury sedan: soft rounded late-1990s body with smooth curved panels and no sharp creases, a gently sloping rounded nose, slim narrow horizontal wraparound headlights, a small chrome-accented grille with a simple chrome caliper-shaped badge, short rounded trunk deck, wide horizontal tail lights wrapping around the rear corners, a long greenhouse with six side windows and thin chrome window trim, body-coloured bumpers, modest 16-inch five-spoke alloy wheels with tall sidewall tyres. Clean glossy white paint. An authentic early-2000s car, not a modern car. The car is alone, centered with generous margin, isolated on a plain seamless flat dark charcoal-gray studio background with a faint soft floor shadow, nothing else in the frame. Night lighting: dark low-key studio, hard cold white rim lights outline the whole body silhouette in crisp highlights, high contrast.  Photographic, sharp focus, product-shot clarity. No text, no lettering, no badges with letters, no license plate (blank smooth plate area), no watermark, no people.",
+  "secs": 24.9,
+  "cost": 0.06,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/analysis/car/cands/top_0.jpg",
+  "view": "top",
+  "model": "openai/gpt-image-2",
+  "prompt": "Exactly top-down overhead view from directly above, looking straight down at the roof, car pointing up toward the top of the frame, symmetrical plan view showing the hood, windshield, roof, rear window and trunk outline; red tail lights glowing at the bottom, headlights at the top. The car: a white 2001 Acura TL, the second-generation 1999-2003 Acura TL four-door mid-size Japanese luxury sedan: soft rounded late-1990s body with smooth curved panels and no sharp creases, a gently sloping rounded nose, slim narrow horizontal wraparound headlights, a small chrome-accented grille with a simple chrome caliper-shaped badge, short rounded trunk deck, wide horizontal tail lights wrapping around the rear corners, a long greenhouse with six side windows and thin chrome window trim, body-coloured bumpers, modest 16-inch five-spoke alloy wheels with tall sidewall tyres. Clean glossy white paint. An authentic early-2000s car, not a modern car. The car is alone, centered with generous margin, isolated on a plain seamless flat dark charcoal-gray studio background with a faint soft floor shadow, nothing else in the frame. Night lighting: dark low-key studio, hard cold white rim lights outline the whole body silhouette in crisp highlights, high contrast.  Photographic, sharp focus, product-shot clarity. No text, no lettering, no badges with letters, no license plate (blank smooth plate area), no watermark, no people.",
+  "secs": 24.5,
+  "cost": 0.06,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/analysis/car/cands/side_10.jpg",
+  "view": "side",
+  "model": "xai/grok-imagine-image-quality",
+  "prompt": "Exact side profile view from the driver's (left) side, car facing left, perfectly orthographic-looking flat side elevation, camera at door height, the whole length of the car visible. Tail lights glowing red, headlights on. The car: a white 2001 Acura TL, the second-generation 1999-2003 Acura TL four-door mid-size Japanese luxury sedan: soft rounded late-1990s body with smooth curved panels and no sharp creases, a gently sloping rounded nose, slim narrow horizontal wraparound headlights, a small chrome-accented grille with a simple chrome caliper-shaped badge, short rounded trunk deck, wide horizontal tail lights wrapping around the rear corners, a long greenhouse with six side windows and thin chrome window trim, body-coloured bumpers, modest 16-inch five-spoke alloy wheels with tall sidewall tyres. Clean glossy white paint. An authentic early-2000s car, not a modern car. The car is alone, centered with generous margin, isolated on a plain seamless flat dark charcoal-gray studio background with a faint soft floor shadow, nothing else in the frame. Night lighting: dark low-key studio, hard cold white rim lights outline the whole body silhouette in crisp highlights, high contrast.  Photographic, sharp focus, product-shot clarity. No text, no lettering, no badges with letters, no license plate (blank smooth plate area), no watermark, no people.",
+  "secs": 6.3,
+  "cost": 0.05,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/analysis/car/cands/rear34_10.jpg",
+  "view": "rear34",
+  "model": "xai/grok-imagine-image-quality",
+  "prompt": "Elevated rear three-quarter view from behind and above, like a drone following the car at about 30 degrees above, looking down at the roof, rear window, trunk lid and the rear-left corner. The red tail lights are glowing. The car: a white 2001 Acura TL, the second-generation 1999-2003 Acura TL four-door mid-size Japanese luxury sedan: soft rounded late-1990s body with smooth curved panels and no sharp creases, a gently sloping rounded nose, slim narrow horizontal wraparound headlights, a small chrome-accented grille with a simple chrome caliper-shaped badge, short rounded trunk deck, wide horizontal tail lights wrapping around the rear corners, a long greenhouse with six side windows and thin chrome window trim, body-coloured bumpers, modest 16-inch five-spoke alloy wheels with tall sidewall tyres. Clean glossy white paint. An authentic early-2000s car, not a modern car. The car is alone, centered with generous margin, isolated on a plain seamless flat dark charcoal-gray studio background with a faint soft floor shadow, nothing else in the frame. Night lighting: dark low-key studio, hard cold white rim lights outline the whole body silhouette in crisp highlights, high contrast.  Photographic, sharp focus, product-shot clarity. No text, no lettering, no badges with letters, no license plate (blank smooth plate area), no watermark, no people.",
+  "secs": 7.6,
+  "cost": 0.05,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/analysis/car/cands/front34_10.jpg",
+  "view": "front34",
+  "model": "xai/grok-imagine-image-quality",
+  "prompt": "Low front three-quarter view from the front-left, headlights switched on and glowing hard white, showing the slim headlights, the grille and the left flank. The car: a white 2001 Acura TL, the second-generation 1999-2003 Acura TL four-door mid-size Japanese luxury sedan: soft rounded late-1990s body with smooth curved panels and no sharp creases, a gently sloping rounded nose, slim narrow horizontal wraparound headlights, a small chrome-accented grille with a simple chrome caliper-shaped badge, short rounded trunk deck, wide horizontal tail lights wrapping around the rear corners, a long greenhouse with six side windows and thin chrome window trim, body-coloured bumpers, modest 16-inch five-spoke alloy wheels with tall sidewall tyres. Clean glossy white paint. An authentic early-2000s car, not a modern car. The car is alone, centered with generous margin, isolated on a plain seamless flat dark charcoal-gray studio background with a faint soft floor shadow, nothing else in the frame. Night lighting: dark low-key studio, hard cold white rim lights outline the whole body silhouette in crisp highlights, high contrast.  Photographic, sharp focus, product-shot clarity. No text, no lettering, no badges with letters, no license plate (blank smooth plate area), no watermark, no people.",
+  "secs": 8.0,
+  "cost": 0.05,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/analysis/car/cands/rear_10.jpg",
+  "view": "rear",
+  "model": "xai/grok-imagine-image-quality",
+  "prompt": "Exactly straight-on rear view at bumper height, perfectly symmetrical, seen from directly behind. Both wide red tail lights are switched on and glowing bright red, the rear window dark. The car: a white 2001 Acura TL, the second-generation 1999-2003 Acura TL four-door mid-size Japanese luxury sedan: soft rounded late-1990s body with smooth curved panels and no sharp creases, a gently sloping rounded nose, slim narrow horizontal wraparound headlights, a small chrome-accented grille with a simple chrome caliper-shaped badge, short rounded trunk deck, wide horizontal tail lights wrapping around the rear corners, a long greenhouse with six side windows and thin chrome window trim, body-coloured bumpers, modest 16-inch five-spoke alloy wheels with tall sidewall tyres. Clean glossy white paint. An authentic early-2000s car, not a modern car. The car is alone, centered with generous margin, isolated on a plain seamless flat dark charcoal-gray studio background with a faint soft floor shadow, nothing else in the frame. Night lighting: dark low-key studio, hard cold white rim lights outline the whole body silhouette in crisp highlights, high contrast.  Photographic, sharp focus, product-shot clarity. No text, no lettering, no badges with letters, no license plate (blank smooth plate area), no watermark, no people.",
+  "secs": 8.1,
+  "cost": 0.05,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/analysis/car/cands/top_10.jpg",
+  "view": "top",
+  "model": "xai/grok-imagine-image-quality",
+  "prompt": "Exactly top-down overhead view from directly above, looking straight down at the roof, car pointing up toward the top of the frame, symmetrical plan view showing the hood, windshield, roof, rear window and trunk outline; red tail lights glowing at the bottom, headlights at the top. The car: a white 2001 Acura TL, the second-generation 1999-2003 Acura TL four-door mid-size Japanese luxury sedan: soft rounded late-1990s body with smooth curved panels and no sharp creases, a gently sloping rounded nose, slim narrow horizontal wraparound headlights, a small chrome-accented grille with a simple chrome caliper-shaped badge, short rounded trunk deck, wide horizontal tail lights wrapping around the rear corners, a long greenhouse with six side windows and thin chrome window trim, body-coloured bumpers, modest 16-inch five-spoke alloy wheels with tall sidewall tyres. Clean glossy white paint. An authentic early-2000s car, not a modern car. The car is alone, centered with generous margin, isolated on a plain seamless flat dark charcoal-gray studio background with a faint soft floor shadow, nothing else in the frame. Night lighting: dark low-key studio, hard cold white rim lights outline the whole body silhouette in crisp highlights, high contrast.  Photographic, sharp focus, product-shot clarity. No text, no lettering, no badges with letters, no license plate (blank smooth plate area), no watermark, no people.",
+  "secs": 6.0,
+  "cost": 0.05,
+  "error": null
+ }
+]

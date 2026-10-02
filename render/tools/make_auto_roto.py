@@ -34,7 +34,8 @@ def process(frames, d, rect=None, src=''):
         im = cv2.resize(im, (W, H), interpolation=cv2.INTER_AREA)
         lab = cv2.cvtColor(im, cv2.COLOR_BGR2LAB)
         L = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8, 8)).apply(lab[..., 0])
-        save(d, 'lines', i, white(clean(dog(L))))
+        ln = clean(dog(L)); ln = cv2.dilate(ln, np.ones((2, 2), np.uint8)) if THICK else ln
+        save(d, 'lines', i, white(ln))
         v = im.max(2).astype(np.float32) / 255
         a = np.clip((v - 0.55) / 0.4, 0, 1); a = cv2.GaussianBlur(a, (0, 0), 1.2)
         li = np.zeros((H, W, 4), np.uint8); li[..., :3] = im; li[..., 3] = (a * 255).astype(np.uint8)
@@ -58,7 +59,7 @@ def process(frames, d, rect=None, src=''):
 
 args = sys.argv[1:]; kind, name = args[0], args[1]
 opt = dict(zip(args[2::2], args[3::2]))
-FPS = int(opt.get('--fps', 15)); rect = [float(x) for x in opt['--matte'].split(',')] if '--matte' in opt else None
+FPS = int(opt.get('--fps', 15)); THICK = opt.get('--thick', '1') == '1'; rect = [float(x) for x in opt['--matte'].split(',')] if '--matte' in opt else None
 if kind == 'clip':
     src = f'{R}/assets/clips/{name}.mp4'
     cap = cv2.VideoCapture(src); sfps = cap.get(cv2.CAP_PROP_FPS); n = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))

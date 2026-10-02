@@ -1,0 +1,16 @@
+{
+ "model": "bytedance/seedance-2.5",
+ "tag": "jade_J6_lip_t3",
+ "notes": "J6 lip-sync validation: vocals 73.25-81.25 s ('And now I'm back on the road' 73.55-80.57) | t2: no reference_images (t1 7003 User Input Error) | t3: audio 7.5 s < duration",
+ "input": {
+  "prompt": "Night, driving. Three-quarter front view through the windshield of a white 2001 Acura TL: she sits in the left-hand driver's seat on the right side of the frame, both hands on the steering wheel, determined, looking ahead at the road. She sings the vocal in the reference audio, her lips moving in exact sync with each sung word. Orange sodium streetlight reflections slide over the windshield; soft cool dashboard glow on her face; the camera is mounted to the car and stays steady. Jade: East Asian woman, heart-shaped face with a large broad forehead, thin rectangular dark gray-teal metal glasses always on, long straight black hair half-up half-down, white cropped zip jacket with an orange chest band over a black top. Keep her face exactly as in the first frame and the reference photos; same eye size, never squinting. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+  "image": "file:assets/character/firstframes/J6.jpg",
+  "reference_audios": [
+   "file:analysis/slices/vocals_J6_73.25_7.5.mp3"
+  ],
+  "duration": 8,
+  "resolution": "720p",
+  "aspect_ratio": "16:9",
+  "generate_audio": false
+ }
+}
