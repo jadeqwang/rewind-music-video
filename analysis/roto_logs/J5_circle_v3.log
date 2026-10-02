@@ -1,0 +1,22 @@
+J5_circle: 91 frames @15fps from assets/clips/J5_circle_v3.mp4 (1280x720), layers=['lines', 'matte', 'light', 'flow', 'face'], workers=1, tone={'hi': 0.8627451062202454, 'gamma': 0.35}
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+WARNING: Logging before InitGoogle() is written to STDERR
+W0000 00:00:1790958262.447116    4900 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790958263.047673    4905 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+W0000 00:00:1790958263.058548    4907 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790958263.154195    4908 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790958263.862640    4911 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+W0000 00:00:1790958263.874696    4913 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790958263.894502    4914 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790958263.954425    4919 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+  J5_circle    0/91 4.25s  flow=0.06 matte=0.53 ground=0.00 face=2.35 lines=0.65 write=0.66
+  J5_circle   10/91 3.40s  flow=0.13 matte=0.50 ground=0.00 face=1.60 lines=0.35 write=0.81
+  J5_circle   20/91 3.51s  flow=0.11 matte=0.43 ground=0.00 face=1.90 lines=0.44 write=0.62
+  J5_circle   30/91 2.71s  flow=0.12 matte=0.50 ground=0.00 face=0.42 lines=0.65 write=1.02
+  J5_circle   40/91 3.54s  flow=0.09 matte=0.58 ground=0.00 face=1.35 lines=0.49 write=1.03
+  J5_circle   50/91 2.14s  flow=0.07 matte=0.43 ground=0.00 face=0.55 lines=0.41 write=0.68
+  J5_circle   60/91 3.36s  flow=0.07 matte=0.46 ground=0.00 face=1.73 lines=0.37 write=0.74
+  J5_circle   70/91 2.69s  flow=0.07 matte=0.47 ground=0.00 face=1.04 lines=0.36 write=0.75
+  J5_circle   80/91 3.35s  flow=0.09 matte=0.46 ground=0.00 face=1.63 lines=0.34 write=0.83
+  J5_circle   90/91 2.61s  flow=0.07 matte=0.48 ground=0.00 face=0.80 lines=0.47 write=0.79
+J5_circle: done 91/91 frames, wall 272.3s, 32.6 MB, mean s/frame (per worker): flow=0.083, matte=0.507, ground=0.0, face=1.174, lines=0.447, write=0.779, total=2.989

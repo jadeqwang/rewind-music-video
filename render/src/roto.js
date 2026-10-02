@@ -9,6 +9,9 @@ import { DW, DH, PAL, clamp, fin, hash, hsig, layer, clearLayer, rgba, BOIL_FPS 
 
 const ROOT = '../assets/roto';
 const _Q = new URLSearchParams(location.search), FORCE_V1 = _Q.has('jadev1'), CELV = _Q.get('cel') || 'cel', NOFEAT = _Q.has('nofeat');
+// anime Jade medium: 'cel' (re-segmented flat cel, assets/roto/<J>/anime) | 'direct' (her own anime footage, matted + graded, <J>/direct)
+export const JADE_MODE = _Q.get('jade') || 'cel';
+const EXT = { direct: 'webp' };
 const MAX = 80;                  // cached bitmaps (1280x720 ≈ 3.7 MB each)
 const cache = new Map();          // url -> {bmp, last}
 const pending = new Map();        // url -> Promise
@@ -29,7 +32,7 @@ export async function loadMeta(id) {
 }
 export const meta = id => metas.get(id) || null;
 
-const url = (id, lay, i) => `${ROOT}/${id}/${lay}/${String(i).padStart(4, '0')}.png`;
+const url = (id, lay, i) => `${ROOT}/${id}/${lay}/${String(i).padStart(4, '0')}.${EXT[lay] || 'png'}`;
 export function frameIndex(m, clipT) { return Math.max(0, Math.min(m.frames - 1, Math.floor(fin(clipT) * m.fps + 1e-3))); }
 
 function load(u) {
@@ -56,7 +59,8 @@ export async function resolveMisses() { const l = [...misses]; misses.clear(); a
 export function prefetch(id, clipT, ahead = 10, behind = 2) {
   const m = meta(id); if (!m) return;
   const f0 = frameIndex(m, clipT);
-  for (let f = Math.max(0, f0 - behind); f <= Math.min(m.frames - 1, f0 + ahead); f++) for (const l of m.layers) load(url(id, l, f));
+  const skip = JADE_MODE === 'direct' && m.layers.includes('direct') ? 'anime' : 'direct';   // only the active anime medium
+  for (let f = Math.max(0, f0 - behind); f <= Math.min(m.frames - 1, f0 + ahead); f++) for (const l of m.layers) if (l !== skip) load(url(id, l, f));
 }
 export function perFrame(id, clipT) { const m = meta(id); if (!m || !m.per_frame) return {}; return m.per_frame[frameIndex(m, clipT)] || {}; }
 
@@ -128,6 +132,7 @@ export function contours(g, id, clipT, o = {}) {
 //        mouth (0..1 openness from the vocal envelope), alpha}
 export function jade(g, id, clipT, o = {}) {
   const m0 = meta(id);
+  if (m0 && JADE_MODE === 'direct' && m0.layers.includes('direct') && !o.v1 && !o.ghost && !FORCE_V1) return jadeDirect(g, id, clipT, o);
   if (m0 && (m0.layers.includes('anime') || m0.layers.includes('cel')) && !o.v1 && !o.ghost && !FORCE_V1) return jade2(g, id, clipT, o);
   const m = m0; const mt = get(id, 'matte', clipT); if (!m || !mt) return false;
   const face = get(id, 'face', clipT), feat = get(id, 'features', clipT), hair = get(id, 'hair', clipT), lines = get(id, 'lines', clipT);
@@ -273,6 +278,36 @@ function thinBrow(b, profile) {
   }
   return out;
 }
+// ANIME-DIRECT Jade: the one element in her own medium (the footage itself, pre-matted + palette-graded by
+// tools/jade2/direct.py), composited into the redrawn world: ink outline, scene light (multiply wash + screen rim on the
+// lit side), the roto line art boiling on top. Grain / bloom come from the post pass like everything else.
+export function jadeDirect(g, id, clipT, o = {}) {
+  const m = meta(id), src = get(id, 'direct', clipT); if (!src) return false;
+  const k = m.w / DW, A = scratch('jadeD', m), a = clearLayer(A);
+  const O = tinted('jadeDo', m, src, PAL.ink), r = 2.6 * k;   // silhouette ink outline (8-tap dilation)
+  for (let j = 0; j < 8; j++) a.drawImage(O, Math.cos(j * Math.PI / 4) * r, Math.sin(j * Math.PI / 4) * r);
+  a.drawImage(src, 0, 0, m.w, m.h);
+  const L = o.light;
+  if (L && L.amount > 0) {
+    const gr = a.createLinearGradient(L.from[0] * k, L.from[1] * k, L.from[2] * k, L.from[3] * k);
+    gr.addColorStop(0, rgba(L.color, 0)); gr.addColorStop(0.5, rgba(L.color, L.amount * 0.5)); gr.addColorStop(1, rgba(L.color, 0));
+    const W = scratch('jadeDw', m), w = clearLayer(W);   // wash, masked to her
+    w.drawImage(src, 0, 0, m.w, m.h); w.globalCompositeOperation = 'source-in'; w.fillStyle = gr; w.fillRect(0, 0, m.w, m.h); w.globalCompositeOperation = 'source-over';
+    a.globalCompositeOperation = 'multiply'; a.drawImage(W, 0, 0); a.globalCompositeOperation = 'source-over';
+    const R = tinted('jadeDr', m, src, L.color), rg = R.ctx || R.getContext('2d');   // rim: a crescent on the side the light comes from
+    const dir = Math.sign((L.from[0] - L.from[2]) || 1), off = 7 * k;
+    rg.globalCompositeOperation = 'destination-out'; rg.drawImage(src, -dir * off, 0, m.w, m.h); rg.globalCompositeOperation = 'source-over';
+    a.globalCompositeOperation = 'screen'; a.globalAlpha = clamp(L.amount * 2.2); a.drawImage(R, 0, 0); a.globalAlpha = 1; a.globalCompositeOperation = 'source-over';
+  }
+  const lines = get(id, 'lines', clipT);
+  if (lines && !o.noLines) {   // our ink line art on top: the boil that ties her to the drawn world (light, she has her own lines)
+    const Lc = tinted('jadeDl', m, lines, PAL.ink); const lg = Lc.ctx || Lc.getContext('2d');
+    lg.globalCompositeOperation = 'destination-in'; lg.drawImage(src, 0, 0, m.w, m.h); lg.globalCompositeOperation = 'source-over';
+    a.globalAlpha = 0.45; a.drawImage(Lc, 0, 0); a.globalAlpha = 1;
+  }
+  g.save(); g.globalAlpha = clamp(o.alpha ?? 1); place(g, A, o.rect, null); g.restore(); return true;
+}
+
 export function jade2(g, id, clipT, o = {}) {
   const m = meta(id), fi = frameIndex(m, clipT), ANIME = m.layers.includes('anime');
   const cel = ANIME ? get(id, 'anime', clipT) : (get(id, CELV, clipT) || get(id, 'cel', clipT)); if (!cel) return false;

@@ -170,8 +170,12 @@ Built offline by `tools/jade2/build.py <J>` → `assets/roto/<J>/cel/NNNN.png` +
   the figure. `--full` (or an empty RVM matte) treats the whole frame as figure (Jeyes ECU).
 - Cubist planes: `cubist` takes `front`/`side` roto ids (default J5 front / J1 3/4); anchors from per_frame mouth (nearest).
 
-## Audio / mix source
-`src/audio.config.js` is the single switch: `AUDIO_DEFAULT` (v4 now) → song for the mux + timing/envelope files (each with a
-fallback list, so `v5` works before `analysis/envelopes_v5.json` / `timing_v5.json` exist). Override per run with
-`node render.mjs ... --audio v5|v5sfx|v5final|v4sfx` (browser: `?audio=v5`); `--song <path>` still overrides the mux file.
-`v5sfx` = `assets/sound/Rewind5_with_intro_sfx.mp3`; `v5final` = `assets/sound/Rewind5_final.mp3` (v5, intro impact removed + intro SFX; the final-encode master). v5 timing is warped vs v4 (see analysis/TIMING_V5_NOTES.md).
+## Audio / mix source (FINAL: v5final)
+`src/audio.config.js` is the single switch. `AUDIO_DEFAULT = 'v5final'` (user-approved): mux `assets/sound/Rewind5_final.wav`,
+timing `analysis/timing_v5.json`, envelopes `analysis/envelopes_v5.json`. Override per run with `--audio v4|v5|v5sfx` (browser
+`?audio=`); `--song <path>` overrides only the mux file.
+- v5 is NOT on the v4 timeline (constant 129 BPM, offsets −483…+86 ms). `TimeMap.from4(t4)` / `TimeMap.to4(t5)` interpolate
+  `timing_v5.time_map` (identity on v4). Shots stay symbolic; the few v4-literal times (H1 scrub list, a fallback) go through
+  `T.from4`; wall pin timestamps are computed from timing.
+- Lip-synced footage (any clip with `meta.lip_offset`, or a jade layer with `v4clock: true`) runs on the v4 clock:
+  clip_time = to4(t) − to4(shot start) + lip_offset, so mouths stay locked to the v5 vocal.

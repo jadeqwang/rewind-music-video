@@ -15,3 +15,7 @@ User decisions: keep 1420 MHz + pale-blue-dot patches + back print; remove Yagi 
   `CANON_SHEET_v2.jpg` = v2/cands/sheet_0 (gpt-image-2 edit of CANON_SHEET.jpg, faces pasted back from CANON_SHEET, corr 0.97-0.98, offset <=1 px).
   Board `JACKET_v2_BOARD.jpg`. First frames `shots/<SHOT>_v2(_720).jpg`, board `shots/FIRST_FRAMES_ANIME_v2.jpg`. Tools: tools/anime/jacket_v2.py
   (edits, log v2/prompts.json), shotpaste.py (16:9 crop + v1 face paste-back), jacket_board.py. Picks: J7m and J8 = cand 1, all others cand 0.
+- JACKET v3 (user feedback on v2 board: "I usually wear it open"): collar halves parted, snap tab unfastened/hanging, black mock-neck visible.
+  `CANON_SHEET_v3.jpg` = v2/cands/sheet3_5 (edit of CANON_SHEET_v2, faces pasted back). Board `JACKET_v3_BOARD.jpg` (v1/v2/v3). First frames
+  `shots/<SHOT>_v3(_720).jpg` (edits of the v2 frames, `jacket_v2.py shot3`), board `shots/FIRST_FRAMES_ANIME_v3.jpg`. v3 is CURRENT; v2 (closed) superseded.
+  v3 picks: cand 1 for J2 J3 J5 J5b J6 J9, cand 0 for the rest.

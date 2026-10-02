@@ -1,0 +1,18 @@
+J9: 121 frames @15fps from assets/clips/J9_v3.mp4 (1280x720), layers=['lines', 'matte', 'light', 'flow', 'face'], workers=1, tone={'hi': 0.7254902124404907, 'gamma': 0.7477392219993326}
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+WARNING: Logging before InitGoogle() is written to STDERR
+W0000 00:00:1790959607.789705    6385 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790959608.166604    6390 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+W0000 00:00:1790959608.175403    6393 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790959608.191528    6394 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790959609.382670    6396 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+W0000 00:00:1790959609.389486    6398 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790959609.405640    6400 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790959609.448769    6404 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+  J9    0/121 3.97s  flow=0.05 matte=0.46 ground=0.00 face=2.53 lines=0.31 write=0.63
+  J9   10/121 3.02s  flow=0.07 matte=0.44 ground=0.00 face=1.47 lines=0.34 write=0.70
+  J9   20/121 2.48s  flow=0.06 matte=0.45 ground=0.00 face=0.93 lines=0.37 write=0.67
+  J9   30/121 2.96s  flow=0.06 matte=0.42 ground=0.00 face=1.45 lines=0.33 write=0.69
+  J9   40/121 2.93s  flow=0.06 matte=0.37 ground=0.00 face=1.51 lines=0.35 write=0.63
+  J9   50/121 2.20s  flow=0.06 matte=0.41 ground=0.00 face=0.80 lines=0.29 write=0.64
+  J9   60/121 2.53s  flow=0.07 matte=0.40 ground=0.00 face=1.10 lines=0.35 write=0.60

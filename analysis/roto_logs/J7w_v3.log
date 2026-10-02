@@ -1,0 +1,23 @@
+J7w: 106 frames @15fps from assets/clips/J7w_v3.mp4 (1280x720), layers=['lines', 'matte', 'light', 'flow', 'face'], workers=1, tone={'hi': 0.6705882549285889, 'gamma': 0.4172992333859115}
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+WARNING: Logging before InitGoogle() is written to STDERR
+W0000 00:00:1790958835.547632    5453 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790958836.258768    5459 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+W0000 00:00:1790958836.265918    5461 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790958836.283120    5461 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790958836.496327    5465 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+W0000 00:00:1790958836.504184    5467 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790958836.519862    5468 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790958836.577113    5472 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+  J7w    0/106 3.92s  flow=0.05 matte=0.52 ground=0.02 face=2.01 lines=0.38 write=0.95
+  J7w   10/106 1.87s  flow=0.10 matte=0.45 ground=0.02 face=0.42 lines=0.24 write=0.63
+  J7w   20/106 2.63s  flow=0.07 matte=0.43 ground=0.02 face=0.75 lines=0.27 write=1.09
+  J7w   30/106 2.10s  flow=0.08 matte=0.58 ground=0.03 face=0.48 lines=0.23 write=0.71
+  J7w   40/106 2.12s  flow=0.09 matte=0.56 ground=0.03 face=0.50 lines=0.15 write=0.78
+  J7w   50/106 1.91s  flow=0.08 matte=0.47 ground=0.02 face=0.43 lines=0.19 write=0.72
+  J7w   60/106 1.53s  flow=0.06 matte=0.36 ground=0.02 face=0.36 lines=0.14 write=0.59
+  J7w   70/106 1.70s  flow=0.07 matte=0.45 ground=0.02 face=0.37 lines=0.21 write=0.59
+  J7w   80/106 1.61s  flow=0.07 matte=0.40 ground=0.02 face=0.37 lines=0.15 write=0.60
+  J7w   90/106 1.76s  flow=0.06 matte=0.53 ground=0.03 face=0.38 lines=0.13 write=0.63
+  J7w  100/106 1.71s  flow=0.07 matte=0.42 ground=0.02 face=0.32 lines=0.16 write=0.71
+J7w: done 106/106 frames, wall 205.4s, 30.4 MB, mean s/frame (per worker): flow=0.077, matte=0.466, ground=0.025, face=0.467, lines=0.186, write=0.715, total=1.935

@@ -1,0 +1,25 @@
+J8: 121 frames @15fps from assets/clips/J8_v3.mp4 (1280x720), layers=['lines', 'matte', 'light', 'flow', 'face'], workers=1, tone={'hi': 0.8156862854957581, 'gamma': 0.5331540234720905}
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+WARNING: Logging before InitGoogle() is written to STDERR
+W0000 00:00:1790959207.220761    5929 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790959207.539809    5934 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+W0000 00:00:1790959207.547442    5937 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790959207.564245    5937 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790959207.640967    5939 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+W0000 00:00:1790959207.648359    5942 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790959207.664963    5942 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790959207.709351    5946 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+  J8    0/121 2.52s  flow=0.06 matte=0.46 ground=0.00 face=1.03 lines=0.32 write=0.65
+  J8   10/121 1.71s  flow=0.06 matte=0.38 ground=0.00 face=0.30 lines=0.26 write=0.71
+  J8   20/121 1.75s  flow=0.06 matte=0.38 ground=0.00 face=0.36 lines=0.27 write=0.68
+  J8   30/121 1.75s  flow=0.09 matte=0.47 ground=0.00 face=0.34 lines=0.29 write=0.56
+  J8   40/121 1.65s  flow=0.06 matte=0.41 ground=0.00 face=0.33 lines=0.25 write=0.59
+  J8   50/121 1.66s  flow=0.07 matte=0.41 ground=0.00 face=0.34 lines=0.25 write=0.60
+  J8   60/121 1.64s  flow=0.06 matte=0.39 ground=0.00 face=0.33 lines=0.27 write=0.59
+  J8   70/121 1.87s  flow=0.06 matte=0.37 ground=0.00 face=0.55 lines=0.30 write=0.58
+  J8   80/121 2.20s  flow=0.06 matte=0.41 ground=0.00 face=0.85 lines=0.23 write=0.64
+  J8   90/121 2.80s  flow=0.06 matte=0.40 ground=0.00 face=1.38 lines=0.33 write=0.63
+  J8  100/121 2.74s  flow=0.09 matte=0.43 ground=0.00 face=1.34 lines=0.28 write=0.61
+  J8  110/121 1.70s  flow=0.06 matte=0.42 ground=0.00 face=0.36 lines=0.26 write=0.59
+  J8  120/121 2.17s  flow=0.06 matte=0.36 ground=0.00 face=0.88 lines=0.26 write=0.61
+J8: done 121/121 frames, wall 236.6s, 40.5 MB, mean s/frame (per worker): flow=0.068, matte=0.398, ground=0.0, face=0.593, lines=0.277, write=0.618, total=1.954

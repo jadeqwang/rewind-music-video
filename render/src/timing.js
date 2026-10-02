@@ -42,6 +42,17 @@ export class TimeMap {
     this.envFps = fin(this.env.fps, 30);
     this.kicks = (d.kicks || []).map(bt).filter(Number.isFinite);
     this.chops = (d.vocal_chops || []).map(c => c.start).filter(Number.isFinite);
+    // v4 ↔ this-mix time map (timing_v5.json time_map: piecewise linear, extrapolated with the end slopes). Identity on v4.
+    const tm = d.time_map, a4 = tm && tm.v4, a5 = tm && tm.v5;
+    const interp = (x, xs, ys, s0, s1) => {
+      const n = xs.length; if (x <= xs[0]) return ys[0] + (x - xs[0]) * s0; if (x >= xs[n - 1]) return ys[n - 1] + (x - xs[n - 1]) * s1;
+      let lo = 0, hi = n - 1; while (hi - lo > 1) { const mid = (lo + hi) >> 1; if (xs[mid] <= x) lo = mid; else hi = mid; }
+      return ys[lo] + (x - xs[lo]) * (ys[hi] - ys[lo]) / (xs[hi] - xs[lo]);
+    };
+    this.mapped = !!(a4 && a5 && a4.length > 1);
+    const sb = fin(tm && tm.slope_before, 1), sa = fin(tm && tm.slope_after, 1);
+    this.from4 = this.mapped ? (t => interp(t, a4, a5, sb, sa)) : (t => t);   // v4 seconds → this mix
+    this.to4 = this.mapped ? (t => interp(t, a5, a4, 1 / sb, 1 / sa)) : (t => t);   // this mix → v4 seconds (lip-synced footage)
   }
   // try a symbolic reference, fall back when the timing data doesn't have it (e.g. the stub has no events)
   opt(fn, dflt) { try { const v = fn(this); return Number.isFinite(v) ? v : dflt; } catch (e) { return dflt; } }

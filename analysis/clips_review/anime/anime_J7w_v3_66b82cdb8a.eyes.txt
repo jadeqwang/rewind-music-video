@@ -1,0 +1,9 @@
+f0: no face
+f24: no face
+f48: yaw 17 face 30.5px eye_w_face 0.201 (-4.3%) iris_face 0.062 (-42.4%) eye_open 0.276 (-45.5%)
+f72: no face
+f96: yaw 18 face 49.7px eye_w_face 0.183 (-12.9%) iris_face 0.080 (-25.5%) eye_open 0.397 (-21.4%)
+f120: no face
+f144: no face
+f168: no face
+MEAN {'eye_w_face': -8.6, 'iris_face': -34.0, 'eye_open': -33.5} faces 2/8

@@ -3584,11 +3584,35 @@
    },
    "est_usd": 1.8496,
    "est_basis": "8s x 0.2312 (@720p non-video input (per second))",
-   "state": "running",
+   "state": "done",
    "bucket": 29849261,
    "submitted": 1790955323.7836921,
    "bytes": 478927,
-   "started": 1790955699.138
+   "started": 1790955699.138,
+   "state_relay": "done",
+   "gen_secs": 183.8,
+   "finished": 1790955882.896,
+   "latency_secs": 559.1,
+   "files": [
+    "assets/gen/anime_J8_v3_60ced6c8c4.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 8.042,
+     "bytes": 6386834,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "193"
+      }
+     ]
+    }
+   ],
+   "collected": 1790955945.9033628
   },
   "rewind/anime_J8b_v3-3982fdd5c8": {
    "id": "3982fdd5c8",
@@ -3612,11 +3636,35 @@
    },
    "est_usd": 1.3872,
    "est_basis": "6s x 0.2312 (@720p non-video input (per second))",
-   "state": "running",
+   "state": "done",
    "bucket": 29849261,
    "submitted": 1790955324.2705767,
    "bytes": 209134,
-   "started": 1790955699.091
+   "started": 1790955699.091,
+   "state_relay": "done",
+   "gen_secs": 174.8,
+   "finished": 1790955873.901,
+   "latency_secs": 549.6,
+   "files": [
+    "assets/gen/anime_J8b_v3_3982fdd5c8.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 6.042,
+     "bytes": 3994436,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "145"
+      }
+     ]
+    }
+   ],
+   "collected": 1790955946.8240578
   },
   "rewind/anime_J9_v3-6e3341c2aa": {
    "id": "6e3341c2aa",
@@ -3640,11 +3688,35 @@
    },
    "est_usd": 1.8496,
    "est_basis": "8s x 0.2312 (@720p non-video input (per second))",
-   "state": "running",
+   "state": "done",
    "bucket": 29849262,
    "submitted": 1790955324.7687905,
    "bytes": 312127,
-   "started": 1790955757.497
+   "started": 1790955757.497,
+   "state_relay": "done",
+   "gen_secs": 217.3,
+   "finished": 1790955974.791,
+   "latency_secs": 650.0,
+   "files": [
+    "assets/gen/anime_J9_v3_6e3341c2aa.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 8.042,
+     "bytes": 10829877,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "193"
+      }
+     ]
+    }
+   ],
+   "collected": 1790956011.5321774
   },
   "rewind/anime_J5_circle_v3-8f73b08d3a": {
    "id": "8f73b08d3a",
@@ -3668,13 +3740,193 @@
    },
    "est_usd": 1.3872,
    "est_basis": "6s x 0.2312 (@720p non-video input (per second))",
-   "state": "running",
+   "state": "done",
    "bucket": 29849262,
    "submitted": 1790955325.1935472,
    "bytes": 176858,
-   "started": 1790955757.362
+   "started": 1790955757.362,
+   "state_relay": "done",
+   "gen_secs": 152.4,
+   "finished": 1790955909.779,
+   "latency_secs": 584.6,
+   "files": [
+    "assets/gen/anime_J5_circle_v3_8f73b08d3a.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 6.042,
+     "bytes": 5687360,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "145"
+      }
+     ]
+    }
+   ],
+   "collected": 1790955948.0443428
+  },
+  "rewind/anime_J5_v3-2028dbf278": {
+   "id": "2028dbf278",
+   "job": "rewind/anime_J5_v3-2028dbf278",
+   "tag": "anime_J5_v3",
+   "model": "bytedance/seedance-2.5",
+   "notes": "anime Jade J5 v3 (jacket v3: band collar worn OPEN, tab unfastened + epaulettes); same prompt as J5_t1",
+   "spec_file": "assets/gen/specs/anime/J5_v3.json",
+   "input": {
+    "duration": 7,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Centre-locked straight-on performance shot in a dark void with red and blue siren rim light pulsing. She slowly raises her right hand in front of her chest and draws one big slow counter-clockwise circle in the air with her index finger, like rewinding time, then lowers it; her body stays square to the camera, eyes to the lens, lips slightly parted. Locked-off camera. Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/anime/shots/J5_v3_720.jpg"
+   },
+   "est_usd": 1.6184,
+   "est_basis": "7s x 0.2312 (@720p non-video input (per second))",
+   "state": "done",
+   "bucket": 29849271,
+   "submitted": 1790956189.718819,
+   "bytes": 176790,
+   "started": 1790956297.246,
+   "state_relay": "done",
+   "gen_secs": 152.3,
+   "finished": 1790956449.582,
+   "latency_secs": 259.9,
+   "files": [
+    "assets/gen/anime_J5_v3_2028dbf278.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 7.042,
+     "bytes": 7137858,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1112,
+       "height": 834,
+       "r_frame_rate": "24/1",
+       "nb_frames": "169"
+      }
+     ]
+    }
+   ],
+   "collected": 1790956451.8433316
+  },
+  "rewind/anime_J5b_v3-61c492266b": {
+   "id": "61c492266b",
+   "job": "rewind/anime_J5b_v3-61c492266b",
+   "tag": "anime_J5b_v3",
+   "model": "bytedance/seedance-2.5",
+   "notes": "anime Jade J5b v3 (jacket v3: band collar worn OPEN, tab unfastened + epaulettes); same prompt as J5b_t1",
+   "spec_file": "assets/gen/specs/anime/J5b_v3.json",
+   "input": {
+    "duration": 7,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Centre-locked straight-on performance shot in a dark void with blue and red siren rim light pulsing. Her raised open hand sweeps slowly backwards past her shoulder, as if scrubbing time back, while her long hair drifts and flows sideways in a slow wind; body square to the camera, eyes to the lens. Locked-off camera. Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/anime/shots/J5b_v3_720.jpg"
+   },
+   "est_usd": 1.6184,
+   "est_basis": "7s x 0.2312 (@720p non-video input (per second))",
+   "state": "done",
+   "bucket": 29849271,
+   "submitted": 1790956190.246457,
+   "bytes": 219865,
+   "started": 1790956297.24,
+   "state_relay": "done",
+   "gen_secs": 152.4,
+   "finished": 1790956449.628,
+   "latency_secs": 259.4,
+   "files": [
+    "assets/gen/anime_J5b_v3_61c492266b.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 7.042,
+     "bytes": 5963877,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "169"
+      }
+     ]
+    }
+   ],
+   "collected": 1790956452.5966175
+  },
+  "rewind/anime_J8b_v3-ec9c2f0e2c": {
+   "id": "ec9c2f0e2c",
+   "job": "rewind/anime_J8b_v3-ec9c2f0e2c",
+   "tag": "anime_J8b_v3",
+   "model": "bytedance/seedance-2.5",
+   "notes": "anime Jade J8b v3 (jacket v3: band collar worn OPEN, tab unfastened + epaulettes); same prompt as J8b_t1",
+   "spec_file": "assets/gen/specs/anime/J8b_v3.json",
+   "input": {
+    "duration": 6,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Dark seminar room, seen from behind her chair: she slowly turns around in the chair, head and shoulders rotating together over her right shoulder, to look straight back at the camera with wide eyes. The projector beam stays steady. Locked-off camera. Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/anime/shots/J8b_v3_720.jpg"
+   },
+   "est_usd": 1.3872,
+   "est_basis": "6s x 0.2312 (@720p non-video input (per second))",
+   "state": "done",
+   "bucket": 29849272,
+   "submitted": 1790956190.801467,
+   "bytes": 209134,
+   "started": 1790956357.327,
+   "state_relay": "done",
+   "gen_secs": 469.9,
+   "finished": 1790956827.265,
+   "latency_secs": 636.5,
+   "files": [
+    "assets/gen/anime_J8b_v3_ec9c2f0e2c.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 6.042,
+     "bytes": 3598004,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "145"
+      }
+     ]
+    }
+   ],
+   "collected": 1790956859.1523438
   }
  },
- "total_est_usd": 112.7492,
- "total_est_usd_done": 93.3284
+ "total_est_usd": 117.3732,
+ "total_est_usd_done": 104.426
 }

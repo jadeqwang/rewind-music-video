@@ -1,0 +1,9 @@
+f0: yaw 21 face 175.3px eye_w_face 0.217 (+3.5%) iris_face 0.095 (-11.0%) eye_open 0.452 (-10.5%)
+f27: yaw 25 face 182.1px eye_w_face 0.212 (+0.9%) iris_face 0.085 (-20.5%) eye_open 0.455 (-10.0%)
+f54: yaw 21 face 170.0px eye_w_face 0.218 (+4.0%) iris_face 0.099 (-7.5%) eye_open 0.462 (-8.6%)
+f82: yaw 27 face 170.2px eye_w_face 0.215 (+2.3%) iris_face 0.088 (-17.2%) eye_open 0.508 (+0.5%)
+f109: yaw 23 face 182.4px eye_w_face 0.221 (+5.0%) iris_face 0.096 (-10.6%) eye_open 0.458 (-9.3%)
+f137: yaw 23 face 174.4px eye_w_face 0.217 (+3.4%) iris_face 0.090 (-15.4%) eye_open 0.441 (-12.8%)
+f164: yaw 23 face 165.5px eye_w_face 0.232 (+10.2%) iris_face 0.098 (-8.0%) eye_open 0.507 (+0.3%)
+f192: yaw 23 face 178.3px eye_w_face 0.213 (+1.3%) iris_face 0.089 (-17.0%) eye_open 0.461 (-8.8%)
+MEAN {'eye_w_face': 3.8, 'iris_face': -13.4, 'eye_open': -7.4} faces 8/8

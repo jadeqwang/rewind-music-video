@@ -98,7 +98,10 @@ export const LAYERS = {
 
   jade(ctx, L, env, { roto }) {
     const id = L.roto, m = roto.meta(id); if (!m) return;
-    const ct = roto.clipTime(id, env.lt, { speed: L.speed ?? 1, offset: (L.offset ?? 0) + (m.lip_offset ?? 0), loop: L.loop ?? 'pingpong' });   // per-clip lip offset (meta.lip_offset, s)
+    // lip-synced clips (meta.lip_offset set) were generated against v4 vocal slices: play footage on the v4 clock through the
+    // inverse map so the mouth stays locked to this mix's vocal despite local tempo changes
+    const lt = (m.lip_offset != null || L.v4clock) && env.T.mapped ? env.T.to4(env.t) - env.T.to4(env.t - env.lt) : env.lt;
+    const ct = roto.clipTime(id, lt, { speed: L.speed ?? 1, offset: (L.offset ?? 0) + (m.lip_offset ?? 0), loop: L.loop ?? 'pingpong' });   // per-clip lip offset (meta.lip_offset, s)
     const rect = camRect(L.cam, env);
     const light = L.light === 'sodium' ? (env.sweep || sodiumSweep(env.t, { amount: 0.32 })) : L.light === 'siren'
       ? { color: (env.b.i & 1) ? PAL.blue : PAL.red, amount: 0.35 * Math.exp(-env.b.phase * 2), from: (env.b.i & 1) ? [DW, 0, DW * 0.3, 0] : [0, 0, DW * 0.7, 0] } : null;
@@ -363,7 +366,9 @@ export const LAYERS = {
   // A Beautiful Mind wall: pinned death photos, timestamps, red string
   wall(ctx, L, env) {
     const g = ctx.g, p = A(L.progress, env, env.u);
-    const pins = L.pins || [[300, 260, '42.89'], [700, 600, '102.28'], [1180, 300, '13.45'], [1500, 700, '∞'], [480, 820, '45.20'], [1640, 240, '171.54']];
+    const T = env.T, f2 = (fn, d) => { try { const v = fn(); return Number.isFinite(v) ? v.toFixed(2) : d; } catch (e) { return d; } };   // timestamps from this mix's timing
+    const pins = L.pins || [[300, 260, f2(() => T.event('shot', 1), '42.44')], [700, 600, f2(() => T.event('shot', 2), '102.02')], [1180, 300, f2(() => T.section('verse1').start, '13.15')],
+      [1500, 700, '∞'], [480, 820, f2(() => T.section('drop1').start, '44.77')], [1640, 240, f2(() => T.section('final_drop').start, '171.29')]];
     const cs = L.card ?? 1;
     g.save();
     const n = Math.ceil(pins.length * clamp(p * 1.4));

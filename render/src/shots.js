@@ -49,9 +49,10 @@ export function buildShots(T) {
     { fx: { heart: 0 } }, { post: { bloom: 0.15, ca: 0.8, vignette: 0.15 } });
   // H1: the whole video backwards at ×64 — a trailer in reverse; lands on the dark road
   // H1: the trailer in reverse at ×64 — curated bright, varied source moments (descending), 2–3 frames each
-  const TR = [225.0, 215.2, 210.2, 205.4, 203.6, 199.5, 193.2, 113.0, 186.8, 181.0, 179.6, 177.5, 174.6, 172.6, 170.3, 168.2, 166.5, 141.4, 153.0, 150.0,
+  const TR = [   // v4-timeline seconds (the footage moments the scrub visits) → mapped onto this mix
+   225.0, 215.2, 210.2, 205.4, 203.6, 199.5, 193.2, 113.0, 186.8, 181.0, 179.6, 177.5, 174.6, 172.6, 170.3, 168.2, 166.5, 141.4, 153.0, 150.0,
     141.3, 136.0, 131.2, 128.6, 126.5, 122.8, 119.5, 116.2, 114.2, 112.6, 109.2, 106.0, 103.0, 102.4, 98.6, 96.5, 92.5, 89.6, 86.5, 83.4, 81.5, 77.0, 69.6,
-    64.0, 59.0, 56.5, 52.6, 49.5, 47.2, 43.6, 41.6, 41.0, 37.0, 33.0, 27.0, 18.0];
+    64.0, 59.0, 56.5, 52.6, 49.5, 47.2, 43.6, 41.6, 41.0, 37.0, 33.0, 27.0, 18.0].map(T.from4);
   C('H1_scrub', bt(1), bt(9), [ink, { type: 'montage', times: TR, per: (bt(9) - bt(1)) / TR.length }, { type: 'rwhud', speed: 64 }],
     { fx: { jerks: [bt(1)], heart: 0 } }, { post: e => ({ warble: 0.8, warbleSeed: Math.floor(e.lt * 30), tracking: 0.5, scan: 0.3, ca: 3, bloom: 0.2 }) });
   C('H2_rain', bt(9), braam0, [ink,
@@ -293,11 +294,11 @@ export function buildShots(T) {
   C('D2_chair', L(16).start, dSil.t ?? dSil, [ink, { type: 'projector', title: '', sub: '' },
     jade('J8', { cam: { from: [0.76, 0.42, 1.1], to: [0.76, 0.42, 1.14], dx: 380 } }),
     { type: 'revisions', lines: [16], size: 100, y: 380, measure: 900 }], { hud: hud(3, 0.0), fx: { heart: 0.3 } });
-  const dsil = T.opt(T => T.event('silence', 3), 149.12), dsilEnd = T.downbeatsIn(dsil + 1, dsil + 3)[0] ?? dsil + 2;
+  const dsil = T.opt(T => T.event('silence', 3), T.from4(149.12)), dsilEnd = T.downbeatsIn(dsil + 1, dsil + 3)[0] ?? dsil + 2;
   C('D3_dropout', dsil, dsilEnd, [{ type: 'fill', color: PAL.bone }, { type: 'mono', text: '∴', y: 700, size: 520, weight: 700, color: PAL.ink }], { fx: { heart: 0.1 } }, { post: { bloom: 0, vignette: 0.1 } });
   // D4: A Beautiful Mind wall, BIG: four case-file prints pinned with red string, filling the frame
   C('D4_wall', dsilEnd, L(18).start, [{ type: 'fill', color: '#16110C' },
-    { type: 'wall', card: 2.3, progress: e => 0.3 + e.u, pins: [[420, 290, '42.89'], [1480, 300, '102.28'], [520, 840, '13.45'], [1420, 830, '∞']] },
+    { type: 'wall', card: 2.3, progress: e => 0.3 + e.u, pins: [[420, 290, ev('shot', 1).toFixed(2)], [1480, 300, ev('shot', 2).toFixed(2)], [520, 840, v1.toFixed(2)], [1420, 830, '∞']] },
     { type: 'rect', x: 690, y: 330, w: 540, h: 420, color: PAL.bone }, { type: 'dot', x: 960, y: 336, r: 10, color: PAL.red },
     { type: 'rollouts', n: 300, seed: 21, ink: true, x: 720, y: 520, w: 480, h: 300, lw: 1.2, tick: 2, labels: false, progress: e => smooth(0, 0.5, e.u), kills: [{ at: 0.38, share: 0.55, dy: -0.3 }, { at: 0.68, share: 0.44, dy: 0.05 }], survivor: true, surviveDy: 0.3, survivorW: 3 },
     { type: 'revisions', lines: [17], size: 76, y: 560, measure: 1500, revs: [{ dx: 0, dy: 0 }, { dx: 18, dy: 30 }] }],

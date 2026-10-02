@@ -1,0 +1,22 @@
+J3: 91 frames @15fps from assets/clips/J3_v3.mp4 (1280x720), layers=['lines', 'matte', 'light', 'flow', 'face'], workers=1, tone={'hi': 0.7333333492279053, 'gamma': 1.0}
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+WARNING: Logging before InitGoogle() is written to STDERR
+W0000 00:00:1790957507.893297    4171 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790957508.530362    4177 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+W0000 00:00:1790957508.543250    4179 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790957508.578605    4180 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790957508.862380    4183 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+W0000 00:00:1790957508.868989    4185 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790957508.884595    4185 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790957508.932076    4190 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+  J3    0/91 3.51s  flow=0.06 matte=0.56 ground=0.00 face=1.84 lines=0.30 write=0.75
+  J3   10/91 2.65s  flow=0.13 matte=0.76 ground=0.00 face=0.55 lines=0.37 write=0.83
+  J3   20/91 3.67s  flow=0.14 matte=0.62 ground=0.00 face=1.35 lines=0.66 write=0.91
+  J3   30/91 2.27s  flow=0.08 matte=0.51 ground=0.00 face=0.53 lines=0.41 write=0.75
+  J3   40/91 2.22s  flow=0.07 matte=0.43 ground=0.00 face=0.56 lines=0.38 write=0.78
+  J3   50/91 2.13s  flow=0.08 matte=0.52 ground=0.00 face=0.36 lines=0.36 write=0.81
+  J3   60/91 2.41s  flow=0.09 matte=0.45 ground=0.00 face=0.66 lines=0.45 write=0.76
+  J3   70/91 2.27s  flow=0.08 matte=0.50 ground=0.00 face=0.43 lines=0.48 write=0.79
+  J3   80/91 2.37s  flow=0.22 matte=0.62 ground=0.00 face=0.57 lines=0.33 write=0.64
+  J3   90/91 1.85s  flow=0.07 matte=0.43 ground=0.00 face=0.41 lines=0.30 write=0.63
+J3: done 91/91 frames, wall 235.6s, 41.6 MB, mean s/frame (per worker): flow=0.097, matte=0.527, ground=0.0, face=0.675, lines=0.439, write=0.849, total=2.586
