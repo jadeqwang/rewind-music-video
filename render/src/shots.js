@@ -48,8 +48,12 @@ export function buildShots(T) {
     { type: 'glyph', ch: '✗', x: 1500, y: 955, size: 270, color: PAL.red, onType: false }],
     { fx: { heart: 0 } }, { post: { bloom: 0.15, ca: 0.8, vignette: 0.15 } });
   // H1: the whole video backwards at ×64 — a trailer in reverse; lands on the dark road
-  add('H1_scrub', bt(1), bt(9), 'rewind', { from: sec('end').start - 0.5, to: v1, speeds: [64], segs: [1], hold: 0, echo: 0, badge: 64 }, { fx: { jerks: [bt(1)] } });
-  // H2: rain on the windshield; dashboard glow rising; case 1 of ∞
+  // H1: the trailer in reverse at ×64 — curated bright, varied source moments (descending), 2–3 frames each
+  const TR = [222.5, 215.2, 210.2, 205.4, 203.6, 199.5, 193.2, 189.5, 186.8, 181.0, 179.6, 177.5, 174.6, 172.6, 170.3, 168.2, 166.5, 158.0, 153.0, 150.0,
+    141.3, 136.0, 131.2, 128.6, 126.5, 122.8, 119.5, 116.2, 114.2, 112.6, 109.2, 106.0, 103.0, 102.4, 98.6, 96.5, 92.5, 89.6, 86.5, 83.4, 81.5, 77.0, 69.6,
+    64.0, 59.0, 56.5, 52.6, 49.5, 47.2, 43.6, 41.6, 41.0, 37.0, 33.0, 27.0, 18.0];
+  C('H1_scrub', bt(1), bt(9), [ink, { type: 'montage', times: TR, per: (bt(9) - bt(1)) / TR.length }, { type: 'rwhud', speed: 64 }],
+    { fx: { jerks: [bt(1)], heart: 0 } }, { post: e => ({ warble: 0.8, warbleSeed: Math.floor(e.lt * 30), tracking: 0.5, scan: 0.3, ca: 3, bloom: 0.2 }) });
   C('H2_rain', bt(9), braam0, [ink,
     { type: 'world', roto: R.plate('car_interior_1'), alpha: 0.95, lights: 1, cam: { from: [0.5, 0.5, 1.06], to: [0.5, 0.52, 1.14] } },
     { type: 'sodium', period: P * 2, amount: 0.9, alpha: 0.5 }, { type: 'flash', amount: 0.12, color: PAL.sodium },
@@ -325,7 +329,7 @@ export function buildShots(T) {
     { type: 'slam', hits: [{ t: fd + P, text: 'NEVER STOP', variant: 'center' }], y: 860, maxH: 420, maxW: 1620 }], { hud: { attempt: 3, ok: true, tc: true, eval: 9 }, fx: { kick: 1, jerks: [fd] } });
   const lane = (o = {}) => [ink, { type: 'world', roto: R.road, alpha: 0.8, lights: 0.6, speed: 2.2 }, { type: 'kickflash', color: PAL.sodium, amount: 0.55 },
     { type: 'streetlights', speed: 2.8 }, { type: 'lanewords', speed: 2.0, words: o.words }, { type: 'speedlines', amount: 0.5, vy: 430 }];
-  const insert = (kind, i) => kind === 'jade' ? [ink, { type: 'sodium', period: P, amount: 0.9, kick: 1, alpha: 0.4 }, jade('J9', { light: 'sodium', late: P / 2, cam: { from: [0.76, 0.42, 1.05], to: [0.76, 0.42, 1.12] } })]
+  const insert = (kind, i) => kind === 'jade' ? [ink, { type: 'sodium', period: P, amount: 0.9, kick: 1, alpha: 0.4 }, jade('J9', { light: null, late: P / 2, cam: { from: [0.76, 0.42, 1.05], to: [0.76, 0.42, 1.12] } })]
     : kind === 'pages' ? [{ type: 'fill', color: '#E8860F' }, { type: 'world', roto: R.road, alpha: 0.8, color: PAL.ink, comp: 'source-over', lights: 0, speed: 2 }, { type: 'casepages', n: 8 }]
     : kind === 'scale' ? [ink, ...sirenLit({ base: 0.45 }), ...suits('S5', { cam: { from: [0.5, 0.5, 0.28], to: [0.5, 0.5, 0.22], dy: -120 } }),
       { type: 'suits', roto: R.suits('S5'), cam: { from: [0.25, 0.4, 2.8], to: [0.25, 0.4, 3.2], dx: 700 } }, { type: 'speedlines', amount: 0.6 }]
@@ -356,12 +360,12 @@ export function buildShots(T) {
     { type: 'car', roto: R.aerial, view: 'chase', lights: 'tail', trail: true, cam: { from: [0.45, 0.6, 1.5], to: [0.5, 0.5, 0.82] }, loop: false },
     { type: 'rollouts', n: 600, seed: 31, x: 180, y: 560, w: 1560, h: 900, alpha: 0.5, labels: false, kills: [{ at: 0.3, share: 0.33, dy: -0.35 }, { at: 0.55, share: 0.33, dy: 0.0 }, { at: 0.8, share: 0.34, dy: 0.3 }] },
     { type: 'pathdraw', progress: 1, width: 9, head: false, color: PAL.cyan }], { fx: { kick: 0.5, heart: 0.2, downInvert: 2, jerks: [ev('braam', 8)] } });
-  C('N7_qed', qed, end, [{ type: 'storypage', size: 56, x: 300, stagger: 0.45, lines: ['I\u2019m back in my car, sirens in my rear view,', 'and I don\u2019t stop. I don\u2019t pull over. I keep driving', 'as inconspicuously as possible.', '', 'And I never stop.'] }], { fx: { heart: 0.15, jerks: [qed] } }, { post: { bloom: 0, vignette: 0.12 } });
+  C('N7_qed', qed, end, [{ type: 'storypage', size: 72, x: 160, stagger: 0.32, lines: ['I\u2019m back in my car, sirens in my rear view,', 'and I don\u2019t stop. I don\u2019t pull over.', 'I keep driving as inconspicuously as possible.', '', { text: 'And I never stop.', size: 112, at: T.beatAfter(qed + 1.4) - qed }] }], { fx: { heart: 0.15, jerks: [qed] } }, { post: { bloom: 0, vignette: 0.12 } });
   C('END_black', end, end + 0.9, [{ type: 'fill', color: '#000' }, { type: 'mono', text: '∎', y: 580, size: 120, weight: 700 }], { fx: { heart: 0 } }, { post: { bloom: 0, vignette: 0, grain: 0.02 } });
   C('END_credits', end + 0.9, T.duration + 0.5, [{ type: 'fill', color: '#000' }, { type: 'mono', text: 'REWIND — Jade Wang', y: 520, size: 44, color: PAL.boneDim },
     { type: 'mono', text: 'every frame drawn in code', y: 600, size: 42, color: PAL.boneDim, at: 0.5 }], { fx: { heart: 0 } }, { post: { bloom: 0, vignette: 0 } });
   // ---- every rewind section keeps actual reverse motion of earlier footage as its base layer (overlays sit on top) ----
-  const RW = [{ a: drop1, b: sec('verse3').start, from: shot1 - 0.02, to: v1 + 0.5 }, { a: drop2, b: bd, from: shot2 - 0.02, to: sec('verse3').start + 0.3 }];
+  const RW = [{ a: drop1, b: sec('verse3').start, from: shot1 - 0.02, to: sec('build1').start + 0.1 }, { a: drop2, b: bd, from: shot2 - 0.02, to: sec('verse3').start + 0.3 }];
   for (const sh of S) for (const w of RW) {
     if (sh.t0 < w.a - 1e-3 || sh.t0 >= w.b - 1e-3) continue;
     sh.params.isRewind = true;

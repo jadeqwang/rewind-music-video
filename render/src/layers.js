@@ -5,7 +5,7 @@
 import { DW, DH, PAL, clamp, lerp, inv, smooth, fract, easeOutCubic, easeInOutCubic, easeOutExpo, easeOutBack, hash, hsig, rng, rgba, layer, clearLayer, resetCtx, fin, noise1, timecode } from './core.js';
 import { page as pageType, slam, subtitle, redact, redactedLine, revisions, setFont, F } from './type.js';
 import * as V from './slams.js';
-import { searchTree, buildTree, glyph, evalBar, annotation } from './hud.js';
+import { searchTree, buildTree, glyph, evalBar, annotation, rewindHud } from './hud.js';
 import { sirens, sodiumSweep, sodiumWash, rain, bullet, headlights, fillInk } from './fx.js';
 import * as CAR from './car.js';
 
@@ -98,7 +98,7 @@ export const LAYERS = {
 
   jade(ctx, L, env, { roto }) {
     const id = L.roto, m = roto.meta(id); if (!m) return;
-    const ct = roto.clipTime(id, env.lt, { speed: L.speed ?? 1, offset: L.offset ?? 0, loop: L.loop ?? 'pingpong' });
+    const ct = roto.clipTime(id, env.lt, { speed: L.speed ?? 1, offset: (L.offset ?? 0) + (m.lip_offset ?? 0), loop: L.loop ?? 'pingpong' });   // per-clip lip offset (meta.lip_offset, s)
     const rect = camRect(L.cam, env);
     const light = L.light === 'sodium' ? (env.sweep || sodiumSweep(env.t, { amount: 0.32 })) : L.light === 'siren'
       ? { color: (env.b.i & 1) ? PAL.blue : PAL.red, amount: 0.35 * Math.exp(-env.b.phase * 2), from: (env.b.i & 1) ? [DW, 0, DW * 0.3, 0] : [0, 0, DW * 0.7, 0] } : null;
@@ -683,10 +683,12 @@ Object.assign(LAYERS, {
     const lines = L.lines || [], px = L.size ?? 64, lead = px * 1.5, x0 = L.x ?? 260;
     let y = (L.y ?? (DH / 2 - (lines.length - 1) * lead / 2 + px * 0.3));
     ty.save(); ty.textBaseline = 'alphabetic';
-    lines.forEach((ln, i) => {
-      if (ln === '') { y += lead * 0.5; return; }
-      const at = (L.stagger ?? 0.35) * i, a = smooth(at, at + 0.5, env.lt);
-      setFont(ty, L.italic === false ? F.cmuR(px) : F.cmu(px)); ty.fillStyle = rgba(PAL.ink, a); ty.fillText(ln, x0, y); y += lead;
+    lines.forEach((ln0, i) => {
+      if (ln0 === '') { y += lead * 0.5; return; }
+      const ln = typeof ln0 === 'string' ? { text: ln0 } : ln0, sz = ln.size ?? px;
+      if (ln.size) y += (sz - px) * 0.9;
+      const at = ln.at ?? (L.stagger ?? 0.35) * i, a = smooth(at, at + 0.4, env.lt);
+      setFont(ty, L.italic === false ? F.cmuR(sz) : F.cmu(sz)); ty.fillStyle = rgba(PAL.ink, a); ty.fillText(ln.text, x0, y); y += ln.size ? sz * 1.4 : lead;
     });
     // ornament: a small rule with a centred diamond
     const oy = (L.y ?? 0) ? y + 10 : y + 10; ty.fillStyle = rgba(PAL.ink, 0.7 * smooth(0, 0.6, env.lt)); ty.fillRect(DW / 2 - 120, oy, 240, 2);
@@ -773,6 +775,21 @@ Object.assign(LAYERS, {
     g.restore();
   },
 });
+const TYPE_LAYERS = new Set(['slam', 'mono', 'page', 'cm', 'subtitle', 'worldcard', 'redact', 'revisions', 'storypage', 'counter', 'annotation', 'reload', 'routemap']);
+Object.assign(LAYERS, {
+  // the hook trailer: a reverse montage of curated bright source moments, 2–3 frames each (times descending)
+  async montage(ctx, L, env, data) {
+    const per = L.per ?? 2.5 / 30, k = Math.min(L.times.length - 1, Math.floor(env.lt / per + 1e-6)), ts = L.times[k];
+    const sh = data.shotAt(ts); if (!sh) return;
+    const M = layer('montage', ctx.g.canvas.width, ctx.g.canvas.height), mg = clearLayer(M), MT = layer('montageT', ctx.g.canvas.width, ctx.g.canvas.height), mt = clearLayer(MT);
+    mg.setTransform(ctx.S, 0, 0, ctx.S, 0, 0); mt.setTransform(ctx.S, 0, 0, ctx.S, 0, 0);
+    await data.drawShot(sh, ts, mg, mt, {}, { noHud: true, noRhythm: true });
+    resetCtx(mg); mg.drawImage(MT, 0, 0);
+    const g = ctx.g; g.save(); g.setTransform(1, 0, 0, 1, 0, 0); g.drawImage(M, 0, 0); g.restore();
+    env.montageTs = ts;
+  },
+  rwhud(ctx, L, env) { rewindHud(ctx.ty, { speed: L.speed ?? 64, tc: env.montageTs ?? env.t, alpha: 1 }); },
+});
 const TREES = new Map();
 
 // normalised Lake Shore Drive outline (lake to the right) and the aerial-curve stroke
@@ -786,6 +803,7 @@ export async function drawLayers(ctx, list, env, data) {
     if (L.when && !L.when(env)) continue;
     if (L.t0 != null && env.lt < L.t0) continue; if (L.t1 != null && env.lt >= L.t1) continue;
     const f = LAYERS[L.type]; if (!f) throw new Error('unknown layer ' + L.type);
+    if (ctx.noType && TYPE_LAYERS.has(L.type)) continue;   // reverse playback bases never carry other shots' lettering
     ctx.g.save(); ctx.ty.save();
     await f(ctx, L, env, data);
     ctx.g.restore(); ctx.ty.restore();

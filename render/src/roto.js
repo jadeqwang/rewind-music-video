@@ -128,7 +128,7 @@ export function contours(g, id, clipT, o = {}) {
 //        mouth (0..1 openness from the vocal envelope), alpha}
 export function jade(g, id, clipT, o = {}) {
   const m0 = meta(id);
-  if (m0 && m0.layers.includes('cel') && !o.v1 && !o.ghost && !FORCE_V1) return jade2(g, id, clipT, o);
+  if (m0 && (m0.layers.includes('anime') || m0.layers.includes('cel')) && !o.v1 && !o.ghost && !FORCE_V1) return jade2(g, id, clipT, o);
   const m = m0; const mt = get(id, 'matte', clipT); if (!m || !mt) return false;
   const face = get(id, 'face', clipT), feat = get(id, 'features', clipT), hair = get(id, 'hair', clipT), lines = get(id, 'lines', clipT);
   const pf = perFrame(id, clipT);
@@ -274,7 +274,8 @@ function thinBrow(b, profile) {
   return out;
 }
 export function jade2(g, id, clipT, o = {}) {
-  const m = meta(id), fi = frameIndex(m, clipT), cel = get(id, CELV, clipT) || get(id, 'cel', clipT); if (!cel) return false;
+  const m = meta(id), fi = frameIndex(m, clipT), ANIME = m.layers.includes('anime');
+  const cel = ANIME ? get(id, 'anime', clipT) : (get(id, CELV, clipT) || get(id, 'cel', clipT)); if (!cel) return false;
   const fd = m.faceData && m.faceData[fi] || {}, cd = m.celData && (m.celData[fi] || m.celData[String(fi)]) || {}, pf = perFrame(id, clipT);
   const A = scratch('jade2', m), a = clearLayer(A);
   a.drawImage(cel, 0, 0, m.w, m.h);
@@ -288,11 +289,12 @@ export function jade2(g, id, clipT, o = {}) {
   if (lines && !o.noLines) {   // hands / sleeves / wheel: the roto agent's clean vector line art, in ink, on the figure only
     const Lc = tinted('jlines2', m, lines, PAL.ink); const lg = Lc.ctx;
     lg.globalCompositeOperation = 'destination-in'; lg.drawImage(cel, 0, 0, m.w, m.h);
-    if (faceM) { lg.globalCompositeOperation = 'destination-out'; for (let k = 0; k < 2; k++) lg.drawImage(faceM, 0, 0, m.w, m.h); }
+    if (faceM && !ANIME) { lg.globalCompositeOperation = 'destination-out'; for (let k = 0; k < 2; k++) lg.drawImage(faceM, 0, 0, m.w, m.h); }   // anime: the clean roto lines draw her own features
     lg.globalCompositeOperation = 'source-over';
     a.globalAlpha = 0.85; a.drawImage(Lc, 0, 0); a.globalAlpha = 1;
   }
   const sc = fd.template_scale_px || (cd.iod) || 150;
+  if (ANIME) { g.save(); g.globalAlpha = clamp(o.alpha ?? 1); place(g, A, o.rect, null); g.restore(); return true; }   // no template features / glasses on anime Jade
   if (NOFEAT) { if (o.glasses !== false) drawGlasses(a, fd, o); g.save(); g.globalAlpha = clamp(o.alpha ?? 1); place(g, A, o.rect, null); g.restore(); return true; }
   // brows: filled tapered polygons (her own asymmetric template)
   a.fillStyle = FEAT;

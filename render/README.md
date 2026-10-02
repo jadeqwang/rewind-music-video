@@ -155,3 +155,15 @@ Built offline by `tools/jade2/build.py <J>` → `assets/roto/<J>/cel/NNNN.png` +
 - Likeness tooling: `render/tools/likeness_review.py [--v2 --v3]`, `render/tools/likeness_ladder.py`, `tools/likeness/measure.py`.
 - Picasso devices (cubist planes front+profile, escalating: case files 2 → 4 planes, build 3 = 6 planes cycling, final drop resolves),
   Gjon-Mili light-pen ghosts, Guernica freeze planes + lamp-eye: layers `cubist`, `guernica`, `ghosts` in `src/layers.js`.
+
+## Anime Jade mode (user decision: anime Jade replaces the B-style face)
+- `python3 tools/jade2/anime.py <J...>` → `assets/roto/<J>/anime/NNNN.png` + `anime.json` (adds `anime` to meta.layers).
+  Flat cel regions quantized to her canonical anime palette (skin + 1 shadow, black hair + sheen, white jacket + shadow,
+  orange bands, pale-blue patch, black top/pants, eye/mouth shapes) from smoothed footage HSV + roto matte/face/hair masks;
+  per-label spline-smoothed layers, never source pixels. `--still IMG OUT` tests on a keyframe (isnet matte).
+- Renderer: when a J roto has `anime`, `roto.jade2` draws the anime cel + the roto's clean ink linework over the whole figure
+  (including the face — her own anime eyes/brows/mouth), no template eyes/glasses. Scene light is multiplied.
+- Lip sync: per-clip offset from `meta.lip_offset` (seconds) is added to the clip time (set it from CLIPS.md).
+- Eye clamp: `anime.json` records per-frame eye-blob size vs the clip's 90th percentile (`eye_scale` > 1 where a frame shrinks
+  > 5 %). TODO: apply the scale as a local warp around the eye anchors in the renderer.
+- Cubist planes: `cubist` takes `front`/`side` roto ids (default J6/J1); point them at the anime front + 3/4 clips when present.
