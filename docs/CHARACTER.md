@@ -23,3 +23,6 @@ Best references:
 ## Car & continuity
 Her car: WHITE 2001 ACURA TL (2nd-gen 4-door sedan; simple dash, no touchscreen). US left-hand drive — she sits on
 the LEFT; traffic on the right. Pursuers: dark sedan. Reject any mirrored / right-hand-drive interiors.
+
+
+v2 (2026-10-02): measured likeness gate + approved-candidate sheet in assets/character/v2/ (measure.json = real-photo ratios); tools in tools/likeness/ (measure.py gate, warp.py correction, pasteback.py real-face paste-back, lipsync.py). Photo-based first frames: assets/character/firstframes/.

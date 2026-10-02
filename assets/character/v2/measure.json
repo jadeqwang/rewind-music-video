@@ -1856,55 +1856,55 @@
    {
     "face": 0,
     "m": {
-     "yaw": -23.9,
-     "eye_w_iod": 0.321,
-     "eye_open": 0.3708,
-     "eye_w_face": 0.2081,
-     "iris_face": 0.0916,
-     "forehead": 0.3176,
-     "browchin_face": 0.6824,
-     "mid_third": 0.5585,
-     "face_hw": 1.5104,
-     "forehead_w": 0.8947,
-     "temple_w": 0.9863,
-     "jaw_w": 0.7609,
-     "lowjaw_w": 0.6401,
-     "chin_w": 0.2017,
-     "chin_angle": 136.3394,
-     "chin_tip_angle": 174.1156,
-     "upper_head": 0.743
+     "yaw": -24.0,
+     "eye_w_iod": 0.3194,
+     "eye_open": 0.3784,
+     "eye_w_face": 0.2037,
+     "iris_face": 0.0887,
+     "forehead": 0.3217,
+     "browchin_face": 0.6783,
+     "mid_third": 0.5606,
+     "face_hw": 1.5122,
+     "forehead_w": 0.8806,
+     "temple_w": 0.9743,
+     "jaw_w": 0.7655,
+     "lowjaw_w": 0.6453,
+     "chin_w": 0.2043,
+     "chin_angle": 136.0459,
+     "chin_tip_angle": 173.1137,
+     "upper_head": 0.7549
     },
-    "gate_ok": true,
+    "gate_ok": false,
     "dev": {
-     "eye_w_face": 0.0302,
-     "iris_face": -0.0428,
-     "eye_open": 0.0346,
-     "forehead": -0.0258,
-     "upper_head": 0.0616,
-     "forehead_w": -0.0193,
-     "jaw_w": -0.013,
-     "chin_w": -0.023
+     "eye_w_face": 0.0084,
+     "iris_face": -0.0731,
+     "eye_open": 0.0558,
+     "forehead": -0.0132,
+     "upper_head": 0.0786,
+     "forehead_w": -0.0346,
+     "jaw_w": -0.0071,
+     "chin_w": -0.0101
     },
     "brow": {
      "height": {
-      "got": -0.0381,
-      "expected": -0.0452,
-      "z": 0.31
+      "got": -0.0367,
+      "expected": -0.0454,
+      "z": 0.38
      },
      "peak_height": {
-      "got": -0.0455,
-      "expected": -0.0481,
-      "z": 0.08
+      "got": -0.0356,
+      "expected": -0.0482,
+      "z": 0.38
      },
      "arch": {
-      "got": -0.0157,
-      "expected": -0.0209,
-      "z": 0.19
+      "got": 0.0065,
+      "expected": -0.021,
+      "z": 0.99
      },
      "peak_pos": {
-      "got": 0.184,
-      "expected": 0.0159,
-      "z": 1.19
+      "got": 0.217,
+      "expected": 0.0165,
+      "z": 1.42
      }
     }
    }
@@ -1916,6 +1916,6 @@
   "EXPRESSIONS": "cands/EX1_w.jpg",
   "TURNAROUND": "cands/TU1_w.jpg",
   "WINDOW_ID": "cands/WI1_w.jpg",
-  "GRASS_RUN": "cands/GR2_w.jpg"
+  "GRASS_RUN": "../firstframes/cands/J7m.jpg + warp (flashlight removed per director review)"
  }
 }

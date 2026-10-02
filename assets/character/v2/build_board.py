@@ -64,6 +64,6 @@ board = board.crop((0, 0, W, pos[-1][1] + 870))
 board.save(ROOT + "/assets/character/REVIEW_BOARD_v2.jpg", quality=90)
 db["outputs"] = outputs
 db["selection"] = {"DRIVER_PLATE": "cands/G_warp.jpg (G + warp)", "FACE_SHEET": "cands/FS1_w.jpg", "EXPRESSIONS": "cands/EX1_w.jpg",
-                   "TURNAROUND": "cands/TU1_w.jpg", "WINDOW_ID": "cands/WI1_w.jpg", "GRASS_RUN": "cands/GR2_w.jpg"}
+                   "TURNAROUND": "cands/TU1_w.jpg", "WINDOW_ID": "cands/WI1_w.jpg", "GRASS_RUN": "../firstframes/cands/J7m.jpg + warp (flashlight removed per director review)"}
 json.dump(db, open(D + "/measure.json", "w"), indent=1, default=float)
 print("ok")
