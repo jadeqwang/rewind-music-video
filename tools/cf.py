@@ -73,9 +73,13 @@ def run_model(model, payload, timeout=900, retries=2, gateway=None, verbose=True
 
     - '@cf/...' models go to /ai/run/{model} (Workers AI).
     - everything else goes to the unified /ai/run envelope endpoint.
-    The gateway holds the connection until the job finishes (video: ~1-5 min),
-    so there is no polling; we just use a long timeout. For the third-party
-    envelope, returns the inner result dict, e.g. {"video": url}.
+    For the third-party envelope, returns the inner result dict, e.g. {"video": url}.
+
+    IMPORTANT (this sandbox): the auth-injecting egress proxy kills any request
+    after ~30 s with 'HTTP 502: upstream request failed'. Images/TTS/ASR finish
+    in < 15 s and work. Video generation (minutes) cannot complete synchronously
+    from here -> use submit_background() with a webhook, or a relay Worker
+    (see docs/GEN_API.md).
     """
     extra = {"cf-aig-gateway-id": gateway} if gateway else None
     if model.startswith("@cf/") or model.startswith("@hf/"):
@@ -89,6 +93,9 @@ def run_model(model, payload, timeout=900, retries=2, gateway=None, verbose=True
             ctype, raw, hdrs = _post(url, body, timeout, extra)
         except CFError as e:
             msg = str(e)
+            if "HTTP 502" in msg and "upstream request failed" in msg and time.time() - t0 > 25:
+                raise CFError("~30 s sandbox proxy timeout (job may still be running/billed upstream). "
+                              "Use submit_background() or a relay Worker for long jobs.") from None
             # don't retry user-input errors (7003 / 400)
             if "HTTP 400" in msg or "7003" in msg or attempt == retries:
                 raise
@@ -118,6 +125,26 @@ def run_model(model, payload, timeout=900, retries=2, gateway=None, verbose=True
             return res["result"]
         return res
     raise last
+
+
+def submit_background(model, payload, webhook_url=None, webhook_format=None):
+    """Fire-and-forget run (unified /ai/run only). Returns {"runId", "state": "Running"}.
+
+    The result is ONLY delivered by POST to webhook_url (public HTTPS, best effort,
+    no retries). There is no run-status GET usable with this sandbox's token
+    (GET /ai/runs/{id} -> 'Method not allowed for this authentication scheme').
+    Without a webhook the output is unrecoverable (but still billed).
+    """
+    opts = {"background": True}
+    if webhook_url:
+        opts["webhookUrl"] = webhook_url
+        if webhook_format:
+            opts["webhookFormat"] = webhook_format
+    _, raw, _ = _post(f"{API}/ai/run", {"model": model, "input": payload, "options": opts}, 30)
+    d = json.loads(raw)
+    if not d.get("success", True):
+        raise CFError(json.dumps(d.get("errors")))
+    return d["result"]
 
 
 _EXT = {"image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp", "video/mp4": ".mp4",

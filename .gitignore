@@ -7,3 +7,5 @@ analysis/models/
 *.onnx
 *.pt
 *.pth
+render/frames/
+render/node_modules/
