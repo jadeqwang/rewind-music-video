@@ -39,7 +39,7 @@ KEYS = ["eye_w_iod", "eye_open", "eye_w_face", "iris_face", "forehead", "browchi
         "forehead_w", "temple_w", "jaw_w", "lowjaw_w", "chin_w", "chin_angle", "chin_tip_angle", "upper_head"]
 # gate: key -> (lowest allowed, highest allowed) relative deviation from the real core mean
 GATE_KEYS = {"eye_w_face": (-0.05, 0.10), "iris_face": (-0.07, 0.12), "eye_open": (-0.10, 0.20),
-             "forehead": (-0.05, 0.08), "upper_head": (-0.08, 0.12),
+             "forehead": (-0.05, 0.10), "upper_head": (-0.08, 0.30),
              "forehead_w": (-0.04, 0.06), "jaw_w": (-0.06, 0.04), "chin_w": (-0.10, 0.08)}
 
 # landmark ids

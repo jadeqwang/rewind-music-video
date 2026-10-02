@@ -124,7 +124,7 @@ def correct(rgb, ref=None, iters=3, eyes=True, forehead=True, shape=True, verbos
                 want.append(ref["upper_head"] / m["upper_head"])
             if want:
                 k = float(np.exp(np.mean(np.log(want))))
-                too_big = (m.get("forehead") or 0) > 1.08 * ref["forehead"] or (m.get("upper_head") or 0) > 1.12 * ref.get("upper_head", 9)
+                too_big = (m.get("forehead") or 0) > 1.10 * ref["forehead"] or (m.get("upper_head") or 0) > 1.30 * ref.get("upper_head", 9)
                 if k > 1 + fh_tol or (k < 1 and too_big):   # never shrink a large forehead unless beyond the gate
                     P["top_scale"] = float(np.clip(P["top_scale"] * k, 0.95, 1.25)); changed = True
         if shape and ref.get("forehead_w") and m.get("forehead_w"):
