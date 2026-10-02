@@ -1150,8 +1150,68 @@
    "bucket": 29848687,
    "submitted": 1790921113.2129364,
    "bytes": 718993
+  },
+  "rewind/nj_E1_t2b-1fa57c7b8d": {
+   "id": "1fa57c7b8d",
+   "job": "rewind/nj_E1_t2b-1fa57c7b8d",
+   "tag": "nj_E1_t2b",
+   "model": "bytedance/seedance-2.5",
+   "notes": "continuity retake E1_t2: white 2001 Acura TL, northbound",
+   "spec_file": "assets/gen/specs/nonjade/E1_t2b.json",
+   "input": {
+    "duration": 10,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "High aerial drone shot at night above Lake Shore Drive, Chicago, looking north along the long smooth curve of the empty lakefront highway toward the small distant skyline. A single lone car, a white 2001 Acura TL, a rounded early-2000s four-door mid-size Japanese sedan with slim horizontal headlights and a smooth simple body, its white paint catching the orange streetlight, drives away from the camera, north along the curve in the lanes nearest the lake, its red tail lights and white headlight beams sweeping ahead. The flat pitch-black lake fills the right side of the frame; a dotted line of orange sodium streetlights traces the curve. The drone glides slowly forward, following the car from behind and above, keeping it in the lower middle of the frame. No people. Single continuous shot, no cuts, no transitions. Night. Graphic neo-noir cinematography, photographic. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus, no motion blur smear. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark, no subtitles.",
+    "reference_images": [
+     "file:assets/sets/lake_shore_drive/2.jpg",
+     "file:assets/sets/lake_shore_drive/4.jpg"
+    ]
+   },
+   "est_usd": 2.312,
+   "est_basis": "10s x 0.2312 (@720p non-video input (per second))",
+   "state": "queued",
+   "bucket": 29848688,
+   "submitted": 1790921186.6075668,
+   "bytes": 368273
+  },
+  "rewind/nj_Epull_t3b-36df0a5b33": {
+   "id": "36df0a5b33",
+   "job": "rewind/nj_Epull_t3b-36df0a5b33",
+   "tag": "nj_Epull_t3b",
+   "model": "bytedance/seedance-2.5",
+   "notes": "continuity retake Epull_t3: white 2001 Acura TL, northbound",
+   "spec_file": "assets/gen/specs/nonjade/Epull_t3b.json",
+   "input": {
+    "duration": 4,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "High wide shot from beside a dark lakefront highway at night, steady camera. A white 2001 Acura TL, a rounded early-2000s four-door mid-size Japanese sedan with slim horizontal headlights and a smooth simple body, its white paint catching the orange streetlight, drives along the highway from right to left, brakes with its red brake lights glowing, and steers onto the paved shoulder where it slowly comes to a stop. Close behind it, following the white sedan, a black sedan with two blazing white headlights pulls onto the shoulder and stops a few meters behind it, its headlights lighting the back of the white car. Orange sodium streetlights along the road, the black lake beyond. No people. Single continuous shot, no cuts, no transitions. Night. Graphic neo-noir cinematography, photographic. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus, no motion blur smear. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark, no subtitles.",
+    "reference_images": [
+     "file:assets/sets/pullover/3.jpg",
+     "file:assets/sets/lake_shore_drive/3.jpg"
+    ]
+   },
+   "est_usd": 0.9248,
+   "est_basis": "4s x 0.2312 (@720p non-video input (per second))",
+   "state": "queued",
+   "bucket": 29848688,
+   "submitted": 1790921187.0077896,
+   "bytes": 365814
   }
  },
- "total_est_usd": 34.2692,
+ "total_est_usd": 37.506,
  "total_est_usd_done": 27.102
 }
