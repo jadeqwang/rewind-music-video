@@ -69,3 +69,5 @@ animations (J1, J6). Everything else waits for morning review.
 - Center-locked performance shots need a straight-on source photo (the most frontal with glasses + open eyes:
   PXL_20260528_215628802, yaw -8.6) and a square, symmetric body.
 - LOCKED STYLE (user): B with B1 eyebrows (fuller, darker) + B2 cheekbone tone shape. Crown = smooth volume.
+- LIP-SYNC LAG varies per Seedance take (−0.29, +0.375, +0.65 s observed) — measure EVERY take with
+  tools/likeness/lipsync.py and store the offset per clip; renderer applies it.
