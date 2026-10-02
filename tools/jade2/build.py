@@ -119,8 +119,8 @@ def build_frame(J, i, frame, meta, fd, pf):
         # half-up: two symmetrical gathered pieces toward the crown (fuller crown silhouette)
         perp = np.array([up[1], -up[0]])
         for side in (-1, 1):
-            c = top + up * iod * 0.30 + perp * side * iod * 0.30
-            cv2.ellipse(hair, (int(c[0]), int(c[1])), (int(iod * 0.42), int(iod * 0.30)), math.degrees(math.atan2(up[1], up[0])) + 90 + side * 18, 0, 360, 1, -1, cv2.LINE_AA)
+            c = top + up * iod * 0.26 + perp * side * iod * 0.24
+            cv2.ellipse(hair, (int(c[0]), int(c[1])), (int(iod * 0.5), int(iod * 0.34)), math.degrees(math.atan2(up[1], up[0])) + 90 + side * 18, 0, 360, 1, -1, cv2.LINE_AA)
         info['part'] = part.round(1).tolist(); info['crown'] = (top + up * iod * 0.3).round(1).tolist(); info['top'] = top.round(1).tolist(); info['up'] = up.round(4).tolist(); info['iod'] = float(iod)
         # lips template, centred on the footage mouth
         lo = apply(M, proj(SH['lips_outer'])); li = apply(M, proj(SH['lips_inner']))
@@ -246,12 +246,6 @@ def build_frame(J, i, frame, meta, fd, pf):
                 cv2.polylines(strands, [np.round(chaikin(np.array(pts), 3)[:-6] * 4).astype(np.int32)], False, 1, 2, cv2.LINE_AA, shift=2)
         # parting shadow between the two gathered crown pieces + their gather lines
         top_ = np.array(info['top'])
-        cv2.polylines(strands, [np.round(chaikin(np.array([part, top_ + up * iod_ * 0.12, top_ + up * iod_ * 0.55]), 3) * 4).astype(np.int32)], False, 1, 3, cv2.LINE_AA, shift=2)
-        for side in (-1, 1):
-            c = top_ + up * iod_ * 0.30 + perp * side * iod_ * 0.30
-            for r in (0.62, 0.85):
-                a0 = math.degrees(math.atan2(up[1], up[0]))
-                cv2.ellipse(strands, (int(c[0]), int(c[1])), (int(iod_ * 0.42 * r), int(iod_ * 0.30 * r)), a0 + 90 + side * 18, 200 if side < 0 else -20, 340 if side < 0 else 120, 1, 2, cv2.LINE_AA)
     elif 'crown' in info and 'E' in info:
         E, back = np.array(info['E']), info['back']; dd = np.linalg.norm(np.array(info['N']) - E); cr = np.array(info['crown'])
         for k_ in range(5):

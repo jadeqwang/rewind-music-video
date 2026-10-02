@@ -221,7 +221,7 @@ function drawGlasses(a, fd, o) {
 }
 
 // ---- Jade v2: 3-tone cel figure (tools/jade2/build.py) + template features drawn as vectors from face.json ----
-const FEAT = '#5B4237', LIDC = '#1E1716', LIP = '#C99B94', LIPD = '#6A4440';
+const FEAT = '#3A2E2C', LIDC = '#1E1716', LIP = '#C99B94', LIPD = '#6A4440';
 function poly(a, pts, close) { a.beginPath(); pts.forEach((p, i) => (i ? a.lineTo(p[0], p[1]) : a.moveTo(p[0], p[1]))); if (close) a.closePath(); }
 function smoothPath(a, pts) {   // quadratic midpoint smoothing
   if (pts.length < 3) return poly(a, pts);
@@ -296,7 +296,7 @@ export function jade2(g, id, clipT, o = {}) {
   if (NOFEAT) { if (o.glasses !== false) drawGlasses(a, fd, o); g.save(); g.globalAlpha = clamp(o.alpha ?? 1); place(g, A, o.rect, null); g.restore(); return true; }
   // brows: filled tapered polygons (her own asymmetric template)
   a.fillStyle = FEAT;
-  for (const b of [fd.brow_R, fd.brow_L, fd.brow_near]) if (b && b.length > 2) { poly(a, thinBrow(b, fd.brow_near === b), true); a.fill(); }
+  for (const b of [fd.brow_R, fd.brow_L, fd.brow_near]) if (b && b.length > 2) { poly(a, b, true); a.fill(); }   // B1 brows (user-approved): the template polygon as is
   const fwPx = (fd.template_scale_px || sc) / IOD_FW;
   eye(a, fd.eye_R_upper, fd.eye_R_lower, fd.eye_R_crease, fd.eye_R_iris, fd.eye_R_closure, sc, fwPx);
   eye(a, fd.eye_L_upper, fd.eye_L_lower, fd.eye_L_crease, fd.eye_L_iris, fd.eye_L_closure, sc, fwPx);

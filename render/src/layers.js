@@ -667,9 +667,9 @@ Object.assign(LAYERS, {
     const p = clamp((t - L.a) / (L.b - L.a));
     const Lr = layer('rwbase', ctx.g.canvas.width, ctx.g.canvas.height), rg = clearLayer(Lr); rg.setTransform(ctx.S, 0, 0, ctx.S, 0, 0);
     rg.fillStyle = PAL.ink; rg.fillRect(0, 0, DW, DH);
-    await data.rewindOf({ ...ctx, g: rg }, null, L.from, L.to, p, { echo: L.echo ?? 3, echoDt: L.echoDt ?? 0.12, echoAlpha: 0.55 });
+    await data.rewindOf({ ...ctx, g: rg }, null, L.from, L.to, p, { echo: L.echo ?? 3, echoDt: L.echoDt ?? 0.12, echoAlpha: 0.55, noType: true });
     resetCtx(rg);
-    if (L.mode !== 'multiply') { rg.globalCompositeOperation = 'color'; rg.fillStyle = L.tint || '#1FA9A1'; rg.fillRect(0, 0, Lr.width, Lr.height); rg.globalCompositeOperation = 'source-over'; }
+    if (L.mode !== 'multiply') { rg.globalCompositeOperation = 'color'; rg.fillStyle = L.tint || '#1FA9A1'; rg.fillRect(0, 0, Lr.width, Lr.height); rg.globalCompositeOperation = 'multiply'; rg.fillStyle = '#8C8C8C'; rg.fillRect(0, 0, Lr.width, Lr.height); rg.globalCompositeOperation = 'source-over'; }   // capped: paper frames rewinding never blow out
     const g = ctx.g; g.save(); g.setTransform(1, 0, 0, 1, 0, 0);
     g.globalAlpha = A(L.alpha, env, L.mode === 'multiply' ? 0.45 : 0.85); g.globalCompositeOperation = L.mode === 'multiply' ? 'multiply' : 'source-over';
     g.drawImage(Lr, 0, 0); g.restore();

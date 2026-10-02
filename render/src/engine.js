@@ -88,7 +88,7 @@ export async function rewindOf(ctx, shotId, fromT, toT, progress, opts = {}) {
     if (tk >= sh.t1) tk = sh.t1 - 1 / 30;
     const g = beginLayer(L), ty = beginLayer(LT);
     await drawShot(sh, tk, g, ty, dummy, { rewinding: true });
-    resetCtx(g); g.drawImage(LT, 0, 0);
+    resetCtx(g); if (!opts.noType) g.drawImage(LT, 0, 0);
     const c = ctx.g; c.save(); c.setTransform(1, 0, 0, 1, 0, 0);
     c.globalAlpha = k === 0 ? 1 : a0 * 0.6 * (1 - (k - 1) / n);
     c.globalCompositeOperation = k === 0 ? 'source-over' : 'screen';
