@@ -60,5 +60,453 @@
   "secs": 11.6,
   "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
   "ts": "2026-10-02T05:04:17"
+ },
+ {
+  "file": "assets/sets/_modeltest/nano-banana-pro.jpg",
+  "set": "_modeltest",
+  "model": "google/nano-banana-pro",
+  "prompt": "Driver's point of view from inside a car speeding north on Lake Shore Drive in Chicago at night: the multi-lane highway curves gently left ahead, a row of tall sodium-vapor streetlights casting pools of orange light on the empty asphalt, white lane dashes, a black empty lake on the right side under a dark sky, the Chicago skyline small and far away on the horizon. Only the top edge of the dashboard visible at the bottom. Cinematic night photograph, 16:9 wide frame, high contrast, deep black shadows, hard directional light, clean readable geometry, strong silhouettes, minimal clutter, sharp focus, anamorphic film still. No text, no signs, no lettering, no logos, no license plates, no people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "image_size": "1K",
+   "output_format": "jpg"
+  },
+  "size": [
+   1376,
+   768
+  ],
+  "est_cost_usd": 0.14,
+  "secs": 21.6,
+  "error": null,
+  "ts": "2026-10-02T05:04:27"
+ },
+ {
+  "file": "assets/sets/_modeltest/gpt-image-2.jpg",
+  "set": "_modeltest",
+  "model": "openai/gpt-image-2",
+  "prompt": "Driver's point of view from inside a car speeding north on Lake Shore Drive in Chicago at night: the multi-lane highway curves gently left ahead, a row of tall sodium-vapor streetlights casting pools of orange light on the empty asphalt, white lane dashes, a black empty lake on the right side under a dark sky, the Chicago skyline small and far away on the horizon. Only the top edge of the dashboard visible at the bottom. Cinematic night photograph, 16:9 wide frame, high contrast, deep black shadows, hard directional light, clean readable geometry, strong silhouettes, minimal clutter, sharp focus, anamorphic film still. No text, no signs, no lettering, no logos, no license plates, no people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "size": "1536x1024",
+   "quality": "medium",
+   "output_format": "jpeg"
+  },
+  "size": [
+   1536,
+   1024
+  ],
+  "est_cost_usd": 0.06,
+  "secs": 26.0,
+  "error": null,
+  "ts": "2026-10-02T05:04:31"
+ },
+ {
+  "file": "assets/sets/_modeltest/room_grok-imagine-image.jpg",
+  "set": "_modeltest",
+  "model": "xai/grok-imagine-image",
+  "prompt": "An empty university seminar room at night, seen from the back corner: a long dark wooden table with five empty chairs in a row behind it facing a single empty chair alone in the middle of the bare floor. A projector on the table throws a hard white beam through the dark air onto a blank pale screen. A large blank clean black chalkboard on the wall, completely empty. A single cold fluorescent ceiling panel lights the table from above, the rest of the room falls into darkness. Tall black windows. Cinematic night photograph, 16:9 wide frame, high contrast, deep black shadows, hard directional light, clean readable geometry, strong silhouettes, minimal clutter, sharp focus, anamorphic film still. No text, no signs, no lettering, no logos, no people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json",
+   "resolution": "1k"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.02,
+  "secs": 7.1,
+  "error": null,
+  "ts": "2026-10-02T05:05:13"
+ },
+ {
+  "file": "assets/sets/_modeltest/room_grok-imagine-image-quality.jpg",
+  "set": "_modeltest",
+  "model": "xai/grok-imagine-image-quality",
+  "prompt": "An empty university seminar room at night, seen from the back corner: a long dark wooden table with five empty chairs in a row behind it facing a single empty chair alone in the middle of the bare floor. A projector on the table throws a hard white beam through the dark air onto a blank pale screen. A large blank clean black chalkboard on the wall, completely empty. A single cold fluorescent ceiling panel lights the table from above, the rest of the room falls into darkness. Tall black windows. Cinematic night photograph, 16:9 wide frame, high contrast, deep black shadows, hard directional light, clean readable geometry, strong silhouettes, minimal clutter, sharp focus, anamorphic film still. No text, no signs, no lettering, no logos, no people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json",
+   "resolution": "1k"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.05,
+  "secs": 7.2,
+  "error": null,
+  "ts": "2026-10-02T05:05:13"
+ },
+ {
+  "file": "assets/sets/_modeltest/room_grok-imagine-image-2.0.jpg",
+  "set": "_modeltest",
+  "model": "xai/grok-imagine-image-2.0",
+  "prompt": "An empty university seminar room at night, seen from the back corner: a long dark wooden table with five empty chairs in a row behind it facing a single empty chair alone in the middle of the bare floor. A projector on the table throws a hard white beam through the dark air onto a blank pale screen. A large blank clean black chalkboard on the wall, completely empty. A single cold fluorescent ceiling panel lights the table from above, the rest of the room falls into darkness. Tall black windows. Cinematic night photograph, 16:9 wide frame, high contrast, deep black shadows, hard directional light, clean readable geometry, strong silhouettes, minimal clutter, sharp focus, anamorphic film still. No text, no signs, no lettering, no logos, no people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.04,
+  "secs": 20.7,
+  "error": null,
+  "ts": "2026-10-02T05:05:26"
+ },
+ {
+  "file": "assets/sets/_modeltest/room_nano-banana-pro.jpg",
+  "set": "_modeltest",
+  "model": "google/nano-banana-pro",
+  "prompt": "An empty university seminar room at night, seen from the back corner: a long dark wooden table with five empty chairs in a row behind it facing a single empty chair alone in the middle of the bare floor. A projector on the table throws a hard white beam through the dark air onto a blank pale screen. A large blank clean black chalkboard on the wall, completely empty. A single cold fluorescent ceiling panel lights the table from above, the rest of the room falls into darkness. Tall black windows. Cinematic night photograph, 16:9 wide frame, high contrast, deep black shadows, hard directional light, clean readable geometry, strong silhouettes, minimal clutter, sharp focus, anamorphic film still. No text, no signs, no lettering, no logos, no people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "image_size": "1K",
+   "output_format": "jpg"
+  },
+  "size": [
+   1376,
+   768
+  ],
+  "est_cost_usd": 0.14,
+  "secs": 25.3,
+  "error": null,
+  "ts": "2026-10-02T05:05:31"
+ },
+ {
+  "file": "assets/sets/_modeltest/room_gpt-image-2.jpg",
+  "set": "_modeltest",
+  "model": "openai/gpt-image-2",
+  "prompt": "An empty university seminar room at night, seen from the back corner: a long dark wooden table with five empty chairs in a row behind it facing a single empty chair alone in the middle of the bare floor. A projector on the table throws a hard white beam through the dark air onto a blank pale screen. A large blank clean black chalkboard on the wall, completely empty. A single cold fluorescent ceiling panel lights the table from above, the rest of the room falls into darkness. Tall black windows. Cinematic night photograph, 16:9 wide frame, high contrast, deep black shadows, hard directional light, clean readable geometry, strong silhouettes, minimal clutter, sharp focus, anamorphic film still. No text, no signs, no lettering, no logos, no people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "size": "1536x1024",
+   "quality": "medium",
+   "output_format": "jpeg"
+  },
+  "size": [
+   1536,
+   1024
+  ],
+  "est_cost_usd": 0.06,
+  "secs": 27.9,
+  "error": null,
+  "ts": "2026-10-02T05:05:34"
+ },
+ {
+  "file": "assets/sets/_modeltest/seedream-5-pro.jpg",
+  "set": "_modeltest",
+  "model": "bytedance/seedream-5-pro",
+  "prompt": "Driver's point of view from inside a car speeding north on Lake Shore Drive in Chicago at night: the multi-lane highway curves gently left ahead, a row of tall sodium-vapor streetlights casting pools of orange light on the empty asphalt, white lane dashes, a black empty lake on the right side under a dark sky, the Chicago skyline small and far away on the horizon. Only the top edge of the dashboard visible at the bottom. Cinematic night photograph, 16:9 wide frame, high contrast, deep black shadows, hard directional light, clean readable geometry, strong silhouettes, minimal clutter, sharp focus, anamorphic film still. No text, no signs, no lettering, no logos, no license plates, no people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "size": "1536x864",
+   "watermark": false
+  },
+  "size": null,
+  "est_cost_usd": 0.045,
+  "secs": 30.1,
+  "error": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs.",
+  "ts": "2026-10-02T05:06:17"
+ },
+ {
+  "file": "assets/sets/_modeltest/room_seedream-5-pro.jpg",
+  "set": "_modeltest",
+  "model": "bytedance/seedream-5-pro",
+  "prompt": "An empty university seminar room at night, seen from the back corner: a long dark wooden table with five empty chairs in a row behind it facing a single empty chair alone in the middle of the bare floor. A projector on the table throws a hard white beam through the dark air onto a blank pale screen. A large blank clean black chalkboard on the wall, completely empty. A single cold fluorescent ceiling panel lights the table from above, the rest of the room falls into darkness. Tall black windows. Cinematic night photograph, 16:9 wide frame, high contrast, deep black shadows, hard directional light, clean readable geometry, strong silhouettes, minimal clutter, sharp focus, anamorphic film still. No text, no signs, no lettering, no logos, no people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "size": "1536x864",
+   "watermark": false
+  },
+  "size": null,
+  "est_cost_usd": 0.045,
+  "secs": 30.4,
+  "error": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs.",
+  "ts": "2026-10-02T05:06:17"
+ },
+ {
+  "file": "assets/sets/_modeltest/room_seedream-5-lite.jpg",
+  "set": "_modeltest",
+  "model": "bytedance/seedream-5-lite",
+  "prompt": "An empty university seminar room at night, seen from the back corner: a long dark wooden table with five empty chairs in a row behind it facing a single empty chair alone in the middle of the bare floor. A projector on the table throws a hard white beam through the dark air onto a blank pale screen. A large blank clean black chalkboard on the wall, completely empty. A single cold fluorescent ceiling panel lights the table from above, the rest of the room falls into darkness. Tall black windows. Cinematic night photograph, 16:9 wide frame, high contrast, deep black shadows, hard directional light, clean readable geometry, strong silhouettes, minimal clutter, sharp focus, anamorphic film still. No text, no signs, no lettering, no logos, no people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "size": "2K",
+   "aspect_ratio": "16:9",
+   "output_format": "jpeg"
+  },
+  "size": null,
+  "est_cost_usd": 0.035,
+  "secs": 30.1,
+  "error": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs.",
+  "ts": "2026-10-02T05:06:57"
+ },
+ {
+  "file": "assets/sets/_modeltest/interior_grok-imagine-image-quality.jpg",
+  "set": "_modeltest",
+  "model": "xai/grok-imagine-image-quality",
+  "prompt": "Inside a dark car at night, from the driver's seat point of view looking forward over the steering wheel, the driver's seat is empty and nobody is in the car. The rear-view mirror is large and prominent at the top center of the frame, and in the mirror glows a burst of red and blue emergency light from a vehicle far behind. Through the windshield, a dark highway with orange sodium streetlights. Dashboard dim, steering wheel a black silhouette. Cinematic night photograph, 16:9 wide frame, high contrast, deep black shadows, hard directional light, clean readable geometry, strong silhouettes, minimal clutter, sharp focus, anamorphic film still. No text, no signs, no lettering, no logos, no license plates. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json",
+   "resolution": "1k"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.05,
+  "secs": 6.5,
+  "error": null,
+  "ts": "2026-10-02T05:07:15"
+ },
+ {
+  "file": "assets/sets/_modeltest/suits_grok-imagine-image-quality.jpg",
+  "set": "_modeltest",
+  "model": "xai/grok-imagine-image-quality",
+  "prompt": "Night, the shoulder of a dark lakefront highway. Low camera at road level. In the background a black sedan is parked with its two headlights blazing straight into the lens, flooding the scene with hard white backlight and long shadows on the asphalt. Four tall men in identical dark suits walk toward the camera in a tight V formation, seen only as pitch-black backlit silhouettes, faces completely in shadow and unreadable, only the outline of sunglasses, shoulders, ties and swinging arms. Faint red and blue glow at the edges. Cinematic night photograph, 16:9 wide frame, high contrast, deep black shadows, hard directional light, clean readable geometry, strong silhouettes, minimal clutter, sharp focus, anamorphic film still. No text, no signs, no lettering, no logos, no license plates.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json",
+   "resolution": "1k"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.05,
+  "secs": 6.7,
+  "error": null,
+  "ts": "2026-10-02T05:07:15"
+ },
+ {
+  "file": "assets/sets/_modeltest/suits_grok-imagine-image.jpg",
+  "set": "_modeltest",
+  "model": "xai/grok-imagine-image",
+  "prompt": "Night, the shoulder of a dark lakefront highway. Low camera at road level. In the background a black sedan is parked with its two headlights blazing straight into the lens, flooding the scene with hard white backlight and long shadows on the asphalt. Four tall men in identical dark suits walk toward the camera in a tight V formation, seen only as pitch-black backlit silhouettes, faces completely in shadow and unreadable, only the outline of sunglasses, shoulders, ties and swinging arms. Faint red and blue glow at the edges. Cinematic night photograph, 16:9 wide frame, high contrast, deep black shadows, hard directional light, clean readable geometry, strong silhouettes, minimal clutter, sharp focus, anamorphic film still. No text, no signs, no lettering, no logos, no license plates.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json",
+   "resolution": "1k"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.02,
+  "secs": 7.7,
+  "error": null,
+  "ts": "2026-10-02T05:07:16"
+ },
+ {
+  "file": "assets/sets/_modeltest/interior_grok-imagine-image.jpg",
+  "set": "_modeltest",
+  "model": "xai/grok-imagine-image",
+  "prompt": "Inside a dark car at night, from the driver's seat point of view looking forward over the steering wheel, the driver's seat is empty and nobody is in the car. The rear-view mirror is large and prominent at the top center of the frame, and in the mirror glows a burst of red and blue emergency light from a vehicle far behind. Through the windshield, a dark highway with orange sodium streetlights. Dashboard dim, steering wheel a black silhouette. Cinematic night photograph, 16:9 wide frame, high contrast, deep black shadows, hard directional light, clean readable geometry, strong silhouettes, minimal clutter, sharp focus, anamorphic film still. No text, no signs, no lettering, no logos, no license plates. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json",
+   "resolution": "1k"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.02,
+  "secs": 8.6,
+  "error": null,
+  "ts": "2026-10-02T05:07:17"
+ },
+ {
+  "file": "assets/sets/_modeltest/suits_grok-imagine-image-2.0.jpg",
+  "set": "_modeltest",
+  "model": "xai/grok-imagine-image-2.0",
+  "prompt": "Night, the shoulder of a dark lakefront highway. Low camera at road level. In the background a black sedan is parked with its two headlights blazing straight into the lens, flooding the scene with hard white backlight and long shadows on the asphalt. Four tall men in identical dark suits walk toward the camera in a tight V formation, seen only as pitch-black backlit silhouettes, faces completely in shadow and unreadable, only the outline of sunglasses, shoulders, ties and swinging arms. Faint red and blue glow at the edges. Cinematic night photograph, 16:9 wide frame, high contrast, deep black shadows, hard directional light, clean readable geometry, strong silhouettes, minimal clutter, sharp focus, anamorphic film still. No text, no signs, no lettering, no logos, no license plates.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.04,
+  "secs": 16.4,
+  "error": null,
+  "ts": "2026-10-02T05:07:24"
+ },
+ {
+  "file": "assets/sets/_modeltest/interior_grok-imagine-image-2.0.jpg",
+  "set": "_modeltest",
+  "model": "xai/grok-imagine-image-2.0",
+  "prompt": "Inside a dark car at night, from the driver's seat point of view looking forward over the steering wheel, the driver's seat is empty and nobody is in the car. The rear-view mirror is large and prominent at the top center of the frame, and in the mirror glows a burst of red and blue emergency light from a vehicle far behind. Through the windshield, a dark highway with orange sodium streetlights. Dashboard dim, steering wheel a black silhouette. Cinematic night photograph, 16:9 wide frame, high contrast, deep black shadows, hard directional light, clean readable geometry, strong silhouettes, minimal clutter, sharp focus, anamorphic film still. No text, no signs, no lettering, no logos, no license plates. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.04,
+  "secs": 17.4,
+  "error": null,
+  "ts": "2026-10-02T05:07:25"
+ },
+ {
+  "file": "assets/sets/_modeltest/interior_nano-banana-pro.jpg",
+  "set": "_modeltest",
+  "model": "google/nano-banana-pro",
+  "prompt": "Inside a dark car at night, from the driver's seat point of view looking forward over the steering wheel, the driver's seat is empty and nobody is in the car. The rear-view mirror is large and prominent at the top center of the frame, and in the mirror glows a burst of red and blue emergency light from a vehicle far behind. Through the windshield, a dark highway with orange sodium streetlights. Dashboard dim, steering wheel a black silhouette. Cinematic night photograph, 16:9 wide frame, high contrast, deep black shadows, hard directional light, clean readable geometry, strong silhouettes, minimal clutter, sharp focus, anamorphic film still. No text, no signs, no lettering, no logos, no license plates. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "image_size": "1K",
+   "output_format": "jpg"
+  },
+  "size": [
+   1376,
+   768
+  ],
+  "est_cost_usd": 0.14,
+  "secs": 18.3,
+  "error": null,
+  "ts": "2026-10-02T05:07:33"
+ },
+ {
+  "file": "assets/sets/_modeltest/suits_nano-banana-pro.jpg",
+  "set": "_modeltest",
+  "model": "google/nano-banana-pro",
+  "prompt": "Night, the shoulder of a dark lakefront highway. Low camera at road level. In the background a black sedan is parked with its two headlights blazing straight into the lens, flooding the scene with hard white backlight and long shadows on the asphalt. Four tall men in identical dark suits walk toward the camera in a tight V formation, seen only as pitch-black backlit silhouettes, faces completely in shadow and unreadable, only the outline of sunglasses, shoulders, ties and swinging arms. Faint red and blue glow at the edges. Cinematic night photograph, 16:9 wide frame, high contrast, deep black shadows, hard directional light, clean readable geometry, strong silhouettes, minimal clutter, sharp focus, anamorphic film still. No text, no signs, no lettering, no logos, no license plates.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "image_size": "1K",
+   "output_format": "jpg"
+  },
+  "size": [
+   1376,
+   768
+  ],
+  "est_cost_usd": 0.14,
+  "secs": 19.5,
+  "error": null,
+  "ts": "2026-10-02T05:07:34"
+ },
+ {
+  "file": "assets/sets/_modeltest/suits_gpt-image-2.jpg",
+  "set": "_modeltest",
+  "model": "openai/gpt-image-2",
+  "prompt": "Night, the shoulder of a dark lakefront highway. Low camera at road level. In the background a black sedan is parked with its two headlights blazing straight into the lens, flooding the scene with hard white backlight and long shadows on the asphalt. Four tall men in identical dark suits walk toward the camera in a tight V formation, seen only as pitch-black backlit silhouettes, faces completely in shadow and unreadable, only the outline of sunglasses, shoulders, ties and swinging arms. Faint red and blue glow at the edges. Cinematic night photograph, 16:9 wide frame, high contrast, deep black shadows, hard directional light, clean readable geometry, strong silhouettes, minimal clutter, sharp focus, anamorphic film still. No text, no signs, no lettering, no logos, no license plates.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "size": "1536x1024",
+   "quality": "medium",
+   "output_format": "jpeg"
+  },
+  "size": [
+   1536,
+   864
+  ],
+  "est_cost_usd": 0.06,
+  "secs": 26.6,
+  "error": null,
+  "ts": "2026-10-02T05:07:42"
+ },
+ {
+  "file": "assets/sets/_modeltest/interior_gpt-image-2.jpg",
+  "set": "_modeltest",
+  "model": "openai/gpt-image-2",
+  "prompt": "Inside a dark car at night, from the driver's seat point of view looking forward over the steering wheel, the driver's seat is empty and nobody is in the car. The rear-view mirror is large and prominent at the top center of the frame, and in the mirror glows a burst of red and blue emergency light from a vehicle far behind. Through the windshield, a dark highway with orange sodium streetlights. Dashboard dim, steering wheel a black silhouette. Cinematic night photograph, 16:9 wide frame, high contrast, deep black shadows, hard directional light, clean readable geometry, strong silhouettes, minimal clutter, sharp focus, anamorphic film still. No text, no signs, no lettering, no logos, no license plates. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "size": "1536x1024",
+   "quality": "medium",
+   "output_format": "jpeg"
+  },
+  "size": [
+   1536,
+   864
+  ],
+  "est_cost_usd": 0.06,
+  "secs": 26.3,
+  "error": null,
+  "ts": "2026-10-02T05:07:43"
+ },
+ {
+  "file": "assets/sets/lake_shore_drive/c_aerial2_grok-quality.jpg",
+  "set": "lake_shore_drive",
+  "model": "xai/grok-imagine-image-quality",
+  "prompt": "High aerial drone view at night looking down along Lake Shore Drive, Chicago: a lone car with two white headlight beams drives north on a long curving empty lakefront highway, a dotted line of orange sodium streetlights traces the curve, to the right of the road the vast flat pitch-black lake fills a third of the frame with a clean shoreline edge, to the left a dark strip of park, and the Chicago skyline far away at the top of the frame as a silhouette. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json",
+   "resolution": "1k"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.05,
+  "secs": 5.9,
+  "error": null,
+  "ts": "2026-10-02T05:08:23"
+ },
+ {
+  "file": "assets/sets/car_interior/c3_grok-quality.jpg",
+  "set": "car_interior",
+  "model": "xai/grok-imagine-image-quality",
+  "prompt": "Inside a dark car at night, from the empty driver's seat looking forward over the steering wheel; nobody is in the car. A large rear-view mirror hangs prominently at the top center of the frame and fills with a bright burst of red and blue emergency light from a vehicle far behind. Through the windshield a dark empty highway with a row of orange sodium streetlights. Dashboard almost black, the steering wheel a clean black silhouette ring, minimal dials. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "params": {
+   "aspect_ratio": "16:9",
+   "response_format": "b64_json",
+   "resolution": "1k"
+  },
+  "size": [
+   1280,
+   720
+  ],
+  "est_cost_usd": 0.05,
+  "secs": 5.8,
+  "error": null,
+  "ts": "2026-10-02T05:08:29"
  }
 ]

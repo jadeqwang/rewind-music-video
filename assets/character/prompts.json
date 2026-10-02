@@ -1,0 +1,262 @@
+[
+ {
+  "id": "f1_nanobanana_cur",
+  "model": "google/nano-banana-pro",
+  "kind": "face",
+  "prompt": "Character reference sheet photograph of the exact woman in the reference photos: same face as the reference photos, same eye shape and size, same round soft face with full cheeks, accurate likeness. Eight head-and-shoulders portraits arranged in a clean 4 by 2 grid on a plain light gray studio background, soft even frontal lighting. Top row: front view, three-quarter view facing left, three-quarter view facing right, side profile. Bottom row expressions: focused calm gaze as if driving, startled with eyes opened wide, singing softly with lips slightly parted, determined. Long straight black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses on in every portrait. White cropped zip jacket with orange stripes over a black top. Smooth clear skin, natural healthy complexion, photographic cinematic realism, sharp focus. No text, no labels.",
+  "refs": [
+   "PXL_20250908_195405539.MP.jpg",
+   "PXL_20260528_215628802.jpg",
+   "PXL_20250908_195352130.jpg",
+   "PXL_20260929_003030232.jpg",
+   "jade_trace_jacket_hp_2.jpg"
+  ],
+  "seed": 1671124638,
+  "aspect": "16:9",
+  "error": "HTTP 400: {\"errors\":[{\"message\":\"Model execution failed (User Input Error): Invalid value at image_input: Too big: expected array to have <=3 items\",\"code\":7003}],\"success\":false,\"result\":{},\"messages\":[]}",
+  "secs": 0.3
+ },
+ {
+  "id": "f1_nanobanana_y28",
+  "model": "google/nano-banana-pro",
+  "kind": "face",
+  "prompt": "Character reference sheet photograph of the exact woman in the reference photos: same face as the reference photos, same eye shape and size, same round soft face with full cheeks, accurate likeness. Eight head-and-shoulders portraits arranged in a clean 4 by 2 grid on a plain light gray studio background, soft even frontal lighting. Top row: front view, three-quarter view facing left, three-quarter view facing right, side profile. Bottom row expressions: focused calm gaze as if driving, startled with eyes opened wide, singing softly with lips slightly parted, determined. Long straight black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses on in every portrait. White cropped zip jacket with orange stripes over a black top. Smooth clear skin, natural healthy complexion, photographic cinematic realism, sharp focus. No text, no labels. She is shown as she looked at age 28: youthful, smooth clear skin, but identical facial structure, identical eye shape and eye size, same nose, same mouth, same round face and full cheeks, unmistakably the same person as the reference photos.",
+  "refs": [
+   "PXL_20250908_195405539.MP.jpg",
+   "PXL_20260528_215628802.jpg",
+   "PXL_20250908_195352130.jpg",
+   "PXL_20260929_003030232.jpg",
+   "jade_trace_jacket_hp_2.jpg"
+  ],
+  "seed": 2037914208,
+  "aspect": "16:9",
+  "error": "HTTP 400: {\"errors\":[{\"message\":\"Model execution failed (User Input Error): Invalid value at image_input: Too big: expected array to have <=3 items\",\"code\":7003}],\"success\":false,\"result\":{},\"messages\":[]}",
+  "secs": 0.7
+ },
+ {
+  "id": "f1_grokimagin_cur",
+  "model": "xai/grok-imagine-image-2.0",
+  "kind": "face",
+  "prompt": "Character reference sheet photograph of the exact woman in the reference photos: same face as the reference photos, same eye shape and size, same round soft face with full cheeks, accurate likeness. Eight head-and-shoulders portraits arranged in a clean 4 by 2 grid on a plain light gray studio background, soft even frontal lighting. Top row: front view, three-quarter view facing left, three-quarter view facing right, side profile. Bottom row expressions: focused calm gaze as if driving, startled with eyes opened wide, singing softly with lips slightly parted, determined. Long straight black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses on in every portrait. White cropped zip jacket with orange stripes over a black top. Smooth clear skin, natural healthy complexion, photographic cinematic realism, sharp focus. No text, no labels.",
+  "refs": [
+   "PXL_20250908_195405539.MP.jpg",
+   "PXL_20260528_215628802.jpg",
+   "PXL_20250908_195352130.jpg",
+   "PXL_20260929_003030232.jpg",
+   "jade_trace_jacket_hp_2.jpg"
+  ],
+  "seed": 1457991517,
+  "aspect": "16:9",
+  "file": "cands/f1_grokimagin_cur.jpg",
+  "secs": 13.4
+ },
+ {
+  "id": "f1_grokimagin_y28",
+  "model": "xai/grok-imagine-image-2.0",
+  "kind": "face",
+  "prompt": "Character reference sheet photograph of the exact woman in the reference photos: same face as the reference photos, same eye shape and size, same round soft face with full cheeks, accurate likeness. Eight head-and-shoulders portraits arranged in a clean 4 by 2 grid on a plain light gray studio background, soft even frontal lighting. Top row: front view, three-quarter view facing left, three-quarter view facing right, side profile. Bottom row expressions: focused calm gaze as if driving, startled with eyes opened wide, singing softly with lips slightly parted, determined. Long straight black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses on in every portrait. White cropped zip jacket with orange stripes over a black top. Smooth clear skin, natural healthy complexion, photographic cinematic realism, sharp focus. No text, no labels. She is shown as she looked at age 28: youthful, smooth clear skin, but identical facial structure, identical eye shape and eye size, same nose, same mouth, same round face and full cheeks, unmistakably the same person as the reference photos.",
+  "refs": [
+   "PXL_20250908_195405539.MP.jpg",
+   "PXL_20260528_215628802.jpg",
+   "PXL_20250908_195352130.jpg",
+   "PXL_20260929_003030232.jpg",
+   "jade_trace_jacket_hp_2.jpg"
+  ],
+  "seed": 965717681,
+  "aspect": "16:9",
+  "file": "cands/f1_grokimagin_y28.jpg",
+  "secs": 15.4
+ },
+ {
+  "id": "f1_seedream5p_y28",
+  "model": "bytedance/seedream-5-pro",
+  "kind": "face",
+  "prompt": "Character reference sheet photograph of the exact woman in the reference photos: same face as the reference photos, same eye shape and size, same round soft face with full cheeks, accurate likeness. Eight head-and-shoulders portraits arranged in a clean 4 by 2 grid on a plain light gray studio background, soft even frontal lighting. Top row: front view, three-quarter view facing left, three-quarter view facing right, side profile. Bottom row expressions: focused calm gaze as if driving, startled with eyes opened wide, singing softly with lips slightly parted, determined. Long straight black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses on in every portrait. White cropped zip jacket with orange stripes over a black top. Smooth clear skin, natural healthy complexion, photographic cinematic realism, sharp focus. No text, no labels. She is shown as she looked at age 28: youthful, smooth clear skin, but identical facial structure, identical eye shape and eye size, same nose, same mouth, same round face and full cheeks, unmistakably the same person as the reference photos.",
+  "refs": [
+   "PXL_20250908_195405539.MP.jpg",
+   "PXL_20260528_215628802.jpg",
+   "PXL_20250908_195352130.jpg",
+   "PXL_20260929_003030232.jpg",
+   "jade_trace_jacket_hp_2.jpg"
+  ],
+  "seed": 71250275,
+  "aspect": "16:9",
+  "error": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs.",
+  "secs": 30.2
+ },
+ {
+  "id": "f1_flux2max_y28",
+  "model": "black-forest-labs/flux-2-max",
+  "kind": "face",
+  "prompt": "Character reference sheet photograph of the exact woman in the reference photos: same face as the reference photos, same eye shape and size, same round soft face with full cheeks, accurate likeness. Eight head-and-shoulders portraits arranged in a clean 4 by 2 grid on a plain light gray studio background, soft even frontal lighting. Top row: front view, three-quarter view facing left, three-quarter view facing right, side profile. Bottom row expressions: focused calm gaze as if driving, startled with eyes opened wide, singing softly with lips slightly parted, determined. Long straight black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses on in every portrait. White cropped zip jacket with orange stripes over a black top. Smooth clear skin, natural healthy complexion, photographic cinematic realism, sharp focus. No text, no labels. She is shown as she looked at age 28: youthful, smooth clear skin, but identical facial structure, identical eye shape and eye size, same nose, same mouth, same round face and full cheeks, unmistakably the same person as the reference photos.",
+  "refs": [
+   "PXL_20250908_195405539.MP.jpg",
+   "PXL_20260528_215628802.jpg",
+   "PXL_20250908_195352130.jpg",
+   "PXL_20260929_003030232.jpg",
+   "jade_trace_jacket_hp_2.jpg"
+  ],
+  "seed": 1403522660,
+  "aspect": "16:9",
+  "error": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs.",
+  "secs": 30.3
+ },
+ {
+  "id": "f1_seedream5p_cur",
+  "model": "bytedance/seedream-5-pro",
+  "kind": "face",
+  "prompt": "Character reference sheet photograph of the exact woman in the reference photos: same face as the reference photos, same eye shape and size, same round soft face with full cheeks, accurate likeness. Eight head-and-shoulders portraits arranged in a clean 4 by 2 grid on a plain light gray studio background, soft even frontal lighting. Top row: front view, three-quarter view facing left, three-quarter view facing right, side profile. Bottom row expressions: focused calm gaze as if driving, startled with eyes opened wide, singing softly with lips slightly parted, determined. Long straight black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses on in every portrait. White cropped zip jacket with orange stripes over a black top. Smooth clear skin, natural healthy complexion, photographic cinematic realism, sharp focus. No text, no labels.",
+  "refs": [
+   "PXL_20250908_195405539.MP.jpg",
+   "PXL_20260528_215628802.jpg",
+   "PXL_20250908_195352130.jpg",
+   "PXL_20260929_003030232.jpg",
+   "jade_trace_jacket_hp_2.jpg"
+  ],
+  "seed": 196184730,
+  "aspect": "16:9",
+  "error": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs.",
+  "secs": 30.5
+ },
+ {
+  "id": "f1_flux2max_cur",
+  "model": "black-forest-labs/flux-2-max",
+  "kind": "face",
+  "prompt": "Character reference sheet photograph of the exact woman in the reference photos: same face as the reference photos, same eye shape and size, same round soft face with full cheeks, accurate likeness. Eight head-and-shoulders portraits arranged in a clean 4 by 2 grid on a plain light gray studio background, soft even frontal lighting. Top row: front view, three-quarter view facing left, three-quarter view facing right, side profile. Bottom row expressions: focused calm gaze as if driving, startled with eyes opened wide, singing softly with lips slightly parted, determined. Long straight black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses on in every portrait. White cropped zip jacket with orange stripes over a black top. Smooth clear skin, natural healthy complexion, photographic cinematic realism, sharp focus. No text, no labels.",
+  "refs": [
+   "PXL_20250908_195405539.MP.jpg",
+   "PXL_20260528_215628802.jpg",
+   "PXL_20250908_195352130.jpg",
+   "PXL_20260929_003030232.jpg",
+   "jade_trace_jacket_hp_2.jpg"
+  ],
+  "seed": 1359442464,
+  "aspect": "16:9",
+  "error": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs.",
+  "secs": 30.5
+ },
+ {
+  "id": "f1_gptimage2_y28",
+  "model": "openai/gpt-image-2",
+  "kind": "face",
+  "prompt": "Character reference sheet photograph of the exact woman in the reference photos: same face as the reference photos, same eye shape and size, same round soft face with full cheeks, accurate likeness. Eight head-and-shoulders portraits arranged in a clean 4 by 2 grid on a plain light gray studio background, soft even frontal lighting. Top row: front view, three-quarter view facing left, three-quarter view facing right, side profile. Bottom row expressions: focused calm gaze as if driving, startled with eyes opened wide, singing softly with lips slightly parted, determined. Long straight black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses on in every portrait. White cropped zip jacket with orange stripes over a black top. Smooth clear skin, natural healthy complexion, photographic cinematic realism, sharp focus. No text, no labels. She is shown as she looked at age 28: youthful, smooth clear skin, but identical facial structure, identical eye shape and eye size, same nose, same mouth, same round face and full cheeks, unmistakably the same person as the reference photos.",
+  "refs": [
+   "PXL_20250908_195405539.MP.jpg",
+   "PXL_20260528_215628802.jpg",
+   "PXL_20250908_195352130.jpg",
+   "PXL_20260929_003030232.jpg",
+   "jade_trace_jacket_hp_2.jpg"
+  ],
+  "seed": 29990029,
+  "aspect": "16:9",
+  "file": "cands/f1_gptimage2_y28.jpg",
+  "secs": 30.7
+ },
+ {
+  "id": "f1_gptimage2_cur",
+  "model": "openai/gpt-image-2",
+  "kind": "face",
+  "prompt": "Character reference sheet photograph of the exact woman in the reference photos: same face as the reference photos, same eye shape and size, same round soft face with full cheeks, accurate likeness. Eight head-and-shoulders portraits arranged in a clean 4 by 2 grid on a plain light gray studio background, soft even frontal lighting. Top row: front view, three-quarter view facing left, three-quarter view facing right, side profile. Bottom row expressions: focused calm gaze as if driving, startled with eyes opened wide, singing softly with lips slightly parted, determined. Long straight black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses on in every portrait. White cropped zip jacket with orange stripes over a black top. Smooth clear skin, natural healthy complexion, photographic cinematic realism, sharp focus. No text, no labels.",
+  "refs": [
+   "PXL_20250908_195405539.MP.jpg",
+   "PXL_20260528_215628802.jpg",
+   "PXL_20250908_195352130.jpg",
+   "PXL_20260929_003030232.jpg",
+   "jade_trace_jacket_hp_2.jpg"
+  ],
+  "seed": 907209968,
+  "aspect": "16:9",
+  "file": "cands/f1_gptimage2_cur.jpg",
+  "secs": 30.9
+ },
+ {
+  "id": "f2_nanobanana2_cur",
+  "model": "google/nano-banana-2",
+  "kind": "face",
+  "prompt": "Character reference sheet photograph of the exact woman in the reference photos: same face as the reference photos, same eye shape and size, same round soft face with full cheeks, accurate likeness. Eight head-and-shoulders portraits arranged in a clean 4 by 2 grid on a plain light gray studio background, soft even frontal lighting. Top row: front view, three-quarter view facing left, three-quarter view facing right, side profile. Bottom row expressions: focused calm gaze as if driving, startled with eyes opened wide, singing softly with lips slightly parted, determined. Long straight black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses on in every portrait. White cropped zip jacket with orange stripes over a black top. Smooth clear skin, natural healthy complexion, photographic cinematic realism, sharp focus. No text, no labels.",
+  "refs": [
+   "PXL_20250908_195405539.MP.jpg",
+   "PXL_20260528_215628802.jpg",
+   "PXL_20260929_003030232.jpg"
+  ],
+  "seed": 658675328,
+  "aspect": "16:9",
+  "error": "HTTP 400: {\"errors\":[{\"message\":\"Model execution failed (User Input Error): Unsupported field passed: image_size. Valid fields: prompt, image_input, aspect_ratio, output_format, resolution, google_search, image_search\",\"code\":7003}],\"success\":false,\"result\":{},\"messages\":[]}",
+  "secs": 0.8
+ },
+ {
+  "id": "f2_nanobanana_cur",
+  "model": "google/nano-banana-pro",
+  "kind": "face",
+  "prompt": "Character reference sheet photograph of the exact woman in the reference photos: same face as the reference photos, same eye shape and size, same round soft face with full cheeks, accurate likeness. Eight head-and-shoulders portraits arranged in a clean 4 by 2 grid on a plain light gray studio background, soft even frontal lighting. Top row: front view, three-quarter view facing left, three-quarter view facing right, side profile. Bottom row expressions: focused calm gaze as if driving, startled with eyes opened wide, singing softly with lips slightly parted, determined. Long straight black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses on in every portrait. White cropped zip jacket with orange stripes over a black top. Smooth clear skin, natural healthy complexion, photographic cinematic realism, sharp focus. No text, no labels.",
+  "refs": [
+   "PXL_20250908_195405539.MP.jpg",
+   "PXL_20260528_215628802.jpg",
+   "PXL_20260929_003030232.jpg"
+  ],
+  "seed": 1150724491,
+  "aspect": "16:9",
+  "file": "cands/f2_nanobanana_cur.jpg",
+  "secs": 23.2
+ },
+ {
+  "id": "f2_nanobanana_y28",
+  "model": "google/nano-banana-pro",
+  "kind": "face",
+  "prompt": "Character reference sheet photograph of the exact woman in the reference photos: same face as the reference photos, same eye shape and size, same round soft face with full cheeks, accurate likeness. Eight head-and-shoulders portraits arranged in a clean 4 by 2 grid on a plain light gray studio background, soft even frontal lighting. Top row: front view, three-quarter view facing left, three-quarter view facing right, side profile. Bottom row expressions: focused calm gaze as if driving, startled with eyes opened wide, singing softly with lips slightly parted, determined. Long straight black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses on in every portrait. White cropped zip jacket with orange stripes over a black top. Smooth clear skin, natural healthy complexion, photographic cinematic realism, sharp focus. No text, no labels. She is shown as she looked at age 28: youthful, smooth clear skin, but identical facial structure, identical eye shape and eye size, same nose, same mouth, same round face and full cheeks, unmistakably the same person as the reference photos.",
+  "refs": [
+   "PXL_20250908_195405539.MP.jpg",
+   "PXL_20260528_215628802.jpg",
+   "PXL_20260929_003030232.jpg"
+  ],
+  "seed": 1615410241,
+  "aspect": "16:9",
+  "file": "cands/f2_nanobanana_y28.jpg",
+  "secs": 23.6
+ },
+ {
+  "id": "f2_flux2max_cur",
+  "model": "black-forest-labs/flux-2-max",
+  "kind": "face",
+  "prompt": "Character reference sheet photograph of the exact woman in the reference photos: same face as the reference photos, same eye shape and size, same round soft face with full cheeks, accurate likeness. Eight head-and-shoulders portraits arranged in a clean 4 by 2 grid on a plain light gray studio background, soft even frontal lighting. Top row: front view, three-quarter view facing left, three-quarter view facing right, side profile. Bottom row expressions: focused calm gaze as if driving, startled with eyes opened wide, singing softly with lips slightly parted, determined. Long straight black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses on in every portrait. White cropped zip jacket with orange stripes over a black top. Smooth clear skin, natural healthy complexion, photographic cinematic realism, sharp focus. No text, no labels.",
+  "refs": [
+   "PXL_20250908_195405539.MP.jpg",
+   "PXL_20260528_215628802.jpg",
+   "PXL_20260929_003030232.jpg"
+  ],
+  "seed": 124990466,
+  "aspect": "16:9",
+  "error": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs.",
+  "secs": 30.4
+ },
+ {
+  "id": "f2_seedream5p_cur",
+  "model": "bytedance/seedream-5-pro",
+  "kind": "face",
+  "prompt": "Character reference sheet photograph of the exact woman in the reference photos: same face as the reference photos, same eye shape and size, same round soft face with full cheeks, accurate likeness. Eight head-and-shoulders portraits arranged in a clean 4 by 2 grid on a plain light gray studio background, soft even frontal lighting. Top row: front view, three-quarter view facing left, three-quarter view facing right, side profile. Bottom row expressions: focused calm gaze as if driving, startled with eyes opened wide, singing softly with lips slightly parted, determined. Long straight black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses on in every portrait. White cropped zip jacket with orange stripes over a black top. Smooth clear skin, natural healthy complexion, photographic cinematic realism, sharp focus. No text, no labels.",
+  "refs": [
+   "PXL_20250908_195405539.MP.jpg",
+   "PXL_20260528_215628802.jpg",
+   "PXL_20260929_003030232.jpg"
+  ],
+  "seed": 300239661,
+  "aspect": "16:9",
+  "error": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs.",
+  "secs": 30.5
+ },
+ {
+  "id": "v2_flx_views_cur",
+  "model": "black-forest-labs/flux-2-pro-preview",
+  "kind": "face",
+  "prompt": "Character turnaround reference photograph, four head-and-shoulders portraits side by side on a plain light gray studio background, soft even frontal lighting, all with a neutral calm expression: front view, three-quarter view facing left, three-quarter view facing right, side profile. The exact woman in the reference photos: same face as the reference photos, same eye shape and size, accurate likeness. Keep her wide, round, soft face with full cheeks and soft rounded jaw exactly as in the photos, her eyes exactly as large and as shaped as in the photos (not narrowed, not smaller), her nose and mouth unchanged. Long straight black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses. Smooth clear skin, natural healthy complexion. Wearing a white cropped zip jacket with orange horizontal stripes over a black top. Photographic cinematic realism, sharp focus. No text, no labels.",
+  "refs": [
+   "PXL_20250908_195405539.MP.jpg",
+   "PXL_20260528_215628802.jpg",
+   "PXL_20260929_003030232.jpg"
+  ],
+  "seed": 329859517,
+  "aspect": "16:9",
+  "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+  "secs": 11.8
+ }
+]

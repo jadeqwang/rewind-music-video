@@ -1,0 +1,40 @@
+{
+ "relay": {
+  "worker": "rare-earth-v3-relay",
+  "kv_namespace": "5f8f1f387d37449a949ee68625bdc310",
+  "prefix": "rewind/"
+ },
+ "jobs": {
+  "rewind/test_lsd_dash-d46648d9e5": {
+   "id": "d46648d9e5",
+   "job": "rewind/test_lsd_dash-d46648d9e5",
+   "tag": "test_lsd_dash",
+   "model": "bytedance/seedance-2.5",
+   "notes": "Pipeline validation (gen.py + rare-earth-v3-relay cron queue). Cheapest config: 480p, 5 s, 16:9, no people, song slice 40-45 s as reference audio.",
+   "spec_file": "assets/gen/specs/test_lsd_dash.json",
+   "input": {
+    "duration": 5,
+    "resolution": "480p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": true,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Night highway along a dark lake, sodium streetlights streaking past, rain on the windshield, camera fixed on the dashboard, high contrast. No people. No text, no subtitles, no logos.",
+    "reference_audios": [
+     "file:assets/tests/ref_audio_40s_5s.mp3"
+    ]
+   },
+   "est_usd": 0.514,
+   "est_basis": "5s x 0.1028 (@480p non-video input (per second))",
+   "state": "queued",
+   "bucket": 29848630,
+   "submitted": 1790917684.3795178,
+   "bytes": 111219
+  }
+ },
+ "total_est_usd": 0.514,
+ "total_est_usd_done": 0
+}

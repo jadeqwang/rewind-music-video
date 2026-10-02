@@ -1,0 +1,12 @@
+{
+  "model": "bytedance/seedance-2.5",
+  "tag": "test_lsd_dash",
+  "notes": "Pipeline validation (gen.py + rare-earth-v3-relay cron queue). Cheapest config: 480p, 5 s, 16:9, no people, song slice 40-45 s as reference audio.",
+  "input": {
+    "prompt": "Night highway along a dark lake, sodium streetlights streaking past, rain on the windshield, camera fixed on the dashboard, high contrast. No people. No text, no subtitles, no logos.",
+    "reference_audios": ["file:assets/tests/ref_audio_40s_5s.mp3"],
+    "duration": 5, "resolution": "480p", "aspect_ratio": "16:9", "fps": 24,
+    "camera_fixed": true, "watermark": false, "output_format": "mp4",
+    "use_virtual_avatar": false, "generate_audio": false
+  }
+}

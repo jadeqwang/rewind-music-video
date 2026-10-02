@@ -10,7 +10,7 @@ from cf import run_model, save_media
 from PIL import Image
 
 COST = {"xai/grok-imagine-image": 0.02, "xai/grok-imagine-image-quality": 0.05, "xai/grok-imagine-image-2.0": 0.04,
-        "bytedance/seedream-5-pro": 0.045, "bytedance/seedream-4.5": 0.04, "google/nano-banana-pro": 0.14,
+        "bytedance/seedream-5-pro": 0.045, "bytedance/seedream-4.5": 0.04, "bytedance/seedream-5-lite": 0.035, "google/nano-banana-pro": 0.14,
         "google/nano-banana-2": 0.07, "black-forest-labs/flux-2-pro-preview": 0.045,
         "black-forest-labs/flux-2-max": 0.10, "openai/gpt-image-2": 0.06}
 LOCK = threading.Lock()
@@ -22,7 +22,7 @@ def payload(model, prompt, seed):
         if model != "xai/grok-imagine-image-2.0": p["resolution"] = "1k"
         return p
     if model.startswith("bytedance/"):
-        return {"prompt": prompt, "size": "2048x1152", "watermark": False}
+        return {"prompt": prompt, "size": "1536x864", "watermark": False}
     if model.startswith("google/"):
         return {"prompt": prompt, "aspect_ratio": "16:9", "image_size": "1K", "output_format": "jpg"}
     if model.startswith("black-forest-labs/"):
@@ -42,6 +42,10 @@ def one(job):
         paths = save_media(r, out + "_raw")
         src = [p for p in paths if not p.endswith(".json")][0]
         im = Image.open(src).convert("RGB")
+        w, h = im.size
+        if abs(w / h - 16 / 9) > 0.02:   # center-crop to 16:9 (gpt-image is 3:2)
+            nh = round(w * 9 / 16); top = (h - nh) // 2
+            im = im.crop((0, top, w, top + nh))
         im.save(out + ".jpg", quality=93); size = im.size
         if src != out + ".jpg": os.remove(src)
         for p in paths:

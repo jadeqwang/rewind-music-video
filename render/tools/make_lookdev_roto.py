@@ -16,12 +16,14 @@ FPS = 15
 W, H = 1280, 720
 
 def xdog(gray, sigma=0.9, k=1.6, tau=0.985, eps=0.02, phi=60.0):
+    """DoG line extraction (dark side of edges): ~0 on flat areas, ~1 on lines. eps is in units of
+    local contrast (the image is normalised by its 98th-percentile DoG response)."""
     g = gray.astype(np.float32) / 255.0
     g1 = cv2.GaussianBlur(g, (0, 0), sigma)
     g2 = cv2.GaussianBlur(g, (0, 0), sigma * k)
-    d = g1 - tau * g2
-    e = np.where(d >= eps, 1.0, 1.0 + np.tanh(phi * (d - eps)))
-    return np.clip(1.0 - e, 0, 1)
+    d = g2 * tau - g1
+    d = d / max(1e-4, np.percentile(np.abs(d), 98))
+    return np.clip((d - eps) * phi, 0, 1)
 
 def clean(lines, min_area=24, thr=0.35):
     b = (lines > thr).astype(np.uint8)
@@ -66,12 +68,13 @@ def suits(n=50):
     meta = dict(fps=FPS, frames=n, w=W, h=H, layers=['lines', 'matte'], src='assets/tests/flux_schnell.jpg', per_frame=[])
     for i in range(n):
         u = i / (n - 1)
-        s = (H / h) * (0.98 + 0.30 * u * u * 0 + 0.30 * u)          # push-in (they approach)
-        bob = 5 * abs(np.sin(i / FPS * np.pi * 2.07))               # footsteps
-        M = np.array([[s, 0, W / 2 - s * w / 2], [0, s, H * 0.98 - s * h + 120 * u + bob]], np.float32)
-        g = cv2.warpAffine(cl, M, (W, H), flags=cv2.INTER_LINEAR, borderValue=0)
+        s = (W / w) * (1.0 + 0.22 * u)                               # cover the width, push in (they approach)
+        bob = 4 * abs(np.sin(i / FPS * np.pi * 2.07))               # footsteps
+        hy = 355 * s                                                 # head line (source y 355) lands at y=300
+        M = np.array([[s, 0, W / 2 - s * 512], [0, s, 300 - hy + bob]], np.float32)
+        g = cv2.warpAffine(cl, M, (W, H), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
         mt = cv2.warpAffine(mm, M, (W, H), flags=cv2.INTER_LINEAR, borderValue=0).astype(np.float32) / 255
-        ln = clean(xdog(g, sigma=1.0, tau=0.98, eps=0.015, phi=40), 30)
+        ln = clean(xdog(g, sigma=1.0, tau=1.0, eps=0.3, phi=2.2), 40)
         save(d, 'lines', i, ln)
         save(d, 'matte', i, mt)
         tr = lambda p: [float(M[0, 0] * p[0] + M[0, 2]), float(M[1, 1] * p[1] + M[1, 2])]
@@ -94,7 +97,7 @@ def road(n=60):
         z = s / b
         M = np.array([[s, 0, (1 - z) * cx], [0, s, (1 - z) * cy]], np.float32)
         g = cv2.warpAffine(gray, M, (W, H), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
-        ln = clean(xdog(g, sigma=1.1, tau=0.975, eps=0.02, phi=35), 40)
+        ln = clean(xdog(g, sigma=1.1, tau=1.0, eps=0.35, phi=2.2), 60)
         save(d, 'lines', i, ln)
         meta['per_frame'].append({})
     json.dump(meta, open(d + '/meta.json', 'w'))
