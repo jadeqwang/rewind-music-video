@@ -21,5 +21,5 @@ Best references:
   refs/jade/Pasted image.png
 
 ## Car & continuity
-Her car: WHITE 2001 ACURA (early-2000s Japanese sedan; simple dash, no touchscreen). US left-hand drive — she sits on
+Her car: WHITE 2001 ACURA TL (2nd-gen 4-door sedan; simple dash, no touchscreen). US left-hand drive — she sits on
 the LEFT; traffic on the right. Pursuers: dark sedan. Reject any mirrored / right-hand-drive interiors.

@@ -801,10 +801,11 @@
    },
    "est_usd": 1.3872,
    "est_basis": "6s x 0.2312 (@720p non-video input (per second))",
-   "state": "queued",
+   "state": "running",
    "bucket": 29848657,
    "submitted": 1790919318.5955818,
-   "bytes": 152717
+   "bytes": 152717,
+   "started": 1790919469.874
   },
   "rewind/nj_Epull_t2-0916ffd613": {
    "id": "0916ffd613",
@@ -831,10 +832,11 @@
    },
    "est_usd": 0.9248,
    "est_basis": "4s x 0.2312 (@720p non-video input (per second))",
-   "state": "queued",
+   "state": "running",
    "bucket": 29848658,
    "submitted": 1790919319.2190309,
-   "bytes": 365649
+   "bytes": 365649,
+   "started": 1790919529.899
   },
   "rewind/nj_S3_t2-de91ff9d6b": {
    "id": "de91ff9d6b",
@@ -861,10 +863,11 @@
    },
    "est_usd": 1.3872,
    "est_basis": "6s x 0.2312 (@720p non-video input (per second))",
-   "state": "queued",
+   "state": "running",
    "bucket": 29848658,
    "submitted": 1790919319.680542,
-   "bytes": 436538
+   "bytes": 436538,
+   "started": 1790919529.979
   },
   "rewind/nj_S5_t2-8bdfa8a64a": {
    "id": "8bdfa8a64a",
