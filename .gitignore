@@ -3,3 +3,7 @@ analysis/stems/
 node_modules/
 render/frames/
 __pycache__/
+analysis/models/
+*.onnx
+*.pt
+*.pth
