@@ -1,0 +1,38 @@
+{
+ "J1 (profile, tracked ROI)": {
+  "clip": "assets/gen/jade_J1_lip_t3_7730ba5879.mp4",
+  "method": "tracked dark-gap ROI (818, 366, 52, 38) (face landmarks on 1% of frames)",
+  "fps": 24.0,
+  "frames": 217,
+  "face_detect_frac": 0.009,
+  "window_s": [
+   0.2916666666666667,
+   7.958333333333333
+  ],
+  "r_lag0": 0.108,
+  "best_r": 0.326,
+  "best_lag_s": -0.292,
+  "mouth_open_range": [
+   0.231,
+   0.315
+  ]
+ },
+ "J6 (landmarks)": {
+  "clip": "assets/gen/jade_J6_lip_t4_93fc18e4f0.mp4",
+  "method": "landmarks",
+  "fps": 24.0,
+  "frames": 193,
+  "face_detect_frac": 1.0,
+  "window_s": [
+   0.2916666666666667,
+   7.291666666666667
+  ],
+  "r_lag0": 0.411,
+  "best_r": 0.552,
+  "best_lag_s": -0.292,
+  "mouth_open_range": [
+   0.001,
+   0.235
+  ]
+ }
+}

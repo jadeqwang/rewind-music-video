@@ -57,6 +57,7 @@ export function buildShots(T) {
   // H4: aerial LSD self-drawing as one pen stroke; THEOREM / PROOF
   C('H4_theorem', db(5), v1, [ink,
     { type: 'world', roto: R.aerial, alpha: 0.5, lights: 0.4, cam: { from: [0.5, 0.5, 1.0], to: [0.48, 0.55, 1.12] } },
+    { type: 'car', roto: R.aerial, view: 'chase', lights: 'tail', cam: { from: [0.5, 0.5, 1.0], to: [0.48, 0.55, 1.12] }, offset: 4 },
     { type: 'pathdraw', progress: e => easeInOutCubic(e.u), width: 5 },
     { type: 'cm', lead: 'Theorem.', text: 'She makes it home.', x: 420, y: 520, size: 112 },
     { type: 'cm', lead: 'Proof.', text: 'By exhaustion.', x: 420, y: 690, size: 112, at: 1.4 },
@@ -94,6 +95,8 @@ export function buildShots(T) {
   ], { hud: hud(1, 0.0), fx: { heart: 0.3 } });
   C('B2_pullover', L(3).start, T.beatBefore(men), [ink,
     { type: 'world', roto: R.pull, alpha: 1, lights: 1, cam: { from: [0.45, 0.6, 1.0], to: [0.42, 0.66, 1.35], ease: easeOutCubic } },
+    { type: 'car', roto: R.pull, view: 'side', lights: 'brake', rot: -0.35, cam: { from: [0.45, 0.6, 1.0], to: [0.42, 0.66, 1.35], ease: easeOutCubic } },
+    { type: 'car', when: e => !String(e.shot.params.layers[1].roto).startsWith('Epull'), view: 'side', lights: 'brake', rot: -0.33, x: e => lerp(820, 760, easeOutCubic(e.u)), y: e => lerp(820, 880, easeOutCubic(e.u)), w: e => lerp(420, 560, easeOutCubic(e.u)) },
     { type: 'sirens', side: 'pair', base: 0.15, peak: 0.35 },
     { type: 'annotation', n: 1, move: 'pull over', nag: '?!', x: 150, y: 960, size: 56, at: 0.3 },
     { type: 'tree', seed: 7, depth: 4, x: 1420, y: 340, w: 380, h: 300, progress: e => 0.25 * e.u, leafSize: 30, onType: true, alpha: 0.9 },
@@ -319,7 +322,8 @@ export function buildShots(T) {
   C('N3_collapse', n3, n4, [ink, { type: 'collapse', n: 1100, progress: e => smooth(0.05, 0.9, e.u) }, { type: 'kickflash', color: PAL.bone, amount: 0.25 }],
     { hud: { attempt: 3, ok: true, tc: true, eval: t => lerp(5, 40, clamp((t - n3) / (n4 - n3))) }, fx: { kick: 1, strobe: 0.5 } });
   // N4: aerial, brighter and short: her light draws the winning line; the ghost cars of attempts 1/2 peel off and dissolve
-  C('N4_aerial', n4, n5, [ink, { type: 'world', roto: R.aerial, alpha: 1, lights: 0.55, cam: { from: [0.5, 0.5, 1.15], to: [0.5, 0.52, 1.0] } },
+  C('N4_aerial', n4, n5, [ink, { type: 'world', roto: R.aerial, alpha: 1, lights: 0.55, cam: { from: [0.5, 0.5, 1.15], to: [0.5, 0.52, 1.0] }, offset: 2.5 },
+    { type: 'car', roto: R.aerial, view: 'chase', lights: 'tail', trail: true, cam: { from: [0.5, 0.5, 1.15], to: [0.5, 0.52, 1.0] }, offset: 2.5 },
     { type: 'pathdraw', progress: e => e.u, width: 9, color: PAL.cyan },
     { type: 'ghostcar', x: e => lerp(820, 300, e.u), y: e => lerp(420, 980, e.u), scale: e => lerp(0.3, 0.8, e.u), alpha: e => 0.95 * (1 - e.u), color: PAL.red },
     { type: 'ghostcar', x: e => lerp(900, 1500, e.u), y: e => lerp(420, 1000, e.u), scale: e => lerp(0.3, 0.8, e.u), alpha: e => 0.95 * (1 - e.u), color: PAL.bone }],
@@ -327,7 +331,8 @@ export function buildShots(T) {
   // N5: pure road, pure speed; the HUD falls away; inserts every other bar
   C('N5_speed', n5, n6, lane({ words: ['I', 'DREAMT'] }), { hud: { attempt: 3, ok: true, tc: true, eval: Infinity, alpha: 1 }, fx: drive });
   ['pages', 'jade', 'scale', 'jade'].forEach((k, j) => C(`N5_${k}${j}`, DB(17 + 2 * j), DB(18 + 2 * j), insert(k, j), { hud: j < 2 ? { attempt: 3, ok: true, eval: Infinity } : null, fx: drive }));
-  C('N6_lake', n6, qed, [ink, { type: 'world', roto: R.aerial, alpha: 1, lights: 0.5, cam: { from: [0.45, 0.6, 1.5], to: [0.5, 0.5, 0.82] } },
+  C('N6_lake', n6, qed, [ink, { type: 'world', roto: R.aerial, alpha: 1, lights: 0.5, cam: { from: [0.45, 0.6, 1.5], to: [0.5, 0.5, 0.82] }, loop: false },
+    { type: 'car', roto: R.aerial, view: 'chase', lights: 'tail', trail: true, cam: { from: [0.45, 0.6, 1.5], to: [0.5, 0.5, 0.82] }, loop: false },
     { type: 'tree', seed: 7, depth: 4, progress: 1, lit: 1, alpha: 0.6, x: 180, y: 560, w: 1560, h: 980, litColor: PAL.cyan },
     { type: 'pathdraw', progress: 1, width: 9, head: false, color: PAL.cyan }], { fx: { kick: 0.5, heart: 0.2, downInvert: 2, jerks: [ev('braam', 8)] } });
   C('N7_qed', qed, end, [{ type: 'qedpage' }], { fx: { heart: 0.15, jerks: [qed] } }, { post: { bloom: 0, vignette: 0.12 } });

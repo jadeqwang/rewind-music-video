@@ -47,3 +47,7 @@ with the real photos as reference_images. Generated character sheets are backup 
 ## Approval state (2026-10-02 night)
 User: "yes, generate the shots but don't animate them all just yet." → all Jade first-frame stills OK; max 2 validation
 animations (J1, J6). Everything else waits for morning review.
+- VIDEO FINDING: Seedance shrinks her eyes progressively within a clip (iris −7..−19%). So the redraw uses footage
+  landmarks only as anchors/pose; eyes/brows/crease are drawn from the canonical real-photo template. Mouth from the
+  vocal stem. Seedance lip-sync leads by a constant ~0.29 s (cut reference audio to start at the first sung word, or
+  shift video +0.29 s). Seedance needs use_virtual_avatar:true for her face (else error 7003).

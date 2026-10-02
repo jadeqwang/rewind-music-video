@@ -41,3 +41,37 @@ E2_calm: 91 frames @15fps from assets/clips/E2_calm.mp4 (1280x720), layers=['lin
   E2_calm   10/91 1.81s  flow=0.12 matte=0.21 ground=0.00 face=0.00 lines=0.98 write=0.50
   E2_calm   40/91 1.86s  flow=0.09 matte=0.03 ground=0.00 face=0.00 lines=1.21 write=0.53
   E2_calm   70/91 1.34s  flow=0.30 matte=0.01 ground=0.00 face=0.00 lines=0.65 write=0.38
+  E2_calm   20/91 1.53s  flow=0.18 matte=0.00 ground=0.00 face=0.00 lines=0.77 write=0.58
+  E2_calm   50/91 0.93s  flow=0.13 matte=0.00 ground=0.00 face=0.00 lines=0.43 write=0.36
+  E2_calm   80/91 0.66s  flow=0.14 matte=0.00 ground=0.00 face=0.00 lines=0.36 write=0.16
+  E2_calm   90/91 0.56s  flow=0.11 matte=0.01 ground=0.00 face=0.00 lines=0.31 write=0.14
+E2_calm: done 91/91 frames, wall 40.4s, 17.9 MB, mean s/frame (per worker): flow=0.184, matte=0.018, ground=0.0, face=0.0, lines=0.621, write=0.355, total=1.178
+E2_fast: 121 frames @15fps from assets/clips/E2_fast.mp4 (1470x630), layers=['lines', 'matte', 'light', 'flow'], workers=3, tone={'hi': 0.5764706134796143, 'gamma': 0.6542342750671656}
+  E2_fast    0/121 1.41s  flow=0.44 matte=0.01 ground=0.00 face=0.00 lines=0.66 write=0.30
+  E2_fast   40/121 0.98s  flow=0.11 matte=0.00 ground=0.00 face=0.00 lines=0.58 write=0.29
+  E2_fast   80/121 0.89s  flow=0.32 matte=0.01 ground=0.00 face=0.00 lines=0.30 write=0.27
+  E2_fast   10/121 0.86s  flow=0.20 matte=0.01 ground=0.00 face=0.00 lines=0.37 write=0.29
+  E2_fast   90/121 0.72s  flow=0.07 matte=0.00 ground=0.00 face=0.00 lines=0.42 write=0.22
+  E2_fast   50/121 0.93s  flow=0.09 matte=0.00 ground=0.00 face=0.00 lines=0.53 write=0.31
+  E2_fast   20/121 1.10s  flow=0.22 matte=0.00 ground=0.00 face=0.00 lines=0.35 write=0.53
+  E2_fast  100/121 0.69s  flow=0.11 matte=0.01 ground=0.00 face=0.00 lines=0.41 write=0.17
+  E2_fast   60/121 0.92s  flow=0.12 matte=0.00 ground=0.00 face=0.00 lines=0.23 write=0.57
+  E2_fast   30/121 1.30s  flow=0.12 matte=0.01 ground=0.00 face=0.00 lines=0.57 write=0.60
+  E2_fast  110/121 0.84s  flow=0.14 matte=0.00 ground=0.00 face=0.00 lines=0.49 write=0.20
+  E2_fast   70/121 0.75s  flow=0.18 matte=0.00 ground=0.00 face=0.00 lines=0.32 write=0.24
+  E2_fast  120/121 0.46s  flow=0.06 matte=0.01 ground=0.00 face=0.00 lines=0.17 write=0.22
+E2_fast: done 121/121 frames, wall 43.8s, 28.3 MB, mean s/frame (per worker): flow=0.154, matte=0.011, ground=0.0, face=0.0, lines=0.479, write=0.3, total=0.945
+E3_flood: 76 frames @15fps from assets/clips/E3_flood.mp4 (1280x720), layers=['lines', 'matte', 'light', 'flow'], workers=3, tone={'hi': 0.7333333492279053, 'gamma': 0.35}
+  E3_flood    0/76 1.99s  flow=0.24 matte=0.06 ground=0.00 face=0.00 lines=1.17 write=0.52
+  E3_flood   50/76 0.90s  flow=0.06 matte=0.01 ground=0.00 face=0.00 lines=0.67 write=0.15
+  E3_flood   30/76 1.27s  flow=0.08 matte=0.00 ground=0.00 face=0.00 lines=0.71 write=0.48
+  E3_flood   10/76 1.38s  flow=0.34 matte=0.00 ground=0.00 face=0.00 lines=0.70 write=0.34
+  E3_flood   60/76 2.15s  flow=0.19 matte=0.00 ground=0.00 face=0.00 lines=1.16 write=0.80
+  E3_flood   40/76 0.89s  flow=0.27 matte=0.01 ground=0.00 face=0.00 lines=0.44 write=0.17
+  E3_flood   20/76 0.92s  flow=0.13 matte=0.00 ground=0.00 face=0.00 lines=0.66 write=0.12
+  E3_flood   70/76 0.74s  flow=0.09 matte=0.00 ground=0.00 face=0.00 lines=0.30 write=0.35
+E3_flood: done 76/76 frames, wall 33.1s, 12.6 MB, mean s/frame (per worker): flow=0.16, matte=0.011, ground=0.0, face=0.0, lines=0.6, write=0.331, total=1.102
+E3_follow: 76 frames @15fps from assets/clips/E3_follow.mp4 (1280x720), layers=['lines', 'matte', 'light', 'flow'], workers=3, tone={'hi': 0.8352941274642944, 'gamma': 0.35}
+  E3_follow    0/76 1.29s  flow=0.24 matte=0.01 ground=0.00 face=0.00 lines=0.61 write=0.43
+  E3_follow   50/76 1.36s  flow=0.26 matte=0.03 ground=0.00 face=0.00 lines=0.65 write=0.41
+  E3_follow   30/76 0.71s  flow=0.16 matte=0.02 ground=0.00 face=0.00 lines=0.40 write=0.13

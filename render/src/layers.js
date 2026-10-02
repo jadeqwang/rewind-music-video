@@ -7,6 +7,7 @@ import { page as pageType, slam, subtitle, redact, redactedLine, revisions, setF
 import * as V from './slams.js';
 import { searchTree, buildTree, glyph, evalBar, annotation } from './hud.js';
 import { sirens, sodiumSweep, sodiumWash, rain, bullet, headlights, fillInk } from './fx.js';
+import * as CAR from './car.js';
 
 export const A = (v, env, d) => (typeof v === 'function' ? v(env) : v ?? d);
 
@@ -445,6 +446,7 @@ Object.assign(LAYERS, {
   // an outline car (rear 3/4): the ghost of an earlier attempt
   ghostcar(ctx, L, env) {
     const g = ctx.g, x = A(L.x, env, 960), y = A(L.y, env, 600), s = A(L.scale, env, 1), a = A(L.alpha, env, 0.9);
+    if (CAR.has('rear')) { CAR.drawView(g, 'rear', x, y + 40 * s, 400 * s, { color: L.color || PAL.cyan, alpha: a, outline: true, lights: null, seed: Math.floor(env.lt * 10) }); return; }
     g.save(); g.translate(x, y); g.scale(s, s); g.strokeStyle = rgba(L.color || PAL.cyan, a); g.lineWidth = 4; g.lineJoin = 'round';
     g.beginPath(); g.moveTo(-200, 40); g.lineTo(-190, -20); g.lineTo(-120, -40); g.lineTo(-80, -100); g.lineTo(80, -100); g.lineTo(120, -40); g.lineTo(190, -20); g.lineTo(200, 40); g.closePath(); g.stroke();
     g.beginPath(); g.moveTo(-70, -90); g.lineTo(70, -90); g.lineTo(100, -45); g.lineTo(-100, -45); g.closePath(); g.stroke();
@@ -547,6 +549,23 @@ Object.assign(LAYERS, {
     setFont(ty, F.mono(240, 700)); ty.textAlign = 'right'; ty.fillText('∎', 1770, 790);
     ty.fillRect(150, 900, 540, 2); setFont(ty, F.cmu(36)); ty.textAlign = 'left'; ty.fillStyle = PAL.ink; ty.fillText('³ attempts 01, 02: terminated. attempt 03: line found.', 150, 960);
     ty.restore();
+  },
+});
+Object.assign(LAYERS, {
+  // her car (white 2001 Acura TL) from the car kit. Tracked: give the same roto/cam/speed/offset/loop as the world layer;
+  // the clip's track (assets/car/tracks/<clip>.json) places it and the Seedance car underneath is erased with ink.
+  // Untracked: {x, y (ground point), w}. view: chase|rear34|rear|side|front34|top
+  car(ctx, L, env, { roto }) {
+    const g = ctx.g; let cx, by, w;
+    if (L.roto) {
+      const id = L.roto, tr = CAR.trackFor(id); if (!tr || !roto.meta(id)) return;
+      const ct = roto.clipTime(id, env.lt, { speed: A(L.speed, env, 1), offset: A(L.offset, env, 0), loop: L.loop ?? true });
+      const b = CAR.trackBox(tr, ct, camRect(L.cam, env)); if (!b) return;
+      const pad = (b.x1 - b.x0) * 0.25; g.fillStyle = PAL.ink; g.fillRect(b.x0 - pad, b.y0 - pad, b.x1 - b.x0 + 2 * pad, b.y1 - b.y0 + 2 * pad);
+      cx = (b.x0 + b.x1) / 2; by = b.y1; w = (b.x1 - b.x0) * (L.wScale ?? 1);
+    } else { cx = A(L.x, env, 960); by = A(L.y, env, 800); w = A(L.w, env, 500); }
+    CAR.drawView(g, L.view || 'chase', cx, by, w, { color: L.color, alpha: A(L.alpha, env, 1), seed: Math.floor(env.lt * 10), lights: L.lights ?? 'tail', rot: L.rot, outline: L.outline, fill: L.fill });
+    if (L.trail) { g.save(); g.globalCompositeOperation = 'lighter'; headlights(g, cx, by - w * 0.2, w * 0.9, 0.25, PAL.red); g.restore(); }
   },
 });
 const TREES = new Map();

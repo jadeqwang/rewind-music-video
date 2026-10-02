@@ -14,6 +14,7 @@ import { SCENES } from './scenes/index.js';
 import { applyRhythm, skipAt } from './rhythm.js';
 import { hudOverlay } from './hud.js';
 import { drawLayers } from './layers.js';
+import * as CAR from './car.js';
 
 const Q = new URLSearchParams(location.search);
 export const W = +(Q.get('w') || 1920), H = +(Q.get('h') || 1080), S = H / DH;
@@ -166,6 +167,7 @@ export async function boot() {
   const which = Q.get('shots') || 'main';
   E.T = await TimeMap.load('..');
   await loadFonts();
+  await CAR.load();
   const mod = await import(which === 'main' ? './shots.js' : `./shots.${which}.js`);
   E.shots = mod.buildShots(E.T).map(s => ({ params: {}, ...s, t0: fin(s.t0), t1: fin(s.t1) })).sort((a, b) => a.t0 - b.t0);
   const ids = new Set();
