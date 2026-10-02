@@ -66,3 +66,19 @@ exam nightmare is hooked by the line + the rewind.
   text be busy at the same time.
 - Every death and rewind must be instantly legible without sound (Twitter autoplays muted): ATTEMPT counter,
   ✗, REWIND text, and visual reverse motion.
+
+## Core tension (user, authoritative): SURREAL/DREAMLIKE and HIGH ENERGY at the same time
+Rule of thumb: **dream logic in SPACE, club energy in TIME.** Geometry, causality and continuity are wrong like a dream;
+rhythm, cutting and impact are relentless like a club.
+Dream devices (use throughout, sparingly but constantly):
+- Impossible continuity: match-cuts by shape (steering wheel → clock face → tree root node → defense-room table);
+  the road loops back into itself; streetlights repeat infinitely (visual Shepard tone); the lake is a black mirror
+  reflecting the road upside-down; the mirror shows a different time than the windshield.
+- Lag / desync (from the book's "Know the place for the first time": "audio and visual input would fall out of sync,
+  creating a lag"): ghost layers trailing a few frames behind; a second outline of Jade that moves a beat late.
+- Scale slips: the suits are sometimes too tall, sometimes tiny on the horizon in the same shot; the car interior is
+  too deep; the defense room has too many chairs.
+- Floating calm inside violence: one element in slow motion (rain, bullet, hair) while everything else cuts on 16ths.
+- Text behaves like dream text: words re-spell themselves, letters drift out of the line, the page breathes.
+Energy devices: cut on kicks/downbeats in drops, 2–4% zoom punches, strobe on four-on-the-floor, camera shake on
+impacts, speed lines, stutter frames on vocal chops, never a static frame > 2 bars outside the verses.

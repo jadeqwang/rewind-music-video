@@ -97,5 +97,25 @@
    }
   ],
   "file": "cands/EX1.jpg"
+ },
+ {
+  "id": "TU3",
+  "model": "openai/gpt-image-2",
+  "prompt": "Photographic full-body character turnaround of the same woman (exactly the face of the first reference image: heart-shaped face, large broad forehead, round-almond eyes) on a plain light warm-gray studio background, soft even light, four full-length views side by side at the same scale, head to sneakers fully in frame: front, three-quarter, side profile, back. The back view clearly shows her half-up half-down hairstyle: the top section split into two symmetrical twisted sections, one from each temple, pulled back and joined at the back of the crown, the rest of the long straight black hair hanging down her back. Relaxed standing pose, arms at her sides. Same woman as the reference photos, accurate likeness, same face as the first reference image. Heart-shaped \"melon-seed\" face (\u74dc\u5b50\u8138): a large, tall, broad forehead and a proportionally large upper head/cranium, wide at the forehead/temples and cheekbones, tapering through the lower cheeks to a narrow, softly pointed chin (not round, not square). Eyes exactly as large and as shaped as in the first reference image (never smaller, never narrowed, never squinting), dark brown round-almond eyes with a slight thin double eyelid crease. Natural straight-ish brows with her subtle asymmetry: the brow on the viewer's left sits slightly lower and flatter, the brow on the viewer's right is slightly higher with a softer arch peaking toward the tail. Long straight solid black hair with a center part, styled half-up half-down: the top section pulled back from the temples into two symmetrical twisted sections meeting toward the crown, adding volume at the top and back of the head and revealing the broad forehead; the rest hangs long and straight past the shoulders, a few fine loose strands at the temples. Thin rectangular dark gray-teal metal frame glasses always on. Age 27, youthful, smooth clear skin, natural healthy complexion, soft even light on the face. Outfit: white cropped zip jacket with one clean orange horizontal band across the chest continuing across both upper sleeves, plus one thin orange band near each cuff, nothing else on it (no patches, no logos, no text, not all-over stripes); black fitted top underneath; slim straight black pants; white sneakers. Use the last reference image for the outfit pattern only (not the face; ignore its patches, text and cargo pants). No text, no labels.",
+  "refs": [
+   "assets/character/v2/cands/FS1_w.jpg",
+   "assets/character/v2/cands/G_warp.jpg",
+   "refs/jade/PXL_20250908_195405539.MP.jpg",
+   "refs/jade/Pasted image.png"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 28.9
+   }
+  ],
+  "file": "cands/TU3.jpg"
  }
 ]

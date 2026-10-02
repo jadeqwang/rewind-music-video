@@ -45,7 +45,7 @@ def process(frames, d, rect=None, src=''):
             x0, y0, x1, y1 = [int(c * s_) for c, s_ in zip(rect, (W, H, W, H))]
             g = cv2.GaussianBlur(cv2.cvtColor(im, cv2.COLOR_BGR2GRAY), (0, 0), 2.0).astype(np.float32)
             bgl = cv2.GaussianBlur(g, (0, 0), 40)
-            m = ((g < np.maximum(18, bgl * 0.55)) * 255).astype(np.uint8)
+            m = (((g < np.maximum(18, bgl * 0.55)) & (bgl > float(opt.get("--bgmin", 30)))) * 255).astype(np.uint8)
             m[:, :x0] = 0; m[:, x1:] = 0; m[:y0] = 0; m[y1:] = 0
             m = cv2.morphologyEx(m, cv2.MORPH_OPEN, np.ones((5, 5), np.uint8)); m = cv2.morphologyEx(m, cv2.MORPH_CLOSE, np.ones((9, 9), np.uint8))
             n, labs, st, _ = cv2.connectedComponentsWithStats(m)
