@@ -1,0 +1,17 @@
+{
+ "model": "bytedance/seedance-2.5",
+ "tag": "anime_J8_t1",
+ "notes": "anime Jade J8 t1",
+ "input": {
+  "prompt": "Dark empty seminar room: she sits alone on the single chair, hands resting on her knees, and sings softly toward the camera, eyes softly lowered, very little body motion. The projector beam stays steady; faint red and blue glow from the window. Slow, gentle push-in. She sings the vocal in the reference audio: her lips move in exact sync with each sung word, small natural breaths. Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+  "image": "file:assets/character/anime/shots/J8_720.jpg",
+  "duration": 8,
+  "resolution": "720p",
+  "aspect_ratio": "16:9",
+  "generate_audio": false,
+  "use_virtual_avatar": false,
+  "reference_audios": [
+   "file:analysis/slices/vocals_anime_J8_147.47_8.mp3"
+  ]
+ }
+}

@@ -190,5 +190,29 @@
   "attempts": 3,
   "est_cost_usd": 0.21000000000000002,
   "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/shots/cands/J9fix_1.jpg",
+  "job": "J9fix",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "src": "J9_1.jpg",
+  "prompt": "Edit this anime film frame minimally: remove the round '1420 MHz' patch from her RIGHT sleeve, so that sleeve is plain white with only the orange band. Keep EVERYTHING else exactly identical: face, eyes and their size, hair, pose, lighting, background, composition, line weight and colours. ",
+  "secs": 27.6,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/shots/cands/J3fix_1.jpg",
+  "job": "J3fix",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "src": "J3_1.jpg",
+  "prompt": "Edit this anime film frame minimally: remove the police car and its light bar at the top-left (replace with dark night road and distant city lights). The red and blue police light now comes from BEHIND her car (frame-right, beyond the rear door), washing red/blue over the rear of the car, her hair rim and the dark figure at the right edge. Keep EVERYTHING else exactly identical: her face, eyes and their size, hair, pose, the blank ID card, car, composition, line weight and colours. ",
+  "secs": 30.9,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
  }
 ]

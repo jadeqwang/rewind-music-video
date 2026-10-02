@@ -1,0 +1,14 @@
+{
+ "model": "bytedance/seedance-2.5",
+ "tag": "anime_J3_t1",
+ "notes": "anime Jade J3 t1",
+ "input": {
+  "prompt": "Night, the car is stopped at the roadside under pulsing red and blue police lights from behind. She slowly reaches out and holds her driver's license card up at the open window toward someone standing just off-frame right, her arm steady, her face calm and compliant, eyes looking up at him. The red and blue light pulses rhythmically over her hair and the car. Locked-off camera. Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+  "image": "file:assets/character/anime/shots/J3_720.jpg",
+  "duration": 6,
+  "resolution": "720p",
+  "aspect_ratio": "16:9",
+  "generate_audio": false,
+  "use_virtual_avatar": false
+ }
+}
