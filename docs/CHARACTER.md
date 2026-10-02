@@ -2,8 +2,8 @@
 
 Likeness anchors (MUST match): East Asian woman; long straight black hair, center part, falling past shoulders, a few
 loose strands at the temples; round soft face, full cheeks; eyes as in photos (do NOT shrink/narrow); straight-ish
-natural brows; thin rectangular glasses with dark gray/teal metal frames (her identity marker — keep them);
-calm "resting oblivious face" expression. Photos are from her 40s; render her youthful and clean-skinned
+natural brows; thin rectangular glasses with dark gray/teal metal frames (her identity marker — ALWAYS on, modern-day frames, in every version incl. age 27);
+calm "resting oblivious face" expression. Photos are from her 40s; target age 27 (her age at the PhD defense), youthful and clean-skinned
 (the dream is the night before her PhD defense) WITHOUT changing face shape or eye size. See docs/LIKENESS_RULES.md.
 
 Canonical outfit ("flight outfit", consistent across her videos): white cropped zip jacket with orange horizontal
