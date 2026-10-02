@@ -1,0 +1,12 @@
+J6: 121 frames @15fps from assets/gen/jade_J6_lip_t4_93fc18e4f0.mp4 (1280x720), layers=['lines', 'matte', 'light', 'flow', 'face'], workers=1, tone={'hi': 0.7803921699523926, 'gamma': 0.7236206681322251}
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+WARNING: Logging before InitGoogle() is written to STDERR
+W0000 00:00:1790923844.005470   10850 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790923844.345285   10855 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+W0000 00:00:1790923844.352657   10857 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790923844.368351   10857 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790923844.823900   10861 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+W0000 00:00:1790923844.830821   10863 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790923844.845373   10863 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790923844.890152   10868 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+  J6    0/121 2.91s  flow=0.04 matte=0.44 ground=0.00 face=1.69 lines=0.19 write=0.54
