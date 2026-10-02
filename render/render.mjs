@@ -68,7 +68,8 @@ const PORT = server.address().port;
 
 const FLAGS = ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist',
   '--disable-renderer-backgrounding', '--disable-background-timer-throttling', '--disable-backgrounding-occluded-windows',
-  '--force-color-profile=srgb', '--js-flags=--max-old-space-size=4096', '--no-sandbox'];
+  '--force-color-profile=srgb', '--js-flags=--max-old-space-size=4096', '--no-sandbox', '--disable-accelerated-2d-canvas',
+  ...(args.flags ? String(args.flags).split(' ') : [])];
 const browsers = [];
 async function openPage(tag = '') {
   // one browser per worker: SwiftShader rasterises in the GPU process, pages in one browser would contend for it
