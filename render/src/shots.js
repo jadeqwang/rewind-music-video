@@ -49,7 +49,7 @@ export function buildShots(T) {
     { fx: { heart: 0 } }, { post: { bloom: 0.15, ca: 0.8, vignette: 0.15 } });
   // H1: the whole video backwards at ×64 — a trailer in reverse; lands on the dark road
   // H1: the trailer in reverse at ×64 — curated bright, varied source moments (descending), 2–3 frames each
-  const TR = [222.5, 215.2, 210.2, 205.4, 203.6, 199.5, 193.2, 189.5, 186.8, 181.0, 179.6, 177.5, 174.6, 172.6, 170.3, 168.2, 166.5, 158.0, 153.0, 150.0,
+  const TR = [225.0, 215.2, 210.2, 205.4, 203.6, 199.5, 193.2, 113.0, 186.8, 181.0, 179.6, 177.5, 174.6, 172.6, 170.3, 168.2, 166.5, 141.4, 153.0, 150.0,
     141.3, 136.0, 131.2, 128.6, 126.5, 122.8, 119.5, 116.2, 114.2, 112.6, 109.2, 106.0, 103.0, 102.4, 98.6, 96.5, 92.5, 89.6, 86.5, 83.4, 81.5, 77.0, 69.6,
     64.0, 59.0, 56.5, 52.6, 49.5, 47.2, 43.6, 41.6, 41.0, 37.0, 33.0, 27.0, 18.0];
   C('H1_scrub', bt(1), bt(9), [ink, { type: 'montage', times: TR, per: (bt(9) - bt(1)) / TR.length }, { type: 'rwhud', speed: 64 }],

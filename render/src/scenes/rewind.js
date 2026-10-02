@@ -41,10 +41,10 @@ export async function draw(ctx, lt, t, shot, data) {
   const s = schedule(lts, dur, p);
   g.fillStyle = PAL.ink; g.fillRect(0, 0, DW, DH);
   const echo = p.echo ?? (s.moving ? 3 : 0);
-  const ts = await rewindOf(ctx, p.source ?? null, from, to, s.progress, { echo, echoDt: 0.07 * s.speed, echoAlpha: 0.5 });
+  const ts = await rewindOf(ctx, p.source ?? null, from, to, s.progress, { echo, echoDt: 0.07 * s.speed, echoAlpha: 0.5, noType: true });
   if (p.overlay) {   // a second attempt rewinding at the same time, in its own colour (kept crisp on the type layer)
     const O = layer('rw_overlay', g.canvas.width, g.canvas.height), og = clearLayer(O); og.setTransform(ctx.S, 0, 0, ctx.S, 0, 0);
-    await rewindOf({ ...ctx, g: og }, null, p.overlay.from, p.overlay.to, s.progress, { echo: 0 });
+    await rewindOf({ ...ctx, g: og }, null, p.overlay.from, p.overlay.to, s.progress, { echo: 0, noType: true });
     resetCtx(og);
     // luminance → alpha at quarter res, tinted: only the overlay's lines/lights survive, in their own colour
     const Q = layer('rw_overlay_q', 480, 270), qg = clearLayer(Q); qg.drawImage(O, 0, 0, 480, 270);
