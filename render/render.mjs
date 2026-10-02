@@ -47,7 +47,7 @@ if (args.encode && !args.sheet && !args.stills) {
   if (missing.length) throw new Error(`${missing.length} frames missing in ${FRAMES} (first ${missing[0]}); run --range first`);
   const out = resolve(HERE, args.out || `lookdev/${SHOTS}.mp4`); mkdirSync(dirname(out), { recursive: true });
   console.log(`encoding ${i1 - i0} frames (${a.toFixed(3)}–${b.toFixed(3)} s) → ${out}`);
-  await run('ffmpeg', ['-y', '-loglevel', 'error', '-stats', '-framerate', String(FPS), '-start_number', String(i0), '-i', join(FRAMES, 'f%05d.jpg'),
+  await run('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', String(FPS), '-start_number', String(i0), '-i', join(FRAMES, 'f%05d.jpg'),
     '-ss', a.toFixed(4), '-t', (b - a).toFixed(4), '-i', SONG, '-map', '0:v', '-map', '1:a', '-frames:v', String(i1 - i0),
     '-c:v', 'libx264', '-preset', args.preset || 'slow', '-crf', String(args.crf || 17), '-pix_fmt', 'yuv420p',
     '-c:a', 'aac', '-b:a', '256k', '-shortest', '-movflags', '+faststart', out]);
@@ -137,7 +137,7 @@ try {
     await Promise.all(Array.from({ length: workers }, (_, w) => work(w)));
     if (args.encode) {
       const out = resolve(HERE, args.out || `lookdev/${SHOTS}.mp4`); mkdirSync(dirname(out), { recursive: true });
-      await run('ffmpeg', ['-y', '-loglevel', 'error', '-stats', '-framerate', String(FPS), '-start_number', String(i0), '-i', join(FRAMES, 'f%05d.jpg'),
+      await run('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', String(FPS), '-start_number', String(i0), '-i', join(FRAMES, 'f%05d.jpg'),
         '-ss', a.toFixed(4), '-t', (b - a).toFixed(4), '-i', SONG, '-map', '0:v', '-map', '1:a', '-frames:v', String(i1 - i0),
         '-c:v', 'libx264', '-preset', args.preset || 'slow', '-crf', String(args.crf || 17), '-pix_fmt', 'yuv420p',
         '-c:a', 'aac', '-b:a', '256k', '-shortest', '-movflags', '+faststart', out]);

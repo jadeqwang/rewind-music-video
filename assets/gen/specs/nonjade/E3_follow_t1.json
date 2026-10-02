@@ -1,0 +1,15 @@
+{
+ "model": "bytedance/seedance-2.5",
+ "tag": "nj_E3_follow_t1",
+ "notes": "non-Jade roto base E3_follow t1",
+ "input": {
+  "prompt": "Close-up of a car's rear-view mirror at night, filling most of the frame, locked-off camera. In the dark mirror two small white headlights of a car far behind follow steadily, slowly growing closer. Then soft red and blue emergency light starts pulsing around them and gradually floods the mirror. Outside the mirror, the black interior and a few orange sodium lights through the windshield. No people. Single continuous shot, no cuts, no transitions. Night. Graphic neo-noir cinematography, photographic. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus, no motion blur smear. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark, no subtitles.",
+  "duration": 5,
+  "resolution": "720p",
+  "aspect_ratio": "16:9",
+  "generate_audio": false,
+  "reference_images": [
+   "file:assets/sets/car_interior/3.jpg"
+  ]
+ }
+}

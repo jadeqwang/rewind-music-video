@@ -59,7 +59,7 @@ def suits(n=50):
     mm = np.zeros_like(m)
     for i in range(1, nn):
         if st[i, 4] > 5000: mm[lab == i] = 255
-    mm = cv2.GaussianBlur(mm, (0, 0), 1.2)
+    mm = cv2.GaussianBlur(mm, (0, 0), 0.7)
     # boost local contrast so the dark suits still give folds/lapels
     lab_ = cv2.cvtColor(im, cv2.COLOR_BGR2LAB)
     cl = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8, 8)).apply(lab_[..., 0])
@@ -165,11 +165,6 @@ def jade(n=72):
         L([(cx - 2, 448 + br), (cx, 720)], 1.2)
         L([(842, sy + 24), (868, 610), (876, 720)], 1.2); L([(1113, sy + 24), (1088, 610), (1080, 720)], 1.2)
         cv2.ellipse(lines, (int(cx * SS), int(812 * SS)), (int(300 * SS), int(150 * SS)), 0, 200, 340, 255, int(3 * SS), cv2.LINE_AA)
-        for hx, hy in [(752 + 0, 676), (1204, 676)]:
-            hx = cx + (hx - 978)
-            hand = [(hx - 30, hy - 4), (hx - 8, hy - 26), (hx + 24, hy - 22), (hx + 34, hy + 4), (hx + 18, hy + 24), (hx - 22, hy + 20)]
-            cv2.fillPoly(matte, [P(hand)], 255, cv2.LINE_AA)
-            for k in range(3): L([(hx - 14 + k * 12, hy - 14), (hx - 11 + k * 12, hy + 12)], 1)
         # features (the only lines allowed inside the face): eyes at full size, brows, nose tip; hair-edge strands
         L([rot((part, cy - 78)), rot((cx - 30, cy - 62)), rot((cx - 52, cy - 30))], 1.6, feat)
         L([rot((part, cy - 78)), rot((cx + 32, cy - 62)), rot((cx + 52, cy - 30))], 1.6, feat)

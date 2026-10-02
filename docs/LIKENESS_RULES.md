@@ -19,3 +19,9 @@ The user reports most model attempts "uglify" her: shrunken eyes, invented age s
   (no texture, no hatching on skin, no spots, no under-eye lines). Hatching faces looked bad in Orbital Sunrise.
 - Eyes may be traced from the reference sheet geometry rather than the gen footage if the footage drifts.
 - Mouth shapes come from the vocal track, not the gen footage.
+
+## User feedback round 1 (authoritative)
+- Plate G (DRIVER_PLATE_y27) is "almost right" but the FOREHEAD IS TOO SMALL vs her natural look. All other candidates
+  "subtly shrank my eyes for no reason". Known model biases: compressed forehead/low hairline, shrunken eyes.
+- Gate: every image/frame of Jade is measured with tools/likeness/measure.py against the real-photo ratios
+  (assets/character/v2/measure.json); deviations > ~5% in eye size or forehead height are corrected (warp.py) or rejected.

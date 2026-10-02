@@ -17,14 +17,14 @@ export function draw(ctx, lt, t, shot, { T }) {
   const prog = easeOutCubic(clamp(lt / (p.grow ?? 1.2)));
   const geo = { x: 330, y: 540, w: 1320, h: 800 };
   // pruned subtree of the failed attempt, in red, under the main tree
-  const { P } = searchTree(g, TR, { ...geo, progress: prog, lit: 0.35 * smooth(0.8, 1.4, lt), labels: p.labels, alpha: 1 });
+  const { P } = searchTree(g, TR, { ...geo, progress: prog, lit: 0.35 * smooth(0.8, 1.4, lt), labels: p.labels, labelSize: p.labelSize, alpha: 1 });
   if (p.dead != null) {
     const dn = TR.nodes[p.dead], a = P(TR.nodes[0]), b = P(dn);
     const u = smooth(0.25, 0.5, lt);
     g.save(); g.strokeStyle = rgba(PAL.red, 0.9 * u); g.lineWidth = 3;
-    const mx = a[0] + (b[0] - a[0]) * 0.45; g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(mx, a[1]); g.lineTo(mx, b[1]); g.lineTo(b[0], b[1]); g.stroke(); g.restore();
+    g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(lerp(a[0], b[0], u), lerp(a[1], b[1], u)); g.stroke(); g.restore();
     const st = smooth(0.45, 0.62, lt);
-    if (st > 0) cross(g, b[0] + 40, b[1], 26 * (1 + 0.4 * (1 - st)), PAL.red, 7, st);
+    if (st > 0) cross(g, b[0], b[1], 22 * (1 + 0.5 * (1 - st)), PAL.red, 6, st);
   }
   // the header line of the engine: mono, small
   setFont(ty, F.mono(15), 2.5); ty.fillStyle = rgba(PAL.boneDim, 0.9);

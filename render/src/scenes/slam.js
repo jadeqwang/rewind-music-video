@@ -15,7 +15,7 @@ export function draw(ctx, lt, t, shot, { T }) {
   const col = h.style === 'flood' ? PAL.ink : (h.color || PAL.bone);
   // the type is part of the scene here (so it gets bloom + CA with the frame)
   slam(g, { t, t0: h.t, text: h.text, color: col, stutter: 1, seed: k + 1, maxW: 1780, maxH: 700, y: 830, font: p.font,
-    plates: h.style === 'flood' ? [PAL.blue, PAL.bone] : [PAL.red, PAL.blue] });
+    plates: h.style === 'flood' ? [PAL.ink, PAL.ink] : [PAL.red, PAL.blue] });
   const kick = Math.exp(-dt / 0.09);
   const P = ctx.post;
   P.zoom = 1 + 0.045 * kick; P.shakeX = hsig(k, Math.floor(dt * 30)) * 10 * kick; P.shakeY = hsig(k, Math.floor(dt * 30), 2) * 6 * kick;

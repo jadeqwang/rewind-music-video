@@ -41,13 +41,14 @@ export function sodiumWash(g, sw, alpha = 0.12) {
 // The bullet, suspended: a hairline with a bright head and a tapered trail. o: {x, y, len, angle, u (flight 0..1)}
 export function bullet(g, o) {
   const x = o.x, y = o.y, len = o.len ?? 900, ang = o.angle ?? 0;
-  g.save(); g.translate(x, y); g.rotate(ang); g.globalCompositeOperation = 'lighter';
+  const col = o.color || PAL.bone;
+  g.save(); g.translate(x, y); g.rotate(ang); g.globalCompositeOperation = o.comp || 'lighter';
   const gr = g.createLinearGradient(-len, 0, 0, 0);
-  gr.addColorStop(0, rgba(PAL.bone, 0)); gr.addColorStop(0.85, rgba(PAL.bone, 0.55)); gr.addColorStop(1, rgba(PAL.bone, 1));
+  gr.addColorStop(0, rgba(col, 0)); gr.addColorStop(0.85, rgba(col, 0.55)); gr.addColorStop(1, rgba(col, 1));
   g.fillStyle = gr; g.fillRect(-len, -1.5, len, 3);
-  g.fillStyle = PAL.bone; g.beginPath(); g.ellipse(0, 0, 16, 4.5, 0, 0, Math.PI * 2); g.fill();
+  g.fillStyle = col; g.beginPath(); g.ellipse(0, 0, 16, 4.5, 0, 0, Math.PI * 2); g.fill();
   // pressure rings around the slug (time is stopped: they hold still)
-  g.strokeStyle = rgba(PAL.bone, 0.35); g.lineWidth = 1;
+  g.strokeStyle = rgba(col, 0.45); g.lineWidth = 1.2;
   for (let k = 1; k <= 4; k++) { g.beginPath(); g.ellipse(-k * 34, 0, 6 + k * 3, 12 + k * 11, 0, -Math.PI / 2, Math.PI / 2); g.stroke(); }
   g.restore();
 }

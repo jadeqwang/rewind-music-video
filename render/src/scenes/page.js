@@ -23,7 +23,7 @@ export function draw(ctx, lt, t, shot, { T, roto }) {
   g.restore();
   if (p.world) roto.contours(g, p.world, lt + (p.worldOffset || 0), { color: PAL.boneDim, alpha: p.worldAlpha ?? 0.22, boil: ctx.seed, fog: { y0: 560, y1: 1080, min: 0 } });
   rain(g, ctx.boil, t, { n: 70, alpha: 0.07 });
-  const sw = sodiumSweep(t, { period: p.sweep ?? 1.1, amount: 0.55 });
+  const sw = sodiumSweep(t, { period: p.sweep ?? 1.1, amount: 0.32 });
   sodiumWash(g, sw, 0.07);
   // Jade
   const mouth = clamp((T.e('vocal', t) - 0.18) * 1.6);

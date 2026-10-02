@@ -98,25 +98,22 @@ export function slam(g, o) {
   const frame = Math.floor(dt * 30 + 1e-3);
   g.translate(cx, by - px * 0.36); g.scale(e, e); g.translate(-cx, -(by - px * 0.36));
   const left = o.align === 'left' ? cx : cx - w / 2;
-  const st = clamp(o.stutter ?? 0);
-  if (st > 0 && frame < 6) {
-    const plates = o.plates || [PAL.red, PAL.blue];
-    for (let k = 0; k < 2; k++) {
-      const dx = hsig(o.seed ?? 0, frame, k) * 38 * st, dy = hsig(o.seed ?? 0, frame, k + 9) * 10 * st;
-      g.globalCompositeOperation = 'lighter'; g.fillStyle = rgba(plates[k], 0.85 * (1 - frame / 6));
-      g.fillText(text, left + dx, by + dy);
-    }
-    g.globalCompositeOperation = 'source-over';
+  const st = clamp(o.stutter ?? 0), seed = o.seed ?? 0, col = o.color || PAL.bone;
+  // stutter: a single offset plate (siren colour) behind the word on the first frames, converging to zero,
+  // and on the first two frames the word is cut into a few horizontal bands that slip sideways (frame skip)
+  if (st > 0 && frame < 5 && o.plates !== false) {
+    const plates = o.plates || [PAL.red, PAL.blue], k = frame % 2;
+    const dx = (k ? 1 : -1) * (34 - frame * 7) * st;
+    g.fillStyle = rgba(plates[k], 1 - frame / 5); g.fillText(text, left + dx, by + (k ? 4 : -4) * st);
   }
-  // stutter slices: horizontal bands displaced on the hit frames
-  if (st > 0 && frame < 4 && o.slices !== false) {
-    const n = 7, top = by - px * 0.74, hh = px * 0.78 / n;
+  if (st > 0 && frame < 2 && o.slices !== false) {
+    const n = 4, top = by - px * 0.74, hh = px * 0.76 / n;
     for (let i = 0; i < n; i++) {
-      g.save(); g.beginPath(); g.rect(0, top + i * hh, DW, hh + 1); g.clip();
-      g.fillStyle = o.color || PAL.bone; g.fillText(text, left + hsig(o.seed ?? 0, frame, i, 3) * 70 * st, by);
+      g.save(); g.beginPath(); g.rect(0, top + i * hh, DW, hh + (i === n - 1 ? px : 1)); g.clip();
+      g.fillStyle = col; g.fillText(text, left + hsig(seed, frame, i, 3) * 46 * st * (i % 2 ? 1 : 0.4), by);
       g.restore();
     }
-  } else { g.fillStyle = o.color || PAL.bone; g.fillText(text, left, by); }
+  } else { g.fillStyle = col; g.fillText(text, left, by); }
   g.restore();
   return { w: w * e, px };
 }

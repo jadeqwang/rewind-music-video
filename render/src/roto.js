@@ -191,7 +191,7 @@ export function suits(g, id, clipT, o = {}) {
       const x = r.x + cx * kx, y = r.y + cy * ky, w = fw * kx * (o.barW ?? 1.55), h = fh * ky * (o.barH ?? 1.0);
       const ox = hsig(i, o.boil ?? 0, 7) * 1.2;
       g.fillStyle = '#000'; g.fillRect(x - w / 2 + ox, y - h / 2, w, h);
-      if (o.barLabel) { g.fillStyle = rgba(PAL.boneDim, 0.85); g.font = `500 ${Math.round(12 * kx * 1.5)}px JBM`; g.textBaseline = 'top'; g.fillText(o.barLabel, x + w / 2 + 6, y - h / 2); }
+      if (o.barLabel) { g.fillStyle = rgba(o.labelColor || PAL.boneDim, 0.85); g.font = `500 ${Math.round(12 * kx * 1.5)}px JBM`; g.textBaseline = 'top'; g.fillText(o.barLabel, x + w / 2 + 6, y - h / 2); }
     }
   }
   // sunglasses glint: a sharp four-point star that lives on top of the bar

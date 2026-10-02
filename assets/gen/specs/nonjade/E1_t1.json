@@ -1,0 +1,13 @@
+{
+ "model": "bytedance/seedance-2.5",
+ "tag": "nj_E1_t1",
+ "notes": "non-Jade roto base E1 t1",
+ "input": {
+  "prompt": "Slow steady forward drone flight high above Lake Shore Drive at night, following a lone car with two white headlight beams as it drives north along the long smooth curve of the empty lakefront highway. The dotted line of orange sodium streetlights traces the curve; the pitch-black lake on the right stays flat and still. The camera glides forward smoothly and continuously, keeping the car in the lower middle of the frame. No people. Single continuous shot, no cuts, no transitions. Night. Graphic neo-noir cinematography, photographic. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus, no motion blur smear. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark, no subtitles.",
+  "duration": 10,
+  "resolution": "720p",
+  "aspect_ratio": "16:9",
+  "generate_audio": false,
+  "image": "file:assets/sets/lake_shore_drive/2.jpg"
+ }
+}

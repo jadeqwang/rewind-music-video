@@ -37,7 +37,7 @@ function defaultPost(shot) {
 export async function drawShot(shot, t, g, ty, post, opts = {}) {
   const lt = t - shot.t0;
   const boil = Math.floor(Math.max(0, lt) * BOIL_FPS + 1e-6);
-  const ctx = { g, ty, post, boil, seed: hash(shot.id, boil), W: DW, H: DH, rewinding: !!opts.rewinding, engine: E, S, shot };
+  const ctx = { g, ty, post, boil, seed: hash(shot.id, boil), W: DW, H: DH, rewinding: !!opts.rewinding, mode: opts.mode || null, engine: E, S, shot };
   const sc = SCENES[shot.scene];
   if (!sc) throw new Error(`unknown scene ${shot.scene} (shot ${shot.id})`);
   g.save(); ty.save();

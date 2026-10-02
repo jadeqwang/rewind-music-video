@@ -11,15 +11,22 @@ export function draw(ctx, lt, t, shot, { T, roto }) {
   // a frozen shot passes freezeAt (local seconds): everything stops, including the boil
   const fl = p.freezeAt != null ? Math.min(lt, p.freezeAt) : lt;
   const ft = shot.t0 + fl;
+  const clipT = fl + (p.rotoOffset || 0);
+  if (ctx.mode === 'print') {
+    // the file photo: bone stock, ink contours, black redactions (used by the freeze)
+    fillInk(g, PAL.bone);
+    roto.contours(g, p.roto, clipT, { color: PAL.ink, alpha: 0.85, boil: null, boilAmp: 0, exclude: p.roto, comp: 'source-over' });
+    roto.suits(g, p.roto, clipT, { boil: null, glint: 0, barLabel: p.barLabel ?? '(b)(6)', labelColor: PAL.ink });
+    return;
+  }
   fillInk(g);
   const sr = sirens(g, T, ft, { amount: p.siren ?? 1, peak: 0.42 });
-  const clipT = fl + (p.rotoOffset || 0);
   roto.contours(g, p.roto, clipT, { color: PAL.bone, alpha: 0.55, boil: ctx.seed, exclude: p.roto, fog: { y0: 120, y1: 700, min: 0.25 } });
   const glintBeat = T.beatPhase(ft);
   const glint = (glintBeat.i % 4 === 1) ? Math.exp(-glintBeat.phase * 5) : 0;
   roto.suits(g, p.roto, clipT, { boil: ctx.seed, rimL: sr.red ? PAL.red : null, rimR: sr.red ? null : PAL.blue, rimAmt: clamp(0.35 + sr.k * 1.6),
     glint: p.glint ?? glint, glintSeed: glintBeat.i, barLabel: p.barLabel ?? '(b)(6)' });
-  if (ctx.rewinding) { subtitle(ty, [].concat(...(p.lines || []).map(i => T.lineWords(i))), ft, {}); return; }
+  if (ctx.rewinding) return;   // the rewind owns the HUD and the subtitle
   // HUD
   const u = smooth(0, dur, fl);
   if (p.eval) evalBar(ty, p.mate != null && fl >= dur - 0.05 ? { mate: p.mate } : { value: lerp(p.eval[0], p.eval[1], u * u) });

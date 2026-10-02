@@ -1,0 +1,13 @@
+{
+ "model": "bytedance/seedance-2.5",
+ "tag": "nj_S1_t1",
+ "notes": "non-Jade roto base S1 t1",
+ "input": {
+  "prompt": "Four tall men in identical dark suits and sunglasses walk slowly and steadily toward the camera in a tight symmetrical V formation along the dark road shoulder, backlit by the blazing white headlights of the black sedan behind them, long shadows stretching toward the camera. Locked-off low camera. Always exactly four men. The men are solid pitch-black backlit silhouettes, faces completely in shadow and featureless, only the outlines of sunglasses, shoulders, ties and arms; nobody's face is ever lit. Single continuous shot, no cuts, no transitions. Night. Graphic neo-noir cinematography, photographic. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus, no motion blur smear. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark, no subtitles.",
+  "duration": 5,
+  "resolution": "720p",
+  "aspect_ratio": "16:9",
+  "generate_audio": false,
+  "image": "file:assets/sets/pullover/1.jpg"
+ }
+}

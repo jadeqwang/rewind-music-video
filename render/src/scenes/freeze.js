@@ -8,19 +8,23 @@ import { setFont, F } from '../type.js';
 
 export async function draw(ctx, lt, t, shot, { drawShot, shotById }) {
   const { g, ty } = ctx, p = shot.params, src = shotById(p.source);
-  const hold = src.t1 - 1 / 30;
-  const dummy = {};
-  await drawShot(src, hold, g, ty, dummy, { rewinding: false, frozen: true });
-  // the world desaturates toward bone/ink while frozen (light stops moving)
-  g.save(); g.globalCompositeOperation = 'saturation'; g.fillStyle = `rgba(0,0,0,${0.55 * smooth(0.05, 0.35, lt)})`; g.fillRect(0, 0, DW, DH); g.restore();
-  g.fillStyle = `rgba(7,8,10,${0.4 * smooth(0.05, 0.4, lt)})`; g.fillRect(0, 0, DW, DH);
-  const b = p.bullet || { x: 760, y: 470, len: 1100, angle: 0.03 };
-  if (lt >= 2 / 30) bullet(g, { ...b, x: b.x - 6 * lt });
-  if (p.attempt) { ty.save(); ty.clearRect(DW - 400, 0, 400, 180); ty.restore(); attempt(ty, { n: p.attempt, failed: smooth(0.08, 0.3, lt), sub: 'TERMINATED' }); }
-  if (p.caption) { setFont(ty, F.mono(22), 6); ty.fillStyle = `rgba(236,230,216,${smooth(0.15, 0.3, lt)})`; ty.textAlign = 'center'; ty.fillText(p.caption, DW / 2, 1010); ty.textAlign = 'left'; }
+  const hold = src.t1 - 1 / 30, f = Math.floor(lt * 30 + 1e-3);
   const P = ctx.post;
-  P.invert = lt < 2 / 30 ? 1 : 0;
-  P.flash = lt < 1 / 30 ? 0.0 : (lt < 3 / 30 ? 0.35 : 0);
-  P.zoom = 1 + 0.03 * smooth(0, shot.t1 - shot.t0, lt);
-  P.ca = 2.2; P.bloom = 0.7; P.grain = 0.07; P.shakeX = lt < 3 / 30 ? 6 : 0; P.shakeY = lt < 3 / 30 ? -4 : 0;
+  if (f < 2) {
+    // muzzle flash: two frames of flat siren red, the silhouettes punched out in ink
+    await drawShot(src, hold, g, ty, {}, { mode: 'print' });
+    g.save(); g.globalCompositeOperation = 'multiply'; g.fillStyle = PAL.red; g.fillRect(0, 0, DW, DH); g.restore();
+    ty.clearRect(0, 0, DW, DH);
+    P.shakeX = f ? -8 : 10; P.shakeY = f ? 5 : -6; P.zoom = 1.04; P.ca = 6; P.bloom = 0; P.grain = 0.06;
+    return;
+  }
+  // then the file photograph: bone stock, ink contours, black redactions, the bullet hanging in the air
+  await drawShot(src, hold, g, ty, {}, { mode: 'print' });
+  const b = p.bullet || { x: 760, y: 470, len: 1100, angle: 0.03 };
+  bullet(g, { ...b, x: b.x - 4 * lt, color: PAL.ink, comp: 'source-over' });
+  ty.clearRect(0, 0, DW, DH);
+  attempt(ty, { n: p.attempt ?? 1, failed: smooth(0.1, 0.3, lt), sub: 'TERMINATED', ink: true });
+  if (p.caption) { setFont(ty, F.mono(22), 6); ty.fillStyle = PAL.ink; ty.textAlign = 'center'; ty.fillText(p.caption, DW / 2, 1010); ty.textAlign = 'left'; }
+  P.zoom = 1.0 + 0.025 * smooth(0, shot.t1 - shot.t0, lt);
+  P.ca = 1.2; P.bloom = 0; P.grain = 0.06; P.vignette = 0.15;
 }

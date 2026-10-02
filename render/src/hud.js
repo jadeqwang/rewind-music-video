@@ -46,11 +46,12 @@ export function evalBar(g, o) {
 export function attempt(g, o) {
   const n = o.n ?? 1, x = o.x ?? DW - 72, y = o.y ?? 96, a = o.alpha ?? 1;
   g.save(); g.textBaseline = 'alphabetic'; g.textAlign = 'right';
-  setFont(g, F.mono(14), 3); g.fillStyle = rgba(PAL.boneDim, 0.9 * a); g.fillText(o.label ?? 'ATTEMPT', x, y - 34);
-  setFont(g, F.mono(o.size ?? 40, 700), 2); g.fillStyle = rgba(PAL.bone, a);
+  const fg = o.ink ? PAL.ink : PAL.bone, dim = o.ink ? PAL.ink : PAL.boneDim;
+  setFont(g, F.mono(14), 3); g.fillStyle = rgba(dim, 0.9 * a); g.fillText(o.label ?? 'ATTEMPT', x, y - 34);
+  setFont(g, F.mono(o.size ?? 40, 700), 2); g.fillStyle = rgba(fg, a);
   const s = String(n).padStart(2, '0'); g.fillText(s, x, y);
   if (o.failed) { const w = g.measureText(s).width; cross(g, x - w - 34, y - 15, 13, PAL.red, 4, o.failed); }
-  if (o.sub) { setFont(g, F.mono(13), 1.5); g.fillStyle = rgba(PAL.boneDim, 0.75 * a); g.fillText(o.sub, x, y + 26); }
+  if (o.sub) { setFont(g, F.mono(13), 1.5); g.fillStyle = rgba(dim, 0.75 * a); g.fillText(o.sub, x, y + 26); }
   g.restore();
 }
 
