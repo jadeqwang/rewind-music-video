@@ -26,3 +26,7 @@ the LEFT; traffic on the right. Pursuers: dark sedan. Reject any mirrored / righ
 
 
 v2 (2026-10-02): measured likeness gate + approved-candidate sheet in assets/character/v2/ (measure.json = real-photo ratios); tools in tools/likeness/ (measure.py gate, warp.py correction, pasteback.py real-face paste-back, lipsync.py). Photo-based first frames: assets/character/firstframes/.
+
+## ANIME JADE (user decision — supersedes the realistic spec for on-screen Jade)
+Canonical: refs/jade/Pasted image.png (her anime self from a previous video). For REWIND: keep the "1420 MHz" and
+pale-blue-dot patches; NO antenna, NO glasses, NO headphones; black pants. Any pose/angle allowed.

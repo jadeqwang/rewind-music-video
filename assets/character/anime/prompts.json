@@ -29,5 +29,40 @@
   "attempts": 1,
   "est_cost": 0.07,
   "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/cands/B_traces_0.jpg",
+  "job": "B_traces",
+  "model": "openai/gpt-image-2",
+  "refs": [
+   "jade_trace_jacket_hp_2.jpg",
+   "jade_trace_base.jpg",
+   "PXL_20260528_215628802.jpg",
+   "PXL_20250908_195405539.MP.jpg"
+  ],
+  "size": "1536x1024",
+  "prompt": "Images 1-2 are approved stylised drawings of this woman (Jade) that already capture her likeness well; images 3-4 are her real photos. Convert her into a full-colour anime character, keeping exactly the face shape, proportions, glasses and hair of the drawings and photos. Modern premium anime feature-film character design, in the spirit of Satoshi Kon (Paprika, Perfect Blue) crossed with Makoto Shinkai: clean confident thin lineart, flat cel shading with only 2-3 tones per colour, subtle soft rim highlights, restrained realistic adult proportions. An adult woman about 27 years old, NOT chibi, NOT moe, not a generic anime girl: a specific, recognisable person drawn in anime style. Her likeness must be unmistakable: heart-shaped 'melon-seed' face (wide temples and high wide cheekbones, the lower cheeks tapering to a narrow, softly pointed chin, not round, not square, not long); a LARGE, tall, broad forehead and a proportionally large upper head/cranium; long straight solid black hair with a center part, styled half-up half-down: two symmetrical sections from left and right of the center part gathered back toward the crown (visible as volume at the crown in 3/4, profile and back views), the rest hanging long and straight well past the shoulders, a few fine loose strands at the temples; thin rectangular dark gray-teal metal-frame glasses ALWAYS on, in every view; dark brown round-almond eyes with a slight thin double-eyelid crease (eyes as large as in her photos or a little larger, never smaller or narrowed); fuller warm dark-brown natural brows that are NOT mirror images: the brow on the viewer's left sits slightly lower and flatter, the brow on the viewer's right is slightly higher with its peak further out toward the tail; small soft nose, natural full lips; a calm, neutral 'resting oblivious' expression. Smooth clear skin, youthful, soft even frontal light on the face, warm natural skin tone. Character model sheet, 2x2 grid of head-and-shoulders portraits of the SAME woman on a plain light warm-gray background, each head large in its cell, same scale and same eye height: top-left exact front view; top-right three-quarter view facing the viewer's left; bottom-left three-quarter view facing the viewer's right; bottom-right clean side profile facing the viewer's left. She wears a black crew-neck top. No text, no labels, no logos. No text, no captions, no watermark.",
+  "secs": 30.5,
+  "attempts": 4,
+  "est_cost": 0.28,
+  "error": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs."
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/cands/A_photos_0.jpg",
+  "job": "A_photos",
+  "model": "openai/gpt-image-2",
+  "refs": [
+   "PXL_20260528_215628802.jpg",
+   "IMG_20180610_074732_mr1528617091925.jpg",
+   "PXL_20250908_195405539.MP.jpg",
+   "IMG_20160827_121631.jpg",
+   "Pasted image.png"
+  ],
+  "size": "1536x1024",
+  "prompt": "Images 1-4 are real photos of one woman (Jade). Image 5 is ONLY an anime style reference (line quality and colouring; ignore its face). Redraw Jade as an anime character: preserve HER exact face geometry from the photos - the face outline, proportions of forehead to face, eye spacing, nose and mouth placement - translated into clean anime line and cel colour. Modern premium anime feature-film character design, in the spirit of Satoshi Kon (Paprika, Perfect Blue) crossed with Makoto Shinkai: clean confident thin lineart, flat cel shading with only 2-3 tones per colour, subtle soft rim highlights, restrained realistic adult proportions. An adult woman about 27 years old, NOT chibi, NOT moe, not a generic anime girl: a specific, recognisable person drawn in anime style. Her likeness must be unmistakable: heart-shaped 'melon-seed' face (wide temples and high wide cheekbones, the lower cheeks tapering to a narrow, softly pointed chin, not round, not square, not long); a LARGE, tall, broad forehead and a proportionally large upper head/cranium; long straight solid black hair with a center part, styled half-up half-down: two symmetrical sections from left and right of the center part gathered back toward the crown (visible as volume at the crown in 3/4, profile and back views), the rest hanging long and straight well past the shoulders, a few fine loose strands at the temples; thin rectangular dark gray-teal metal-frame glasses ALWAYS on, in every view; dark brown round-almond eyes with a slight thin double-eyelid crease (eyes as large as in her photos or a little larger, never smaller or narrowed); fuller warm dark-brown natural brows that are NOT mirror images: the brow on the viewer's left sits slightly lower and flatter, the brow on the viewer's right is slightly higher with its peak further out toward the tail; small soft nose, natural full lips; a calm, neutral 'resting oblivious' expression. Smooth clear skin, youthful, soft even frontal light on the face, warm natural skin tone. Character model sheet, 2x2 grid of head-and-shoulders portraits of the SAME woman on a plain light warm-gray background, each head large in its cell, same scale and same eye height: top-left exact front view; top-right three-quarter view facing the viewer's left; bottom-left three-quarter view facing the viewer's right; bottom-right clean side profile facing the viewer's left. She wears a black crew-neck top. No text, no labels, no logos. No text, no captions, no watermark.",
+  "secs": 30.6,
+  "attempts": 4,
+  "est_cost": 0.28,
+  "error": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs."
  }
 ]
