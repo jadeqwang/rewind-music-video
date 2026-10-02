@@ -170,9 +170,10 @@ Built offline by `tools/jade2/build.py <J>` → `assets/roto/<J>/cel/NNNN.png` +
   the figure. `--full` (or an empty RVM matte) treats the whole frame as figure (Jeyes ECU).
 - Cubist planes: `cubist` takes `front`/`side` roto ids (default J5 front / J1 3/4); anchors from per_frame mouth (nearest).
 
-## Anime Jade medium: `?jade=cel|direct` (default cel until the user picks)
+## Anime Jade medium: `?jade=direct|cel` (FINAL default: direct, user-approved)
 - `direct` (tools/jade2/direct.py → assets/roto/<J>/direct/NNNN.webp, RGBA): her own anime footage, matted (1 px choke +
-  1.1 px soft edge) and graded into the palette (blacks → ink, whites → bone, saturation ×0.9, 28 % cel-snap to 6 bands).
+  1.1 px soft edge) and lightly graded toward the palette (2 % black point, slight S, whites → bone, saturation ×0.94,
+  10 % cel-snap to 6 bands; J2 none). Driving takes (J1/J2/J6/J9) get the roto wheel lines as bone world line art around her hands.
   roto.jadeDirect adds the ink silhouette outline, the scene light (multiply wash + screen rim on the lit side) and the roto
   lines at 45 % (boil). The rewind cyan shimmer and the post grain are unchanged. Cubist planes follow the active medium.
 - Takes: every J shot resolves `<id>_v3` (jacket v3) first, then v1. Force v1 with `?jadetake=v1`, or per id via

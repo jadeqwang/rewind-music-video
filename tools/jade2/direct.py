@@ -9,11 +9,11 @@ ROOT = os.path.abspath(os.path.dirname(__file__) + '/../..')
 INK = np.array([10, 8, 7], np.float32) / 255     # BGR of PAL.ink #07080A, lifted a hair so the outline still reads
 BONE = np.array([216, 230, 236], np.float32) / 255  # BGR of PAL.bone #ECE6D8
 
-def grade(bgr, snap=0.28, sat=0.9):
+def grade(bgr, snap=0.10, sat=0.94):   # light touch: the user likes the straight anime
     x = bgr.astype(np.float32) / 255
-    # levels: crush the lowest 5 % to ink, roll the top into bone (channel-wise, so whites take bone's warmth)
-    x = np.clip((x - 0.05) / 0.9, 0, 1)
-    x = x * x * (3 - 2 * x) * 0.35 + x * 0.65                # a gentle S for anime contrast
+    # levels: deepen only the very bottom (hair strands keep their detail), roll the top into bone (channel-wise warmth)
+    x = np.clip((x - 0.02) / 0.96, 0, 1)
+    x = x * x * (3 - 2 * x) * 0.2 + x * 0.8                  # a slight S
     L = x @ np.array([0.114, 0.587, 0.299], np.float32)
     # cel-snap: pull luminance part-way toward 6 flat bands (edge-preserving: bands are taken on a bilateral copy)
     Ls = cv2.bilateralFilter(L, 7, 0.08, 5)
@@ -33,6 +33,7 @@ def alpha(mt):
     soft = cv2.GaussianBlur(a.astype(np.float32), (0, 0), 1.1)
     return np.clip(soft, 0, 1)
 
+SNAP = {'J2': 0.0}   # per-clip band snap (J2: none, its skin/jacket speckle with any)
 def run_clip(J, full=False):
     d = f'{ROOT}/assets/roto/{J}'; meta = json.load(open(d + '/meta.json'))
     cap = cv2.VideoCapture(f"{ROOT}/{meta['src']}"); sfps = cap.get(cv2.CAP_PROP_FPS); frames = []
@@ -46,7 +47,7 @@ def run_clip(J, full=False):
         f = cv2.resize(frames[min(len(frames) - 1, int(round(i / meta['fps'] * sfps)))], (meta['w'], meta['h']), interpolation=cv2.INTER_AREA)
         mt = rd(f'{d}/matte/{i:04d}.png')
         a = np.ones(f.shape[:2], np.float32) if (full or mt is None or mt.max() < 0.05) else alpha(mt)   # ECU (Jeyes): the frame is her
-        out = np.dstack([grade(f), (a * 255).astype(np.uint8)])
+        out = np.dstack([grade(f, snap=SNAP.get(J.split('_v')[0], 0.10)), (a * 255).astype(np.uint8)])
         out[a < 0.004] = 0
         cv2.imwrite(f'{d}/direct/{i:04d}.webp', out, [cv2.IMWRITE_WEBP_QUALITY, 90])
     if 'direct' not in meta['layers']: meta['layers'].append('direct'); json.dump(meta, open(d + '/meta.json', 'w'))

@@ -10,8 +10,9 @@ import { DW, DH, PAL, clamp, fin, hash, hsig, layer, clearLayer, rgba, BOIL_FPS 
 const ROOT = '../assets/roto';
 const _Q = new URLSearchParams(location.search), FORCE_V1 = _Q.has('jadev1'), CELV = _Q.get('cel') || 'cel', NOFEAT = _Q.has('nofeat');
 // anime Jade medium: 'cel' (re-segmented flat cel, assets/roto/<J>/anime) | 'direct' (her own anime footage, matted + graded, <J>/direct)
-export const JADE_MODE = _Q.get('jade') || 'cel';
+export const JADE_MODE = _Q.get('jade') || 'direct';   // FINAL (user): direct
 const EXT = { direct: 'webp' };
+const WHEEL = new Set(['J1', 'J2', 'J6', 'J9']);   // takes where she drives (steering wheel in front of her hands)
 const MAX = 80;                  // cached bitmaps (1280x720 ≈ 3.7 MB each)
 const cache = new Map();          // url -> {bmp, last}
 const pending = new Map();        // url -> Promise
@@ -298,13 +299,22 @@ export function jadeDirect(g, id, clipT, o = {}) {
     const R = tinted('jadeDr', m, src, L.color), rg = R.ctx || R.getContext('2d');   // rim: a crescent on the side the light comes from
     const dir = Math.sign((L.from[0] - L.from[2]) || 1), off = 7 * k;
     rg.globalCompositeOperation = 'destination-out'; rg.drawImage(src, -dir * off, 0, m.w, m.h); rg.globalCompositeOperation = 'source-over';
-    a.globalCompositeOperation = 'screen'; a.globalAlpha = clamp(L.amount * 2.2); a.drawImage(R, 0, 0); a.globalAlpha = 1; a.globalCompositeOperation = 'source-over';
+    a.globalCompositeOperation = 'screen'; a.globalAlpha = clamp(L.amount * 1.4); a.drawImage(R, 0, 0); a.globalAlpha = 1; a.globalCompositeOperation = 'source-over';
   }
   const lines = get(id, 'lines', clipT);
   if (lines && !o.noLines) {   // our ink line art on top: the boil that ties her to the drawn world (light, she has her own lines)
     const Lc = tinted('jadeDl', m, lines, PAL.ink); const lg = Lc.ctx || Lc.getContext('2d');
     lg.globalCompositeOperation = 'destination-in'; lg.drawImage(src, 0, 0, m.w, m.h); lg.globalCompositeOperation = 'source-over';
     a.globalAlpha = 0.45; a.drawImage(Lc, 0, 0); a.globalAlpha = 1;
+  }
+  if (lines && (o.wheel ?? WHEEL.has(String(id).split('_v')[0]))) {   // driving takes: the wheel is outside her matte → draw it as
+    // world line art (luminous bone contours, like the rest of the drawn world) in a band around her lower body, so hands grip it
+    const B = scratch('jadeDb', m), b = clearLayer(B);
+    b.filter = `blur(${Math.round(34 * k)}px)`; for (let j = 0; j < 4; j++) b.drawImage(src, 0, 0, m.w, m.h); b.filter = 'none';   // dilated band
+    b.globalCompositeOperation = 'source-in'; b.drawImage(tinted('jadeDwl', m, lines, PAL.bone), 0, 0);
+    b.globalCompositeOperation = 'destination-out'; b.drawImage(src, 0, 0, m.w, m.h);   // not over her (hands stay in front... of the line gap)
+    b.fillRect(0, 0, m.w, m.h * 0.42); b.globalCompositeOperation = 'source-over';   // wheel region only: lower frame
+    a.globalCompositeOperation = 'destination-over'; a.globalAlpha = 0.8; a.drawImage(B, 0, 0); a.globalAlpha = 1; a.globalCompositeOperation = 'source-over';
   }
   g.save(); g.globalAlpha = clamp(o.alpha ?? 1); place(g, A, o.rect, null); g.restore(); return true;
 }

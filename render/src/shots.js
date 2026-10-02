@@ -294,8 +294,8 @@ export function buildShots(T) {
   C('D1_room2', brm[1], brm[2], room(2, { flick: true, cam: { from: [0.5, 0.5, 1.05], to: [0.5, 0.5, 1.15] } }), { hud: hud(3, 0.0), fx: { heart: 0.3, jerks: [brm[1]] } });
   C('D1_room3', brm[2], L(16).start, room(e => (e.lt > bar ? 5 : 3), { flick: true }), { hud: hud(3, 0.0), fx: { heart: 0.35, jerks: [brm[2]] } });
   C('D2_chair', L(16).start, dSil.t ?? dSil, [ink, { type: 'projector', title: '', sub: '' },
-    jade('J8', { cam: { from: [0.76, 0.42, 1.1], to: [0.76, 0.42, 1.14], dx: 380 } }),
-    { type: 'revisions', lines: [16], size: 100, y: 380, measure: 900 }], { hud: hud(3, 0.0), fx: { heart: 0.3 } });
+    jade('J8', { cam: { from: [0.5, 0.42, 1.1], to: [0.5, 0.42, 1.14], dx: 400 } }),   // right third: the revisions column (x ≤ 1020) never crosses her
+    { type: 'revisions', lines: [16], size: 100, y: 800, measure: 820 }], { hud: hud(3, 0.0), fx: { heart: 0.3 } });   // below the projector screen, left of her
   const dsil = T.opt(T => T.event('silence', 3), T.from4(149.12)), dsilEnd = T.downbeatsIn(dsil + 1, dsil + 3)[0] ?? dsil + 2;
   C('D3_dropout', dsil, dsilEnd, [{ type: 'fill', color: PAL.bone }, { type: 'mono', text: '∴', y: 700, size: 520, weight: 700, color: PAL.ink }], { fx: { heart: 0.1 } }, { post: { bloom: 0, vignette: 0.1 } });
   // D4: A Beautiful Mind wall, BIG: four case-file prints pinned with red string, filling the frame
@@ -334,7 +334,7 @@ export function buildShots(T) {
     { type: 'slam', hits: [{ t: fd + P, text: 'NEVER STOP', variant: 'center' }], y: 860, maxH: 420, maxW: 1620 }], { hud: { attempt: 3, ok: true, tc: true, eval: 9 }, fx: { kick: 1, jerks: [fd] } });
   const lane = (o = {}) => [ink, { type: 'world', roto: R.road, alpha: 0.8, lights: 0.6, speed: 2.2 }, { type: 'kickflash', color: PAL.sodium, amount: 0.55 },
     { type: 'streetlights', speed: 2.8 }, { type: 'lanewords', speed: 2.0, words: o.words }, { type: 'speedlines', amount: 0.5, vy: 430 }];
-  const insert = (kind, i) => kind === 'jade' ? [ink, { type: 'sodium', period: P, amount: 0.9, kick: 1, alpha: 0.4 }, jade('J9', { light: null, late: P / 2, cam: { from: [0.76, 0.42, 1.05], to: [0.76, 0.42, 1.12] } })]
+  const insert = (kind, i) => kind === 'jade' ? [ink, { type: 'sodium', period: P, amount: 0.9, kick: 1, alpha: 0.4 }, jade('J9', { light: null, late: P / 2, cam: { from: [0.42, 0.42, 1.05], to: [0.42, 0.42, 1.12] } })]
     : kind === 'pages' ? [{ type: 'fill', color: '#E8860F' }, { type: 'world', roto: R.road, alpha: 0.8, color: PAL.ink, comp: 'source-over', lights: 0, speed: 2 }, { type: 'casepages', n: 8 }]
     : kind === 'scale' ? [ink, ...sirenLit({ base: 0.45 }), ...suits('S5', { cam: { from: [0.5, 0.5, 0.28], to: [0.5, 0.5, 0.22], dy: -120 } }),
       { type: 'suits', roto: R.suits('S5'), cam: { from: [0.25, 0.4, 2.8], to: [0.25, 0.4, 3.2], dx: 700 } }, { type: 'speedlines', amount: 0.6 }]
