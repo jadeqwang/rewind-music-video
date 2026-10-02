@@ -125,7 +125,7 @@ def run_clip(J, fr=None):
         mt = a(f'{d}/matte/{i:04d}.png'); fc = a(f'{d}/face/{i:04d}.png'); hr = a(f'{d}/hair/{i:04d}.png')
         face = (fc > 0.5) if fc is not None else None; hair = (hr > 0.5) if hr is not None else None
         lab, names = classify(f, mt, face, hair)
-        cache[i] = (lab, mt, face)
+        cache[i] = (lab, mt.astype(np.float16), face)
         info[i] = dict(eye=eye_size(lab, names, face) if face is not None else None)
     # eye clamp: canon eye size = the clip's 90th percentile (gen footage only ever shrinks them); frames > 5 % smaller
     # get their eye shapes scaled back up about each eye's centroid before rendering
@@ -133,7 +133,8 @@ def run_clip(J, fr=None):
     for i, v in info.items():
         v['eye_scale'] = (max(1.0, ref / v['eye']) if (ref and v['eye'] and v['eye'] < ref * 0.95) else 1.0)
         lab, mt, face = cache[i]
-        if v['eye_scale'] > 1.0: lab = grow_eyes(lab, names, face, v['eye_scale'])
+        mt = mt.astype(np.float32)
+        if v['eye_scale'] > 1.0 and face is not None: lab = grow_eyes(lab, names, face, v['eye_scale'])
         cv2.imwrite(f'{d}/anime/{i:04d}.png', render(lab, names, mt))
     json.dump(dict(eye_ref=ref, frames={str(k): v for k, v in info.items()}), open(d + '/anime.json', 'w'))
     if 'anime' not in meta['layers']: meta['layers'].append('anime'); json.dump(meta, open(d + '/meta.json', 'w'))

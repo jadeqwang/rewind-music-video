@@ -93,6 +93,7 @@ export function buildShots(T) {
     { type: 'routemap', progress: e => e.u },
     { type: 'page', lines: [1], size: 104, y: 330, measure: 1150, maxLines: 2 },
   ], { hud: hud(1, 0.2), fx: { heart: 0.2, kick: 0.3, downInvert: 2 } });
+  C('V2_glance', L(2).start - bar, L(2).start, [ink, { type: 'sodium', period: P * 2, amount: 0.4, alpha: 0.1 }, jade('J2', { mouth: false })], { hud: hud(1, 0.15), fx: { heart: 0.25 } });
   C('V3_mirror', L(2).start, sec('build1').start, [
     { type: 'world', roto: R.follow, paper: true, alpha: 1 },
     { type: 'ghostcar', x: 1530, y: 300, scale: 0.42, color: PAL.ink, alpha: e => 0.5 + 0.4 * Math.sin(e.t * 9) ** 2 },
@@ -177,7 +178,7 @@ export function buildShots(T) {
   const R2a = r1end, R2b = L(6).start;
   add('R2_backward', R2a, R2b, 'rewind', { from: b6a, to: L(3).start, speeds: [2, 4, 8], segs: [0.3, 0.33, 0.37], hold: 0, lines: [] }, { fx: { kick: 0.8 } });
   for (const d of T.downbeatsIn(R2a + 0.1, R2b - 0.3)) C(`R2_j${DI(d)}`, d, Math.min(R2b, d + 2 * P), [ink, { type: 'sirens', side: 'pair', base: 0.5 },
-    jade('J5', { light: 'siren', late: P / 2, lateColor: PAL.cyan, cam: { from: [0.76, 0.42, 1.0], to: [0.76, 0.42, 1.08] } }), { type: 'circle', x: 960, y: 420, r: 320 }], { fx: { kick: 1, strobe: 0.6 } });
+    jade('J5_circle', { light: 'siren', late: P / 2, lateColor: PAL.cyan, cam: { from: [0.76, 0.42, 1.0], to: [0.76, 0.42, 1.08] } }), { type: 'circle', x: 960, y: 420, r: 320 }], { fx: { kick: 1, strobe: 0.6 } });
   const R3b = T.downbeatsIn(L(6).start + P, L(7).start)[0] ?? L(6).start + bar;
   C('R3_slam', L(6).start, R3b, [ink, { type: 'sirens', side: 'pair', base: 0.2, peak: 0.4 }, { type: 'slam', text: 'REWIND', variant: 'mirror', at: 0, y: 700 }], { fx: { kick: 1, jerks: [L(6).start] } });
   add('R3b_rewind', R3b, L(7).start, 'rewind', { from: L(3).start, to: L(0).start, speeds: [4, 8], segs: [0.5, 0.5], hold: 0, echo: 2, layers: [{ type: 'slam', text: 'REWIND', variant: 'stack', at: 0, onType: true, color: PAL.cyan }] }, { fx: { kick: 1 } });
@@ -215,7 +216,7 @@ export function buildShots(T) {
   // =============================== 5 · BUILD 2 88.92 – 102.84 (the field) ===============================
   const b2 = sec('build2').start, shot2 = W('shot', 2).start;
   const fieldGrass = (o = {}) => [ink, { type: 'world', roto: R.plate('grass_field_1'), alpha: 0.35, lights: 0.8, cam: o.cam }, { type: 'grass', n: 1200, y: 560, alpha: 0.55, scroll: o.scroll ?? 0.3 },
-    { type: 'beams', n: o.beams ?? 2, amount: o.beamAmt ?? 0.25 }, { type: 'runner', x: o.x ?? 1300, y: 840, scale: o.scale ?? 0.9, dir: -1 }];
+    { type: 'beams', n: o.beams ?? 2, amount: o.beamAmt ?? 0.25 }, o.medium ? jade('J7m', { loop: true, mouth: false }) : jade('J7w', { loop: true, mouth: false })];
   {
     const ds = [L(11).start, ...T.downbeatsIn(L(11).start + 1, L(12).start), L(12).start];
     for (let i = 0; i < ds.length - 1; i++) {
@@ -232,7 +233,7 @@ export function buildShots(T) {
     if (cuts[cuts.length - 1] < shot2) cuts.push(shot2);
     for (let i = 0; i < cuts.length - 1; i++) {
       if (i === cuts.length - 2) C('F3_tab', cuts[i], cuts[i + 1], [...fieldGrass({ beams: 4, beamAmt: 0.45, x: 1000, scale: 1.2 }), { type: 'sirens', side: 'pair', base: 0.3 }, ...suits('F3', { cam: { from: [0.3, 0.45, 1.0], to: [0.3, 0.45, 1.0] }, world: { alpha: 0 } })], { hud: hud(2, null, { mate: -1 }) });
-      else if (i % 2) C(`F3_${i}`, cuts[i], cuts[i + 1], [...fieldGrass({ beams: 4, beamAmt: 0.45, x: 1100 - i * 30, scale: 1.1 }), { type: 'subtitle', lines: [13] }], { hud: hud(2, -8) });
+      else if (i % 2) C(`F3_${i}`, cuts[i], cuts[i + 1], [...fieldGrass({ beams: 4, beamAmt: 0.45, medium: true }), { type: 'subtitle', lines: [13] }], { hud: hud(2, -8) });
       else C(`F3_${i}`, cuts[i], cuts[i + 1], [ink, ...sirenLit({ base: 0.5 }), ...suits('F3', { cam: { from: [0.5, 0.4, 1.9 + i * 0.05], to: [0.5, 0.4, 2.0 + i * 0.05] } })], { hud: hud(2, -9) });
     }
   }
@@ -313,6 +314,7 @@ export function buildShots(T) {
     { type: 'counter', value: e => (e.u < 0.92 ? Math.floor(3 + Math.pow(e.u / 0.92, 3) * 996) : '∞'), x: DW - 80, y: 250, size: 150 }],
     { hud: { attempt: 3, tc: true, eval: e => Math.sin(e * 17) * 9 }, fx: { heart: 0.5, kick: 0.6 } });
   // Picasso escalation 3/4: the fully fractured portrait, planes re-cut on every heartbeat
+  for (const d of T.downbeatsIn(b3 + 0.5, never - 0.5)) C(`X1_eyes${DI(d)}`, d + 2 * P, d + 3 * P, [ink, jade('Jeyes', { mouth: false, light: null })], { fx: { heart: 0.6 } });
   for (const d of T.downbeatsIn(b3 + 0.5, never - 0.5)) C(`X1_cubist${DI(d)}`, d, d + 2 * P, [ink, { type: 'cubist', planes: 6, beatCycle: true, scale: 2.4, cy: 500 }], { fx: { heart: 0.6 } }, { post: { bloom: 0.1 } });
   C('X2_never', never, stop3, [ink, { type: 'rollouts', n: 2800, seed: 31, x: 180, y: 540, w: 1600, h: 900, lw: 1.2, tick: 2, labels: false, kill: e => e.u, survivor: true, progress: 1, surviveDy: 0.05, kills: [{ at: 0.3, share: 0.3, dy: -0.35 }, { at: 0.55, share: 0.3, dy: 0.0 }, { at: 0.8, share: 0.35, dy: 0.3 }] }, { type: 'slam', text: 'NEVER', at: 0, y: 1000, maxH: 300, onType: true }],
     { hud: { attempt: 3, tc: true, eval: 0 }, fx: { kick: 1 } });

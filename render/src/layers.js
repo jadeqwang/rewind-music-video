@@ -710,21 +710,23 @@ Object.assign(LAYERS, {
   // logic), never grotesque: the frontal eyes stay whole and full size; planes offset a little, shift tone, ink seams.
   // L: {front, side, planes (0..6), resolve (0..1: planes converge into one whole face), cx, cy, scale, beatCycle}
   async cubist(ctx, L, env, { roto }) {
-    const F = L.front || 'J6', Sd = L.side || 'J1', mf = roto.meta(F), ms = roto.meta(Sd); if (!mf || !mf.celData) return;
+    const F = L.front || 'J5', Sd = L.side || 'J1', mf = roto.meta(F), ms = roto.meta(Sd); if (!mf) return;
     const ctF = roto.clipTime(F, env.lt * (L.speed ?? 0.4) + (L.offset ?? 2.0), { loop: 'pingpong' }), fiF = roto.frameIndex(mf, ctF);
-    const cdF = mf.celData[fiF] || mf.celData[String(fiF)]; if (!cdF || !cdF.nose) return;
-    const iod = cdF.iod || 160, nose = cdF.nose;
+    const anchor = (m_, fi, ct, id_) => { const cd = m_.celData && (m_.celData[fi] || m_.celData[String(fi)]); if (cd && cd.nose) return { nose: cd.nose, iod: cd.iod || 160, cd };
+      const pf = roto.perFrame(id_, ct); if (pf.mouth) return { nose: [pf.mouth[0], pf.mouth[1] - pf.mouth[2] * 0.55], iod: pf.mouth[2] * 1.9, cd: null }; return null; };
+    const aF = anchor(mf, fiF, ctF, F); if (!aF) return;
+    const iod = aF.iod, nose = aF.nose;
     // place the face: scale so the face is big in frame, centred at (cx, cy)
     const sc = (L.scale ?? 2.3), cx = L.cx ?? 960, cy = L.cy ?? 520;
     const rect = { x: cx - nose[0] * sc, y: cy - nose[1] * sc, w: 1920 * sc, h: 1080 * sc };
     const Lf = layer('cub_front', ctx.g.canvas.width, ctx.g.canvas.height), fg = clearLayer(Lf); fg.setTransform(ctx.S, 0, 0, ctx.S, 0, 0);
     roto.jade(fg, F, ctF, { rect, mouth: clamp((env.T.e('vocal', env.t) - 0.18) * 1.6) });
     let haveSide = false; const Ls = layer('cub_side', ctx.g.canvas.width, ctx.g.canvas.height), sg = clearLayer(Ls); sg.setTransform(ctx.S, 0, 0, ctx.S, 0, 0);
-    if (ms && ms.celData) {
-      const ctS = roto.clipTime(Sd, env.lt * 0.4 + 1.5, { loop: 'pingpong' }), fiS = roto.frameIndex(ms, ctS), cdS = ms.celData[fiS] || ms.celData[String(fiS)];
-      if (cdS && cdS.N && cdS.E) {   // align the profile's nose tip onto the frontal nose, scaled by eye–nose distance
-        const dd = Math.hypot(cdS.N[0] - cdS.E[0], cdS.N[1] - cdS.E[1]), k = sc * (iod * 0.62) / dd;
-        const rs = { x: cx - cdS.N[0] * k + iod * sc * 0.06, y: cy - cdS.N[1] * k, w: 1920 * k, h: 1080 * k };
+    if (ms) {
+      const ctS = roto.clipTime(Sd, env.lt * 0.4 + 1.5, { loop: 'pingpong' }), fiS = roto.frameIndex(ms, ctS), aS = anchor(ms, fiS, ctS, Sd);
+      if (aS) {   // align the second view's nose onto the frontal nose, scaled by face size
+        const k = sc * iod / aS.iod;
+        const rs = { x: cx - aS.nose[0] * k + iod * sc * 0.06, y: cy - aS.nose[1] * k, w: 1920 * k, h: 1080 * k };
         roto.jade(sg, Sd, ctS, { rect: rs, mouth: 0 }); haveSide = true;
       }
     }
