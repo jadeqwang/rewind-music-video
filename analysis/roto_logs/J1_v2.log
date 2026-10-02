@@ -11,3 +11,6 @@ W0000 00:00:1790954314.816245   26591 inference_feedback_manager.cc:121] Feedbac
 W0000 00:00:1790954314.885148   26597 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
   J1    0/121 4.27s  flow=0.05 matte=0.46 ground=0.00 face=2.75 lines=0.38 write=0.63
   J1   10/121 2.57s  flow=0.06 matte=0.38 ground=0.00 face=1.14 lines=0.34 write=0.65
+  J1   20/121 2.60s  flow=0.12 matte=0.41 ground=0.00 face=0.95 lines=0.43 write=0.70
+  J1   30/121 3.20s  flow=0.09 matte=0.48 ground=0.00 face=1.26 lines=0.58 write=0.78
+  J1   40/121 2.23s  flow=0.06 matte=0.42 ground=0.00 face=0.69 lines=0.41 write=0.65
