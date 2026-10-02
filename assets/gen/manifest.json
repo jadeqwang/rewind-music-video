@@ -1190,10 +1190,11 @@
    },
    "est_usd": 2.312,
    "est_basis": "10s x 0.2312 (@720p non-video input (per second))",
-   "state": "queued",
+   "state": "running",
    "bucket": 29848688,
    "submitted": 1790921186.6075668,
-   "bytes": 368273
+   "bytes": 368273,
+   "started": 1790921317.241
   },
   "rewind/nj_Epull_t3b-36df0a5b33": {
    "id": "36df0a5b33",
@@ -1220,10 +1221,11 @@
    },
    "est_usd": 0.9248,
    "est_basis": "4s x 0.2312 (@720p non-video input (per second))",
-   "state": "queued",
+   "state": "running",
    "bucket": 29848688,
    "submitted": 1790921187.0077896,
-   "bytes": 365814
+   "bytes": 365814,
+   "started": 1790921317.244
   }
  },
  "total_est_usd": 37.506,
