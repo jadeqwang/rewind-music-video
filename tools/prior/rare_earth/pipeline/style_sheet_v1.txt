@@ -1,0 +1,11 @@
+Art-direction style board titled "SIGNAL PRINT — visual language for the RARE EARTH music video". A clean, confident graphic-design presentation board on warm off-white paper, Swiss-grid layout, small monospace annotations.
+The style: a moving risograph / screen-printed anime. Every image is built from a few flat spot-color inks with crisp black ink linework, halftone-dot shading, slight color misregistration, and paper grain; when the signal is strong the print "lights up" into glowing neon linework on black.
+Board contents:
+1) INK PALETTE as round swatches with names and hex codes: KLEIN BLUE #1F2BD1 (Earth night), BEACON ORANGE #FF5A1F (Earth warmth, aviation lights), PALE BLUE DOT #9CCBFF (Earth, DOT), FLUO PINK #FF48B0 (the other world's sky), MINT SIGNAL #3FE0C5 (the other world's lights), SIGNAL YELLOW #FFE14D (contact), INK #0B0B14, PAPER #F3EFE6.
+2) Four sample frames in 16:9 thumbnails:
+ a) EARTH — an anime girl with long black hime-cut hair and orange foam headphones stands on top of a red-and-white radio antenna tower poking out of a sea of fog at night, raising a small handheld Yagi antenna to one star; printed in Klein blue + beacon orange + pale blue on paper, halftone fog.
+ b) THE OTHER WORLD — a vast magenta sky with a giant planetary ring arcing overhead, a huge coral sun, a thin luminous space elevator rising from a terraced city; printed in fluo pink + mint + ink.
+ c) LIGHT MODE — the same girl singing, drawn only as glowing mint and yellow neon outlines on pure black with bloom and speed lines.
+ d) DATA INSERT — brutalist black-on-paper dot-matrix printout with the characters "6EQUJ5" circled in red pen, a transit light-curve graph with a small dip, and the word "LISTENING".
+3) TYPE specimens: huge heavy extended grotesk lyric "DO YOU STILL CARE?", a condensed serif anime title card "RARE EARTH", monospace UI line "RX 1420.40575 MHz  SNR 23.4", Korean "희귀한 지구" and Japanese "どこかで、つながってる。" in bold display.
+4) TEXTURE chips: coarse halftone dots, fine risograph grain, two-color misregistration, 1-bit dither, scanlines.

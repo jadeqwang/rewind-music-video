@@ -1,0 +1,9 @@
+{
+  "name": "orbital-sunrise-video",
+  "private": true,
+  "type": "module",
+  "description": "Orbital Sunrise music video: every frame drawn in colored pencil by JavaScript.",
+  "dependencies": {
+    "puppeteer-core": "^24.0.0"
+  }
+}

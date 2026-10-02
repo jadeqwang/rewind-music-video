@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Orbital Sunrise studio</title>
+<link rel="icon" href="data:,">
+<style>
+  @font-face { font-family: 'Anton'; src: url('fonts/Anton_normal_400.ttf'); font-display: block; }
+  @font-face { font-family: 'Oswald'; font-weight: 500; src: url('fonts/Oswald_normal_500.ttf'); font-display: block; }
+  @font-face { font-family: 'Oswald'; font-weight: 700; src: url('fonts/Oswald_normal_700.ttf'); font-display: block; }
+  @font-face { font-family: 'Instrument Serif'; font-style: italic; src: url('fonts/InstrumentSerif_italic_400.ttf'); font-display: block; }
+  @font-face { font-family: 'Instrument Serif'; font-style: normal; src: url('fonts/InstrumentSerif_normal_400.ttf'); font-display: block; }
+  @font-face { font-family: 'JetBrains Mono'; font-weight: 400; src: url('fonts/JetBrainsMono_normal_400.ttf'); font-display: block; }
+  @font-face { font-family: 'JetBrains Mono'; font-weight: 700; src: url('fonts/JetBrainsMono_normal_700.ttf'); font-display: block; }
+  @font-face { font-family: 'JetBrains Mono'; font-weight: 800; src: url('fonts/JetBrainsMono_normal_800.ttf'); font-display: block; }
+  @font-face { font-family: 'Cormorant'; font-style: italic; font-weight: 600; src: url('fonts/CormorantGaramond_italic_600.ttf'); font-display: block; }
+  html, body { margin: 0; background: #111; color: #ddd; font: 13px system-ui, sans-serif; }
+  main { padding: 12px; display: grid; gap: 8px; }
+  #out { width: min(100%, 1280px); aspect-ratio: 16 / 9; height: auto; background: #0d0c10; }
+  .bar { display: flex; gap: 10px; align-items: center; max-width: 1280px; }
+  #scrub { flex: 1; }
+  #tt { font-variant-numeric: tabular-nums; min-width: 220px; }
+</style>
+</head>
+<body>
+<main>
+  <canvas id="out"></canvas>
+  <div class="bar"><input id="scrub" type="range" min="0" max="242.2" step="0.0417" value="0"><span id="tt">loading…</span></div>
+</main>
+<script src="src/core.js"></script>
+<script src="src/pencil.js"></script>
+<script src="src/plates.js"></script>
+<script src="src/type.js"></script>
+<script src="src/props.js"></script>
+<script src="src/timeline.js"></script>
+<script src="src/shots.js"></script>
+<script src="src/shots2.js"></script>
+<script src="src/main.js"></script>
+</body>
+</html>

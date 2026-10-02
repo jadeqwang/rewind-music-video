@@ -1,0 +1,213 @@
+{
+ "transcription_info": {
+  "language": "en",
+  "language_probability": 1,
+  "duration": 20,
+  "duration_after_vad": 20
+ },
+ "text": "With no warning, I get shot And time stops Stop, stop, stop, stop, stop Rewind Rewind Rewind Rewind Rewind",
+ "word_count": 19,
+ "segments": [
+  {
+   "start": 0,
+   "end": 3.38,
+   "text": " With no warning, I get shot",
+   "temperature": 1,
+   "avg_logprob": -0.8191864864498961,
+   "compression_ratio": 1.5820895522388059,
+   "no_speech_prob": 0,
+   "words": [
+    {
+     "word": " With",
+     "start": 0,
+     "end": 0.98
+    },
+    {
+     "word": " no",
+     "start": 0.98,
+     "end": 1.3
+    },
+    {
+     "word": " warning,",
+     "start": 1.3,
+     "end": 1.96
+    },
+    {
+     "word": " I",
+     "start": 2.22,
+     "end": 2.5
+    },
+    {
+     "word": " get",
+     "start": 2.5,
+     "end": 2.92
+    },
+    {
+     "word": " shot",
+     "start": 2.92,
+     "end": 3.38
+    }
+   ],
+   "word_count": 6
+  },
+  {
+   "start": 3.38,
+   "end": 5.1,
+   "text": " And time stops",
+   "temperature": 1,
+   "avg_logprob": -0.8191864864498961,
+   "compression_ratio": 1.5820895522388059,
+   "no_speech_prob": 0,
+   "words": [
+    {
+     "word": " And",
+     "start": 3.38,
+     "end": 4.02
+    },
+    {
+     "word": " time",
+     "start": 4.02,
+     "end": 4.76
+    },
+    {
+     "word": " stops",
+     "start": 4.76,
+     "end": 5.1
+    }
+   ],
+   "word_count": 3
+  },
+  {
+   "start": 5.1,
+   "end": 8.1,
+   "text": " Stop, stop, stop, stop, stop",
+   "temperature": 1,
+   "avg_logprob": -0.8191864864498961,
+   "compression_ratio": 1.5820895522388059,
+   "no_speech_prob": 0,
+   "words": [
+    {
+     "word": " Stop,",
+     "start": 5.1,
+     "end": 5.46
+    },
+    {
+     "word": " stop,",
+     "start": 5.46,
+     "end": 5.84
+    },
+    {
+     "word": " stop,",
+     "start": 5.84,
+     "end": 6.5
+    },
+    {
+     "word": " stop,",
+     "start": 6.5,
+     "end": 7.04
+    },
+    {
+     "word": " stop",
+     "start": 7.04,
+     "end": 8.1
+    }
+   ],
+   "word_count": 5
+  },
+  {
+   "start": 12.1,
+   "end": 12.120000000000001,
+   "text": " Rewind",
+   "temperature": 1,
+   "avg_logprob": -0.8191864864498961,
+   "compression_ratio": 1.5820895522388059,
+   "no_speech_prob": 0,
+   "words": [
+    {
+     "word": " Rewind",
+     "start": 12.1,
+     "end": 12.69
+    }
+   ],
+   "word_count": 1
+  },
+  {
+   "start": 15.899999999999999,
+   "end": 16.18,
+   "text": " Rewind",
+   "temperature": 1,
+   "avg_logprob": -0.8191864864498961,
+   "compression_ratio": 1.5820895522388059,
+   "no_speech_prob": 0,
+   "words": [
+    {
+     "word": " Rewind",
+     "start": 15.899999999999999,
+     "end": 16.49
+    }
+   ],
+   "word_count": 1
+  },
+  {
+   "start": 17.08,
+   "end": 17.52,
+   "text": " Rewind",
+   "temperature": 1,
+   "avg_logprob": -0.8191864864498961,
+   "compression_ratio": 1.5820895522388059,
+   "no_speech_prob": 0,
+   "words": [
+    {
+     "word": " Rewind",
+     "start": 17.08,
+     "end": 17.52
+    }
+   ],
+   "word_count": 1
+  },
+  {
+   "start": 18.12,
+   "end": 18.26,
+   "text": " Rewind",
+   "temperature": 1,
+   "avg_logprob": -0.8191864864498961,
+   "compression_ratio": 1.5820895522388059,
+   "no_speech_prob": 0,
+   "words": [
+    {
+     "word": " Rewind",
+     "start": 17.67,
+     "end": 18.26
+    }
+   ],
+   "word_count": 1
+  },
+  {
+   "start": 19.04,
+   "end": 19.62,
+   "text": " Rewind",
+   "temperature": 1,
+   "avg_logprob": -0.8191864864498961,
+   "compression_ratio": 1.5820895522388059,
+   "no_speech_prob": 0,
+   "words": [
+    {
+     "word": " Rewind",
+     "start": 19.03,
+     "end": 19.62
+    }
+   ],
+   "word_count": 1
+  }
+ ],
+ "vtt": "WEBVTT\n\n00:00.000 --> 00:00.980\n With\n\n00:00.980 --> 00:01.300\n no\n\n00:01.300 --> 00:01.960\n warning,\n\n00:02.220 --> 00:02.500\n I\n\n00:02.500 --> 00:02.920\n get\n\n00:02.920 --> 00:03.380\n shot\n\n00:03.380 --> 00:04.020\n And\n\n00:04.020 --> 00:04.760\n time\n\n00:04.760 --> 00:05.100\n stops\n\n00:05.100 --> 00:05.460\n Stop,\n\n00:05.460 --> 00:05.840\n stop,\n\n00:05.840 --> 00:06.500\n stop,\n\n00:06.500 --> 00:07.040\n stop,\n\n00:07.040 --> 00:08.100\n stop\n\n00:12.100 --> 00:12.690\n Rewind\n\n00:15.900 --> 00:16.490\n Rewind\n\n00:17.080 --> 00:17.520\n Rewind\n\n00:17.670 --> 00:18.260\n Rewind\n\n00:19.030 --> 00:19.620\n Rewind\n\n",
+ "usage": {
+  "prompt_tokens": 0,
+  "completion_tokens": 0,
+  "total_tokens": 0,
+  "prompt_tokens_details": {
+   "cached_tokens": 0
+  },
+  "neurons": 15.543412567999999
+ }
+}

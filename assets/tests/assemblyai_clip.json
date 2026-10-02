@@ -1,0 +1,72 @@
+{
+ "text": "With no warning, I get shot and time stops.",
+ "words": [
+  {
+   "text": "With",
+   "start": 499,
+   "end": 998,
+   "confidence": 0.9860545,
+   "speaker": null
+  },
+  {
+   "text": "no",
+   "start": 998,
+   "end": 1320,
+   "confidence": 0.99997663,
+   "speaker": null
+  },
+  {
+   "text": "warning,",
+   "start": 1481,
+   "end": 2092,
+   "confidence": 0.99699634,
+   "speaker": null
+  },
+  {
+   "text": "I",
+   "start": 2269,
+   "end": 2382,
+   "confidence": 0.9999105,
+   "speaker": null
+  },
+  {
+   "text": "get",
+   "start": 2688,
+   "end": 2817,
+   "confidence": 0.9994085,
+   "speaker": null
+  },
+  {
+   "text": "shot",
+   "start": 2849,
+   "end": 3509,
+   "confidence": 0.9809513,
+   "speaker": null
+  },
+  {
+   "text": "and",
+   "start": 3895,
+   "end": 3960,
+   "confidence": 0.8866594,
+   "speaker": null
+  },
+  {
+   "text": "time",
+   "start": 4137,
+   "end": 4829,
+   "confidence": 0.99849105,
+   "speaker": null
+  },
+  {
+   "text": "stops.",
+   "start": 4877,
+   "end": 5924,
+   "confidence": 0.9769575,
+   "speaker": null
+  }
+ ],
+ "utterances": null,
+ "confidence": 0.98060066,
+ "language_code": "en_us",
+ "language_confidence": null
+}

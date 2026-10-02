@@ -1,0 +1,15 @@
+{
+  "name": "rare-earth-render",
+  "private": true,
+  "type": "module",
+  "description": "JS renderer for the RARE EARTH music video",
+  "scripts": {
+    "serve": "node tools/serve.mjs",
+    "render": "node tools/render.mjs"
+  },
+  "dependencies": {
+    "esbuild": "^0.28.2",
+    "playwright-core": "^1.63.0",
+    "three": "^0.186.1"
+  }
+}

@@ -1,0 +1,57 @@
+{
+ "text": "With no warning I get shot and time stops. Rewind.",
+ "language": "en",
+ "duration": 20.088,
+ "words": [
+  {
+   "text": "With",
+   "start": 0.86,
+   "end": 1.02
+  },
+  {
+   "text": "no",
+   "start": 1.12,
+   "end": 1.24
+  },
+  {
+   "text": "warning",
+   "start": 1.541,
+   "end": 2.281
+  },
+  {
+   "text": "I",
+   "start": 2.601,
+   "end": 2.621
+  },
+  {
+   "text": "get",
+   "start": 2.721,
+   "end": 3.021
+  },
+  {
+   "text": "shot",
+   "start": 3.161,
+   "end": 3.461
+  },
+  {
+   "text": "and",
+   "start": 3.942,
+   "end": 4.062
+  },
+  {
+   "text": "time",
+   "start": 4.242,
+   "end": 4.922
+  },
+  {
+   "text": "stops.",
+   "start": 5.022,
+   "end": 9.784
+  },
+  {
+   "text": "Rewind.",
+   "start": 15.926,
+   "end": 18.287
+  }
+ ]
+}
