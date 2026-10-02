@@ -35,7 +35,8 @@ URLS = {
     "selfie_multiclass_256x256.tflite": "https://storage.googleapis.com/mediapipe-models/image_segmenter/selfie_multiclass_256x256/float32/latest/selfie_multiclass_256x256.tflite",
 }
 REAL_JSON = os.path.join(HERE, "..", "..", "assets", "character", "v2", "measure.json")
-KEYS = ["eye_w_iod", "eye_open", "eye_w_face", "iris_face", "forehead", "browchin_face", "mid_third", "face_hw"]
+KEYS = ["eye_w_iod", "eye_open", "eye_w_face", "iris_face", "forehead", "browchin_face", "mid_third", "face_hw",
+        "forehead_w", "temple_w", "jaw_w", "lowjaw_w", "chin_w", "chin_angle", "chin_tip_angle"]
 GATE_KEYS = {"eye_w_face": 0.05, "iris_face": 0.07, "eye_open": 0.10, "forehead": 0.05}  # rel. tolerance
 
 # landmark ids
@@ -281,6 +282,16 @@ def measure(src, debug_path=None):
                iris_face=(np.mean(iris) / fw3) if iris else None,
                blink=round((bs.get("eyeBlinkLeft", 0) + bs.get("eyeBlinkRight", 0)) / 2, 3),
                squint=round((bs.get("eyeSquintLeft", 0) + bs.get("eyeSquintRight", 0)) / 2, 3))
+    # face shape (heart / melon-seed): widths in the de-rotated 3-D frame, relative to cheekbone width
+    out["forehead_w"] = d3(54, 284) / fw3          # upper-forehead width / cheekbone width
+    out["temple_w"] = d3(21, 251) / fw3            # temple (brow level) width / cheekbone width
+    out["jaw_w"] = d3(172, 397) / fw3              # gonion-to-gonion / cheekbone width
+    out["lowjaw_w"] = d3(136, 365) / fw3           # lower-cheek / jaw-corner width / cheekbone width
+    out["chin_w"] = d3(148, 377) / d3(172, 397)    # chin width / jaw width
+    v1, v2 = Pc[172, :2] - Pc[CHIN, :2], Pc[397, :2] - Pc[CHIN, :2]
+    out["chin_angle"] = math.degrees(math.acos(np.dot(v1, v2) / np.linalg.norm(v1) / np.linalg.norm(v2)))  # smaller = more tapered
+    v1, v2 = Pc[148, :2] - Pc[CHIN, :2], Pc[377, :2] - Pc[CHIN, :2]
+    out["chin_tip_angle"] = math.degrees(math.acos(np.dot(v1, v2) / np.linalg.norm(v1) / np.linalg.norm(v2)))
     bR, bL = brow_metrics(Pc, "R"), brow_metrics(Pc, "L")
     out["eye_roll_check"] = round(math.degrees(math.atan2(Pc[L_OUT, 1] - Pc[R_OUT, 1], Pc[L_OUT, 0] - Pc[R_OUT, 0])), 2)
     # image-left / image-right brows (raw); subject sides depend on mirroring (see notes in measure.json)
