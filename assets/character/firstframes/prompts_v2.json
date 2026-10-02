@@ -527,5 +527,80 @@
    }
   ],
   "file": "cands/J3k.jpg"
+ },
+ {
+  "id": "G9_a",
+  "model": "openai/gpt-image-2",
+  "prompt": "Edit the first image ONLY by adding eyeglasses to her face: thin rectangular dark gray-teal metal frames exactly like the glasses in the second image (thin full-rim metal, slightly rounded rectangular lenses, small nose pads, thin metal temple arms going back to her ears). Size: each lens a little wider than her eye, the frame spanning slightly beyond the outer corners of her eyes; the top rim sits just below her eyebrows; correct perspective for a face looking almost straight at the camera. Clear lenses with only a very faint reflection, no magnification or distortion of her eyes. Change NOTHING else: same face, same eyes, same eyebrows, same skin, same lipstick, same hair, same background, same lighting, same framing and size.",
+  "refs": [
+   "refs/jade/IMG_20180209_082832.jpg",
+   "refs/jade/PXL_20260528_215628802.jpg"
+  ],
+  "size": "1024x1536",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 29.7
+   }
+  ],
+  "file": "cands/G9_a.jpg"
+ },
+ {
+  "id": "G9_b",
+  "model": "openai/gpt-image-2",
+  "prompt": "Edit the first image ONLY by adding eyeglasses to her face: thin rectangular dark gray-teal metal frames exactly like the glasses in the second image (thin full-rim metal, slightly rounded rectangular lenses, small nose pads, thin metal temple arms going back to her ears). Size: each lens a little wider than her eye, the frame spanning slightly beyond the outer corners of her eyes; the top rim sits just below her eyebrows; correct perspective for a face looking almost straight at the camera. Clear lenses with only a very faint reflection, no magnification or distortion of her eyes. Change NOTHING else: same face, same eyes, same eyebrows, same skin, same lipstick, same hair, same background, same lighting, same framing and size.",
+  "refs": [
+   "refs/jade/IMG_20180209_082832.jpg",
+   "refs/jade/PXL_20260528_215628802.jpg"
+  ],
+  "size": "1024x1536",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": false,
+    "secs": 30.5,
+    "err": "~30 s sandbox proxy timeout (job may still be running/billed upstream). Use submit_background() or a relay Worker for long jobs."
+   },
+   {
+    "ok": true,
+    "secs": 29.3
+   }
+  ],
+  "file": "cands/G9_b.jpg"
+ },
+ {
+  "id": "J5_v3",
+  "model": "openai/gpt-image-2",
+  "prompt": "Performance shot, center-locked and perfectly symmetric: she stands exactly centered in frame against a pure black void, waist-up, facing the camera straight on, one hand raised beside her face at shoulder height beginning a slow circular rewind gesture. Soft frontal white key light on her face, a red rim light from frame-left and a blue rim light from frame-right on her hair and shoulders (police siren colors), faint haze. Flattering, no colored light across the face. POSE: her head faces the camera straight on (turned only ~2.6 degrees, essentially frontal) exactly as in the first image; her torso and shoulders are square to the camera, level and symmetric, turned the same tiny amount - no twist between head and body. Keep her face, glasses and lipstick exactly as in the first image. Keep this exact woman from the first image: her face, head angle, eyes, eyebrows, glasses and expression must stay exactly as in the photo (do not redraw or beautify her face). Long straight solid black hair with a center part styled half-up half-down (two symmetrical sections pulled back from the temples toward the crown, the rest hanging long), revealing her broad forehead. She wears a white cropped zip jacket with one clean orange horizontal band across the chest and upper sleeves (no patches, no text) over a black top. Cinematic photographic film still, 16:9 widescreen composition, soft flattering light on her face, smooth clear skin. No text, no logos, no headphones.",
+  "refs": [
+   "refs/jade/derived/IMG_20180209_082832_glasses.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 28.3
+   }
+  ],
+  "file": "cands/J5_v3.jpg"
+ },
+ {
+  "id": "J5b_v3",
+  "model": "openai/gpt-image-2",
+  "prompt": "Performance shot variation, center-locked and perfectly symmetric: she stands exactly centered against a black void, medium shot from the waist up, facing the camera straight on, both hands raised in front of her chest tracing a slow counter-clockwise circle, symmetric pose. Soft frontal white key light on her face, alternating red and blue rim light behind her on hair and shoulders, light haze. Flattering, no colored light across the face. POSE: her head faces the camera straight on (turned only ~2.6 degrees, essentially frontal) exactly as in the first image; her torso and shoulders are square to the camera, level and symmetric, turned the same tiny amount - no twist between head and body. Keep her face, glasses and lipstick exactly as in the first image. Keep this exact woman from the first image: her face, head angle, eyes, eyebrows, glasses and expression must stay exactly as in the photo (do not redraw or beautify her face). Long straight solid black hair with a center part styled half-up half-down (two symmetrical sections pulled back from the temples toward the crown, the rest hanging long), revealing her broad forehead. She wears a white cropped zip jacket with one clean orange horizontal band across the chest and upper sleeves (no patches, no text) over a black top. Cinematic photographic film still, 16:9 widescreen composition, soft flattering light on her face, smooth clear skin. No text, no logos, no headphones.",
+  "refs": [
+   "refs/jade/derived/IMG_20180209_082832_glasses.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 29.4
+   }
+  ],
+  "file": "cands/J5b_v3.jpg"
  }
 ]

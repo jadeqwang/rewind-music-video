@@ -75,5 +75,20 @@
   "src": "refs/jade/PXL_20260528_215628802.jpg",
   "set": "assets/sets/defense_room/2.jpg",
   "prompt": "A dark empty seminar room the night before a PhD defense: she sits alone on a single black chair in the middle of the room, medium shot from the knees up, facing the camera, hands in her lap, singing softly to herself. A single soft overhead light on her, a projector beam across the room behind her, faint red and blue reflections in the dark windows. Use the second image for the room layout and mood. POSE: she sits square to the camera, shoulders level and facing the camera, her head only very slightly turned toward frame-left exactly as in the first image - head and torso congruent, no twist. Keep her face exactly as in the first image."
+ },
+ "J5_v3": {
+  "src": "refs/jade/derived/IMG_20180209_082832_glasses.jpg",
+  "set": null,
+  "prompt": "Performance shot, center-locked and perfectly symmetric: she stands exactly centered in frame against a pure black void, waist-up, facing the camera straight on, one hand raised beside her face at shoulder height beginning a slow circular rewind gesture. Soft frontal white key light on her face, a red rim light from frame-left and a blue rim light from frame-right on her hair and shoulders (police siren colors), faint haze. Flattering, no colored light across the face. POSE: her head faces the camera straight on (turned only ~2.6 degrees, essentially frontal) exactly as in the first image; her torso and shoulders are square to the camera, level and symmetric, turned the same tiny amount - no twist between head and body. Keep her face, glasses and lipstick exactly as in the first image."
+ },
+ "J5b_v3": {
+  "src": "refs/jade/derived/IMG_20180209_082832_glasses.jpg",
+  "set": null,
+  "prompt": "Performance shot variation, center-locked and perfectly symmetric: she stands exactly centered against a black void, medium shot from the waist up, facing the camera straight on, both hands raised in front of her chest tracing a slow counter-clockwise circle, symmetric pose. Soft frontal white key light on her face, alternating red and blue rim light behind her on hair and shoulders, light haze. Flattering, no colored light across the face. POSE: her head faces the camera straight on (turned only ~2.6 degrees, essentially frontal) exactly as in the first image; her torso and shoulders are square to the camera, level and symmetric, turned the same tiny amount - no twist between head and body. Keep her face, glasses and lipstick exactly as in the first image."
+ },
+ "J8_v3": {
+  "src": "refs/jade/derived/IMG_20180209_082832_glasses.jpg",
+  "set": "assets/sets/defense_room/2.jpg",
+  "prompt": "A dark empty seminar room the night before a PhD defense: she sits alone on a single black chair in the middle of the room, centered, medium shot from the knees up, facing the camera straight on, seated square to the camera, hands in her lap, singing softly to herself. A single soft overhead light on her, a projector beam across the room behind her, faint red and blue reflections in the dark windows. Use the second image for the room layout and mood. POSE: her head faces the camera straight on (turned only ~2.6 degrees, essentially frontal) exactly as in the first image; her torso and shoulders are square to the camera, level and symmetric, turned the same tiny amount - no twist between head and body. Keep her face, glasses and lipstick exactly as in the first image."
  }
 }
