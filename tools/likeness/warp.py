@@ -136,7 +136,7 @@ def correct(rgb, ref=None, iters=3, eyes=True, forehead=True, shape=True, verbos
                 k = float(np.exp(np.mean(np.log(want))))
                 too_big = (m.get("forehead") or 0) > 1.10 * ref["forehead"]   # upper_head alone never shrinks (pitch-sensitive)
                 if k > 1 + fh_tol or (k < 1 and too_big):   # never shrink a large forehead unless beyond the gate
-                    P["top_scale"] = float(np.clip(P["top_scale"] * k, 0.95, 1.25)); changed = True
+                    P["top_scale"] = float(np.clip(P["top_scale"] * k, 0.95, 1.14)); changed = True
         if shape and ref.get("forehead_w") and m.get("forehead_w"):
             try:
                 RR = json.load(open(MS.REAL_JSON))["real"]; fsl, y0 = RR["yaw_slope"].get("forehead_w", 0), RR["core_abs_yaw"]
