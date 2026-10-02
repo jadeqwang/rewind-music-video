@@ -190,3 +190,10 @@ timing `analysis/timing_v5.json`, envelopes `analysis/envelopes_v5.json`. Overri
   `T.from4`; wall pin timestamps are computed from timing.
 - Lip-synced footage (any clip with `meta.lip_offset`, or a jade layer with `v4clock: true`) runs on the v4 clock:
   clip_time = to4(t) − to4(shot start) + lip_offset, so mouths stay locked to the v5 vocal.
+
+## Final 1080p30 pass
+`bash final_1080.sh frames` renders 6,966 frames into frames/final1080. It takes about 2.1 h at about 1.1 s/frame with 3 workers, needs about 4 GB, and resumes if interrupted.
+`bash final_1080.sh encode` writes three encodes, each yuv420p, faststart, with AAC 320k / 48 kHz from Rewind5_final.wav:
+- `REWIND_final_1080p_master.mp4`: CRF 17, `-tune grain`, about 350–450 MB.
+- `REWIND_final_1080p_x.mp4`: two-pass 9 Mbps, about 265 MB.
+- `REWIND_final_1080p_100mb.mp4`: two-pass 3 Mbps, about 96 MB.

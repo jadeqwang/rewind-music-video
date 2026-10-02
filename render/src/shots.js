@@ -368,7 +368,7 @@ export function buildShots(T) {
   C('N7_qed', qed, end, [{ type: 'storypage', size: 72, x: 160, stagger: 0.32, lines: ['I\u2019m back in my car, sirens in my rear view,', 'and I don\u2019t stop. I don\u2019t pull over.', 'I keep driving as inconspicuously as possible.', '', { text: 'And I never stop.', size: 112, at: T.beatAfter(qed + 1.4) - qed }] }], { fx: { heart: 0.15, jerks: [qed] } }, { post: { bloom: 0, vignette: 0.12 } });
   C('END_black', end, end + 0.9, [{ type: 'fill', color: '#000' }, { type: 'mono', text: '∎', y: 580, size: 120, weight: 700 }], { fx: { heart: 0 } }, { post: { bloom: 0, vignette: 0, grain: 0.02 } });
   C('END_credits', end + 0.9, T.duration + 0.5, [{ type: 'fill', color: '#000' }, { type: 'mono', text: 'REWIND — Jade Wang', y: 520, size: 44, color: PAL.boneDim },
-    { type: 'mono', text: 'every frame drawn in code', y: 600, size: 42, color: PAL.boneDim, at: 0.5 }], { fx: { heart: 0 } }, { post: { bloom: 0, vignette: 0 } });
+    { type: 'mono', text: 'world drawn in code · Jade animated with Seedance', y: 600, size: 40, color: PAL.boneDim, at: 0.5 }], { fx: { heart: 0 } }, { post: { bloom: 0, vignette: 0 } });
   // ---- every rewind section keeps actual reverse motion of earlier footage as its base layer (overlays sit on top) ----
   const RW = [{ a: drop1, b: sec('verse3').start, from: shot1 - 0.02, to: sec('build1').start + 0.1 }, { a: drop2, b: bd, from: shot2 - 0.02, to: sec('verse3').start + 0.3 }];
   for (const sh of S) for (const w of RW) {

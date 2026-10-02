@@ -81,7 +81,7 @@ HUD = eval bar (left), ATTEMPT counter (top-left mono), search tree (grows acros
 | 205–215.86 | N4 shed | HUD falls away piece by piece; pure road, pure speed. | — | E2 |
 | 215.86–227.20 | N5 instrumental | Braams 219.60/223.40: pull-out over the whole lake, tree superimposed on the coastline. `Q.E.D.` at 223.40. | A | E1 |
 | 227.20 | END | Hard cut to black. `∎` | — | — |
-| 227.2–232.4 | credits | tiny mono: REWIND — Jade Wang · every frame drawn in code | C | — |
+| 227.2–232.4 | credits | tiny mono: REWIND — Jade Wang · world drawn in code · Jade animated with Seedance | C | — |
 
 ## Gen list (Seedance 2.5, 720p, roto bases)
 Jade (needs approved sheet): J1 driving profile lip-sync · J2 mirror glance · J3 reach/hold ID at window · J5/J5b performance
