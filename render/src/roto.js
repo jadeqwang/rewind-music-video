@@ -339,7 +339,13 @@ export function jade2(g, id, clipT, o = {}) {
         const dx = ir[0] - back * qw * 0.12 - cx0, dy = ir[1] - cy0; q = q.map(p => [p[0] + dx, p[1] + dy]);
         cd.glasses = { ...cd.glasses, arm: [[cd.glasses.arm[0][0] + dx, cd.glasses.arm[0][1] + dy], cd.glasses.arm[1]] };
       }
-      poly(a, q, true); a.fillStyle = 'rgba(61,242,230,0.06)'; a.fill(); a.strokeStyle = GL; a.lineWidth = lw; a.lineJoin = 'round'; a.stroke();
+      {   // one clean slim lens: a rounded narrow ellipse through the quad's centre, tilted with its long side
+        const cx = q.reduce((s, p) => s + p[0], 0) / 4, cy = q.reduce((s, p) => s + p[1], 0) / 4;
+        const hgt = Math.hypot(q[1][0] - q[2][0], q[1][1] - q[2][1]), wid = Math.max(6, Math.hypot(q[0][0] - q[1][0], q[0][1] - q[1][1]) * 0.55);
+        const ang = Math.atan2(q[2][1] - q[1][1], q[2][0] - q[1][0]) - Math.PI / 2;
+        a.save(); a.translate(cx, cy); a.rotate(ang); a.beginPath(); a.ellipse(0, 0, wid / 2, hgt / 2, 0, 0, Math.PI * 2);
+        a.fillStyle = 'rgba(61,242,230,0.06)'; a.fill(); a.strokeStyle = GL; a.lineWidth = lw; a.stroke(); a.restore();
+      }
       const [p0, p1] = cd.glasses.arm; a.beginPath(); a.moveTo(p0[0], p0[1]); a.lineTo(p1[0], p1[1]); a.stroke();
       a.strokeStyle = 'rgba(255,255,255,0.7)'; a.lineWidth = lw * 0.6; a.beginPath(); a.moveTo(q[0][0] * 0.7 + q[3][0] * 0.3, q[0][1] * 0.7 + q[3][1] * 0.3); a.lineTo(q[0][0] * 0.85 + q[1][0] * 0.15, q[0][1] * 0.85 + q[1][1] * 0.15); a.stroke();
     } else drawGlasses(a, fd, o);
