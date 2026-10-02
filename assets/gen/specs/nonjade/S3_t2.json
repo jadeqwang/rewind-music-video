@@ -1,0 +1,16 @@
+{
+ "model": "bytedance/seedance-2.5",
+ "tag": "nj_S3_t2",
+ "notes": "non-Jade roto base S3 retake t2",
+ "input": {
+  "prompt": "Low locked-off camera at the edge of a field of tall grass at night. Exactly four men in dark suits run from left to right across the frame through the waist-high grass, one behind the other, crisp solid pitch-black silhouettes against two hard white flashlight beams shining from behind them through faint mist. The grass is a dark silhouette mass with only its tops rim-lit. Black sky, a thin row of orange lights on the far horizon. Sharp, no motion blur. The men are solid pitch-black backlit silhouettes, faces completely in shadow and featureless, only the outlines of sunglasses, shoulders, ties and arms; nobody's face is ever lit. Single continuous shot, no cuts, no transitions. Night. Graphic neo-noir cinematography, photographic. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus, no motion blur smear. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark, no subtitles.",
+  "duration": 6,
+  "resolution": "720p",
+  "aspect_ratio": "16:9",
+  "generate_audio": false,
+  "reference_images": [
+   "file:assets/sets/grass_field/1.jpg",
+   "file:assets/sets/pullover/1.jpg"
+  ]
+ }
+}

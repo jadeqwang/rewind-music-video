@@ -1,0 +1,13 @@
+{
+ "model": "bytedance/seedance-2.5",
+ "tag": "nj_E4_t2",
+ "notes": "non-Jade roto base E4 retake t2",
+ "input": {
+  "prompt": "Low camera among a few tall grass stalks at night, locked-off. A strong gusting wind bends and whips the tall stalks back and forth as clean dark silhouettes. Two hard white flashlight beams sweep quickly across the frame in wide arcs from left to right and back, raking through the grass and the faint mist, so bright shafts and deep black gaps move constantly across the field. No people. Single continuous shot, no cuts, no transitions. Night. Graphic neo-noir cinematography, photographic. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus, no motion blur smear. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark, no subtitles.",
+  "duration": 6,
+  "resolution": "720p",
+  "aspect_ratio": "16:9",
+  "generate_audio": false,
+  "image": "file:assets/sets/grass_field/3.jpg"
+ }
+}

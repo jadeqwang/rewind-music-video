@@ -1,0 +1,244 @@
+{
+ "params": {
+  "eye_sx": 1.066835128098002,
+  "eye_sy": 1.164449810850723,
+  "top_scale": 0.95,
+  "top_h": 1.0,
+  "jaw_narrow": 0.0,
+  "hair_u": 178.54066004540226
+ },
+ "before": {
+  "yaw": -19.7,
+  "pitch": 16.8,
+  "roll": 0.1,
+  "eye_w_iod": 0.3118,
+  "eye_open": 0.3387,
+  "eye_w_face": 0.2042,
+  "iris_face": 0.0893,
+  "blink": 0.071,
+  "squint": 0.17,
+  "forehead_w": 0.9143,
+  "temple_w": 1.0039,
+  "jaw_w": 0.7527,
+  "lowjaw_w": 0.6411,
+  "chin_w": 0.2163,
+  "chin_angle": 133.6096,
+  "chin_tip_angle": 174.0904,
+  "eye_roll_check": -0.47,
+  "mesh_brow_imgL": {
+   "height": 0.3161,
+   "peak_height": 0.3633,
+   "peak_pos": 0.356,
+   "angle": -11.61,
+   "arch": 0.0842,
+   "thick": 0.0691,
+   "length": 0.4532
+  },
+  "mesh_brow_imgR": {
+   "height": 0.3304,
+   "peak_height": 0.3764,
+   "peak_pos": 0.429,
+   "angle": -9.48,
+   "arch": 0.0871,
+   "thick": 0.076,
+   "length": 0.5091
+  },
+  "brow_imgL": {
+   "height": 0.3095,
+   "peak_height": 0.3371,
+   "peak_pos": 0.587,
+   "angle": 4.21,
+   "thick": 0.1,
+   "length": 0.46,
+   "arch": 0.06
+  },
+  "brow_imgR": {
+   "height": 0.3451,
+   "peak_height": 0.3889,
+   "peak_pos": 0.691,
+   "angle": 3.04,
+   "thick": 0.105,
+   "length": 0.695,
+   "arch": 0.1006
+  },
+  "brow_asym": {
+   "height": -0.0356,
+   "peak_height": -0.0518,
+   "peak_pos": -0.104,
+   "angle": 1.17,
+   "thick": -0.005,
+   "length": -0.235,
+   "arch": -0.0406
+  },
+  "mid_third": 0.5577,
+  "upper_head": 0.7485,
+  "forehead": 0.346,
+  "browchin_face": 0.654,
+  "face_hw": 1.4951,
+  "hairline_xy": [
+   845.7,
+   118.5
+  ],
+  "face_px": 333.3
+ },
+ "after": {
+  "yaw": -19.8,
+  "pitch": 16.5,
+  "roll": -0.0,
+  "eye_w_iod": 0.3168,
+  "eye_open": 0.3603,
+  "eye_w_face": 0.2079,
+  "iris_face": 0.091,
+  "blink": 0.038,
+  "squint": 0.109,
+  "forehead_w": 0.9179,
+  "temple_w": 1.0073,
+  "jaw_w": 0.7494,
+  "lowjaw_w": 0.6381,
+  "chin_w": 0.2166,
+  "chin_angle": 133.2932,
+  "chin_tip_angle": 173.873,
+  "eye_roll_check": -0.38,
+  "mesh_brow_imgL": {
+   "height": 0.3152,
+   "peak_height": 0.3623,
+   "peak_pos": 0.353,
+   "angle": -11.66,
+   "arch": 0.0839,
+   "thick": 0.0686,
+   "length": 0.4527
+  },
+  "mesh_brow_imgR": {
+   "height": 0.3287,
+   "peak_height": 0.3744,
+   "peak_pos": 0.432,
+   "angle": -9.41,
+   "arch": 0.0869,
+   "thick": 0.0754,
+   "length": 0.5069
+  },
+  "brow_imgL": {
+   "height": 0.3093,
+   "peak_height": 0.3351,
+   "peak_pos": 0.615,
+   "angle": 4.01,
+   "thick": 0.095,
+   "length": 0.455,
+   "arch": 0.057
+  },
+  "brow_imgR": {
+   "height": 0.3439,
+   "peak_height": 0.3868,
+   "peak_pos": 0.696,
+   "angle": 2.99,
+   "thick": 0.105,
+   "length": 0.69,
+   "arch": 0.1018
+  },
+  "brow_asym": {
+   "height": -0.0346,
+   "peak_height": -0.0517,
+   "peak_pos": -0.081,
+   "angle": 1.02,
+   "thick": -0.01,
+   "length": -0.235,
+   "arch": -0.0448
+  },
+  "mid_third": 0.5571,
+  "upper_head": 0.7027,
+  "forehead": 0.3355,
+  "browchin_face": 0.6645,
+  "face_hw": 1.4655,
+  "hairline_xy": [
+   847.4,
+   126.1
+  ],
+  "face_px": 334.8
+ },
+ "hist": [
+  {
+   "params": {
+    "eye_sx": 1.0296,
+    "eye_sy": 1.0895,
+    "top_scale": 0.95,
+    "top_h": 1.0,
+    "jaw_narrow": 0.0,
+    "hair_u": 178.5407
+   },
+   "m": {
+    "eye_w_iod": 0.3148,
+    "eye_open": 0.3496,
+    "eye_w_face": 0.2058,
+    "iris_face": 0.0901,
+    "forehead": 0.3362,
+    "browchin_face": 0.6638,
+    "mid_third": 0.5595,
+    "face_hw": 1.465,
+    "forehead_w": 0.9167,
+    "temple_w": 1.0061,
+    "jaw_w": 0.7499,
+    "lowjaw_w": 0.6385,
+    "chin_w": 0.2163,
+    "chin_angle": 133.5706,
+    "chin_tip_angle": 174.0044,
+    "upper_head": 0.7032
+   }
+  },
+  {
+   "params": {
+    "eye_sx": 1.0513,
+    "eye_sy": 1.1404,
+    "top_scale": 0.95,
+    "top_h": 1.0,
+    "jaw_narrow": 0.0,
+    "hair_u": 178.5407
+   },
+   "m": {
+    "eye_w_iod": 0.3162,
+    "eye_open": 0.3562,
+    "eye_w_face": 0.2072,
+    "iris_face": 0.0906,
+    "forehead": 0.3361,
+    "browchin_face": 0.6639,
+    "mid_third": 0.5577,
+    "face_hw": 1.4651,
+    "forehead_w": 0.916,
+    "temple_w": 1.0057,
+    "jaw_w": 0.7495,
+    "lowjaw_w": 0.6381,
+    "chin_w": 0.2165,
+    "chin_angle": 133.4817,
+    "chin_tip_angle": 173.9338,
+    "upper_head": 0.7027
+   }
+  },
+  {
+   "params": {
+    "eye_sx": 1.0668,
+    "eye_sy": 1.1644,
+    "top_scale": 0.95,
+    "top_h": 1.0,
+    "jaw_narrow": 0.0,
+    "hair_u": 178.5407
+   },
+   "m": {
+    "eye_w_iod": 0.3168,
+    "eye_open": 0.3603,
+    "eye_w_face": 0.2079,
+    "iris_face": 0.091,
+    "forehead": 0.3355,
+    "browchin_face": 0.6645,
+    "mid_third": 0.5571,
+    "face_hw": 1.4655,
+    "forehead_w": 0.9179,
+    "temple_w": 1.0073,
+    "jaw_w": 0.7494,
+    "lowjaw_w": 0.6381,
+    "chin_w": 0.2166,
+    "chin_angle": 133.2932,
+    "chin_tip_angle": 173.873,
+    "upper_head": 0.7027
+   }
+  }
+ ]
+}

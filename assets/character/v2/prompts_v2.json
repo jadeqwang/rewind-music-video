@@ -1,0 +1,38 @@
+[
+ {
+  "id": "G_edit_b",
+  "model": "openai/gpt-image-2",
+  "prompt": "Edit the first image only slightly. Make the top half of her head larger: a large, tall, broad forehead and a larger upper head and cranium, proportionally bigger top half of the head, exactly like the woman in the second reference photo; long black hair parted in the center framing the wide forehead, pulled back from the temples. Keep everything below the eyebrows identical: same eyes at the same or slightly larger size, same eyebrows, same glasses, same nose, mouth, jaw and chin, same skin, same lighting, same car interior, same jacket, same pose, same framing and composition. Photographic, no text.",
+  "refs": [
+   "assets/character/DRIVER_PLATE_y27.jpg",
+   "refs/jade/PXL_20250908_195405539.MP.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 30.9
+   }
+  ],
+  "file": "cands/G_edit_b.jpg"
+ },
+ {
+  "id": "G_edit_a",
+  "model": "openai/gpt-image-2",
+  "prompt": "Edit the first image only slightly. Make the top half of her head larger: a large, tall, broad forehead and a larger upper head and cranium, proportionally bigger top half of the head, exactly like the woman in the second reference photo; long black hair parted in the center framing the wide forehead, pulled back from the temples. Keep everything below the eyebrows identical: same eyes at the same or slightly larger size, same eyebrows, same glasses, same nose, mouth, jaw and chin, same skin, same lighting, same car interior, same jacket, same pose, same framing and composition. Photographic, no text.",
+  "refs": [
+   "assets/character/DRIVER_PLATE_y27.jpg",
+   "refs/jade/PXL_20250908_195405539.MP.jpg"
+  ],
+  "size": "1536x1024",
+  "quality": "medium",
+  "attempts": [
+   {
+    "ok": true,
+    "secs": 30.9
+   }
+  ],
+  "file": "cands/G_edit_a.jpg"
+ }
+]
