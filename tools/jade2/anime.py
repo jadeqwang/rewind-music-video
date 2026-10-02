@@ -58,8 +58,11 @@ def classify(bgr, matte, face=None, hair=None):
     n_, l_, st_, _ = cv2.connectedComponentsWithStats(hands); keep = np.zeros(n_, bool); keep[1:] = st_[1:, 4] < 0.012 * H * W
     lab[keep[l_] & (hands > 0)] = idx['skin']
     lab[fig & orange & ~face] = idx['orange']
-    lab[fig & blue & ~face] = idx['patch']
-    lab[hair & dark] = idx['hair']; lab[hair & ~dark & (vn < 0.45)] = idx['hair_sheen']
+    pb = (fig & blue & ~face).astype(np.uint8); n_, l_, st_, _ = cv2.connectedComponentsWithStats(pb)   # the patch: compact round blobs only (not blue rim light on hair)
+    for j in range(1, n_):
+        a_ = st_[j, 4]; bw, bh = st_[j, 2], st_[j, 3]
+        if 0.0004 * H * W < a_ < 0.01 * H * W and a_ / max(1, bw * bh) > 0.55 and 0.6 < bw / max(1, bh) < 1.6: lab[l_ == j] = idx['patch']
+    lab[hair & dark] = idx['hair']; lab[hair & ~dark & (vn < 0.45) & ~face] = idx['hair_sheen']
     # face: skin + one shadow tone; eyes/brows dark → eye ink; very bright small → eye white; reddish → mouth
     if face.any():
         fv = vn[face]; t_sh = np.percentile(fv, 22)
@@ -113,6 +116,7 @@ def grow_eyes(lab, names, face, k):
         out[big > 0] = big[big > 0]
     return out
 
+FULL = False
 def run_clip(J, fr=None):
     d = f'{ROOT}/assets/roto/{J}'; meta = json.load(open(d + '/meta.json'))
     cap = cv2.VideoCapture(f"{ROOT}/{meta['src']}"); sfps = cap.get(cv2.CAP_PROP_FPS); frames = []
@@ -124,7 +128,9 @@ def run_clip(J, fr=None):
     os.makedirs(d + '/anime', exist_ok=True); info = {}; cache = {}; names = list(P.keys())
     for i in (range(meta['frames']) if fr is None else range(*fr)):
         f = cv2.resize(frames[min(len(frames) - 1, int(round(i / meta['fps'] * sfps)))], (meta['w'], meta['h']), interpolation=cv2.INTER_CUBIC)
-        mt = a(f'{d}/matte/{i:04d}.png'); fc = a(f'{d}/face/{i:04d}.png'); hr = a(f'{d}/hair/{i:04d}.png')
+        mt = a(f'{d}/matte/{i:04d}.png')
+        if FULL or mt is None or mt.mean() < 0.01: mt = np.ones((meta['h'], meta['w']), np.float32)   # ECU shots (Jeyes): the whole frame is her
+        fc = a(f'{d}/face/{i:04d}.png'); hr = a(f'{d}/hair/{i:04d}.png')
         face = (fc > 0.5) if fc is not None else None; hair = (hr > 0.5) if hr is not None else None
         lab, names = classify(f, mt, face, hair)
         cache[i] = (lab, mt.astype(np.float16), face)
@@ -152,5 +158,6 @@ if __name__ == '__main__':
         out = render(lab, names, mt); cv2.imwrite(a[2], out); print('wrote', a[2])
     else:
         fr = None
+        if '--full' in a: a.remove('--full'); FULL = True
         if '--frames' in a: k = a.index('--frames'); fr = tuple(map(int, a[k + 1].split(':'))); a = a[:k] + a[k + 2:]
         for J in a: run_clip(J, fr)

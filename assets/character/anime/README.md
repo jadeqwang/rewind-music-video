@@ -11,3 +11,7 @@ User decisions: keep 1420 MHz + pale-blue-dot patches + back print; remove Yagi 
   scene shots (J7/J8) use ONE composite reference board image (sheet + head + set plate) as the input. Follow-up edits fixed patch side (1420 MHz
   patch only on the LEFT sleeve; the model kept putting it on the right) and the police car's position (J3). Eye gate / fix: `tools/anime/framemeasure.py`
   (`--fix` = size-only eye enlarge via likeness/warp.py; J6 and J9 were fixed). Clips: assets/clips/CLIPS.md (ANIME JADE section).
+- JACKET v2 (2026-10-02, user): snap-tab ribbed BAND COLLAR + snap EPAULETTES (real costume: Wild Fable mini cropped racer jacket, white); all else unchanged.
+  `CANON_SHEET_v2.jpg` = v2/cands/sheet_0 (gpt-image-2 edit of CANON_SHEET.jpg, faces pasted back from CANON_SHEET, corr 0.97-0.98, offset <=1 px).
+  Board `JACKET_v2_BOARD.jpg`. First frames `shots/<SHOT>_v2(_720).jpg`, board `shots/FIRST_FRAMES_ANIME_v2.jpg`. Tools: tools/anime/jacket_v2.py
+  (edits, log v2/prompts.json), shotpaste.py (16:9 crop + v1 face paste-back), jacket_board.py. Picks: J7m and J8 = cand 1, all others cand 0.

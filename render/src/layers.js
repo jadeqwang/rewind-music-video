@@ -713,7 +713,9 @@ Object.assign(LAYERS, {
     const F = L.front || 'J5', Sd = L.side || 'J1', mf = roto.meta(F), ms = roto.meta(Sd); if (!mf) return;
     const ctF = roto.clipTime(F, env.lt * (L.speed ?? 0.4) + (L.offset ?? 2.0), { loop: 'pingpong' }), fiF = roto.frameIndex(mf, ctF);
     const anchor = (m_, fi, ct, id_) => { const cd = m_.celData && (m_.celData[fi] || m_.celData[String(fi)]); if (cd && cd.nose) return { nose: cd.nose, iod: cd.iod || 160, cd };
-      const pf = roto.perFrame(id_, ct); if (pf.mouth) return { nose: [pf.mouth[0], pf.mouth[1] - pf.mouth[2] * 0.55], iod: pf.mouth[2] * 1.9, cd: null }; return null; };
+      const PF = m_.per_frame || []; let pf = PF[fi] || {};
+      for (let d = 1; !pf.mouth && d < PF.length; d++) pf = (PF[fi - d] && PF[fi - d].mouth) ? PF[fi - d] : (PF[fi + d] || {});   // nearest frame with a mouth anchor
+      if (pf.mouth) return { nose: [pf.mouth[0], pf.mouth[1] - pf.mouth[2] * 0.55], iod: pf.mouth[2] * 1.9, cd: null }; return null; };
     const aF = anchor(mf, fiF, ctF, F); if (!aF) return;
     const iod = aF.iod, nose = aF.nose;
     // place the face: scale so the face is big in frame, centred at (cx, cy)

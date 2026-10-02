@@ -75,3 +75,27 @@ Rejected: `rewind/anime_J2_t2_480-e3b91b3ce2` (480p, $0.41): Seedance re-staged 
 Lip-sync numbers: `analysis/clips_review/anime/<SHOT>_t1.lip.json`. MediaPipe sees anime faces on only ~50% of frames, so the mouth is tracked as a dark-gap ROI (`tools/anime/mouthroi.py` -> `lipsync.py --roi ... --win 0.8 7.2`). Ref audio = `analysis/slices/vocals_anime_<SHOT>_<start>_8.mp3` (start 0.3 s before the first strong vocal).
 Roto: `assets/roto/<SHOT>/` (roto.py, Jade = primary). The roto face layer (MediaPipe) picks up anime faces only on some frames, so eyes/brows should come from the anime canon template, as already planned.
 Anime spend (list prices): Seedance 12 x 720p t1 = $18.50, plus 2 x 480p retakes = $1.03; gpt-image-2 first frames, 33 attempts (timeouts counted as billed) = $2.31. **Total ≈ $21.84.**
+
+# ANIME JADE v2 clips — jacket v2 (snap-tab band collar + snap epaulettes), 2026-10-02
+User: "all look phenomenal" — change ONE thing: collar + shoulders to match her real racer jacket (Wild Fable mini cropped racer, white):
+short stand-up ribbed band collar with a snap tab at the throat, structured shoulder epaulettes with a snap near the collar. Everything else unchanged.
+v1 clips above stay as fallback. Canon: `assets/character/anime/CANON_SHEET_v2.jpg` (board `JACKET_v2_BOARD.jpg`). First frames: `shots/<SHOT>_v2_720.jpg`
+(board `shots/FIRST_FRAMES_ANIME_v2.jpg`; v1 faces pasted back pixel-exact by `tools/anime/shotpaste.py`, corr 0.92-0.995, offset <=1 px; Jeyes_v2 = v1, no jacket in frame).
+Edits: `tools/anime/jacket_v2.py` (log `assets/character/anime/v2/prompts.json`). Specs `assets/gen/specs/anime/<SHOT>_v2.json` = the accepted takes' prompts, only the image swapped (J5_circle now 720p).
+| shot | file | take id | dur | cost | eyes (w/iris/open % vs canon) | lip offset | notes |
+|---|---|---|---|---|---|---|---|
+| J1 | `J1_v2.mp4` | `rewind/anime_J1_v2-9eab1b59d5` | 8.04 s | $1.85 | 3.6 / -12.8 / -9.5, 8/8 | **+0.58 s** (r 0.55) | Same as v1, LHD; collar tab + epaulette stay through. |
+| J2 | `J2_v2.mp4` | `rewind/anime_J2_v2-c0d4f67aee` | 4.04 s | $0.92 | 0.0 / -8.0 / -21.7, 6/8 | n/a | Unease, brows knit; collar holds. |
+| J3 | `J3_v2.mp4` | `rewind/anime_J3_v2-46fa27d201` | 6.04 s | $1.39 | -4.2 / -2.4 / -3.7, 8/8 | n/a | Hands the card out of the window; card gains a printed license design (photo + lines) by ~3.5 s, and a small striped tag appears on her right shoulder when the arm extends; natural blink at 3.6 s. |
+| J5 | `J5_v2.mp4` | `rewind/anime_J5_v2-a20897b503` | 7.04 s | $1.62 | 1.0 / 17.2 / -0.4, 8/8 | n/a | Finger rises, arc past the face, hand drops; square body. |
+| J5_circle | `J5_circle_v2.mp4` | `rewind/anime_J5_circle_v2-492153ff4b` | 6.04 s | $1.39 | -1.3 / 13.7 / -4.0, 8/8 | n/a | Now 720p. Finger circles in front of the chest. |
+| J5b | `J5b_v2.mp4` | `rewind/anime_J5b_v2-5cdd4b4073` (t2) | 7.04 s | $1.62 | -0.7 / 8.4 / -6.4, 8/8 | n/a | Hand sweeps back, hair streams, pure void. t1 `-3bf3d13409` rejected: added neon light tubes to the void + sparkle trail. |
+| J6 | `J6_v2.mp4` | `rewind/anime_J6_v2-4f28d682fc` | 8.04 s | $1.85 | -0.2 / 7.0 / -6.2, 8/8 | **-0.29 s** (r 0.58) | Through the windshield, LHD, determined, sirens in mirror; bigger mouth movement than v1. |
+| J7w | `J7w_v2.mp4` | `rewind/anime_J7w_v2-c05d1df4fd` | 7.04 s | $1.62 | no face (small) | n/a | Runs L→R, beams sweep; collar too small to read at this scale. |
+| J7m | `J7m_v2.mp4` | `rewind/anime_J7m_v2-696a9ada32` | 6.04 s | $1.39 | -12.2 / -36.7 / -70.7, 5/8 (profile) | n/a | Looks back over her left shoulder, then runs away; low gate = profile/back frames; front frames OK. |
+| J8 | `J8_v2.mp4` | `rewind/anime_J8_v2-dc7e968f15` | 8.04 s | $1.85 | -1.1 / 0.7 / -9.8, 8/8 | **+0.75 s** (r 0.51; low confidence, push-in moves the ROI) | Seated, sings to camera, push-in. |
+| J8b | `J8b_v2.mp4` | `rewind/anime_J8b_v2-da5a716ee7` (t2) | 6.04 s | $1.39 | -7.6 / -5.1 / -15.7, 5/8 | n/a | Back to camera → turns to face camera; 1420 patch correctly on her LEFT. t1 `-85e86cb162` rejected (patch flipped to her right sleeve after the turn). |
+| J9 | `J9_v2.mp4` | `rewind/anime_J9_v2-fd2c203154` (t2) | 8.04 s | $1.85 | 11.7 / -5.8 / -13.0, 8/8 | n/a | Hair whips, sirens, steady. t1 `-6efbeebe0e` rejected (invented brown stitched patches on her right sleeve). |
+Lip json: `analysis/clips_review/anime/<SHOT>_v2.lip.json` (mouthroi frame 24, `--win 0.8 7.2 --maxlag 0.8`, vocals stem `analysis/stems/vocals.wav`). Roto: `assets/roto/<SHOT>_v2/` (`roto.py <SHOT> --src assets/clips/<SHOT>_v2.mp4 --out <SHOT>_v2`, so the per-shot config applies).
+Jeyes: not re-animated (ECU of the eyes, no jacket visible) — keep `Jeyes.mp4`.
+v2 spend (list prices): Seedance 12 + 3 retakes at 720p = $23.58; gpt-image-2 25 edits / 31 attempts = $2.17. **Total ≈ $25.75.**

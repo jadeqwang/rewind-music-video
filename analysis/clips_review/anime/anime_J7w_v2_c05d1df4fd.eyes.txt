@@ -1,0 +1,8 @@
+f0: no face
+f24: no face
+f48: no face
+f72: no face
+f96: no face
+f120: no face
+f144: no face
+f168: no face

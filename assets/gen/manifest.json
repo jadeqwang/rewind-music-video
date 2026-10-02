@@ -2347,8 +2347,797 @@
     }
    ],
    "collected": 1790947542.8313587
+  },
+  "rewind/anime_J1_v2-9eab1b59d5": {
+   "id": "9eab1b59d5",
+   "job": "rewind/anime_J1_v2-9eab1b59d5",
+   "tag": "anime_J1_v2",
+   "model": "bytedance/seedance-2.5",
+   "notes": "anime Jade J1 v2 (jacket v2: snap-tab band collar + epaulettes); same prompt as J1_t1",
+   "spec_file": "assets/gen/specs/anime/J1_v2.json",
+   "input": {
+    "duration": 8,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Night, she drives the car, seen from the passenger-side dashboard; both hands on the wheel, eyes on the road ahead, calm and focused. Warm orange sodium streetlight bands slide across her and the cabin as the car moves; city lights drift past behind her. Camera stays locked to the car. She sings the vocal in the reference audio: her lips move in exact sync with each sung word, small natural breaths. Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/anime/shots/J1_v2_720.jpg",
+    "reference_audios": [
+     "file:analysis/slices/vocals_anime_J1_13.85_8.mp3"
+    ]
+   },
+   "est_usd": 1.8496,
+   "est_basis": "8s x 0.2312 (@720p non-video input (per second))",
+   "state": "done",
+   "bucket": 29849212,
+   "submitted": 1790952631.433445,
+   "bytes": 547859,
+   "started": 1790952762.603,
+   "state_relay": "done",
+   "gen_secs": 350.2,
+   "finished": 1790953112.81,
+   "latency_secs": 481.4,
+   "files": [
+    "assets/gen/anime_J1_v2_9eab1b59d5.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 8.042,
+     "bytes": 7930588,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "193"
+      }
+     ]
+    }
+   ],
+   "collected": 1790953136.7921526
+  },
+  "rewind/anime_J2_v2-c0d4f67aee": {
+   "id": "c0d4f67aee",
+   "job": "rewind/anime_J2_v2-c0d4f67aee",
+   "tag": "anime_J2_v2",
+   "model": "bytedance/seedance-2.5",
+   "notes": "anime Jade J2 v2 (jacket v2: snap-tab band collar + epaulettes); same prompt as J2_t1",
+   "spec_file": "assets/gen/specs/anime/J2_v2.json",
+   "input": {
+    "duration": 4,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Night, she drives; while the car moves, her eyes flick up to the rear-view mirror and hold there with faint unease, then a tiny swallow; her head barely moves. Warm streetlight bands slide across the cabin. Camera locked to the car. Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/anime/shots/J2_v2_720.jpg"
+   },
+   "est_usd": 0.9248,
+   "est_basis": "4s x 0.2312 (@720p non-video input (per second))",
+   "state": "done",
+   "bucket": 29849212,
+   "submitted": 1790952631.931396,
+   "bytes": 301276,
+   "started": 1790952762.522,
+   "state_relay": "done",
+   "gen_secs": 264.1,
+   "finished": 1790953026.581,
+   "latency_secs": 394.6,
+   "files": [
+    "assets/gen/anime_J2_v2_c0d4f67aee.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 4.042,
+     "bytes": 4249123,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "97"
+      }
+     ]
+    }
+   ],
+   "collected": 1790953087.6737664
+  },
+  "rewind/anime_J3_v2-46fa27d201": {
+   "id": "46fa27d201",
+   "job": "rewind/anime_J3_v2-46fa27d201",
+   "tag": "anime_J3_v2",
+   "model": "bytedance/seedance-2.5",
+   "notes": "anime Jade J3 v2 (jacket v2: snap-tab band collar + epaulettes); same prompt as J3_t1",
+   "spec_file": "assets/gen/specs/anime/J3_v2.json",
+   "input": {
+    "duration": 6,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Night, the car is stopped at the roadside under pulsing red and blue police lights from behind. She slowly reaches out and holds her driver's license card up at the open window toward someone standing just off-frame right, her arm steady, her face calm and compliant, eyes looking up at him. The red and blue light pulses rhythmically over her hair and the car. Locked-off camera. Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/anime/shots/J3_v2_720.jpg"
+   },
+   "est_usd": 1.3872,
+   "est_basis": "6s x 0.2312 (@720p non-video input (per second))",
+   "state": "done",
+   "bucket": 29849213,
+   "submitted": 1790952632.388879,
+   "bytes": 265448,
+   "started": 1790952818.89,
+   "state_relay": "done",
+   "gen_secs": 151.4,
+   "finished": 1790952970.283,
+   "latency_secs": 337.9,
+   "files": [
+    "assets/gen/anime_J3_v2_46fa27d201.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 6.042,
+     "bytes": 6060042,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "145"
+      }
+     ]
+    }
+   ],
+   "collected": 1790953034.6014671
+  },
+  "rewind/anime_J5_v2-a20897b503": {
+   "id": "a20897b503",
+   "job": "rewind/anime_J5_v2-a20897b503",
+   "tag": "anime_J5_v2",
+   "model": "bytedance/seedance-2.5",
+   "notes": "anime Jade J5 v2 (jacket v2: snap-tab band collar + epaulettes); same prompt as J5_t1",
+   "spec_file": "assets/gen/specs/anime/J5_v2.json",
+   "input": {
+    "duration": 7,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Centre-locked straight-on performance shot in a dark void with red and blue siren rim light pulsing. She slowly raises her right hand in front of her chest and draws one big slow counter-clockwise circle in the air with her index finger, like rewinding time, then lowers it; her body stays square to the camera, eyes to the lens, lips slightly parted. Locked-off camera. Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/anime/shots/J5_v2_720.jpg"
+   },
+   "est_usd": 1.6184,
+   "est_basis": "7s x 0.2312 (@720p non-video input (per second))",
+   "state": "done",
+   "bucket": 29849213,
+   "submitted": 1790952632.8533924,
+   "bytes": 176766,
+   "started": 1790952818.846,
+   "state_relay": "done",
+   "gen_secs": 151.4,
+   "finished": 1790952970.294,
+   "latency_secs": 337.4,
+   "files": [
+    "assets/gen/anime_J5_v2_a20897b503.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 7.042,
+     "bytes": 6859645,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "169"
+      }
+     ]
+    }
+   ],
+   "collected": 1790953035.670675
+  },
+  "rewind/anime_J5b_v2-3bf3d13409": {
+   "id": "3bf3d13409",
+   "job": "rewind/anime_J5b_v2-3bf3d13409",
+   "tag": "anime_J5b_v2",
+   "model": "bytedance/seedance-2.5",
+   "notes": "anime Jade J5b v2 (jacket v2: snap-tab band collar + epaulettes); same prompt as J5b_t1",
+   "spec_file": "assets/gen/specs/anime/J5b_v2.json",
+   "input": {
+    "duration": 7,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Centre-locked straight-on performance shot in a dark void with blue and red siren rim light pulsing. Her raised open hand sweeps slowly backwards past her shoulder, as if scrubbing time back, while her long hair drifts and flows sideways in a slow wind; body square to the camera, eyes to the lens. Locked-off camera. Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/anime/shots/J5b_v2_720.jpg"
+   },
+   "est_usd": 1.6184,
+   "est_basis": "7s x 0.2312 (@720p non-video input (per second))",
+   "state": "done",
+   "bucket": 29849214,
+   "submitted": 1790952633.2879064,
+   "bytes": 228429,
+   "started": 1790952877.037,
+   "state_relay": "done",
+   "gen_secs": 163.0,
+   "finished": 1790953040.037,
+   "latency_secs": 406.7,
+   "files": [
+    "assets/gen/anime_J5b_v2_3bf3d13409.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 7.042,
+     "bytes": 7162160,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "169"
+      }
+     ]
+    }
+   ],
+   "collected": 1790953088.4636939
+  },
+  "rewind/anime_J6_v2-4f28d682fc": {
+   "id": "4f28d682fc",
+   "job": "rewind/anime_J6_v2-4f28d682fc",
+   "tag": "anime_J6_v2",
+   "model": "bytedance/seedance-2.5",
+   "notes": "anime Jade J6 v2 (jacket v2: snap-tab band collar + epaulettes); same prompt as J6_t1",
+   "spec_file": "assets/gen/specs/anime/J6_v2.json",
+   "input": {
+    "duration": 8,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Night, she drives, seen through the windshield from the front, both hands firm on the wheel, determined steady gaze down the road; red and blue police light pulses in the rear-view mirror; city lights stream past. Camera locked to the car. She sings the vocal in the reference audio: her lips move in exact sync with each sung word, small natural breaths. Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/anime/shots/J6_v2_720.jpg",
+    "reference_audios": [
+     "file:analysis/slices/vocals_anime_J6_73.2_8.mp3"
+    ]
+   },
+   "est_usd": 1.8496,
+   "est_basis": "8s x 0.2312 (@720p non-video input (per second))",
+   "state": "done",
+   "bucket": 29849214,
+   "submitted": 1790952633.8406363,
+   "bytes": 547292,
+   "started": 1790952877.039,
+   "state_relay": "done",
+   "gen_secs": 162.2,
+   "finished": 1790953039.224,
+   "latency_secs": 405.4,
+   "files": [
+    "assets/gen/anime_J6_v2_4f28d682fc.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 8.042,
+     "bytes": 6445328,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "193"
+      }
+     ]
+    }
+   ],
+   "collected": 1790953089.178944
+  },
+  "rewind/anime_J7w_v2-c05d1df4fd": {
+   "id": "c05d1df4fd",
+   "job": "rewind/anime_J7w_v2-c05d1df4fd",
+   "tag": "anime_J7w_v2",
+   "model": "bytedance/seedance-2.5",
+   "notes": "anime Jade J7w v2 (jacket v2: snap-tab band collar + epaulettes); same prompt as J7w_t1",
+   "spec_file": "assets/gen/specs/anime/J7w_v2.json",
+   "input": {
+    "duration": 7,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Wide night shot: she sprints through the field of tall grass from left to right, legs and arms pumping, hair streaming; the camera pans slowly to follow her. Two hard white flashlight beams sweep across the grass from behind her, and the grass whips in the wind. Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/anime/shots/J7w_v2_720.jpg"
+   },
+   "est_usd": 1.6184,
+   "est_basis": "7s x 0.2312 (@720p non-video input (per second))",
+   "state": "done",
+   "bucket": 29849215,
+   "submitted": 1790952634.2925117,
+   "bytes": 269114,
+   "state_relay": "done",
+   "gen_secs": 152.0,
+   "started": 1790952947.094,
+   "finished": 1790953099.125,
+   "latency_secs": 464.8,
+   "files": [
+    "assets/gen/anime_J7w_v2_c05d1df4fd.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 7.042,
+     "bytes": 12941894,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "169"
+      }
+     ]
+    }
+   ],
+   "collected": 1790953149.106882
+  },
+  "rewind/anime_J7m_v2-696a9ada32": {
+   "id": "696a9ada32",
+   "job": "rewind/anime_J7m_v2-696a9ada32",
+   "tag": "anime_J7m_v2",
+   "model": "bytedance/seedance-2.5",
+   "notes": "anime Jade J7m v2 (jacket v2: snap-tab band collar + epaulettes); same prompt as J7m_t1",
+   "spec_file": "assets/gen/specs/anime/J7m_v2.json",
+   "input": {
+    "duration": 6,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Medium tracking shot at night: she runs away through the tall grass, glances back over her left shoulder toward the camera with wide alert eyes, then turns forward again and keeps running; hair flying; white flashlight beams flare across the grass behind her. The camera tracks with her. Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/anime/shots/J7m_v2_720.jpg"
+   },
+   "est_usd": 1.3872,
+   "est_basis": "6s x 0.2312 (@720p non-video input (per second))",
+   "state": "done",
+   "bucket": 29849215,
+   "submitted": 1790952634.774743,
+   "bytes": 261955,
+   "state_relay": "done",
+   "gen_secs": 163.5,
+   "started": 1790952947.08,
+   "finished": 1790953110.625,
+   "latency_secs": 475.9,
+   "files": [
+    "assets/gen/anime_J7m_v2_696a9ada32.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 6.042,
+     "bytes": 8119356,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "145"
+      }
+     ]
+    }
+   ],
+   "collected": 1790953149.7676616
+  },
+  "rewind/anime_J8_v2-dc7e968f15": {
+   "id": "dc7e968f15",
+   "job": "rewind/anime_J8_v2-dc7e968f15",
+   "tag": "anime_J8_v2",
+   "model": "bytedance/seedance-2.5",
+   "notes": "anime Jade J8 v2 (jacket v2: snap-tab band collar + epaulettes); same prompt as J8_t1",
+   "spec_file": "assets/gen/specs/anime/J8_v2.json",
+   "input": {
+    "duration": 8,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Dark empty seminar room: she sits alone on the single chair, hands resting on her knees, and sings softly toward the camera, eyes softly lowered, very little body motion. The projector beam stays steady; faint red and blue glow from the window. Slow, gentle push-in. She sings the vocal in the reference audio: her lips move in exact sync with each sung word, small natural breaths. Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/anime/shots/J8_v2_720.jpg",
+    "reference_audios": [
+     "file:analysis/slices/vocals_anime_J8_147.47_8.mp3"
+    ]
+   },
+   "est_usd": 1.8496,
+   "est_basis": "8s x 0.2312 (@720p non-video input (per second))",
+   "state": "done",
+   "bucket": 29849216,
+   "submitted": 1790952635.3070145,
+   "bytes": 481919,
+   "started": 1790953008.346,
+   "state_relay": "done",
+   "gen_secs": 162.5,
+   "finished": 1790953170.857,
+   "latency_secs": 535.5,
+   "files": [
+    "assets/gen/anime_J8_v2_dc7e968f15.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 8.042,
+     "bytes": 6527216,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "193"
+      }
+     ]
+    }
+   ],
+   "collected": 1790953218.6062095
+  },
+  "rewind/anime_J8b_v2-85e86cb162": {
+   "id": "85e86cb162",
+   "job": "rewind/anime_J8b_v2-85e86cb162",
+   "tag": "anime_J8b_v2",
+   "model": "bytedance/seedance-2.5",
+   "notes": "anime Jade J8b v2 (jacket v2: snap-tab band collar + epaulettes); same prompt as J8b_t1",
+   "spec_file": "assets/gen/specs/anime/J8b_v2.json",
+   "input": {
+    "duration": 6,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Dark seminar room, seen from behind her chair: she slowly turns around in the chair, head and shoulders rotating together over her right shoulder, to look straight back at the camera with wide eyes. The projector beam stays steady. Locked-off camera. Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/anime/shots/J8b_v2_720.jpg"
+   },
+   "est_usd": 1.3872,
+   "est_basis": "6s x 0.2312 (@720p non-video input (per second))",
+   "state": "done",
+   "bucket": 29849216,
+   "submitted": 1790952635.7647161,
+   "bytes": 206934,
+   "started": 1790953008.461,
+   "state_relay": "done",
+   "gen_secs": 416.5,
+   "finished": 1790953424.937,
+   "latency_secs": 789.2,
+   "files": [
+    "assets/gen/anime_J8b_v2_85e86cb162.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 6.042,
+     "bytes": 3788641,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "145"
+      }
+     ]
+    }
+   ],
+   "collected": 1790953477.865835
+  },
+  "rewind/anime_J9_v2-6efbeebe0e": {
+   "id": "6efbeebe0e",
+   "job": "rewind/anime_J9_v2-6efbeebe0e",
+   "tag": "anime_J9_v2",
+   "model": "bytedance/seedance-2.5",
+   "notes": "anime Jade J9 v2 (jacket v2: snap-tab band collar + epaulettes); same prompt as J9_t1",
+   "spec_file": "assets/gen/specs/anime/J9_v2.json",
+   "input": {
+    "duration": 8,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Night, final-act energy: she drives fast and steady, both hands firm on the wheel, eyes locked on the road, not slowing down. Wind from the open window whips her long hair back and sideways; orange sodium streetlights strobe across her and the cabin in a fast rhythm; red and blue police lights blaze in the rear-view mirror. Camera locked to the car. Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/anime/shots/J9_v2_720.jpg"
+   },
+   "est_usd": 1.8496,
+   "est_basis": "8s x 0.2312 (@720p non-video input (per second))",
+   "state": "done",
+   "bucket": 29849217,
+   "submitted": 1790952636.275699,
+   "bytes": 308211,
+   "started": 1790953063.582,
+   "state_relay": "done",
+   "gen_secs": 191.1,
+   "finished": 1790953254.72,
+   "latency_secs": 618.4,
+   "files": [
+    "assets/gen/anime_J9_v2_6efbeebe0e.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 8.042,
+     "bytes": 10563805,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "193"
+      }
+     ]
+    }
+   ],
+   "collected": 1790953286.5664716
+  },
+  "rewind/anime_J5_circle_v2-492153ff4b": {
+   "id": "492153ff4b",
+   "job": "rewind/anime_J5_circle_v2-492153ff4b",
+   "tag": "anime_J5_circle_v2",
+   "model": "bytedance/seedance-2.5",
+   "notes": "anime Jade J5_circle v2 (jacket v2: snap-tab band collar + epaulettes); same prompt as J5_t2_480",
+   "spec_file": "assets/gen/specs/anime/J5_circle_v2.json",
+   "input": {
+    "duration": 6,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Centre-locked straight-on performance shot in a dark void with red and blue siren rim light pulsing. She raises her right hand in front of her chest and, with her index finger, slowly draws TWO complete closed circles in the air in front of her chest, turning counter-clockwise like rewinding a tape reel, a smooth continuous circular motion; her body stays square to the camera, eyes to the lens, lips slightly parted. Locked-off camera. Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/anime/shots/J5_v2_720.jpg"
+   },
+   "est_usd": 1.3872,
+   "est_basis": "6s x 0.2312 (@720p non-video input (per second))",
+   "state": "done",
+   "bucket": 29849217,
+   "submitted": 1790952636.8063462,
+   "bytes": 176834,
+   "started": 1790953063.564,
+   "state_relay": "done",
+   "gen_secs": 149.9,
+   "finished": 1790953213.474,
+   "latency_secs": 576.7,
+   "files": [
+    "assets/gen/anime_J5_circle_v2_492153ff4b.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 6.042,
+     "bytes": 5565034,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "145"
+      }
+     ]
+    }
+   ],
+   "collected": 1790953220.4607134
+  },
+  "rewind/anime_J9_v2-fd2c203154": {
+   "id": "fd2c203154",
+   "job": "rewind/anime_J9_v2-fd2c203154",
+   "tag": "anime_J9_v2",
+   "model": "bytedance/seedance-2.5",
+   "notes": "anime Jade J9 v2 (jacket v2: snap-tab band collar + epaulettes); same prompt as J9_t1",
+   "spec_file": "assets/gen/specs/anime/J9_v2.json",
+   "input": {
+    "duration": 8,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Night, final-act energy: she drives fast and steady, both hands firm on the wheel, eyes locked on the road, not slowing down. Wind from the open window whips her long hair back and sideways; orange sodium streetlights strobe across her and the cabin in a fast rhythm; red and blue police lights blaze in the rear-view mirror. Camera locked to the car. Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/anime/shots/J9_v2_720.jpg"
+   },
+   "est_usd": 1.8496,
+   "est_basis": "8s x 0.2312 (@720p non-video input (per second))",
+   "state": "done",
+   "bucket": 29849229,
+   "submitted": 1790953658.4876108,
+   "bytes": 308211,
+   "started": 1790953778.523,
+   "state_relay": "done",
+   "gen_secs": 172.6,
+   "finished": 1790953951.136,
+   "latency_secs": 292.6,
+   "files": [
+    "assets/gen/anime_J9_v2_fd2c203154.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 8.042,
+     "bytes": 9483618,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "193"
+      }
+     ]
+    }
+   ],
+   "collected": 1790953989.3757427
+  },
+  "rewind/anime_J8b_v2-da5a716ee7": {
+   "id": "da5a716ee7",
+   "job": "rewind/anime_J8b_v2-da5a716ee7",
+   "tag": "anime_J8b_v2",
+   "model": "bytedance/seedance-2.5",
+   "notes": "anime Jade J8b v2 (jacket v2: snap-tab band collar + epaulettes); same prompt as J8b_t1",
+   "spec_file": "assets/gen/specs/anime/J8b_v2.json",
+   "input": {
+    "duration": 6,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Dark seminar room, seen from behind her chair: she slowly turns around in the chair, head and shoulders rotating together over her right shoulder, to look straight back at the camera with wide eyes. The projector beam stays steady. Locked-off camera. Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/anime/shots/J8b_v2_720.jpg"
+   },
+   "est_usd": 1.3872,
+   "est_basis": "6s x 0.2312 (@720p non-video input (per second))",
+   "state": "done",
+   "bucket": 29849229,
+   "submitted": 1790953658.943435,
+   "bytes": 206934,
+   "started": 1790953778.531,
+   "state_relay": "done",
+   "gen_secs": 150.7,
+   "finished": 1790953929.272,
+   "latency_secs": 270.3,
+   "files": [
+    "assets/gen/anime_J8b_v2_da5a716ee7.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 6.042,
+     "bytes": 4033472,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "145"
+      }
+     ]
+    }
+   ],
+   "collected": 1790953990.4550006
+  },
+  "rewind/anime_J5b_v2-5cdd4b4073": {
+   "id": "5cdd4b4073",
+   "job": "rewind/anime_J5b_v2-5cdd4b4073",
+   "tag": "anime_J5b_v2",
+   "model": "bytedance/seedance-2.5",
+   "notes": "anime Jade J5b v2 (jacket v2: snap-tab band collar + epaulettes); same prompt as J5b_t1",
+   "spec_file": "assets/gen/specs/anime/J5b_v2.json",
+   "input": {
+    "duration": 7,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Centre-locked straight-on performance shot in a dark void with blue and red siren rim light pulsing. Her raised open hand sweeps slowly backwards past her shoulder, as if scrubbing time back, while her long hair drifts and flows sideways in a slow wind; body square to the camera, eyes to the lens. Locked-off camera. Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/anime/shots/J5b_v2_720.jpg"
+   },
+   "est_usd": 1.6184,
+   "est_basis": "7s x 0.2312 (@720p non-video input (per second))",
+   "state": "done",
+   "bucket": 29849230,
+   "submitted": 1790953659.417874,
+   "bytes": 228429,
+   "started": 1790953844.0,
+   "state_relay": "done",
+   "gen_secs": 349.2,
+   "finished": 1790954193.167,
+   "latency_secs": 533.7,
+   "files": [
+    "assets/gen/anime_J5b_v2_5cdd4b4073.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 7.042,
+     "bytes": 6739830,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "169"
+      }
+     ]
+    }
+   ],
+   "collected": 1790954244.94089
   }
  },
- "total_est_usd": 70.4396,
- "total_est_usd_done": 57.4924
+ "total_est_usd": 94.022,
+ "total_est_usd_done": 81.0748
 }
