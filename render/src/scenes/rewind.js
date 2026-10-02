@@ -37,9 +37,9 @@ export async function draw(ctx, lt, t, shot, { T, rewindOf }) {
   const ts = await rewindOf(ctx, p.source ?? null, from, to, s.progress, { echo: s.moving ? 3 : 0, echoDt: 0.07 * s.speed, echoAlpha: 0.5 });
   rewindHud(ty, { speed: s.speed, tc: ts, alpha: 1 });
   // a thin progress rail along the bottom: the scrub position over the rewound span
-  ty.fillStyle = 'rgba(61,242,230,0.25)'; ty.fillRect(120, 1046, DW - 240, 2);
-  ty.fillStyle = PAL.cyan; ty.fillRect(120 + (DW - 240) * (1 - s.progress), 1040, 3, 14);
-  if (p.lines) subtitle(ty, [].concat(...p.lines.map(i => T.lineWords(i))), t, { y: 990, size: 28, lit: PAL.cyan, color: PAL.cyan });
+  ty.fillStyle = 'rgba(61,242,230,0.35)'; ty.fillRect(90, 1052, DW - 180, 4);
+  ty.fillStyle = PAL.cyan; ty.fillRect(90 + (DW - 180) * (1 - s.progress) - 4, 1040, 8, 28);
+  if (p.lines) subtitle(ty, [].concat(...p.lines.map(i => T.lineWords(i))), t, { y: 1000, lit: PAL.cyan, color: PAL.cyan });
   const P = ctx.post;
   // cyan positive grade throughout; true negative on the freeze-break and on every speed change (2 frames)
   const f = Math.floor(lt * 30 + 1e-3), sc = speedChangeFrames(dur, p);

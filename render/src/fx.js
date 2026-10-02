@@ -10,6 +10,17 @@ export function sirens(g, T, t, o = {}) {
   const red = (b.i & 1) === 0, col = red ? PAL.red : PAL.blue;
   const k = amt * Math.exp(-b.phase * (o.decay ?? 2.2)) * (o.peak ?? 0.55);
   g.save(); g.globalCompositeOperation = 'lighter';
+  if (o.side === 'pair') {
+    // both halves always lit (red left, blue right) so silhouettes always sit against light; the beat swaps which is hot
+    const base = o.base ?? 0.4, hot = (o.peak ?? 0.55) * amt;
+    const kl = (red ? k / (o.peak ?? 0.55) * hot : 0) + base * amt, kr = (red ? 0 : k / (o.peak ?? 0.55) * hot) + base * amt;
+    for (const [c, kk, x0, x1] of [[PAL.red, kl, 0, DW * 0.62], [PAL.blue, kr, DW, DW * 0.38]]) {
+      const gr = g.createLinearGradient(x0, 0, x1, 0);
+      gr.addColorStop(0, rgba(c, kk)); gr.addColorStop(0.6, rgba(c, kk * 0.8)); gr.addColorStop(1, rgba(c, 0));
+      g.fillStyle = gr; g.fillRect(0, 0, DW, DH);
+    }
+    g.restore(); return { color: col, k, red, kl, kr };
+  }
   if (o.side === 'full') { g.fillStyle = rgba(col, k); g.fillRect(0, 0, DW, DH); }
   else {
     const left = red, x0 = left ? 0 : DW, x1 = DW / 2;
@@ -63,6 +74,15 @@ export function rain(g, seed, t, o = {}) {
     g.moveTo(x, y); g.lineTo(x - l * 0.12, y + l);
   }
   g.stroke(); g.restore();
+}
+
+// headlight bloom: a soft bone/sodium glow behind subjects (their own car's headlights raking the scene)
+export function headlights(g, x, y, r, amount = 0.5, col = PAL.bone) {
+  if (amount <= 0) return;
+  g.save(); g.globalCompositeOperation = 'lighter';
+  const gr = g.createRadialGradient(x, y, 0, x, y, r);
+  gr.addColorStop(0, rgba(col, amount)); gr.addColorStop(0.35, rgba(col, amount * 0.45)); gr.addColorStop(1, rgba(col, 0));
+  g.fillStyle = gr; g.fillRect(0, 0, DW, DH); g.restore();
 }
 
 export function fillInk(g, col = PAL.ink) { g.save(); g.setTransform(1, 0, 0, 1, 0, 0); g.globalCompositeOperation = 'source-over'; g.fillStyle = col; g.fillRect(0, 0, g.canvas.width, g.canvas.height); g.restore(); }

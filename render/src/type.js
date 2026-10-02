@@ -3,6 +3,8 @@
 // Modes: page() (a) · slam() (b) · subtitle() (c) · redact() (d) · revisions() (e)
 import { DW, DH, PAL, clamp, lerp, inv, smooth, easeOutCubic, easeOutExpo, easeOutBack, hash, hsig, rgba, fin } from './core.js';
 
+const LATIN = 'U+0000-00D6,U+00D8-00FF,U+0131,U+0152-0153,U+02C6,U+02DA,U+02DC,U+2000-2015,U+2017-206F,U+20AC,U+2122';
+const SYMS = 'U+00D7,U+2016,U+2190-27BF';
 export const FONTS = [
   ['CMU', 'fonts/cmu-serif-500-italic.ttf', { style: 'italic', weight: '500' }],
   ['CMU', 'fonts/cmu-serif-700-italic.ttf', { style: 'italic', weight: '700' }],
@@ -11,14 +13,17 @@ export const FONTS = [
   ['BigShoulders', 'fonts/big-shoulders-display-latin-800-normal.woff2', { weight: '800' }],
   ['BigShoulders', 'fonts/big-shoulders-display-latin-900-normal.woff2', { weight: '900' }],
   ['Archivo', 'fonts/archivo-latin-wdth-normal.woff2', { weight: '100 900', stretch: '62% 125%' }],
-  ['JBM', 'fonts/jetbrains-mono-latin-400-normal.woff2', { weight: '400' }],
-  ['JBM', 'fonts/jetbrains-mono-latin-700-normal.woff2', { weight: '700' }],
+  ['JBM', 'fonts/jetbrains-mono-latin-400-normal.woff2', { weight: '400', unicodeRange: LATIN }],
+  ['JBM', 'fonts/jetbrains-mono-latin-700-normal.woff2', { weight: '700', unicodeRange: LATIN }],
+  // symbols the JetBrains latin subset lacks (✗ ◀ ▶ − ∎ ∴ ‖ × █ box/arrows): DejaVu Sans Mono subset, same family
+  ['JBM', 'fonts/dejavu-sans-mono-symbols.ttf', { weight: '400', unicodeRange: SYMS }],
+  ['JBM', 'fonts/dejavu-sans-mono-Bold-symbols.ttf', { weight: '700', unicodeRange: SYMS }],
 ];
 export async function loadFonts() {
   await Promise.all(FONTS.map(async ([fam, u, d]) => { const f = new FontFace(fam, `url(${u})`, d); await f.load(); document.fonts.add(f); }));
   await document.fonts.ready;
   for (const s of ['italic 500 40px CMU', 'italic 700 40px CMU', '500 40px CMU', '40px Anton', '900 40px BigShoulders', '800 40px Archivo', '400 20px JBM', '700 20px JBM'])
-    await document.fonts.load(s, 'Aa1');
+    await document.fonts.load(s, 'Aa1✗◀−∎');
 }
 export const F = {
   cmu: (px, w = 500) => `italic ${w} ${px}px CMU`, cmuR: px => `500 ${px}px CMU`,
@@ -29,55 +34,56 @@ export function setFont(g, f, spacing = 0) { g.font = f; try { g.letterSpacing =
 
 const clean = w => String(w).replace(/^[\s"“]+|[\s"”]+$/g, '');
 
-// (a) PAGE — big Computer Modern italic, word-by-word, in the left two-thirds, set like a dissertation page.
-// words: [{w,start,end, note?: '1'}]; o: {x, y, w (measure), size, lead, t, color, header, folio, footnotes:[{mark,text,at}], fadeOut}
+// (a) PAGE — big Computer Modern italic (120–170 px), word by word, in the left two-thirds, set like a dissertation
+// page. The sung word is bone-white, past words dim. Paginates: maxLines lines per page; the page holding the latest
+// sung word is shown (the folio advances with it).
+// words: [{w,start,end, note?: '1'}]; o: {x, y, w (measure), size, lead, maxLines, color, header, folio, footnotes:[{mark,text,at}]}
 export function page(g, words, t, o = {}) {
-  const x0 = o.x ?? 200, y0 = o.y ?? 360, measure = o.w ?? 1060, size = o.size ?? 92, lead = o.lead ?? 1.18;
-  const col = o.color || PAL.bone;
+  const x0 = o.x ?? 150, y0 = o.y ?? 400, measure = o.w ?? 1150, size = o.size ?? 140, lead = o.lead ?? 1.12;
+  const col = o.color || PAL.bone, maxLines = o.maxLines ?? 3;
   g.save(); g.textBaseline = 'alphabetic';
-  // page furniture: running header, hairline rule, folio
-  if (o.header) {
-    const a = o.furniture ?? 1;
-    setFont(g, F.cmu(22)); g.fillStyle = rgba(PAL.boneDim, 0.9 * a);
-    g.fillText(o.header, x0, 132);
-    if (o.folio) { setFont(g, F.cmuR(22)); const fw = g.measureText(o.folio).width; g.fillText(o.folio, x0 + measure - fw, 132); }
-    g.fillStyle = rgba(PAL.boneDim, 0.55 * a); g.fillRect(x0, 148, measure, 1);
-  }
   setFont(g, F.cmu(size));
   const space = g.measureText(' ').width;
-  let x = x0, y = y0;
+  let x = x0, line = 0;
   const placed = [];
   for (const w of words) {
     const s = clean(w.w), ww = g.measureText(s).width;
-    if (x > x0 && x + ww > x0 + measure) { x = x0; y += size * lead; }
-    placed.push({ w, s, x, y, ww }); x += ww + space * 1.05;
+    if (x > x0 && x + ww > x0 + measure) { x = x0; line++; }
+    placed.push({ w, s, x, line, ww, pg: Math.floor(line / maxLines), y: y0 + (line % maxLines) * size * lead }); x += ww + space * 1.05;
+  }
+  let cur = 0; for (const p of placed) if (p.w.start <= t + 0.04) cur = p.pg;
+  if (o.page != null) cur = o.page;
+  const a0 = o.furniture ?? 1;
+  if (o.header) {
+    setFont(g, F.cmu(34)); g.fillStyle = rgba(PAL.boneDim, a0);
+    g.fillText(o.header, x0, 120);
+    if (o.folio) { const fo = String(/^\d+$/.test(o.folio) ? +o.folio + cur : o.folio); setFont(g, F.cmuR(34)); const fw = g.measureText(fo).width; g.fillText(fo, x0 + measure - fw, 120); }
+    g.fillStyle = rgba(PAL.boneDim, 0.7 * a0); g.fillRect(x0, 142, measure, 2);
   }
   for (const p of placed) {
-    const u = inv(p.w.start - 0.04, p.w.start + 0.22, t);
+    if (p.pg !== cur) continue;
+    const u = inv(p.w.start - 0.04, p.w.start + 0.18, t);
     if (u <= 0) continue;
     const e = easeOutCubic(u);
-    // the word being sung is bright bone; earlier words settle to a slightly dimmer bone
-    const sung = t >= p.w.start && t < (p.w.end ?? p.w.start + .4) + 0.15;
-    g.fillStyle = rgba(col, e * (sung ? 1 : (o.settle ?? 0.82)) * (o.alpha ?? 1));
+    const sung = t >= p.w.start - 0.04 && t < (p.w.end ?? p.w.start + .4) + 0.12;
+    g.fillStyle = rgba(col, e * (sung ? 1 : (o.settle ?? 0.4)) * (o.alpha ?? 1));
     setFont(g, F.cmu(size));
-    g.fillText(p.s, p.x, p.y + (1 - e) * size * 0.08);
-    if (p.w.note) { setFont(g, F.cmuR(size * 0.42)); g.fillStyle = rgba(o.noteColor || PAL.red, e); g.fillText(p.w.note, p.x + p.ww + 4, p.y - size * 0.48); }
+    g.fillText(p.s, p.x, p.y + (1 - e) * size * 0.06);
+    if (p.w.note) { setFont(g, F.cmuR(size * 0.4)); g.fillStyle = rgba(o.noteColor || PAL.red, e); g.fillText(p.w.note, p.x + p.ww + 6, p.y - size * 0.5); }
   }
-  // footnotes at the page foot: LaTeX-style short rule + note
   if (o.footnotes) {
-    let fy = o.footY ?? 940;
-    const shown = o.footnotes.filter(f => t >= f.at);
-    if (shown.length) { g.fillStyle = rgba(PAL.boneDim, 0.7 * smooth(shown[0].at, shown[0].at + .3, t)); g.fillRect(x0, fy - 44, measure * 0.28, 1); }
+    let fy = o.footY ?? 990;
+    const shown = o.footnotes.filter(f => t >= f.at && (f.page == null || f.page === cur));
+    if (shown.length) { g.fillStyle = rgba(PAL.boneDim, 0.8 * smooth(shown[0].at, shown[0].at + .3, t)); g.fillRect(x0, fy - 58, measure * 0.3, 2); }
     for (const f of shown) {
       const a = smooth(f.at, f.at + .35, t);
-      setFont(g, F.cmuR(15)); g.fillStyle = rgba(o.noteColor || PAL.red, a); g.fillText(f.mark, x0, fy - 12);
-      setFont(g, F.cmu(25)); g.fillStyle = rgba(PAL.boneDim, a); g.fillText(f.text, x0 + 16, fy);
-      fy += 34;
+      setFont(g, F.cmuR(24)); g.fillStyle = rgba(o.noteColor || PAL.red, a); g.fillText(f.mark, x0, fy - 16);
+      setFont(g, F.cmu(o.footSize ?? 36)); g.fillStyle = rgba(PAL.bone, 0.85 * a); g.fillText(f.text, x0 + 22, fy);
+      fy += 46;
     }
   }
-  if (o.folioFoot) { setFont(g, F.cmuR(22)); g.fillStyle = rgba(PAL.boneDim, 0.7); const fw = g.measureText(o.folioFoot).width; g.fillText(o.folioFoot, x0 + measure / 2 - fw / 2, 1030); }
   g.restore();
-  return placed;
+  return placed.filter(p => p.pg === cur);
 }
 
 // (b) SLAM — massive condensed grotesk for drops, with stutter: on each hit the word re-slams with frame-skipped
@@ -123,7 +129,7 @@ export function slam(g, o) {
 export function subtitle(g, words, t, o = {}) {
   const vis = words.filter(w => t >= w.start - 0.05);
   if (!vis.length) return;
-  g.save(); setFont(g, F.mono(o.size ?? 30, 400), 1.5); g.textBaseline = 'alphabetic';
+  g.save(); setFont(g, F.mono(Math.max(42, o.size ?? 44), 400), 1); g.textBaseline = 'alphabetic';
   const txt = words.map(w => (o.upper ? clean(w.w).toUpperCase() : clean(w.w).toLowerCase()));
   const sp = g.measureText(' ').width, widths = txt.map(s => g.measureText(s).width);
   const total = widths.reduce((a, b) => a + b, 0) + sp * (txt.length - 1);
@@ -171,7 +177,7 @@ export function redactedLine(g, parts, x, y, font, col = PAL.boneDim, barCol = P
 export function revisions(g, revs, t, o = {}) {
   for (let i = 0; i < revs.length; i++) {
     const r = revs[i];
-    const placed = page(g, r.words, t, { x: (o.x ?? 200) + (r.dx ?? i * 14), y: (o.y ?? 420) + (r.dy ?? i * 30), w: o.measure ?? 1100, size: o.size ?? 80, alpha: r.alpha ?? Math.pow(0.55, revs.length - 1 - i), settle: 1 });
+    const placed = page(g, r.words, t, { x: (o.x ?? 150) + (r.dx ?? i * 18), y: (o.y ?? 420) + (r.dy ?? i * 40), w: o.measure ?? 1150, size: o.size ?? 120, maxLines: 99, alpha: r.alpha ?? Math.pow(0.55, revs.length - 1 - i), settle: 1 });
     g.save();
     for (const p of placed) {
       if (t < p.w.start) continue;

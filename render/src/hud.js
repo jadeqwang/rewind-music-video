@@ -1,6 +1,8 @@
 // hud.js: the nightmare's UI — chess-engine eval bar, ATTEMPT counter, search tree with pruned ✗ leaves,
-// move annotations (?!, ??, !!), FOIA banners, rewind transport (◀◀, ×N badge, timecode). Vector glyphs only
-// (no reliance on font coverage for ✗ ◀ etc.).
+// move annotations (?!, ??, !!), FOIA banners, rewind transport (◀◀, ×N badge, timecode).
+// Symbols (✗ ◀ ▶ − ∎ ∴ ‖ ×) come from the DejaVu Sans Mono symbol subset registered under the JBM family.
+// Legibility floor (phone, muted): mono cap-height ≥ 30 px at 1080p (JetBrains Mono cap ≈ 0.73 em → ≥ 42 px font),
+// key items ≥ 40 px cap (≥ 56 px font). Fewer elements, larger.
 import { DW, DH, PAL, clamp, lerp, inv, smooth, easeOutCubic, easeOutExpo, hash, hsig, rng, rgba, fin, timecode } from './core.js';
 import { F, setFont } from './type.js';
 
@@ -23,73 +25,74 @@ export function transport(g, x, y, h, col, dir = -1, n = 2) {
   g.restore();
 }
 
+export const MONO_MIN = 42, MONO_KEY = 56;
+export function glyph(g, ch, x, y, px, col, w = 700) { g.save(); setFont(g, F.mono(px, w)); g.fillStyle = col; g.textBaseline = 'middle'; g.textAlign = 'center'; g.fillText(ch, x, y); g.restore(); }
+
 // ---- chess-engine evaluation bar (left edge) ----
 // value: pawns from Jade's side (+ good). mate: if set (e.g. -1) shows "−#1" and the bar empties.
 export function evalBar(g, o) {
-  const x = o.x ?? 46, y0 = o.y ?? 150, h = o.h ?? 780, w = o.w ?? 12, a = o.alpha ?? 1;
+  const x = o.x ?? 44, y0 = o.y ?? 190, h = o.h ?? 760, w = o.w ?? 20, a = o.alpha ?? 1;
   const v = fin(o.value, 0), mate = o.mate;
   const p = mate != null ? (mate > 0 ? 1 : 0) : clamp(0.5 + Math.atan(v / 2.2) / Math.PI);   // share of the bar that is "hers"
   g.save();
-  g.fillStyle = rgba('#000000', 0.9 * a); g.fillRect(x, y0, w, h);
-  g.strokeStyle = rgba(PAL.boneDim, 0.5 * a); g.lineWidth = 1; g.strokeRect(x - 0.5, y0 - 0.5, w + 1, h + 1);
+  g.fillStyle = rgba('#000000', 0.92 * a); g.fillRect(x, y0, w, h);
+  g.strokeStyle = rgba(PAL.boneDim, 0.7 * a); g.lineWidth = 2; g.strokeRect(x - 1, y0 - 1, w + 2, h + 2);
   const hb = h * p; g.fillStyle = rgba(PAL.bone, a); g.fillRect(x, y0 + h - hb, w, hb);
-  g.fillStyle = rgba(PAL.boneDim, 0.7 * a); g.fillRect(x - 4, y0 + h / 2, 4, 1);    // zero tick
+  g.fillStyle = rgba(PAL.red, a); g.fillRect(x + w + 3, y0 + h / 2 - 1, 8, 3);    // zero tick
   const label = mate != null ? `${mate < 0 ? '−' : '+'}#${Math.abs(mate)}` : `${v >= 0 ? '+' : '−'}${Math.abs(v).toFixed(1)}`;
-  setFont(g, F.mono(17, 700), 0.5); g.textBaseline = 'alphabetic';
-  g.fillStyle = mate != null && mate < 0 ? rgba(PAL.red, a) : rgba(PAL.bone, a);
-  g.fillText(label, x - 4, y0 - 14);
-  if (o.caption) { setFont(g, F.mono(12), 2); g.fillStyle = rgba(PAL.boneDim, 0.8 * a); g.save(); g.translate(x + w + 16, y0 + h); g.rotate(-Math.PI / 2); g.fillText(o.caption, 0, 0); g.restore(); }
+  setFont(g, F.mono(o.size ?? MONO_KEY, 700), 0); g.textBaseline = 'alphabetic';
+  g.fillStyle = mate != null && mate < 0 ? rgba(PAL.red, a) : rgba(o.ink ? PAL.ink : PAL.bone, a);
+  g.fillText(label, x - 6, y0 - 26);
   g.restore();
 }
 
-// ---- ATTEMPT counter (top right) ----
+// ---- ATTEMPT counter (top right): "ATTEMPT 01", ✗ when failed ----
 export function attempt(g, o) {
-  const n = o.n ?? 1, x = o.x ?? DW - 72, y = o.y ?? 96, a = o.alpha ?? 1;
+  const n = o.n ?? 1, x = o.x ?? DW - 64, y = o.y ?? 100, a = o.alpha ?? 1;
   g.save(); g.textBaseline = 'alphabetic'; g.textAlign = 'right';
   const fg = o.ink ? PAL.ink : PAL.bone, dim = o.ink ? PAL.ink : PAL.boneDim;
-  setFont(g, F.mono(14), 3); g.fillStyle = rgba(dim, 0.9 * a); g.fillText(o.label ?? 'ATTEMPT', x, y - 34);
-  setFont(g, F.mono(o.size ?? 40, 700), 2); g.fillStyle = rgba(fg, a);
-  const s = String(n).padStart(2, '0'); g.fillText(s, x, y);
-  if (o.failed) { const w = g.measureText(s).width; cross(g, x - w - 34, y - 15, 13, PAL.red, 4, o.failed); }
-  if (o.sub) { setFont(g, F.mono(13), 1.5); g.fillStyle = rgba(dim, 0.75 * a); g.fillText(o.sub, x, y + 26); }
+  setFont(g, F.mono(o.size ?? 64, 700), 1); g.fillStyle = rgba(fg, a);
+  const s = String(n).padStart(2, '0'); g.fillText(s, x, y); const nw = g.measureText(s).width;
+  setFont(g, F.mono(MONO_MIN, 400), 2); g.fillStyle = rgba(dim, 0.95 * a); g.fillText(o.label ?? 'ATTEMPT', x - nw - 18, y);
+  const lw = g.measureText(o.label ?? 'ATTEMPT').width;
+  if (o.failed) { setFont(g, F.mono(64, 700)); g.fillStyle = rgba(PAL.red, a * clamp(o.failed * 1.5)); g.fillText('✗', x - nw - lw - 40, y); }
+  if (o.sub) { setFont(g, F.mono(MONO_MIN, 700), 2); g.fillStyle = rgba(o.subColor || PAL.red, a); g.fillText(o.sub, x, y + 58); }
   g.restore();
 }
 
 // ---- move annotation: "1. pull over" + "?!" ----
 const NAG_COL = { '?!': PAL.sodium, '?': PAL.sodium, '??': PAL.red, '!!': PAL.cyan, '!': PAL.bone };
 export function annotation(g, o) {
-  const a = o.alpha ?? 1, x = o.x, y = o.y;
+  const a = o.alpha ?? 1, x = o.x, y = o.y, px = o.size ?? 50;
   g.save(); g.textBaseline = 'alphabetic';
-  setFont(g, F.mono(o.size ?? 26, 400), 1); g.fillStyle = rgba(PAL.bone, a);
+  setFont(g, F.mono(px, 400), 1); g.fillStyle = rgba(o.ink ? PAL.ink : PAL.bone, a);
   const mv = `${o.n ?? 1}. ${o.move}`; g.fillText(mv, x, y);
   const w = g.measureText(mv).width;
-  if (o.nag) { setFont(g, F.mono((o.size ?? 26) * 1.1, 700), 0); g.fillStyle = rgba(NAG_COL[o.nag] || PAL.bone, a); g.fillText(o.nag, x + w + 6, y); }
+  if (o.nag) { setFont(g, F.mono(px * 1.15, 700), 0); g.fillStyle = rgba(NAG_COL[o.nag] || PAL.bone, a); g.fillText(o.nag, x + w + 10, y); }
   g.restore();
 }
 
 // ---- FOIA / classification banner ----
 export function foiaBanner(g, o = {}) {
-  const a = o.alpha ?? 1, y = o.y ?? 34;
+  const a = o.alpha ?? 1, y = o.y ?? 52;
   g.save(); g.textBaseline = 'middle'; g.textAlign = 'center';
-  setFont(g, F.mono(14, 700), 4); g.fillStyle = rgba(o.color || PAL.boneDim, a);
-  g.fillText(o.text ?? 'UNCLASSIFIED//FOR OFFICIAL USE ONLY', DW / 2, y);
-  if (o.case) { g.textAlign = 'left'; setFont(g, F.mono(13), 1.5); g.fillText(o.case, 72, y); }
-  if (o.page) { g.textAlign = 'right'; setFont(g, F.mono(13), 1.5); g.fillText(o.page, DW - 72, y); }
+  setFont(g, F.mono(o.size ?? MONO_MIN, 700), 4); g.fillStyle = rgba(o.color || PAL.boneDim, a);
+  g.fillText(o.text ?? 'UNCLASSIFIED//FOUO', DW / 2, y);
   g.restore();
 }
 
-// ---- rewind transport HUD: ◀◀ REWIND  ×4  ·  timecode running backwards ----
+// ---- rewind transport HUD: ◀◀ REWIND ×4 · timecode running backwards ----
 export function rewindHud(g, o) {
-  const a = o.alpha ?? 1, x = o.x ?? 120, y = o.y ?? 120;
+  const a = o.alpha ?? 1, x = o.x ?? 90, y = o.y ?? 130;
   g.save(); g.textBaseline = 'alphabetic';
-  transport(g, x + 40, y - 22, 52, rgba(PAL.cyan, a), -1, 2);
-  setFont(g, F.mono(44, 700), 8); g.fillStyle = rgba(PAL.cyan, a); g.fillText('REWIND', x + 104, y - 4);
-  const sp = `×${o.speed ?? 2}`; setFont(g, F.mono(44, 700), 1);
-  const bx = x + 420, bw = g.measureText(sp).width + 28;
-  g.fillStyle = rgba(PAL.cyan, a); g.fillRect(bx, y - 46, bw, 56); g.fillStyle = PAL.ink; g.fillText(sp, bx + 14, y - 4);
-  setFont(g, F.mono(40, 400), 2); g.fillStyle = rgba(PAL.cyan, a * 0.9);
-  g.textAlign = 'right'; g.fillText(timecode(o.tc ?? 0), DW - 110, y - 6);
-  setFont(g, F.mono(12), 3); g.fillStyle = rgba(PAL.cyan, a * 0.6); g.fillText(o.tcLabel ?? 'SRC TC', DW - 110, y - 46);
+  setFont(g, F.mono(64, 700), 0); g.fillStyle = rgba(PAL.cyan, a); g.fillText('◀◀', x, y);
+  let cx = x + g.measureText('◀◀').width + 22;
+  setFont(g, F.mono(64, 700), 6); g.fillText('REWIND', cx, y); cx += g.measureText('REWIND').width + 34;
+  const sp = `×${o.speed ?? 2}`; setFont(g, F.mono(64, 700), 0);
+  const bw = g.measureText(sp).width + 30;
+  g.fillRect(cx, y - 58, bw, 74); g.fillStyle = PAL.ink; g.fillText(sp, cx + 15, y);
+  setFont(g, F.mono(60, 400), 1); g.fillStyle = rgba(PAL.cyan, a);
+  g.textAlign = 'right'; g.fillText(timecode(o.tc ?? 0), DW - 80, y);
   g.restore();
 }
 
@@ -125,8 +128,8 @@ export function searchTree(g, T, o) {
     const p0 = P(nodes[n.parent]), p1 = P(n);
     const mx = p0[0] + (p1[0] - p0[0]) * 0.45;
     const isLit = alive.has(n.i);
-    g.strokeStyle = isLit && lit > 0 ? rgba(o.litColor || PAL.bone, a * lerp(0.35, 1, lit)) : rgba(PAL.boneDim, a * 0.38);
-    g.lineWidth = isLit && lit > 0 ? lerp(1.2, 3, lit) : 1.1;
+    g.strokeStyle = isLit && lit > 0 ? rgba(o.litColor || PAL.bone, a * lerp(0.6, 1, lit)) : rgba(PAL.boneDim, a * 0.75);
+    g.lineWidth = isLit && lit > 0 ? lerp(3, 6, lit) : 3;
     if (o.elbow) {   // elbow connector (bracket look), partially drawn by u
       const L1 = mx - p0[0], L2 = Math.abs(p1[1] - p0[1]), L3 = p1[0] - mx, Lt = L1 + L2 + L3, s = u * Lt;
       g.beginPath(); g.moveTo(p0[0], p0[1]);
@@ -140,18 +143,18 @@ export function searchTree(g, T, o) {
     if (u >= 1) {
       if (!n.kids.length && !alive.has(n.i)) {
         const st = clamp((grow - n.d - (n.r ?? 0) * 0.35) * 2.2);
-        if (st > 0) cross(g, p1[0] + 10, p1[1], 6, rgba(PAL.red, a * 0.95), 2, st);
-      } else { g.fillStyle = isLit && lit > 0 ? rgba(PAL.bone, a) : rgba(PAL.boneDim, a * 0.8); g.beginPath(); g.arc(p1[0], p1[1], n.d === 1 ? 5 : 3, 0, Math.PI * 2); g.fill(); }
+        if (st > 0) glyph(g, '✗', p1[0] + 22, p1[1], o.leafSize ?? 40, rgba(PAL.red, a * clamp(st * 1.5)));
+      } else { g.fillStyle = isLit && lit > 0 ? rgba(PAL.bone, a) : rgba(PAL.boneDim, a * 0.8); g.beginPath(); g.arc(p1[0], p1[1], n.d === 1 ? 9 : 5, 0, Math.PI * 2); g.fill(); }
     }
   }
-  const r0 = P(nodes[0]); g.fillStyle = rgba(PAL.bone, a); g.fillRect(r0[0] - 3, r0[1] - 3, 6, 6);
+  const r0 = P(nodes[0]); g.fillStyle = rgba(PAL.bone, a); g.fillRect(r0[0] - 8, r0[1] - 8, 16, 16);
   if (o.labels) {
-    setFont(g, F.mono(o.labelSize ?? 22), 1); g.textBaseline = 'alphabetic';
+    setFont(g, F.mono(o.labelSize ?? 48, 700), 0); g.textBaseline = 'alphabetic';
     for (const lb of o.labels) {
       const n = nodes[lb.node]; if (!n) continue; const p = P(n);
       if (grow - n.d < 0.6) continue;
       g.fillStyle = rgba(lb.color || PAL.bone, a * clamp((grow - n.d - 0.6) * 3));
-      g.fillText(lb.text, p[0] + 14, p[1] - 12);
+      g.fillText(lb.text, p[0] + 22, p[1] - 22);
     }
   }
   g.restore();

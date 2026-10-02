@@ -34,3 +34,7 @@ The user reports most model attempts "uglify" her: shrunken eyes, invented age s
   a large forehead is a defining trait. NEVER prompt "raise/increase hairline" (models make her bald without growing
   the head). Prompt "large tall broad forehead, larger upper head", or warp the whole region above the brows
   (forehead + cranium + hair together) upward; lower face untouched.
+- EYES: slight, thin double-eyelid crease (not monolid, not a deep crease). Redraw it as a fine line.
+- HAIR: half-up half-down in TWO SYMMETRICAL PIECES (top section gathered left+right of the center part toward the
+  crown; rest long and straight). Invisible head-on, adds volume up top and accentuates the large upper head. Show in
+  3/4, profile and back views; include in every prompt.

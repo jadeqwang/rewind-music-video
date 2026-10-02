@@ -34,11 +34,10 @@ export function draw(ctx, lt, t, shot, { T, roto }) {
   // type: the page
   const ws = words(T, p);
   const fns = (p.footnotes || []).map(f => ({ ...f, at: f.at ?? (ws.find(w => w.key === f.word)?.start ?? 0) }));
-  pageType(ty, ws, t, { x: p.x ?? 200, y: p.y ?? 400, w: p.measure ?? 1000, size: p.size ?? 96, header: p.header, folio: p.folio,
+  pageType(ty, ws, t, { x: p.x ?? 150, y: p.y ?? 420, w: p.measure ?? 1060, size: p.size ?? 140, maxLines: p.maxLines ?? 3, header: p.header, folio: p.folio,
     footnotes: fns, furniture: smooth(0, 0.4, lt) });
   if (ctx.rewinding) return;   // the rewind owns the HUD
   // HUD (quiet)
-  if (p.eval) evalBar(ty, { value: lerp(p.eval[0], p.eval[1], smooth(0, dur, lt)), alpha: 0.85, caption: 'EVAL · DEPTH 24' });
-  if (p.attempt) attempt(ty, { n: p.attempt, alpha: 0.85, sub: p.attemptSub });
+  if (p.eval) evalBar(ty, { value: lerp(p.eval[0], p.eval[1], smooth(0, dur, lt)), alpha: 0.9 });
   ctx.post.bloom = 0.35; ctx.post.bloomThr = 0.8; ctx.post.ca = 0.5;
 }

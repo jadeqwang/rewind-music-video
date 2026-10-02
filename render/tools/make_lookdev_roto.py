@@ -59,6 +59,9 @@ def suits(n=50):
     mm = np.zeros_like(m)
     for i in range(1, nn):
         if st[i, 4] > 5000: mm[lab == i] = 255
+    # heads solid: the matte misses the hair, so add a head ellipse over each face (no floating hair outlines)
+    for (hx, hy, ax, ay) in [(255, 352, 56, 64), (515, 326, 60, 66), (737, 320, 56, 64)]:
+        cv2.ellipse(mm, (hx, hy), (ax, ay), 0, 0, 360, 255, -1, cv2.LINE_AA)
     mm = cv2.GaussianBlur(mm, (0, 0), 0.7)
     # boost local contrast so the dark suits still give folds/lapels
     lab_ = cv2.cvtColor(im, cv2.COLOR_BGR2LAB)

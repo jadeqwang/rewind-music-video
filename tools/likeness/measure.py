@@ -36,8 +36,11 @@ URLS = {
 }
 REAL_JSON = os.path.join(HERE, "..", "..", "assets", "character", "v2", "measure.json")
 KEYS = ["eye_w_iod", "eye_open", "eye_w_face", "iris_face", "forehead", "browchin_face", "mid_third", "face_hw",
-        "forehead_w", "temple_w", "jaw_w", "lowjaw_w", "chin_w", "chin_angle", "chin_tip_angle"]
-GATE_KEYS = {"eye_w_face": 0.05, "iris_face": 0.07, "eye_open": 0.10, "forehead": 0.05}  # rel. tolerance
+        "forehead_w", "temple_w", "jaw_w", "lowjaw_w", "chin_w", "chin_angle", "chin_tip_angle", "upper_head"]
+# gate: key -> (lowest allowed, highest allowed) relative deviation from the real core mean
+GATE_KEYS = {"eye_w_face": (-0.05, 0.10), "iris_face": (-0.07, 0.12), "eye_open": (-0.10, 0.20),
+             "forehead": (-0.05, 0.08), "upper_head": (-0.08, 0.12),
+             "forehead_w": (-0.04, 0.06), "jaw_w": (-0.06, 0.04), "chin_w": (-0.10, 0.08)}
 
 # landmark ids
 R_OUT, R_IN, L_OUT, L_IN = 33, 133, 263, 362
@@ -258,6 +261,33 @@ def brow_pixels(rgb, pts, debug=None):
     return res
 
 
+def head_top(pts, mask):
+    """Top of hair/skull along the face axis: median over columns within +-0.15 face width of the midline
+    of the highest pixel of the connected head blob (hair/skin/accessory classes). Returns distance above glabella."""
+    up, right = face_frame(pts)
+    g = pts[GLABELLA, :2]
+    fw = np.linalg.norm(pts[CHEEK_L, :2] - pts[CHEEK_R, :2])
+    h, w = mask.shape
+    tops = []
+    for off in np.linspace(-0.15, 0.15, 7):
+        base = g + right * off * fw
+        last, t = None, 0.0
+        while t < 2.0 * fw:
+            p = base + up * t
+            x, y = int(round(p[0])), int(round(p[1]))
+            if not (0 <= x < w and 0 <= y < h):
+                last = None if y < 0 else last   # left the image while on head -> clipped
+                break
+            if mask[y, x] in (1, 2, 3, 5):
+                last = t
+            elif last is not None and t - last > 0.04 * fw:
+                break
+            t += 1.0
+        if last is not None:
+            tops.append(last)
+    return float(np.median(tops)) if len(tops) >= 3 else None
+
+
 def measure(src, debug_path=None):
     rgb = load_rgb(src)
     lm = landmarks(rgb)
@@ -311,6 +341,8 @@ def measure(src, debug_path=None):
     mask = seg_mask(rgb)
     hp, ht = hairline(pts, mask)
     out["mid_third"] = (brow - subn) / (brow - chin)
+    tt = head_top(pts, mask)
+    out["upper_head"] = (tt - brow) / (brow - chin) if tt is not None else None   # brow->top of head / brow->chin
     if ht is not None:
         fh = ht - chin
         out["forehead"] = (ht - brow) / fh
@@ -347,21 +379,46 @@ def real_ref():
         return None
 
 
+def real_brow():
+    try:
+        return json.load(open(REAL_JSON))["real"]["brow"]["asym_fit"]
+    except Exception:
+        return None
+
+
+def brow_check(m, fit=None, k_sd=1.5):
+    """Brow asymmetry vs the real yaw-corrected fit. Returns (ok, details). Fails if the asymmetry is
+    flattened to near-symmetric AND outside the real band, or if its sign is reversed beyond k_sd*resid."""
+    fit = fit or real_brow()
+    if not fit or not m or not m.get("brow_asym"):
+        return None, {}
+    det, ok = {}, True
+    for k in ("height", "peak_height", "arch", "peak_pos"):
+        exp = fit[k]["intercept"] + fit[k]["per_deg_yaw"] * m["yaw"]
+        z = (m["brow_asym"][k] - exp) / max(1e-6, fit[k]["resid_sd"])
+        det[k] = dict(got=m["brow_asym"][k], expected=round(exp, 4), z=round(z, 2))
+        if abs(z) > k_sd * 1.5:
+            ok = False
+    return ok, det
+
+
 def gate(m, ref=None, tol=None):
-    """Return (ok, {key: relative deviation}). Smaller eyes or forehead beyond tolerance fail; larger
-    eyes only fail if > 2x tolerance."""
+    """Return (ok, {key: relative deviation}, brow_details)."""
     ref = ref or real_ref(); tol = tol or GATE_KEYS
     if m is None or ref is None:
-        return False, {}
+        return False, {}, {}
     devs, ok = {}, True
-    for k, t in tol.items():
+    for k, (lo, hi) in tol.items():
         if m.get(k) is None or ref.get(k) is None:
             continue
         d = m[k] / ref[k] - 1
         devs[k] = round(d, 4)
-        if d < -t or d > 2 * t:
+        if d < lo or d > hi:
             ok = False
-    return ok, devs
+    bok, bdet = brow_check(m)
+    if bok is False:
+        ok = False
+    return ok, devs, bdet
 
 
 def main():
@@ -386,9 +443,9 @@ def main():
         if dbg: os.makedirs(a.debug, exist_ok=True)
         m = measure(src, dbg)
         if m and a.gate:
-            m["gate_ok"], m["gate_dev"] = gate(m)
+            m["gate_ok"], m["gate_dev"], m["brow_check"] = gate(m)
         res[name] = m
-        print(name, json.dumps(m))
+        print(name, json.dumps({k: m.get(k) for k in ["yaw"] + KEYS + ["gate_ok", "gate_dev"]} if m else None))
     if a.json:
         json.dump(res, open(a.json, "w"), indent=1)
 
