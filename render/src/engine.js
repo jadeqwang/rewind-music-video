@@ -147,7 +147,7 @@ window.renderSheet = (times, cols = 4, w = 480) => serial(async () => {
 
 // roto references: any value under a key named `roto`/`jade`/`world`/`matte` may be 'A|B|C' = first sequence that exists
 // (e.g. 'B3|_auto/S1|ld_suits': the roto agent's shot, else the interim auto-roto of the base clip, else the stand-in).
-const ROTO_KEYS = new Set(['roto', 'jade', 'world', 'subject']);
+const ROTO_KEYS = new Set(['roto', 'jade', 'world', 'subject', 'front', 'side']);
 async function resolveRef(v) {
   for (const c of String(v).split('|')) if (await roto.loadMeta(c)) return c;
   return String(v).split('|').pop();

@@ -45,7 +45,7 @@ def run_clip(J, full=False):
     for i in range(meta['frames']):
         f = cv2.resize(frames[min(len(frames) - 1, int(round(i / meta['fps'] * sfps)))], (meta['w'], meta['h']), interpolation=cv2.INTER_AREA)
         mt = rd(f'{d}/matte/{i:04d}.png')
-        a = np.ones(f.shape[:2], np.float32) if (full or mt is None or mt.mean() < 0.01) else alpha(mt)   # ECU (Jeyes): the frame is her
+        a = np.ones(f.shape[:2], np.float32) if (full or mt is None or mt.max() < 0.05) else alpha(mt)   # ECU (Jeyes): the frame is her
         out = np.dstack([grade(f), (a * 255).astype(np.uint8)])
         out[a < 0.004] = 0
         cv2.imwrite(f'{d}/direct/{i:04d}.webp', out, [cv2.IMWRITE_WEBP_QUALITY, 90])

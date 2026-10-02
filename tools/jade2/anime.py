@@ -153,7 +153,7 @@ def run_clip(J, fr=None):
     for i in (range(meta['frames']) if fr is None else range(*fr)):
         f = cv2.resize(frames[min(len(frames) - 1, int(round(i / meta['fps'] * sfps)))], (meta['w'], meta['h']), interpolation=cv2.INTER_CUBIC)
         mt = a(f'{d}/matte/{i:04d}.png')
-        if FULL or mt is None or mt.mean() < 0.01: mt = np.ones((meta['h'], meta['w']), np.float32)   # ECU shots (Jeyes): the whole frame is her
+        if FULL or mt is None or mt.max() < 0.05: mt = np.ones((meta['h'], meta['w']), np.float32)   # ECU shots (Jeyes): the whole frame is her
         fc = a(f'{d}/face/{i:04d}.png'); hr = a(f'{d}/hair/{i:04d}.png')
         face = (fc > 0.5) if fc is not None else None; hair = (hr > 0.5) if hr is not None else None
         lab, names = classify(f, mt, face, hair, ROI(i))

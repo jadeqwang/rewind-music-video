@@ -170,6 +170,16 @@ Built offline by `tools/jade2/build.py <J>` → `assets/roto/<J>/cel/NNNN.png` +
   the figure. `--full` (or an empty RVM matte) treats the whole frame as figure (Jeyes ECU).
 - Cubist planes: `cubist` takes `front`/`side` roto ids (default J5 front / J1 3/4); anchors from per_frame mouth (nearest).
 
+## Anime Jade medium: `?jade=cel|direct` (default cel until the user picks)
+- `direct` (tools/jade2/direct.py → assets/roto/<J>/direct/NNNN.webp, RGBA): her own anime footage, matted (1 px choke +
+  1.1 px soft edge) and graded into the palette (blacks → ink, whites → bone, saturation ×0.9, 28 % cel-snap to 6 bands).
+  roto.jadeDirect adds the ink silhouette outline, the scene light (multiply wash + screen rim on the lit side) and the roto
+  lines at 45 % (boil). The rewind cyan shimmer and the post grain are unchanged. Cubist planes follow the active medium.
+- Takes: every J shot resolves `<id>_v3` (jacket v3) first, then v1. Force v1 with `?jadetake=v1`, or per id via
+  `V1_TAKES` in shots.js. v3 lip offsets: J1_v3 +0.58, J6_v3 −0.25, J8_v3 +0.38.
+- `python3 tools/anime_modes.py` builds out/anime_modes.jpg (clip frame | cel in-scene | direct in-scene).
+  Stills write `<t>.jade.json` (which clip frame was drawn).
+
 ## Audio / mix source (FINAL: v5final)
 `src/audio.config.js` is the single switch. `AUDIO_DEFAULT = 'v5final'` (user-approved): mux `assets/sound/Rewind5_final.wav`,
 timing `analysis/timing_v5.json`, envelopes `analysis/envelopes_v5.json`. Override per run with `--audio v4|v5|v5sfx` (browser

@@ -16,8 +16,10 @@ export function buildShots(T) {
   const P = T.period, bar = 4 * P;
 
   // ---------------- roto refs ----------------
+  const JADE_V1 = new URLSearchParams(location.search).get('jadetake') === 'v1', V1_TAKES = new Set([]);   // add an id here if its v3 take is clearly worse
   const R = {
-    jade: id => `${id}|ld_jade`,
+    // canonical Jade = jacket v3 takes (<id>_v3); per-shot fallback to the v1 take via V1_TAKES, or all via ?jadetake=v1
+    jade: id => (JADE_V1 || V1_TAKES.has(id) ? '' : `${id}_v3|`) + `${id}|ld_jade`,
     suits: id => `${id}|${({ B3: 'S1', B6: 'S2', F2: 'S3', F3: 'S3', S5: 'S5' })[id] || 'S1'}|ld_suits`,
     road: 'E2_fast|E2_calm|_auto/E2_calm', calm: 'E2_calm|_auto/E2_calm', aerial: 'E1|_auto/E1', flood: 'E3_flood|_auto/E3_flood', follow: 'E3_follow|_auto/E3_follow',
     room: 'E5|_auto/E5', committee: 'S4|_auto/S4', field: 'E4|_auto/plate_grass_field_1', pull: 'Epull|_auto/plate_pullover_3',
@@ -162,7 +164,7 @@ export function buildShots(T) {
   ], { hud: { attempt: 1, failed: true, mate: -1, tc: true } }, { post: { ca: 3, bloom: 0.4 } });
   // Picasso escalation 1/4: a hint — the subject's portrait on the case file splits into 2 planes; Guernica planes + lamp-eye over the print
   const casePic = (planes) => [{ type: 'guernica', rect: [100, 190, 1150, 647], n: 5 + planes, bx: 675, by: 236, br: 62 },
-    { type: 'cubist', planes, clip: [1320, 820, 420, 210], cx: 1530, cy: 930, scale: 0.55, bg: '#2A2624', seed: planes }];
+    { type: 'cubist', front: R.jade('J5'), side: R.jade('J1'), planes, clip: [1320, 820, 420, 210], cx: 1530, cy: 930, scale: 0.55, bg: '#2A2624', seed: planes }];
   add('B8_case01', sfx1, T.beatBefore(W('stops').start - 0.3), 'freeze', { source: 'B6_tab', case: 1, move: { n: 1, move: 'pull over', nag: '??' }, loc: 'LAKE SHORE DR', file: 'FILE 65-HQ-', over: casePic(2) },
     { fx: { heart: 0, jerks: [] }, post: {} });
   C('B9_silence', T.beatBefore(W('stops').start - 0.3), drop1, [{ type: 'fill', color: '#000' },
@@ -316,7 +318,7 @@ export function buildShots(T) {
     { hud: { attempt: 3, tc: true, eval: e => Math.sin(e * 17) * 9 }, fx: { heart: 0.5, kick: 0.6 } });
   // Picasso escalation 3/4: the fully fractured portrait, planes re-cut on every heartbeat
   for (const d of T.downbeatsIn(b3 + 0.5, never - 0.5)) C(`X1_eyes${DI(d)}`, d + 2 * P, d + 3 * P, [ink, jade('Jeyes', { mouth: false, light: null })], { fx: { heart: 0.6 } });
-  for (const d of T.downbeatsIn(b3 + 0.5, never - 0.5)) C(`X1_cubist${DI(d)}`, d, d + 2 * P, [ink, { type: 'cubist', planes: 6, beatCycle: true, scale: 2.4, cy: 500 }], { fx: { heart: 0.6 } }, { post: { bloom: 0.1 } });
+  for (const d of T.downbeatsIn(b3 + 0.5, never - 0.5)) C(`X1_cubist${DI(d)}`, d, d + 2 * P, [ink, { type: 'cubist', front: R.jade('J5'), side: R.jade('J1'), planes: 6, beatCycle: true, scale: 2.4, cy: 500 }], { fx: { heart: 0.6 } }, { post: { bloom: 0.1 } });
   C('X2_never', never, stop3, [ink, { type: 'rollouts', n: 2800, seed: 31, x: 180, y: 540, w: 1600, h: 900, lw: 1.2, tick: 2, labels: false, kill: e => e.u, survivor: true, progress: 1, surviveDy: 0.05, kills: [{ at: 0.3, share: 0.3, dy: -0.35 }, { at: 0.55, share: 0.3, dy: 0.0 }, { at: 0.8, share: 0.35, dy: 0.3 }] }, { type: 'slam', text: 'NEVER', at: 0, y: 1000, maxH: 300, onType: true }],
     { hud: { attempt: 3, tc: true, eval: 0 }, fx: { kick: 1 } });
   C('X3_stop', stop3, T.opt(T => T.section('silence3').end, stop3 + 0.66) - 0.22, [ink, { type: 'rollouts', n: 0, seed: 31, x: 180, y: 540, w: 1600, h: 900, survivor: true, surviveDy: 0.05, labels: false, kills: [] }, { type: 'slam', text: 'STOP', at: 0, y: 1000, maxH: 300, onType: true }], { fx: { kick: 1 } });
@@ -339,7 +341,7 @@ export function buildShots(T) {
     : [ink, { type: 'world', roto: R.road, alpha: 0.9, lights: 1, speed: 2.4 }, { type: 'mirror', rect: [460, 60, 1000, 300], zoom: 1.2, layers: [{ type: 'world', roto: R.flood, alpha: 0.9, lights: e => 1 - e.u * 0.8 }, { type: 'sirens', side: 'full', amount: e => 1 - e.u, base: 0.4 }] }];
   C('N2_lane', n2, n3, lane(), { hud: hud(3, 4, { ok: true }), fx: drive });
   // Picasso escalation 4/4: she RESOLVES — the planes converge into one whole single-view face (the survivor)
-  C('N1_resolve', n2, DB(2), [ink, { type: 'sodium', period: P, amount: 0.6, alpha: 0.3 }, { type: 'cubist', planes: 6, resolve: e => smooth(0.05, 0.75, e.u), scale: 2.3, cy: 500 }],
+  C('N1_resolve', n2, DB(2), [ink, { type: 'sodium', period: P, amount: 0.6, alpha: 0.3 }, { type: 'cubist', front: R.jade('J5'), side: R.jade('J1'), planes: 6, resolve: e => smooth(0.05, 0.75, e.u), scale: 2.3, cy: 500 }],
     { hud: hud(3, 5, { ok: true }), fx: { kick: 1 } }, { post: { bloom: 0.1 } });
   [['jade', 2], ['pages', 4], ['scale', 6], ['mirror', 7]].forEach(([k, b], j) => C(`N2_${k}`, DB(b), DB(b + 1), insert(k, j),
     { hud: hud(3, 5, { ok: true }), fx: { ...drive, ...(k === 'pages' ? { strobe: 0 } : {}) } }, k === 'pages' ? { post: { bloom: 0 } } : {}));
