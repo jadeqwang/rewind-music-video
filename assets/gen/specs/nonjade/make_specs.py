@@ -39,10 +39,11 @@ SHOTS = {
  "S5": dict(dur=6, refs=[S("lake_shore_drive/1"), S("pullover/2")], p=
   "Camera mounted low on the side of a car speeding along a lakefront highway at night, looking sideways at the road shoulder. Four men in dark suits stand still in a row on the shoulder under orange sodium streetlights, and the camera rushes past them at high speed, so they slide quickly across the frame from right to left and are gone. Smooth fast lateral tracking motion." + SUIT),
 }
+if __name__ != "__main__": SHOTS = {}
 for k, s in SHOTS.items():
     inp = {"prompt": s["p"] + LOOK, "duration": s["dur"], "resolution": "720p", "aspect_ratio": "16:9", "generate_audio": False}
     if "image" in s: inp["image"] = s["image"]
     if "refs" in s: inp["reference_images"] = s["refs"]
     spec = {"model": "bytedance/seedance-2.5", "tag": f"nj_{k}_{TAKE}", "notes": f"non-Jade roto base {k} {TAKE}", "input": inp}
     json.dump(spec, open(os.path.join(HERE, f"{k}_{TAKE}.json"), "w"), indent=1)
-print("wrote", len(SHOTS))
+if SHOTS: print("wrote", len(SHOTS))

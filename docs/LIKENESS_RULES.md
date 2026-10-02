@@ -38,3 +38,8 @@ The user reports most model attempts "uglify" her: shrunken eyes, invented age s
 - HAIR: half-up half-down in TWO SYMMETRICAL PIECES (top section gathered left+right of the center part toward the
   crown; rest long and straight). Invisible head-on, adds volume up top and accentuates the large upper head. Show in
   3/4, profile and back views; include in every prompt.
+
+## Strategy (user, from the Orbital Sunrise lesson)
+Prefer her REAL PHOTOS as the base: choose shot angles that match an existing photo's camera, composite her (real face
+pasted back, pixel-exact) into the set plate, relight with simple grading, and use that as Seedance's first frame,
+with the real photos as reference_images. Generated character sheets are backup for wides/full-body only.

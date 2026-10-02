@@ -16,6 +16,11 @@ float vnoise(vec2 p){ vec2 i=floor(p), f=fract(p); vec2 u=f*f*(3.-2.*f);
   return mix(mix(hash12(i),hash12(i+vec2(1,0)),u.x),mix(hash12(i+vec2(0,1)),hash12(i+vec2(1,1)),u.x),u.y); }
 float luma(vec3 c){ return dot(c, vec3(.299,.587,.114)); }
 mat2 rot(float a){ float c=cos(a), s=sin(a); return mat2(c,-s,s,c); }
+float halftone(vec2 px, float v, float cell, float ang){
+  v = clamp(v, 0., 1.); vec2 q = rot(ang) * px / cell; vec2 f = fract(q) - .5; float d = length(f);
+  float r = sqrt(v) * .7071, aa = 0.75 / cell; float dots = 1. - smoothstep(r - aa, r + aa, d);
+  float rinv = sqrt(max(0., 1. - v)) * .7071; float holes = smoothstep(rinv - aa, rinv + aa, length(fract(q + .5) - .5));
+  return v > .5 ? max(dots, holes) : dots; }
 vec3 safe(vec3 c){ if (any(isnan(c)) || any(isinf(c))) return vec3(0.); return c; }
 `;
 
@@ -56,7 +61,7 @@ precision highp float; in vec2 vUv; out vec4 o; ${LIB}
 uniform sampler2D tScene, tType, tBloom;
 uniform vec2 res; uniform float S; uniform float time;
 uniform float bloom, ca, misreg, grain, grainSeed, scan, invert, flash, vignette, fade, zoom, spin;
-uniform float cyanGrade;
+uniform float cyanGrade; uniform vec4 htRect; uniform float htAmt, htCell;
 uniform vec2 shake; uniform float ripple, ripplePhase, warble, warbleSeed, tracking, neg, typeCA, typeDim, dither;
 uniform vec3 inkC, boneC, cyanC, flashC;
 vec2 distort(vec2 uv){
@@ -105,6 +110,15 @@ void main(){
     vec3 m = mix(inkC * vec3(.35, 1.1, 1.2) + vec3(0., .012, .016), cyanC * .8, smoothstep(.0, .55, l));
     m = mix(m, mix(cyanC, boneC, .7), smoothstep(.55, 1., l));
     col = mix(col, m, cyanGrade);
+  }
+  // halftone photo print inside htRect (design px, top-down): the frozen frame as an AM-screened print on bone stock
+  if (htAmt > 0.) {
+    vec2 dp = vec2(vUv.x * res.x, (1. - vUv.y) * res.y) / S;
+    if (dp.x > htRect.x && dp.y > htRect.y && dp.x < htRect.x + htRect.z && dp.y < htRect.y + htRect.w) {
+      float l = clamp(luma(col) * 1.15, 0., 1.);
+      float cov = halftone(dp, 1. - l, htCell, .26);
+      col = mix(col, mix(boneC, inkC, cov), htAmt);
+    }
   }
   // type layer (straight alpha) with its own, smaller CA; drawn after the grade so HUD/type keep their colours
   vec2 tc = c2 * typeCA;
@@ -202,7 +216,8 @@ export class Post {
     const f1 = (k, d) => u[k] && gl.uniform1f(u[k], n(k, d));
     f1('bloom', 0.6); f1('ca', 0); f1('misreg', 0); f1('grain', 0.05); f1('grainSeed', 0); f1('scan', 0); f1('invert', 0); f1('flash', 0);
     f1('vignette', 0.25); f1('fade', 1); f1('zoom', 1); f1('spin', 0); f1('ripple', 0); f1('ripplePhase', 0); f1('warble', 0);
-    f1('warbleSeed', 0); f1('tracking', 0); f1('neg', 0); f1('cyanGrade', 0); f1('typeCA', 0.35); f1('typeDim', 1); f1('dither', 1.5);
+    f1('warbleSeed', 0); f1('tracking', 0); f1('neg', 0); f1('cyanGrade', 0); f1('htAmt', 0); f1('htCell', 7);
+    { const r = P.htRect || [0, 0, 0, 0]; gl.uniform4f(u.htRect, r[0], r[1], r[2], r[3]); } f1('typeCA', 0.35); f1('typeDim', 1); f1('dither', 1.5);
     gl.uniform2f(u.shake, n('shakeX', 0), n('shakeY', 0));
     const c3 = (k, v) => gl.uniform3f(u[k], v[0], v[1], v[2]);
     c3('inkC', P.inkC || [0.027, 0.031, 0.039]); c3('boneC', P.boneC || [0.925, 0.902, 0.847]);

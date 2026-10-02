@@ -750,8 +750,151 @@
     }
    ],
    "collected": 1790919265.517695
+  },
+  "rewind/nj_E2_fast_t2-21f76bba64": {
+   "id": "21f76bba64",
+   "job": "rewind/nj_E2_fast_t2-21f76bba64",
+   "tag": "nj_E2_fast_t2",
+   "model": "bytedance/seedance-2.5",
+   "notes": "non-Jade roto base E2_fast retake t2",
+   "spec_file": "assets/gen/specs/nonjade/E2_fast_t2.json",
+   "input": {
+    "duration": 8,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Driver's point of view from a car racing extremely fast, far above the speed limit, along an empty curving lakefront highway at night. The white lane dashes strobe toward the camera in rapid succession and the tall orange sodium streetlights rush past overhead every half second, one after another, flashing by the left edge of the frame. Strong, fast, continuous forward motion, the camera locked to the car, only the top edge of the black dashboard at the bottom of frame. No people. Single continuous shot, no cuts, no transitions. Night. Graphic neo-noir cinematography, photographic. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus, no motion blur smear. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark, no subtitles.",
+    "image": "file:assets/sets/lake_shore_drive/1.jpg"
+   },
+   "est_usd": 1.8496,
+   "est_basis": "8s x 0.2312 (@720p non-video input (per second))",
+   "state": "queued",
+   "bucket": 29848657,
+   "submitted": 1790919318.1350682,
+   "bytes": 138332
+  },
+  "rewind/nj_E4_t2-2c2ba9daea": {
+   "id": "2c2ba9daea",
+   "job": "rewind/nj_E4_t2-2c2ba9daea",
+   "tag": "nj_E4_t2",
+   "model": "bytedance/seedance-2.5",
+   "notes": "non-Jade roto base E4 retake t2",
+   "spec_file": "assets/gen/specs/nonjade/E4_t2.json",
+   "input": {
+    "duration": 6,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Low camera among a few tall grass stalks at night, locked-off. A strong gusting wind bends and whips the tall stalks back and forth as clean dark silhouettes. Two hard white flashlight beams sweep quickly across the frame in wide arcs from left to right and back, raking through the grass and the faint mist, so bright shafts and deep black gaps move constantly across the field. No people. Single continuous shot, no cuts, no transitions. Night. Graphic neo-noir cinematography, photographic. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus, no motion blur smear. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark, no subtitles.",
+    "image": "file:assets/sets/grass_field/3.jpg"
+   },
+   "est_usd": 1.3872,
+   "est_basis": "6s x 0.2312 (@720p non-video input (per second))",
+   "state": "queued",
+   "bucket": 29848657,
+   "submitted": 1790919318.5955818,
+   "bytes": 152717
+  },
+  "rewind/nj_Epull_t2-0916ffd613": {
+   "id": "0916ffd613",
+   "job": "rewind/nj_Epull_t2-0916ffd613",
+   "tag": "nj_Epull_t2",
+   "model": "bytedance/seedance-2.5",
+   "notes": "non-Jade roto base Epull retake t2",
+   "spec_file": "assets/gen/specs/nonjade/Epull_t2.json",
+   "input": {
+    "duration": 4,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "High wide shot from beside a dark lakefront highway at night, steady camera. A small dark hatchback car drives along the highway from right to left, brakes with its red brake lights glowing, and steers onto the paved shoulder where it slowly comes to a stop. Close behind it, following the hatchback, a black sedan with two blazing white headlights pulls onto the shoulder and stops a few meters behind it, its headlights lighting the back of the hatchback. Orange sodium streetlights along the road, black lake beyond. No people. Single continuous shot, no cuts, no transitions. Night. Graphic neo-noir cinematography, photographic. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus, no motion blur smear. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark, no subtitles.",
+    "reference_images": [
+     "file:assets/sets/pullover/3.jpg",
+     "file:assets/sets/lake_shore_drive/3.jpg"
+    ]
+   },
+   "est_usd": 0.9248,
+   "est_basis": "4s x 0.2312 (@720p non-video input (per second))",
+   "state": "queued",
+   "bucket": 29848658,
+   "submitted": 1790919319.2190309,
+   "bytes": 365649
+  },
+  "rewind/nj_S3_t2-de91ff9d6b": {
+   "id": "de91ff9d6b",
+   "job": "rewind/nj_S3_t2-de91ff9d6b",
+   "tag": "nj_S3_t2",
+   "model": "bytedance/seedance-2.5",
+   "notes": "non-Jade roto base S3 retake t2",
+   "spec_file": "assets/gen/specs/nonjade/S3_t2.json",
+   "input": {
+    "duration": 6,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Low locked-off camera at the edge of a field of tall grass at night. Exactly four men in dark suits run from left to right across the frame through the waist-high grass, one behind the other, crisp solid pitch-black silhouettes against two hard white flashlight beams shining from behind them through faint mist. The grass is a dark silhouette mass with only its tops rim-lit. Black sky, a thin row of orange lights on the far horizon. Sharp, no motion blur. The men are solid pitch-black backlit silhouettes, faces completely in shadow and featureless, only the outlines of sunglasses, shoulders, ties and arms; nobody's face is ever lit. Single continuous shot, no cuts, no transitions. Night. Graphic neo-noir cinematography, photographic. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus, no motion blur smear. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark, no subtitles.",
+    "reference_images": [
+     "file:assets/sets/grass_field/1.jpg",
+     "file:assets/sets/pullover/1.jpg"
+    ]
+   },
+   "est_usd": 1.3872,
+   "est_basis": "6s x 0.2312 (@720p non-video input (per second))",
+   "state": "queued",
+   "bucket": 29848658,
+   "submitted": 1790919319.680542,
+   "bytes": 436538
+  },
+  "rewind/nj_S5_t2-8bdfa8a64a": {
+   "id": "8bdfa8a64a",
+   "job": "rewind/nj_S5_t2-8bdfa8a64a",
+   "tag": "nj_S5_t2",
+   "model": "bytedance/seedance-2.5",
+   "notes": "non-Jade roto base S5 retake t2",
+   "spec_file": "assets/gen/specs/nonjade/S5_t2.json",
+   "input": {
+    "duration": 6,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Low tracking shot from a car speeding along a dark lakefront highway at night, looking sideways at the paved shoulder. Four men in dark suits stand perfectly still in a row on the shoulder, solid pitch-black silhouettes backlit by orange sodium streetlights. The camera rushes past them at high speed, so the four standing men and the streetlight poles slide quickly across the frame from right to left and disappear. Sharp, physical, one continuous moving shot. The men are solid pitch-black backlit silhouettes, faces completely in shadow and featureless, only the outlines of sunglasses, shoulders, ties and arms; nobody's face is ever lit. Single continuous shot, no cuts, no transitions. Night. Graphic neo-noir cinematography, photographic. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus, no motion blur smear. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark, no subtitles.",
+    "reference_images": [
+     "file:assets/sets/pullover/2.jpg"
+    ]
+   },
+   "est_usd": 1.3872,
+   "est_basis": "6s x 0.2312 (@720p non-video input (per second))",
+   "state": "queued",
+   "bucket": 29848659,
+   "submitted": 1790919320.1187043,
+   "bytes": 297319
   }
  },
- "total_est_usd": 20.166,
+ "total_est_usd": 27.102,
  "total_est_usd_done": 20.166
 }
