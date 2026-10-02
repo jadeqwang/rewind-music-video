@@ -29,7 +29,7 @@ VIEWS = {
            "showing the slim headlights, the grille and the left flank.",
  "top":    "Exactly top-down overhead view from directly above, looking straight down at the roof, car pointing up toward the top of the frame, "
            "symmetrical plan view showing the hood, windshield, roof, rear window and trunk outline; red tail lights glowing at the bottom, "
-           "headlights at the top.",
+           "headlights at the top. The whole car fits in the frame with wide empty margin on all sides, car occupying about 70 percent of the frame height.",
 }
 PRICE = {"openai/gpt-image-2": 0.06, "xai/grok-imagine-image-quality": 0.05}
 LOCK = threading.Lock(); PJ = ROOT + "/assets/car/prompts.json"
@@ -38,8 +38,8 @@ def prompt(view): return VIEWS[view] + " The car: " + CAR + ". " + BG + TAIL
 
 def one(view, k, model):
     p = prompt(view)
-    pl = ({"prompt": p, "size": "1536x1024", "quality": "medium", "output_format": "jpeg"} if model.startswith("openai")
-          else {"prompt": p, "aspect_ratio": "16:9", "response_format": "b64_json", "resolution": "1k"})
+    pl = ({"prompt": p, "size": "1024x1024" if view == "top" else "1536x1024", "quality": "medium", "output_format": "jpeg"} if model.startswith("openai")
+          else {"prompt": p, "aspect_ratio": "1:1" if view == "top" else "16:9", "response_format": "b64_json", "resolution": "1k"})
     out = f"{ROOT}/analysis/car/cands/{view}_{k}"; os.makedirs(os.path.dirname(out), exist_ok=True)
     for att in range(3):
         t0 = time.time()
@@ -47,7 +47,7 @@ def one(view, k, model):
             r = run_model(model, pl, timeout=60, retries=0, verbose=False)
             paths = save_media(r, out + "_raw"); src = [x for x in paths if not x.endswith(".json")][0]
             im = Image.open(src).convert("RGB"); w, h = im.size
-            if abs(w / h - 16 / 9) > 0.02:
+            if view != "top" and abs(w / h - 16 / 9) > 0.02:
                 nh = round(w * 9 / 16); t = (h - nh) // 2; im = im.crop((0, t, w, t + nh))
             im.save(out + ".jpg", quality=93); os.remove(src)
             for x in paths:

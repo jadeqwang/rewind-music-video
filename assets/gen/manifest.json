@@ -1374,10 +1374,11 @@
    },
    "est_usd": 2.0808,
    "est_basis": "9s x 0.2312 (@720p non-video input (per second))",
-   "state": "queued",
+   "state": "running",
    "bucket": 29848702,
    "submitted": 1790922054.2551525,
-   "bytes": 452743
+   "bytes": 452743,
+   "started": 1790922157.629
   },
   "rewind/jade_J6_lip_t3-7770d0bf28": {
    "id": "7770d0bf28",
@@ -1404,12 +1405,49 @@
    },
    "est_usd": 1.8496,
    "est_basis": "8s x 0.2312 (@720p non-video input (per second))",
-   "state": "queued",
+   "state": "error",
    "bucket": 29848702,
    "submitted": 1790922054.7136848,
-   "bytes": 411642
+   "bytes": 411642,
+   "state_relay": "error",
+   "gen_secs": 5.3,
+   "started": 1790922157.632,
+   "finished": 1790922162.909,
+   "latency_secs": 108.2,
+   "error": "7003: User Input Error",
+   "est_usd_note": "errored runs are normally not billed"
+  },
+  "rewind/jade_J6_lip_t4-93fc18e4f0": {
+   "id": "93fc18e4f0",
+   "job": "rewind/jade_J6_lip_t4-93fc18e4f0",
+   "tag": "jade_J6_lip_t4",
+   "model": "bytedance/seedance-2.5",
+   "notes": "J6 lip-sync validation: vocals 73.25-81.25 s ('And now I'm back on the road' 73.55-80.57) | t2: no reference_images (t1 7003 User Input Error) | t3: audio 7.5 s < duration | t4: + use_virtual_avatar",
+   "spec_file": "assets/gen/specs/jade/J6_lip_t4.json",
+   "input": {
+    "duration": 8,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": true,
+    "generate_audio": false,
+    "prompt": "Night, driving. Three-quarter front view through the windshield of a white 2001 Acura TL: she sits in the left-hand driver's seat on the right side of the frame, both hands on the steering wheel, determined, looking ahead at the road. She sings the vocal in the reference audio, her lips moving in exact sync with each sung word. Orange sodium streetlight reflections slide over the windshield; soft cool dashboard glow on her face; the camera is mounted to the car and stays steady. Jade: East Asian woman, heart-shaped face with a large broad forehead, thin rectangular dark gray-teal metal glasses always on, long straight black hair half-up half-down, white cropped zip jacket with an orange chest band over a black top. Keep her face exactly as in the first frame and the reference photos; same eye size, never squinting. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/firstframes/J6.jpg",
+    "reference_audios": [
+     "file:analysis/slices/vocals_J6_73.25_7.5.mp3"
+    ]
+   },
+   "est_usd": 1.8496,
+   "est_basis": "8s x 0.2312 (@720p non-video input (per second))",
+   "state": "queued",
+   "bucket": 29848705,
+   "submitted": 1790922218.707345,
+   "bytes": 411641
   }
  },
- "total_est_usd": 45.3668,
+ "total_est_usd": 47.2164,
  "total_est_usd_done": 30.3388
 }

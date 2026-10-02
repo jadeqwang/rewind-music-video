@@ -216,9 +216,35 @@ export function star(g, x, y, R, a, col) {
 }
 
 // ---- light layer (format addition): RGB = the light's own colour, alpha = brightness; drawn additively ----
+// tools/roto atlas ('light', 960x270): left half R siren_red G sodium B siren_blue, right half R cold_white G ground B luma.
+// Colourised once per frame into a 480x270 RGBA canvas (cached), then drawn additively like 'lights'.
+const atlasCache = new Map();
+const LCOL = { red: [255, 42, 42], sodium: [255, 159, 28], blue: [47, 91, 255], white: [236, 230, 216] };
+function atlasLights(id, clipT) {
+  const m = meta(id), bmp = get(id, 'light', clipT); if (!bmp) return null;
+  const key = url(id, 'light', frameIndex(m, clipT));
+  if (atlasCache.has(key)) return atlasCache.get(key);
+  const c = document.createElement('canvas'); c.width = 480; c.height = 270; const g = c.getContext('2d', { willReadFrequently: true });
+  g.drawImage(bmp, 0, 0); const L = g.getImageData(0, 0, 480, 270).data; g.clearRect(0, 0, 480, 270); g.drawImage(bmp, -480, 0); const Rt = g.getImageData(0, 0, 480, 270).data;
+  const out = g.createImageData(480, 270), d = out.data;
+  for (let i = 0; i < d.length; i += 4) {
+    const r = L[i] / 255, so = L[i + 1] / 255, b = L[i + 2] / 255, w = Rt[i] / 255;
+    const a = Math.min(1, r + so + b + w); if (a < 0.02) continue;
+    d[i] = Math.min(255, (LCOL.red[0] * r + LCOL.sodium[0] * so + LCOL.blue[0] * b + LCOL.white[0] * w) / a);
+    d[i + 1] = Math.min(255, (LCOL.red[1] * r + LCOL.sodium[1] * so + LCOL.blue[1] * b + LCOL.white[1] * w) / a);
+    d[i + 2] = Math.min(255, (LCOL.red[2] * r + LCOL.sodium[2] * so + LCOL.blue[2] * b + LCOL.white[2] * w) / a);
+    d[i + 3] = Math.pow(a, 1.4) * 170;   // tamed: the atlas is a strength map, not a light source to blow out
+  }
+  g.clearRect(0, 0, 480, 270); g.putImageData(out, 0, 0);
+  atlasCache.set(key, c); if (atlasCache.size > 60) atlasCache.delete(atlasCache.keys().next().value);
+  return c;
+}
 export function lights(g, id, clipT, o = {}) {
-  const m = meta(id); if (!m || !m.layers.includes('lights')) return false;
-  const bmp = get(id, 'lights', clipT); if (!bmp) return false;
+  const m = meta(id); if (!m) return false;
+  let bmp = null;
+  if (m.layers.includes('lights')) bmp = get(id, 'lights', clipT);
+  else if (m.layers.includes('light')) bmp = atlasLights(id, clipT);
+  if (!bmp) return false;
   g.save(); g.globalCompositeOperation = o.comp || 'lighter'; g.globalAlpha = clamp(o.alpha ?? 1);
   place(g, bmp, o.rect, o.boil != null ? jitter(o.boil, 0.4) : null);
   g.restore(); return true;

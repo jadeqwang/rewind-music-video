@@ -677,6 +677,8 @@ def process(shot, start=0.0, dur=None, layers=None, workers=3, force=False, src=
     stats = []
     if not preview_only:
         k = max(1, min(workers, n // 8 or 1))
+        if cfg.get('hold'):
+            k = 1          # the matte hold needs the whole history in one process
         bounds = np.linspace(0, n, k + 1).astype(int)
         jobs = [(shot, d, cache, (h, w), n, int(bounds[j]), int(bounds[j + 1]), layers, cfg, tn, force) for j in range(k)]
         print(f'{shot}: {n} frames @15fps from {os.path.relpath(src, ROOT)} ({w}x{h}), layers={layers}, workers={k}, tone={tn}', flush=True)

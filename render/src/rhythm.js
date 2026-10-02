@@ -25,6 +25,8 @@ export function applyRhythm(P, t, shot, T) {
   if (fx.kick) { const k = T.kick(t, 0.08); P.zoom = (P.zoom ?? 1) * (1 + 0.03 * fx.kick * k); P.ca = (P.ca ?? 0) + 3 * fx.kick * k; }
   if (fx.strobe) { const k = T.kick(t, 0.05); P.flash = Math.max(P.flash ?? 0, fx.strobe * 0.18 * k); }
   if (fx.soft) P.soft = Math.max(P.soft ?? 0, fx.soft * Math.pow(b.phase, 1.5));
+  // bone-paper inversion on downbeats (every n-th): two frames of the hard two-tone print
+  if (fx.downInvert) { const k = T.downbeatIndex(t); const d0 = T.downbeats[k]; if (k >= 0 && k % fx.downInvert === 0 && t - d0 < 2 / 30) P.invert = 1; }
   const bl = blinkAt(fx, t); if (bl > 0) P.blink = Math.max(P.blink ?? 0, bl);
   for (const j of fx.jerks || []) if (t >= j && t < j + 1 / 30) { P.shakeY = (P.shakeY ?? 0) + 46; P.flash = Math.max(P.flash ?? 0, 0.45); P.zoom = (P.zoom ?? 1) * 1.03; }
   return P;

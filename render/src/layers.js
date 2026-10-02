@@ -35,9 +35,11 @@ export const LAYERS = {
     const id = L.roto, m = roto.meta(id); if (!m) return;
     const ct = roto.clipTime(id, env.lt, { speed: A(L.speed, env, 1), offset: A(L.offset, env, 0), loop: L.loop ?? true });
     const rect = camRect(L.cam, env);
+    // paper: bone stock, ink lines (the file-photo inversion used as a recurring device)
+    if (L.paper) { const g = ctx.g; g.fillStyle = PAL.bone; g.fillRect(-10, -10, DW + 20, DH + 20); }
     const draw = (g) => {
-      roto.contours(g, id, ct, { color: L.color || PAL.bone, alpha: A(L.alpha, env, 0.8), rect, boil: ctx.seed, boilAmp: L.boilAmp ?? 1, fog: L.fog, double: L.double, comp: L.comp });
-      const la = A(L.lights, env, 0.9); if (la > 0) roto.lights(g, id, ct, { rect, alpha: la });
+      roto.contours(g, id, ct, { color: L.paper ? PAL.ink : (L.color || PAL.bone), alpha: A(L.alpha, env, 0.95), rect, boil: ctx.seed, boilAmp: L.boilAmp ?? 1, fog: L.fog, double: L.double, comp: L.paper ? 'source-over' : L.comp, exclude: L.exclude ? id : null });
+      const la = L.paper ? 0 : A(L.lights, env, 0.9); if (la > 0) roto.lights(g, id, ct, { rect, alpha: la });
     };
     if (!L.mirror) return draw(ctx.g);
     const Ly = layer('world_mirror', ctx.g.canvas.width, ctx.g.canvas.height), lg = clearLayer(Ly); lg.setTransform(ctx.S, 0, 0, ctx.S, 0, 0);
@@ -179,7 +181,7 @@ export const LAYERS = {
     const hits = (L.hits || [{ t: env.shot.t0 + (L.at ?? 0), text: L.text, variant: L.variant }]).filter(h => h.t <= env.t + 1e-6);
     if (!hits.length) return; const h = hits[hits.length - 1], g = L.onType ? ctx.ty : ctx.g, v = h.variant || L.variant || 'center';
     const o = { t: env.t, t0: h.t, text: h.text, color: h.color || L.color || PAL.bone, y: L.y, cx: L.cx };
-    if (v === 'behind') V.behind(g, o, null); else if (v === 'mirror') V.mirror(g, o); else if (v === 'bars') V.bars(g, { ...o, code: h.code }); else if (v === 'stack') V.stack(g, { ...o, beat: env.T.period });
+    if (v === 'assemble') V.assemble(g, { ...o, beat: env.T.period, maxH: L.maxH }); else if (v === 'behind') V.behind(g, o, null); else if (v === 'mirror') V.mirror(g, o); else if (v === 'bars') V.bars(g, { ...o, code: h.code }); else if (v === 'stack') V.stack(g, { ...o, beat: env.T.period });
     else slam(g, { ...o, stutter: L.stutter ?? 1, seed: hits.length, maxW: L.maxW ?? 1780, maxH: L.maxH ?? 680, y: L.y ?? 830, plates: L.plates });
   },
 
@@ -337,13 +339,14 @@ export const LAYERS = {
   wall(ctx, L, env) {
     const g = ctx.g, p = A(L.progress, env, env.u);
     const pins = L.pins || [[300, 260, '42.89'], [700, 600, '102.28'], [1180, 300, '13.45'], [1500, 700, '∞'], [480, 820, '45.20'], [1640, 240, '171.54']];
+    const cs = L.card ?? 1;
     g.save();
     const n = Math.ceil(pins.length * clamp(p * 1.4));
     g.strokeStyle = PAL.red; g.lineWidth = 3;
     for (let i = 1; i < n; i++) { const a = pins[i - 1], b = pins[i]; g.beginPath(); g.moveTo(a[0], a[1]); g.quadraticCurveTo((a[0] + b[0]) / 2, Math.max(a[1], b[1]) + 60, b[0], b[1]); g.stroke(); }
     for (let i = 0; i < n; i++) {
       const [x, y, lab] = pins[i];
-      g.save(); g.translate(x, y); g.rotate(hsig(i, 3) * 0.12);
+      g.save(); g.translate(x, y); g.rotate(hsig(i, 3) * 0.12); g.scale(cs, cs);
       g.fillStyle = PAL.bone; g.fillRect(-130, -90, 260, 180); g.fillStyle = PAL.ink; g.fillRect(-114, -74, 228, 120);
       g.fillStyle = '#000'; for (let k = 0; k < 3; k++) { g.beginPath(); g.ellipse(-60 + k * 60, -10, 18, 22, 0, 0, Math.PI * 2); g.fill(); g.fillRect(-82 + k * 60, 10, 44, 40); }
       setFont(g, F.mono(42, 700), 1); g.fillStyle = PAL.ink; g.textAlign = 'center'; g.fillText(lab, 0, 86);
@@ -450,6 +453,101 @@ Object.assign(LAYERS, {
   },
   // an over-everything vignette of black (drain), amount 0..1
   drain(ctx, L, env) { const g = ctx.g, a = A(L.amount, env, env.u); const gr = g.createRadialGradient(DW / 2, DH / 2, lerp(1200, 4, a), DW / 2, DH / 2, lerp(1400, 30, a)); gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(0,0,0,1)'); g.fillStyle = gr; g.fillRect(0, 0, DW, DH); },
+});
+Object.assign(LAYERS, {
+  // NEVER STOP painted on the asphalt as the lane dashes, rushing at camera in perspective (ground plane)
+  lanewords(ctx, L, env) {
+    const g = ctx.g, vx = L.vx ?? 960, vy = L.vy ?? 430, sp = A(L.speed, env, 1.6), words = L.words || ['NEVER', 'STOP'];
+    // road surface edges + centre band, bright
+    g.save(); g.strokeStyle = rgba(PAL.bone, 0.95); g.lineWidth = 5;
+    for (const sx of [-1, 1]) { g.beginPath(); g.moveTo(vx + sx * 30, vy); g.lineTo(vx + sx * 2400, DH + 200); g.stroke(); }
+    const n = L.n ?? 7;
+    setFont(g, F.slam(200)); g.textAlign = 'center'; g.textBaseline = 'alphabetic';
+    for (let i = n - 1; i >= 0; i--) {
+      const z = fract(i / n + env.t * sp * 0.22), d = Math.pow(z, 2.2);          // 0 = horizon, 1 = under the car
+      const y = vy + d * (DH + 300 - vy), sc = 0.04 + d * 2.6;
+      if (y > DH + 260) continue;
+      const w = words[(i + Math.floor(env.t * sp * 0.22 * n)) % words.length];
+      g.save(); g.translate(vx, y); g.scale(sc, sc * 0.42);
+      g.fillStyle = rgba(L.color || PAL.bone, smooth(0, 0.12, z)); g.fillText(w, 0, 0); g.restore();
+    }
+    g.restore();
+  },
+  // case-file pages of the deaths flying out of the car window (from the centre outward, tumbling)
+  casepages(ctx, L, env) {
+    const g = ctx.g, n = L.n ?? 7;
+    for (let i = 0; i < n; i++) {
+      const ph = fract(env.t * (0.45 + hash(i, 1) * 0.35) + hash(i, 2)), ang = hash(i, 3) * Math.PI * 2;
+      const r = lerp(60, 1500, Math.pow(ph, 1.4)), x = 960 + Math.cos(ang) * r, y = 520 + Math.sin(ang) * r * 0.6, sc = lerp(0.25, 1.7, ph), rot = hsig(i, 4) * 3 * ph;
+      g.save(); g.translate(x, y); g.rotate(rot); g.scale(sc, sc); g.globalAlpha = 1 - smooth(0.85, 1, ph);
+      g.fillStyle = PAL.bone; g.fillRect(-200, -260, 400, 520);
+      setFont(g, F.mono(40, 700), 2); g.fillStyle = PAL.ink; g.fillText(`CASE 0${1 + (i % 2)}`, -170, -200);
+      g.fillStyle = '#0b0b0c'; g.fillRect(-170, -170, 340, 210);
+      g.fillStyle = '#000'; for (let k = 0; k < 6; k++) g.fillRect(-170, 70 + k * 30, 120 + hash(i, k) * 210, 16);
+      setFont(g, F.mono(220, 700)); g.fillStyle = PAL.red; g.textAlign = 'center'; g.fillText('✗', 60, 40);
+      g.restore();
+    }
+  },
+  // the search tree collapsing into the road: thousands of branches fold into one line (the LSD curve)
+  collapse(ctx, L, env) {
+    const g = ctx.g, p = clamp(A(L.progress, env, env.u)), n = L.n ?? 900, R0 = rng(L.seed ?? 11), x0 = 260, y0 = 560;
+    const curve = s => { const q = LSD_AERIAL, k = s * (q.length - 1), i = Math.min(q.length - 2, Math.floor(k)), f = k - i; return [lerp(q[i][0], q[i + 1][0], f) * DW, lerp(q[i][1], q[i + 1][1], f) * DH]; };
+    const e = easeInOutCubic(p);
+    g.save(); g.lineCap = 'round';
+    g.strokeStyle = rgba(PAL.bone, lerp(0.35, 0.9, e)); g.lineWidth = lerp(2.5, 4, e); g.beginPath();
+    for (let i = 0; i < n; i++) {
+      let x = x0, y = y0, a = (R0() - 0.5) * 1.6; const len = 5;
+      for (let k = 0; k <= len; k++) {
+        if (k) { a += (R0() - 0.5) * 0.9; const st = 60 + R0() * 120; x += Math.cos(a) * st; y += Math.sin(a) * st * 1.2; }
+        const c = curve(k / len), px = lerp(x, c[0], e), py = lerp(y, c[1], e);
+        k ? g.lineTo(px, py) : g.moveTo(px, py);
+      }
+    }
+    g.stroke();
+    if (e > 0.85) { g.strokeStyle = rgba(PAL.cyan, (e - 0.85) / 0.15); g.lineWidth = 10; g.beginPath(); for (let k = 0; k <= 40; k++) { const c = curve(k / 40); k ? g.lineTo(c[0], c[1]) : g.moveTo(c[0], c[1]); } g.stroke(); }
+    g.restore();
+  },
+  // the defense room lit by its projector: a bone screen, a big bone wedge of light, the committee as solid black
+  projector(ctx, L, env) {
+    const g = ctx.g, fl = A(L.flicker, env, 0), sx = 520, sy = 110, sw = 880, sh = 500, px = L.px ?? 1760, py = L.py ?? 900;
+    g.save();
+    g.fillStyle = rgba(PAL.bone, 0.92 - fl * 0.5); g.fillRect(sx, sy, sw, sh);                     // the screen
+    g.globalCompositeOperation = 'lighter';
+    const gr = g.createLinearGradient(px, py, sx + sw / 2, sy + sh / 2); gr.addColorStop(0, rgba(PAL.bone, 0.75 - fl * 0.4)); gr.addColorStop(1, rgba(PAL.bone, 0.18));
+    g.fillStyle = gr; g.beginPath(); g.moveTo(px, py); g.lineTo(sx + sw, sy); g.lineTo(sx + sw, sy + sh); g.closePath(); g.fill();
+    g.beginPath(); g.moveTo(px, py); g.lineTo(sx + sw, sy + sh); g.lineTo(sx + sw * 0.5, sy + sh); g.closePath(); g.fill();
+    g.restore();
+    if (L.title) { setFont(g, F.cmu(70)); g.fillStyle = PAL.ink; g.textAlign = 'center'; g.fillText(L.title, sx + sw / 2, sy + 150); setFont(g, F.cmu(40)); g.fillText(L.sub ?? 'a dissertation defense', sx + sw / 2, sy + 220); }
+  },
+  // too many chairs: rows of chair outlines repeating into infinity (on bone paper)
+  chairs(ctx, L, env) {
+    const g = ctx.g, vx = 960, vy = 300, ink = L.color || PAL.ink;
+    g.save(); g.strokeStyle = ink; g.lineCap = 'round';
+    for (let r = 14; r >= 0; r--) {
+      const z = fract(r / 15 + env.t * 0.05), d = Math.pow(z, 2), y = vy + d * 900, sc = 0.05 + d * 1.4;
+      for (let c = -6; c <= 6; c++) {
+        const x = vx + c * 220 * sc * 1.4; g.lineWidth = Math.max(1.5, 5 * sc);
+        g.save(); g.translate(x, y); g.scale(sc, sc);
+        g.beginPath(); g.moveTo(-50, -160); g.lineTo(-50, 0); g.lineTo(50, 0); g.lineTo(50, -160); g.moveTo(-60, 0); g.lineTo(-60, 110); g.moveTo(60, 0); g.lineTo(60, 110); g.moveTo(-50, -160); g.lineTo(50, -160); g.stroke();
+        g.restore();
+      }
+    }
+    g.restore();
+  },
+  // the thesis' last page: bone paper, running head, the proof's closing line and the tombstone
+  qedpage(ctx, L, env) {
+    const g = ctx.g, ty = ctx.ty;
+    g.fillStyle = PAL.bone; g.fillRect(-10, -10, DW + 20, DH + 20);
+    ty.save(); ty.textBaseline = 'alphabetic';
+    setFont(ty, F.cmu(34)); ty.fillStyle = PAL.ink; ty.fillText('Chapter 3.  Proof by Exhaustion', 150, 120); setFont(ty, F.cmuR(34)); ty.textAlign = 'right'; ty.fillText(L.folio ?? '232', 1770, 120); ty.textAlign = 'left';
+    ty.fillRect(150, 142, 1620, 2);
+    setFont(ty, F.cmu(64)); ty.fillText(L.line1 ?? 'Case 3 holds: she does not stop.', 150, 380);
+    setFont(ty, F.cmu(64)); ty.fillText(L.line2 ?? 'Every other line was checked and pruned.', 150, 470);
+    ty.font = '700 220px CMUB'; ty.fillText('Q.E.D.', 150, 780);
+    setFont(ty, F.mono(240, 700)); ty.textAlign = 'right'; ty.fillText('∎', 1770, 790);
+    ty.fillRect(150, 900, 540, 2); setFont(ty, F.cmu(36)); ty.textAlign = 'left'; ty.fillStyle = PAL.ink; ty.fillText('³ attempts 01, 02: terminated. attempt 03: line found.', 150, 960);
+    ty.restore();
+  },
 });
 const TREES = new Map();
 

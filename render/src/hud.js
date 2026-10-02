@@ -33,13 +33,13 @@ export function glyph(g, ch, x, y, px, col, w = 700) { g.save(); setFont(g, F.mo
 export function evalBar(g, o) {
   const x = o.x ?? 44, y0 = o.y ?? 250, h = o.h ?? 700, w = o.w ?? 20, a = o.alpha ?? 1;
   const v = fin(o.value, 0), mate = o.mate;
-  const p = mate != null ? (mate > 0 ? 1 : 0) : clamp(0.5 + Math.atan(v / 2.2) / Math.PI);   // share of the bar that is "hers"
+  const p = o.inf ? 1 : mate != null ? (mate > 0 ? 1 : 0) : clamp(0.5 + Math.atan(v / 2.2) / Math.PI);   // share of the bar that is "hers"
   g.save();
   g.fillStyle = rgba('#000000', 0.92 * a); g.fillRect(x, y0, w, h);
   g.strokeStyle = rgba(PAL.boneDim, 0.7 * a); g.lineWidth = 2; g.strokeRect(x - 1, y0 - 1, w + 2, h + 2);
   const hb = h * p; g.fillStyle = rgba(PAL.bone, a); g.fillRect(x, y0 + h - hb, w, hb);
   g.fillStyle = rgba(PAL.red, a); g.fillRect(x + w + 3, y0 + h / 2 - 1, 8, 3);    // zero tick
-  const label = mate != null ? `${mate < 0 ? '−' : '+'}#${Math.abs(mate)}` : `${v >= 0 ? '+' : '−'}${Math.abs(v).toFixed(1)}`;
+  const label = o.inf ? '+∞' : mate != null ? `${mate < 0 ? '−' : '+'}#${Math.abs(mate)}` : `${v >= 0 ? '+' : '−'}${Math.abs(v).toFixed(1)}`;
   setFont(g, F.mono(o.size ?? MONO_KEY, 700), 0); g.textBaseline = 'alphabetic';
   g.fillStyle = mate != null && mate < 0 ? rgba(PAL.red, a) : rgba(o.ink ? PAL.ink : PAL.bone, a);
   g.fillText(label, x - 6, y0 - 26);
@@ -172,12 +172,12 @@ export function hudOverlay(g, t, shot, T) {
     setFont(g, F.mono(64, 700), 1); g.fillStyle = rgba(h.ink ? PAL.ink : PAL.bone, a);
     const n = typeof h.attempt === 'function' ? h.attempt(t) : h.attempt;
     g.fillText(String(n).padStart(2, '0'), 96 + lw + 18, 96);
-    if (h.failed) { const nw = g.measureText(String(n).padStart(2, '0')).width; g.fillStyle = rgba(PAL.red, a); g.fillText('✗', 96 + lw + 30 + nw, 96); }
+    if (h.failed || h.ok) { const nw = g.measureText(String(n).padStart(2, '0')).width; g.fillStyle = rgba(h.ok ? PAL.cyan : PAL.red, a); g.fillText(h.ok ? '✓' : '✗', 96 + lw + 30 + nw, 96); }
     g.restore();
   }
   if (h.eval != null || h.mate != null) {
     const v = Array.isArray(h.eval) ? lerp(h.eval[0], h.eval[1], u * u) : typeof h.eval === 'function' ? h.eval(t) : h.eval;
-    evalBar(g, h.mate != null && (h.mateAt == null || lt >= h.mateAt) ? { mate: h.mate, alpha: a } : { value: v, alpha: a });
+    evalBar(g, h.mate != null && (h.mateAt == null || lt >= h.mateAt) ? { mate: h.mate, alpha: a } : { value: v, alpha: a, inf: v === Infinity });
   }
   if (h.tc) {
     g.save(); setFont(g, F.mono(46, 400), 1); g.fillStyle = rgba(h.ink ? PAL.ink : PAL.boneDim, a); g.textAlign = 'right'; g.textBaseline = 'alphabetic';

@@ -81,3 +81,24 @@ export function stack(g, o) {
   }
   g.restore();
 }
+
+// (e) assemble: the title holds its hit, then on every beat the letters drift out of the line and are pulled back in
+//     reverse motion (tape-rewind) with echo trails — dream text that keeps re-spelling itself
+export function assemble(g, o) {
+  const dt = Math.max(0, o.t - o.t0), text = o.text.toUpperCase(), beat = o.beat ?? 60 / 130;
+  g.save(); g.textBaseline = 'alphabetic';
+  const { px, w } = fit(g, text, F.slam, 600, o.maxW ?? 1500, o.maxH ?? 430);
+  const by = o.y ?? 640, x0 = DW / 2 - w / 2;
+  const chars = text.split(''), widths = chars.map(c => g.measureText(c).width);
+  const ph = (dt % (2 * beat)) / (2 * beat), drift = dt < 0.25 ? 0 : Math.sin(ph * Math.PI) ** 2;   // out and back every 2 beats
+  for (let e = 3; e >= 0; e--) {
+    let x = x0;
+    for (let i = 0; i < chars.length; i++) {
+      const dd = Math.max(0, drift - e * 0.06), ox = hsig(i, 1, Math.floor(dt / (2 * beat))) * 140 * dd, oy = hsig(i, 2, Math.floor(dt / (2 * beat))) * 90 * dd, rot = hsig(i, 3) * 0.25 * dd;
+      g.save(); g.translate(x + widths[i] / 2 + ox, by + oy); g.rotate(rot);
+      g.fillStyle = e ? rgba(PAL.cyan, 0.25 / e) : (o.color || PAL.bone); g.fillText(chars[i], -widths[i] / 2, 0); g.restore();
+      x += widths[i];
+    }
+  }
+  g.restore();
+}

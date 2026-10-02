@@ -18,8 +18,9 @@ export function buildShots(T) {
   // ---------------- roto refs ----------------
   const R = {
     jade: id => `${id}|ld_jade`,
-    suits: id => `${id}|ld_suits`,
-    road: '_auto/E2_calm', aerial: '_auto/E1', flood: '_auto/E3_flood', follow: '_auto/E3_follow', room: '_auto/E5', committee: '_auto/S4',
+    suits: id => `${id}|${({ B3: 'S1', B6: 'S2', F2: 'S3', F3: 'S3', S5: 'S5' })[id] || 'S1'}|ld_suits`,
+    road: 'E2_fast|E2_calm|_auto/E2_calm', calm: 'E2_calm|_auto/E2_calm', aerial: 'E1|_auto/E1', flood: 'E3_flood|_auto/E3_flood', follow: 'E3_follow|_auto/E3_follow',
+    room: 'E5|_auto/E5', committee: 'S4|_auto/S4', field: 'E4|_auto/plate_grass_field_1', pull: 'Epull|_auto/plate_pullover_3',
     formation: '_auto/S1', window: '_auto/S2',
     plate: n => `_auto/plate_${n}`,
   };
@@ -39,22 +40,23 @@ export function buildShots(T) {
     { type: 'slam', text: 'ATTEMPT 01 ✗', variant: 'center', at: 0, y: 330, maxH: 250, stutter: 0, onType: true, color: PAL.bone },
   ], { hud: { mate: -1, tc: true }, fx: { heart: 0 } }, { post: { bloom: 0.2, ca: 1.5 } });
   // H1: the whole video backwards at ×64 — a trailer in reverse; lands on the dark road
-  add('H1_scrub', bt(1), bt(6), 'rewind', { from: sec('end').start - 0.5, to: v1, speeds: [64], segs: [1], hold: 0, echo: 0, badge: 64 }, { fx: { jerks: [bt(1)] } });
+  add('H1_scrub', bt(1), bt(9), 'rewind', { from: sec('end').start - 0.5, to: v1, speeds: [64], segs: [1], hold: 0, echo: 0, badge: 64 }, { fx: { jerks: [bt(1)] } });
   // H2: rain on the windshield; dashboard glow rising; case 1 of ∞
-  C('H2_rain', bt(6), braam0, [ink,
-    { type: 'world', roto: R.plate('car_interior_1'), alpha: e => 0.3 + 0.3 * e.u, lights: e => 0.3 + 0.5 * e.u, cam: { from: [0.5, 0.5, 1.06], to: [0.5, 0.52, 1.12] } },
-    { type: 'rain', n: 220, alpha: 0.35 }, { type: 'rain', n: 60, alpha: 0.6, slow: 0.25 },
-    { type: 'dash', amount: e => 0.35 * e.u },
-    { type: 'mono', text: 'case 1 of ∞', y: 560, at: 0.6, typed: 14, color: PAL.boneDim },
-  ], { fx: { heart: 0.25, soft: 0.6, blinks: [{ t: bt(6) + 1.6, skip: 0.4 }] } });
+  C('H2_rain', bt(9), braam0, [ink,
+    { type: 'world', roto: R.plate('car_interior_1'), alpha: 0.95, lights: 1, cam: { from: [0.5, 0.5, 1.06], to: [0.5, 0.52, 1.14] } },
+    { type: 'sodium', period: P * 2, amount: 0.9, alpha: 0.5 }, { type: 'flash', amount: 0.12, color: PAL.sodium },
+    { type: 'rain', n: 320, alpha: 0.75 }, { type: 'rain', n: 90, alpha: 1, slow: 0.25 },
+    { type: 'dash', amount: e => 0.5 + 0.4 * e.u },
+    { type: 'mono', text: 'case 1 of ∞', y: 560, at: 0.3, typed: 14, color: PAL.bone, size: 56, weight: 700 },
+  ], { fx: { heart: 0.25, soft: 0.4, blinks: [{ t: bt(9) + 1.0, skip: 0.4 }] } });
   // H3: title card on the braam
   C('H3_title', braam0, db(5), [ink,
-    { type: 'slam', text: 'REWIND', variant: 'center', y: 640, maxH: 430, stutter: 1 },
-    { type: 'cm', text: 'a proof by exhaustion', x: DW / 2, align: 'center', y: 820, size: 76, at: 0.35 },
-  ], { fx: { jerks: [braam0], heart: 0.2 } }, { post: { bloom: 0.25, bloomThr: 0.7 } });
+    { type: 'slam', text: 'REWIND', variant: 'assemble', y: 640, maxH: 430 },
+    { type: 'cm', text: 'a proof by exhaustion', x: DW / 2, align: 'center', y: 820, size: 80, at: 0.35 },
+  ], { fx: { jerks: [braam0], heart: 0.2 } }, { post: e => ({ bloom: 0.25, bloomThr: 0.7, warble: 0.5 * Math.sin((e.lt % (2 * P)) / (2 * P) * Math.PI) ** 2, warbleSeed: Math.floor(e.lt * 30), scan: 0.25 }) });
   // H4: aerial LSD self-drawing as one pen stroke; THEOREM / PROOF
   C('H4_theorem', db(5), v1, [ink,
-    { type: 'world', roto: R.aerial, alpha: 0.18, lights: 0.45, cam: { from: [0.5, 0.5, 1.0], to: [0.48, 0.55, 1.12] } },
+    { type: 'world', roto: R.aerial, alpha: 0.5, lights: 0.4, cam: { from: [0.5, 0.5, 1.0], to: [0.48, 0.55, 1.12] } },
     { type: 'pathdraw', progress: e => easeInOutCubic(e.u), width: 5 },
     { type: 'cm', lead: 'Theorem.', text: 'She makes it home.', x: 420, y: 520, size: 112 },
     { type: 'cm', lead: 'Proof.', text: 'By exhaustion.', x: 420, y: 690, size: 112, at: 1.4 },
@@ -63,24 +65,25 @@ export function buildShots(T) {
   // =============================== 1 · VERSE 1 13.45 – 28.53 (whisper) ===============================
   const pageHdr = { header: 'Chapter 3.  Proof by Exhaustion', folio: '47' };
   C('V1_profile', v1, L(1).start, [ink,
-    { type: 'world', roto: R.plate('lake_shore_drive_1'), alpha: 0.16, lights: 0.3, cam: { from: [0.5, 0.55, 1.1], to: [0.5, 0.55, 1.2] }, mirror: { y: 640, alpha: 0.3 } },
+    { type: 'world', roto: R.plate('lake_shore_drive_1'), alpha: 0.3, lights: 0.5, cam: { from: [0.5, 0.55, 1.1], to: [0.5, 0.55, 1.2] }, mirror: { y: 640, alpha: 0.3 } },
     { type: 'sodium', period: 4 * P / 2, amount: 0.34, alpha: 0.08 },
     { type: 'rain', n: 70, alpha: 0.08 },
     jade('J1', { light: 'sodium', late: P }),
     { type: 'page', lines: [0], notes: { defense: '1' }, footnotes: [{ mark: '1', text: 'tomorrow, 9:00 a.m.', word: 'defense' }], size: 140, maxLines: 3, ...pageHdr },
   ], { hud: hud(1, 0.3), fx: { heart: 0.22, soft: 0.35, blinks: [{ t: W('my').start - 0.2, skip: 0.25 }] } });
   C('V2_pov', L(1).start, L(2).start, [ink,
-    { type: 'world', roto: R.road, alpha: 0.7, lights: 0.9, speed: 1.4 },
+    { type: 'world', roto: R.road, alpha: 1, lights: 0.6, speed: 1.4 },
+    { type: 'sodium', period: P, amount: 0.7, alpha: 0.25 },
     { type: 'streetlights', vx: 1040, vy: 470, speed: 1.4 },
     { type: 'routemap', progress: e => e.u },
     { type: 'page', lines: [1], size: 104, y: 330, measure: 1150, maxLines: 2 },
-  ], { hud: hud(1, 0.2), fx: { heart: 0.2, kick: 0.3 } });
-  C('V3_mirror', L(2).start, sec('build1').start, [ink,
-    { type: 'world', roto: R.follow, alpha: 0.65, lights: 1 },
-    { type: 'ghostcar', x: 1530, y: 300, scale: 0.42, alpha: e => 0.5 + 0.4 * Math.sin(e.t * 9) ** 2 },
-    { type: 'page', lines: [2], until: W('couldn\'t', 1, { after: L(2).start }).start, size: 120, y: 790, measure: 1300, maxLines: 1 },
-    { type: 'redact', hold: true, parts: ['I', { bar: 9 }], x: 150, y: 950, size: 120 },
-  ], { hud: hud(1, 0.1), fx: { heart: 0.25, blinks: [{ t: sec('build1').start - 0.12, skip: 0 }] } });
+  ], { hud: hud(1, 0.2), fx: { heart: 0.2, kick: 0.3, downInvert: 2 } });
+  C('V3_mirror', L(2).start, sec('build1').start, [
+    { type: 'world', roto: R.follow, paper: true, alpha: 1 },
+    { type: 'ghostcar', x: 1530, y: 300, scale: 0.42, color: PAL.ink, alpha: e => 0.5 + 0.4 * Math.sin(e.t * 9) ** 2 },
+    { type: 'page', lines: [2], until: W('couldn\'t', 1, { after: L(2).start }).start, size: 120, y: 790, measure: 1300, maxLines: 1, color: PAL.ink, settle: 0.6 },
+    { type: 'redact', hold: true, parts: ['I', { bar: 9 }], x: 150, y: 950, size: 120, color: PAL.ink, barColor: '#000' },
+  ], { hud: hud(1, 0.1, { ink: true }), fx: { heart: 0.25, blinks: [{ t: sec('build1').start - 0.12, skip: 0 }] } }, { post: { bloom: 0, vignette: 0.15 } });
 
   // =============================== 2 · BUILD 1 28.53 – 43.42 (the approach) ===============================
   const b1 = sec('build1').start, men = W('men').start, shades = W('shades').start;
@@ -90,7 +93,7 @@ export function buildShots(T) {
     { type: 'mono', text: 'SIRENS (SILENT)', y: 980, size: 46, weight: 700, typed: 30 },
   ], { hud: hud(1, 0.0), fx: { heart: 0.3 } });
   C('B2_pullover', L(3).start, T.beatBefore(men), [ink,
-    { type: 'world', roto: R.plate('pullover_3'), alpha: 0.8, lights: 1, cam: { from: [0.45, 0.6, 1.0], to: [0.42, 0.66, 1.35], ease: easeOutCubic } },
+    { type: 'world', roto: R.pull, alpha: 1, lights: 1, cam: { from: [0.45, 0.6, 1.0], to: [0.42, 0.66, 1.35], ease: easeOutCubic } },
     { type: 'sirens', side: 'pair', base: 0.15, peak: 0.35 },
     { type: 'annotation', n: 1, move: 'pull over', nag: '?!', x: 150, y: 960, size: 56, at: 0.3 },
     { type: 'tree', seed: 7, depth: 4, x: 1420, y: 340, w: 380, h: 300, progress: e => 0.25 * e.u, leafSize: 30, onType: true, alpha: 0.9 },
@@ -227,11 +230,12 @@ export function buildShots(T) {
     overlay: { from: shot1 - 0.02, to: L(3).start, color: PAL.red, alpha: 0.75 },
     layers: [{ type: 'sweepbars', progress: e => (e.lt % (2 * P)) / (2 * P), n: 5, onType: true }] }, { fx: { jerks: [drop2], kick: 1 } });
   for (const d of T.downbeatsIn(drop2 + 1, r9 - 1).filter((_, i) => i % 2 === 1)) C(`R8_j${DI(d)}`, d, d + 2 * P, [ink, { type: 'sirens', side: 'pair', base: 0.5, peak: 0.6 }, jade('J5b', { light: 'siren', late: P / 2, lateColor: PAL.red, cam: { from: [0.76, 0.42, 1.0], to: [0.76, 0.42, 1.1] } }), { type: 'circle', x: 960, y: 420, r: 320, color: PAL.red }], { fx: { kick: 1, strobe: 0.6 } });
-  C('R9_bars', r9, r10, [{ type: 'fill', color: PAL.bone }, { type: 'slam', hits: [{ t: r9, text: 'REWIND', variant: 'bars', code: '(b)(7)(C)' }, { t: T.downbeatsIn(r9 + 0.5, r10)[0] ?? r9 + bar, text: 'RE—WIND', variant: 'bars', code: '(b)(6)' }] }],
+  C('R9_bars', r9, r10, [{ type: 'fill', color: PAL.bone }, { type: 'fill', color: PAL.red, when: e => e.t >= (T.downbeatsIn(r9 + 0.5, r10)[0] ?? r9 + bar) }, { type: 'slam', hits: [{ t: r9, text: 'REWIND', variant: 'bars', code: '(b)(7)(C)' }, { t: T.downbeatsIn(r9 + 0.5, r10)[0] ?? r9 + bar, text: 'REWIND', variant: 'behind' }] },
+    { type: 'suits', roto: R.suits('B3'), when: e => e.t >= (T.downbeatsIn(r9 + 0.5, r10)[0] ?? r9 + bar), cam: { from: [0.5, 0.5, 1.0], to: [0.5, 0.5, 1.15] } }],
     { fx: { kick: 1, jerks: [r9] } }, { post: { bloom: 0, vignette: 0.1 } });
   const r11 = T.downbeatsIn(r10 + 0.3, r10 + 3)[0] ?? r10 + bar / 2;
-  C('R10_bars', r10, r11, [{ type: 'fill', color: PAL.red }, { type: 'slam', text: 'REWIND', variant: 'bars', at: 0, code: '(b)(7)(E)' }], { fx: { kick: 1, jerks: [r10] } }, { post: { bloom: 0 } });
-  const r12 = T.downbeatsIn(bd - 2.5 * bar, bd)[0] ?? bd - 2 * bar;
+  C('R10_stack', r10, r11, [{ type: 'fill', color: PAL.red }, { type: 'slam', text: 'REWIND', variant: 'stack', at: 0, color: PAL.ink }], { fx: { kick: 1, jerks: [r10] } }, { post: { bloom: 0 } });
+  const r12 = T.downbeatsIn(bd - 1.5 * bar, bd)[0] ?? bd - bar;
   {
     const ks = [r11, ...T.kicksIn(r11 + 0.2, r12).filter((_, i) => i % 2 === 1)]; ks.push(r12);
     const kinds = ['wall', 'foia', 'jade', 'counter', 'tree', 'case'];
@@ -252,29 +256,33 @@ export function buildShots(T) {
 
   // =============================== 7 · BREAKDOWN 134.09 – 164.10 (the defense room) ===============================
   const brm = [ev('braam', 4), ev('braam', 5), ev('braam', 6)], dSil = ev('silence', 3);
-  // D1: the room, re-angled on each braam (projector flicker; one more redacted committee member each time; too many chairs)
-  const roomCut = [bd, ...brm, L(16).start];
-  const roomViews = [R.room, R.plate('defense_room_2'), R.plate('defense_room_3'), R.room];
-  for (let i = 0; i < 4; i++) {
-    const isE5 = roomViews[i] === R.room;
-    C(`D1_room${i}`, roomCut[i], roomCut[i + 1], [ink,
-      { type: 'world', roto: roomViews[i], alpha: 0.85, lights: 1, speed: 0.6, loop: 'pingpong', cam: { from: [0.5, 0.5, 1.0 + i * 0.08], to: [0.5, 0.5, 1.12 + i * 0.08] } },
-      ...(isE5 ? [{ type: 'committee', n: i + (i ? 1 : 0), scale: 0.9, seats: [[700, 560], [860, 560], [1020, 560], [1180, 560], [1340, 560]] }] : []),
-      { type: 'flash', amount: e => (i && e.lt < 0.25 ? 0.4 * (1 - e.lt / 0.25) : 0) },
-      { type: 'mono', text: 'DEFENSE · 09:00', y: 1000, size: 46, weight: 700, at: i ? 0 : 0.8, typed: i ? 0 : 16 },
-    ], { hud: hud(3, 0.0), fx: { heart: 0.3, soft: 0.25, blinks: i === 1 ? [{ t: roomCut[2] - 0.7, skip: 0.5 }] : [] } });
-  }
-  C('D2_chair', L(16).start, dSil.t ?? dSil, [ink, { type: 'world', roto: R.room, alpha: 0.3, lights: 0.5, speed: 0.4 },
-    jade('J8', { cam: { from: [0.62, 0.45, 0.8], to: [0.62, 0.45, 0.82] } }),
-    { type: 'revisions', lines: [16], size: 110, y: 380, measure: 1000 }], { hud: hud(3, 0.0), fx: { heart: 0.3 } });
+  // D1: the room lit by its projector — a bone screen and a big bone wedge of light; on each braam the projector
+  // flickers and one more redacted committee member is sitting there (solid black against the screen). Dream: too many chairs.
+  const seats = [[700, 690], [860, 690], [1020, 690], [1180, 690], [1340, 690]];
+  const room = (n, o = {}) => [ink, { type: 'world', roto: R.room, alpha: 0.7, lights: 0.6, speed: 0.6, loop: 'pingpong', cam: o.cam },
+    { type: 'projector', flicker: e => (o.flick && e.lt < 0.3 ? Math.abs(Math.sin(e.lt * 60)) : 0), title: 'REWIND', sub: 'a proof by exhaustion' },
+    { type: 'committee', n, scale: 1.0, seats }];
+  const chairsAt = brm[0] + bar;
+  C('D1_room0', bd, brm[0], [...room(0), { type: 'mono', text: 'DEFENSE · 09:00', y: 1010, size: 50, weight: 700, at: 0.8, typed: 16 }], { hud: hud(3, 0.0), fx: { heart: 0.3, soft: 0.2 } });
+  C('D1_room1', brm[0], chairsAt, room(1, { flick: true }), { hud: hud(3, 0.0), fx: { heart: 0.3, jerks: [brm[0]] } });
+  C('D1_chairs', chairsAt, brm[1], [{ type: 'fill', color: PAL.bone }, { type: 'chairs' }, { type: 'mono', text: 'committee: 5 of ∞', y: 1010, size: 50, weight: 700, color: PAL.ink }],
+    { hud: hud(3, 0.0, { ink: true }), fx: { heart: 0.3, blinks: [{ t: brm[1] - 0.5, skip: 0.3 }] } }, { post: { bloom: 0, vignette: 0.15 } });
+  C('D1_room2', brm[1], brm[2], room(2, { flick: true, cam: { from: [0.5, 0.5, 1.05], to: [0.5, 0.5, 1.15] } }), { hud: hud(3, 0.0), fx: { heart: 0.3, jerks: [brm[1]] } });
+  C('D1_room3', brm[2], L(16).start, room(e => (e.lt > bar ? 5 : 3), { flick: true }), { hud: hud(3, 0.0), fx: { heart: 0.35, jerks: [brm[2]] } });
+  C('D2_chair', L(16).start, dSil.t ?? dSil, [ink, { type: 'projector', title: '', sub: '' },
+    jade('J8', { cam: { from: [0.76, 0.42, 1.1], to: [0.76, 0.42, 1.14], dx: 380 } }),
+    { type: 'revisions', lines: [16], size: 100, y: 380, measure: 900 }], { hud: hud(3, 0.0), fx: { heart: 0.3 } });
   const dsil = T.opt(T => T.event('silence', 3), 149.12), dsilEnd = T.downbeatsIn(dsil + 1, dsil + 3)[0] ?? dsil + 2;
-  C('D3_dropout', dsil, dsilEnd, [ink, { type: 'mono', text: '∴', y: 640, size: 380, weight: 700 }], { fx: { heart: 0.1 } });
-  C('D4_wall', dsilEnd, L(18).start, [ink, { type: 'wall', progress: e => e.u }, { type: 'routemap', x: 1440, y: 680, progress: e => e.u },
-    { type: 'revisions', lines: [17], size: 100, y: 820, measure: 1300 }], { hud: hud(3, 0.0), fx: { heart: 0.3, kick: 0.2 } });
-  C('D5_reveal', L(18).start, sec('build3').start, [ink, { type: 'world', roto: R.room, alpha: 0.25, lights: 0.4, speed: 0.4 },
+  C('D3_dropout', dsil, dsilEnd, [{ type: 'fill', color: PAL.bone }, { type: 'mono', text: '∴', y: 700, size: 520, weight: 700, color: PAL.ink }], { fx: { heart: 0.1 } }, { post: { bloom: 0, vignette: 0.1 } });
+  // D4: A Beautiful Mind wall, BIG: four case-file prints pinned with red string, filling the frame
+  C('D4_wall', dsilEnd, L(18).start, [{ type: 'fill', color: '#16110C' },
+    { type: 'wall', card: 2.3, progress: e => 0.3 + e.u, pins: [[420, 290, '42.89'], [1480, 300, '102.28'], [520, 840, '13.45'], [1420, 830, '∞']] },
+    { type: 'revisions', lines: [17], size: 76, y: 560, measure: 1500, revs: [{ dx: 0, dy: 0 }, { dx: 18, dy: 30 }] }],
+    { hud: hud(3, 0.0), fx: { heart: 0.3, kick: 0.2, downInvert: 2 } }, { post: { bloom: 0.1 } });
+  C('D5_reveal', L(18).start, sec('build3').start, [ink, { type: 'projector', title: '', sub: '' },
     { type: 'ghosts', roto: R.jade('J8b'), n: 3 },
-    { type: 'page', lines: [18], until: W('couldn\'t', 2).start, size: 120, y: 760, measure: 1400, maxLines: 1 },
-    { type: 'redact', text: 'it was me.', x: 150, y: 920, size: 120, at: W('place', 2).end - L(18).start + 0.2, dur: 0.7, color: PAL.cyan, barColor: PAL.bone },
+    { type: 'page', lines: [18], until: W('couldn\'t', 2).start, size: 110, y: 820, measure: 1500, maxLines: 1 },
+    { type: 'redact', text: 'it was me.', x: 150, y: 970, size: 110, at: W('place', 2).end - L(18).start + 0.2, dur: 0.7, color: PAL.cyan, barColor: PAL.bone },
   ], { hud: hud(3, 0.0), fx: { heart: 0.35 } });
 
   // =============================== 8 · BUILD 3 164.10 – 171.50 (brute force) ===============================
@@ -288,48 +296,41 @@ export function buildShots(T) {
   C('X3_stop', stop3, T.opt(T => T.section('silence3').end, stop3 + 0.66) - 0.22, [ink, { type: 'explode', n: 0, lit: 1 }, { type: 'slam', text: 'STOP', at: 0, y: 1000, maxH: 300, onType: true }], { fx: { kick: 1 } });
   C('X4_black', T.opt(T => T.section('silence3').end, stop3 + 0.66) - 0.22, fd, [{ type: 'fill', color: '#000' }, { type: 'annotation', n: 1, move: 'keep driving', nag: '!!', x: 620, y: 560, size: 64 }], { fx: { heart: 0 } });
 
-  // =============================== 9 · FINAL DROP 171.54 – 215.86 (never stop) ===============================
-  const n2 = T.downbeatsIn(fd + 0.5, fd + 4)[0] ?? fd + bar, n3 = T.downbeatsIn(fd + 17, fd + 20)[0], n4 = T.downbeatsIn(n3 + 14, n3 + 16.5)[0] ?? n3 + 15, n5 = sec('instrumental').start, end = sec('end').start;
+  // =============================== 9 · FINAL DROP 171.54 – 227.20 (never stop) — the climax ===============================
+  // dream in space (words become lane dashes, the tree folds into the road, suits slip scale, pages fly out of the window),
+  // club in time (cut on downbeats, sodium floods on every kick, bone-paper inversions on every downbeat)
+  const DB = i => T.downbeat(DI(fd) + i);           // i-th bar from the drop
+  const n2 = DB(1), n3 = DB(8), n4 = DB(12), n5 = DB(16), n6 = sec('instrumental').start, qed = ev('braam', 9), end = sec('end').start;
+  const drive = { kick: 1, strobe: 0.7, downInvert: 1 };
   C('N1_found', fd, n2, [ink, { type: 'mono', text: 'ATTEMPT 03 — LINE FOUND', y: 300, size: 64, weight: 700, color: PAL.cyan },
-    { type: 'slam', hits: [{ t: fd + P, text: 'NEVER STOP', variant: 'center' }], y: 860, maxH: 420 }], { fx: { kick: 1, jerks: [fd] } });
-  {
-    const ds = [n2, ...T.downbeatsIn(n2 + 0.5, n3), n3];
-    const kinds = ['jade', 'pov', 'mirror', 'roadside'];
-    for (let i = 0; i < ds.length - 1; i++) {
-      const kd = kinds[i % 4], id = `N2_${i}`;
-      const lay = kd === 'jade' ? [ink, { type: 'world', roto: R.plate('car_interior_1'), alpha: 0.25, lights: 0.6, cam: { from: [0.5, 0.5, 1.1], to: [0.5, 0.5, 1.15] } }, { type: 'sodium', period: P, amount: 0.4, kick: 1 }, jade('J9', { light: 'sodium', late: P / 2 })]
-        : kd === 'pov' ? [ink, { type: 'world', roto: R.road, alpha: 0.8, lights: 1, speed: 2 }, { type: 'streetlights', speed: 2.6 }, { type: 'speedlines', amount: 0.5, vy: 470 }, { type: 'kickflash', color: PAL.sodium, amount: 0.25 }]
-        : kd === 'mirror' ? [ink, { type: 'world', roto: R.road, alpha: 0.5, lights: 0.8, speed: 2 }, { type: 'mirror', rect: [560, 70, 800, 240], zoom: 1.2, layers: [{ type: 'world', roto: R.flood, alpha: 0.6, lights: e => 1 - e.u * 0.7 }, { type: 'sirens', side: 'full', amount: e => 1 - e.u, base: 0.3 }] }]
-        : [ink, ...sirenLit({ base: 0.3 }), ...suits('S5', { cam: { from: [0.1, 0.45, 0.7], to: [1.3, 0.45, 0.45], ease: x => x } }), { type: 'speedlines', amount: 0.6, vx: 1400, vy: 500 }];
-      C(id, ds[i], ds[i + 1], [...lay, { type: 'slam', hits: T.chopsIn(ds[i], ds[i + 1]).map(c => ({ t: c, text: 'I DREAMT', variant: 'stack' })), onType: true, color: PAL.bone, cx: kd === 'jade' ? 560 : DW / 2 }],
-        { hud: hud(3, 2.5), fx: { kick: 1, strobe: 0.5 } });
-    }
-  }
-  {
-    const ds = [n3, ...T.downbeatsIn(n3 + 0.5, n4).filter((_, i) => i % 2 === 1), n4];
-    for (let i = 0; i < ds.length - 1; i++) {
-      const plate = i % 3 === 1 ? R.plate('lake_shore_drive_2') : i % 3 === 2 ? R.plate('lake_shore_drive_4') : R.aerial;
-      C(`N3_aerial${i}`, ds[i], ds[i + 1], [ink, { type: 'world', roto: plate, alpha: 0.7, lights: 1, cam: { from: [0.5, 0.5, 1.0 + 0.04 * i], to: [0.5, 0.5, 1.1 + 0.04 * i] }, mirror: plate === R.aerial ? null : { y: 560, alpha: 0.3 } },
-        { type: 'tree', seed: 7, depth: 4, progress: 1, lit: 1, alpha: 0.3, x: 200, y: 560, w: 1500, h: 900, litColor: PAL.cyan },
-        { type: 'pathdraw', progress: e => clamp((e.t - n3) / (n4 - n3)), width: 7 },
-        { type: 'ghostcar', x: e => lerp(700, 300, e.u), y: e => lerp(500, 900, e.u), scale: 0.3, alpha: e => 0.8 * (1 - e.u), color: PAL.red },
-        { type: 'ghostcar', x: e => lerp(800, 1300, e.u), y: e => lerp(500, 950, e.u), scale: 0.3, alpha: e => 0.8 * (1 - e.u), color: PAL.cyan }],
-        { hud: hud(3, 4), fx: { kick: 0.8 } });
-    }
-  }
-  {
-    const ds = [n4, ...T.downbeatsIn(n4 + 0.5, n5), n5];
-    for (let i = 0; i < ds.length - 1; i++) {
-      const hudA = clamp(1 - (ds[i] - n4) / (n5 - n4) * 1.3);
-      C(`N4_shed${i}`, ds[i], ds[i + 1], [ink, { type: 'world', roto: R.road, alpha: 0.85, lights: 1, speed: 2.4, offset: i * 0.7 }, { type: 'streetlights', speed: 3 }, { type: 'speedlines', amount: 0.7, vy: 470, n: 140 }, { type: 'kickflash', color: PAL.sodium, amount: 0.3 }],
-        { hud: { attempt: hudA > 0.66 ? 3 : null, tc: hudA > 0.33, eval: hudA > 0 ? 6 : null, alpha: hudA }, fx: { kick: 1, strobe: 0.7 } });
-    }
-  }
-  const qed = ev('braam', 9);
-  C('N5_lake', n5, end, [ink, { type: 'world', roto: R.aerial, alpha: 0.6, lights: 1, cam: { from: [0.45, 0.6, 1.5], to: [0.5, 0.5, 0.82] } },
-    { type: 'tree', seed: 7, depth: 4, progress: 1, lit: 1, alpha: 0.3, x: 180, y: 560, w: 1560, h: 980, litColor: PAL.cyan },
-    { type: 'pathdraw', progress: 1, width: 7, head: false },
-    { type: 'cm', text: 'Q.E.D.', x: DW / 2, align: 'center', y: 620, size: 240, at: qed - n5 }], { fx: { kick: 0.4, heart: 0.2 } });
+    { type: 'slam', hits: [{ t: fd + P, text: 'NEVER STOP', variant: 'center' }], y: 860, maxH: 420 }], { hud: { attempt: 3, ok: true, tc: true, eval: 9 }, fx: { kick: 1, jerks: [fd] } });
+  const lane = (o = {}) => [ink, { type: 'world', roto: R.road, alpha: 0.8, lights: 0.6, speed: 2.2 }, { type: 'kickflash', color: PAL.sodium, amount: 0.55 },
+    { type: 'streetlights', speed: 2.8 }, { type: 'lanewords', speed: 2.0, words: o.words }, { type: 'speedlines', amount: 0.5, vy: 430 }];
+  const insert = (kind, i) => kind === 'jade' ? [ink, { type: 'sodium', period: P, amount: 0.9, kick: 1, alpha: 0.4 }, jade('J9', { light: 'sodium', late: P / 2, cam: { from: [0.76, 0.42, 1.05], to: [0.76, 0.42, 1.12] } })]
+    : kind === 'pages' ? [{ type: 'fill', color: PAL.sodium }, { type: 'world', roto: R.road, alpha: 0.8, color: PAL.ink, comp: 'source-over', lights: 0, speed: 2 }, { type: 'casepages', n: 8 }]
+    : kind === 'scale' ? [ink, ...sirenLit({ base: 0.45 }), ...suits('S5', { cam: { from: [0.5, 0.5, 0.28], to: [0.5, 0.5, 0.22], dy: -120 } }),
+      { type: 'suits', roto: R.suits('S5'), cam: { from: [0.25, 0.4, 2.8], to: [0.25, 0.4, 3.2], dx: 700 } }, { type: 'speedlines', amount: 0.6 }]
+    : [ink, { type: 'world', roto: R.road, alpha: 0.9, lights: 1, speed: 2.4 }, { type: 'mirror', rect: [460, 60, 1000, 300], zoom: 1.2, layers: [{ type: 'world', roto: R.flood, alpha: 0.9, lights: e => 1 - e.u * 0.8 }, { type: 'sirens', side: 'full', amount: e => 1 - e.u, base: 0.4 }] }];
+  C('N2_lane', n2, n3, lane(), { hud: hud(3, 4, { ok: true }), fx: drive });
+  [['jade', 2], ['pages', 4], ['scale', 6], ['mirror', 7]].forEach(([k, b], j) => C(`N2_${k}`, DB(b), DB(b + 1), [...insert(k, j),
+    { type: 'slam', hits: T.chopsIn(DB(b), DB(b + 1)).map(c => ({ t: c, text: 'I DREAMT', variant: 'stack' })), onType: true, cx: k === 'jade' ? 560 : DW / 2 }],
+    { hud: hud(3, 5, { ok: true }), fx: drive }));
+  // N3: the search tree collapses into the road — thousands of branches fold into one line, the LSD curve
+  C('N3_collapse', n3, n4, [ink, { type: 'collapse', n: 1100, progress: e => smooth(0.05, 0.9, e.u) }, { type: 'kickflash', color: PAL.bone, amount: 0.25 }],
+    { hud: { attempt: 3, ok: true, tc: true, eval: t => lerp(5, 40, clamp((t - n3) / (n4 - n3))) }, fx: { kick: 1, strobe: 0.5 } });
+  // N4: aerial, brighter and short: her light draws the winning line; the ghost cars of attempts 1/2 peel off and dissolve
+  C('N4_aerial', n4, n5, [ink, { type: 'world', roto: R.aerial, alpha: 1, lights: 0.55, cam: { from: [0.5, 0.5, 1.15], to: [0.5, 0.52, 1.0] } },
+    { type: 'pathdraw', progress: e => e.u, width: 9, color: PAL.cyan },
+    { type: 'ghostcar', x: e => lerp(820, 300, e.u), y: e => lerp(420, 980, e.u), scale: e => lerp(0.3, 0.8, e.u), alpha: e => 0.95 * (1 - e.u), color: PAL.red },
+    { type: 'ghostcar', x: e => lerp(900, 1500, e.u), y: e => lerp(420, 1000, e.u), scale: e => lerp(0.3, 0.8, e.u), alpha: e => 0.95 * (1 - e.u), color: PAL.bone }],
+    { hud: { attempt: 3, ok: true, tc: true, eval: Infinity }, fx: { kick: 0.8, downInvert: 2 } });
+  // N5: pure road, pure speed; the HUD falls away; inserts every other bar
+  C('N5_speed', n5, n6, lane({ words: ['I', 'DREAMT'] }), { hud: { attempt: 3, ok: true, tc: true, eval: Infinity, alpha: 1 }, fx: drive });
+  ['pages', 'jade', 'scale', 'jade'].forEach((k, j) => C(`N5_${k}${j}`, DB(17 + 2 * j), DB(18 + 2 * j), insert(k, j), { hud: j < 2 ? { attempt: 3, ok: true, eval: Infinity } : null, fx: drive }));
+  C('N6_lake', n6, qed, [ink, { type: 'world', roto: R.aerial, alpha: 1, lights: 0.5, cam: { from: [0.45, 0.6, 1.5], to: [0.5, 0.5, 0.82] } },
+    { type: 'tree', seed: 7, depth: 4, progress: 1, lit: 1, alpha: 0.6, x: 180, y: 560, w: 1560, h: 980, litColor: PAL.cyan },
+    { type: 'pathdraw', progress: 1, width: 9, head: false, color: PAL.cyan }], { fx: { kick: 0.5, heart: 0.2, downInvert: 2, jerks: [ev('braam', 8)] } });
+  C('N7_qed', qed, end, [{ type: 'qedpage' }], { fx: { heart: 0.15, jerks: [qed] } }, { post: { bloom: 0, vignette: 0.12 } });
   C('END_black', end, end + 0.9, [{ type: 'fill', color: '#000' }, { type: 'mono', text: '∎', y: 580, size: 120, weight: 700 }], { fx: { heart: 0 } }, { post: { bloom: 0, vignette: 0, grain: 0.02 } });
   C('END_credits', end + 0.9, T.duration + 0.5, [{ type: 'fill', color: '#000' }, { type: 'mono', text: 'REWIND — Jade Wang', y: 520, size: 44, color: PAL.boneDim },
     { type: 'mono', text: 'every frame drawn in code', y: 600, size: 42, color: PAL.boneDim, at: 0.5 }], { fx: { heart: 0 } }, { post: { bloom: 0, vignette: 0 } });
