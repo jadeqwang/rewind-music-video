@@ -68,6 +68,8 @@ SHOTS = {
     'S3':        dict(persons='suits', rvm=0.7, grass=True),
     'S4':        dict(persons='suits', rvm=0.8, mgain=2.6, hold=0.996),   # seated dark suits: RVM gives soft 0.3-0.7 alpha
     'S5':        dict(persons='suits', rvm=0.4),
+    'J7w':       dict(persons='jade', rvm=0.4, face=True, grass=True),   # anime Jade in tall grass
+    'J7m':       dict(persons='jade', rvm=0.4, face=True, grass=True),
 }
 
 

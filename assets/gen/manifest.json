@@ -2162,7 +2162,7 @@
    },
    "est_usd": 1.8496,
    "est_basis": "8s x 0.2312 (@720p non-video input (per second))",
-   "state": "ready",
+   "state": "done",
    "bucket": 29849113,
    "submitted": 1790946425.349831,
    "bytes": 331727,
@@ -2170,7 +2170,27 @@
    "state_relay": "done",
    "gen_secs": 163.1,
    "finished": 1790946983.934,
-   "latency_secs": 558.6
+   "latency_secs": 558.6,
+   "files": [
+    "assets/gen/anime_J9_t1_bba668eb89.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 8.042,
+     "bytes": 10531510,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "193"
+      }
+     ]
+    }
+   ],
+   "collected": 1790947015.6045527
   },
   "rewind/anime_Jeyes_t1-6f7802de1d": {
    "id": "6f7802de1d",
@@ -2194,13 +2214,91 @@
    },
    "est_usd": 1.156,
    "est_basis": "5s x 0.2312 (@720p non-video input (per second))",
-   "state": "running",
+   "state": "done",
    "bucket": 29849114,
    "submitted": 1790946425.812637,
    "bytes": 226623,
-   "started": 1790946877.358
+   "started": 1790946877.358,
+   "state_relay": "done",
+   "gen_secs": 170.7,
+   "finished": 1790947048.067,
+   "latency_secs": 622.3,
+   "files": [
+    "assets/gen/anime_Jeyes_t1_6f7802de1d.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 5.042,
+     "bytes": 3614253,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "121"
+      }
+     ]
+    }
+   ],
+   "collected": 1790947062.849406
+  },
+  "rewind/anime_J5_t2_480-3be8655050": {
+   "id": "3be8655050",
+   "job": "rewind/anime_J5_t2_480-3be8655050",
+   "tag": "anime_J5_t2_480",
+   "model": "bytedance/seedance-2.5",
+   "notes": "anime Jade J5 t2_480 480p retake",
+   "spec_file": "assets/gen/specs/anime/J5_t2_480.json",
+   "input": {
+    "duration": 6,
+    "resolution": "480p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Centre-locked straight-on performance shot in a dark void with red and blue siren rim light pulsing. She raises her right hand in front of her chest and, with her index finger, slowly draws TWO complete closed circles in the air in front of her chest, turning counter-clockwise like rewinding a tape reel, a smooth continuous circular motion; her body stays square to the camera, eyes to the lens, lips slightly parted. Locked-off camera. Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/anime/shots/J5_720.jpg"
+   },
+   "est_usd": 0.6168,
+   "est_basis": "6s x 0.1028 (@480p non-video input (per second))",
+   "state": "queued",
+   "bucket": 29849122,
+   "submitted": 1790947258.510633,
+   "bytes": 181082
+  },
+  "rewind/anime_J2_t2_480-e3b91b3ce2": {
+   "id": "e3b91b3ce2",
+   "job": "rewind/anime_J2_t2_480-e3b91b3ce2",
+   "tag": "anime_J2_t2_480",
+   "model": "bytedance/seedance-2.5",
+   "notes": "anime Jade J2 t2_480 480p retake",
+   "spec_file": "assets/gen/specs/anime/J2_t2_480.json",
+   "input": {
+    "duration": 4,
+    "resolution": "480p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Night, she drives with both hands on the wheel. At about one second her eyes clearly flick UP and to the side toward the rear-view mirror above her, hold on it for a beat with faint unease (brows knitting slightly), then return to the road; her head barely moves. Warm streetlight bands slide across the cabin. Camera locked to the car. Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/anime/shots/J2_720.jpg"
+   },
+   "est_usd": 0.4112,
+   "est_basis": "4s x 0.1028 (@480p non-video input (per second))",
+   "state": "queued",
+   "bucket": 29849122,
+   "submitted": 1790947259.0782235,
+   "bytes": 311204
   }
  },
- "total_est_usd": 69.4116,
- "total_est_usd_done": 53.4588
+ "total_est_usd": 70.4396,
+ "total_est_usd_done": 56.4644
 }
