@@ -50,3 +50,14 @@ All prompts share the LOOK suffix in make_specs.py. Suit prompts add the SUIT si
 ## Seedance for this look
 - Good: a first frame from the set plate locks the composition and palette almost perfectly (E2, E5, S1, S4). Mirror floods, slow dolly moves and backlit suit silhouettes are excellent. No invented text in 20 takes. Suit counts held (4/4/4/5).
 - Bad: the default motion is timid (E2 'fast' and E4 beams were too slow on t1; it needed 'extremely fast... every half second'). Fast multi-figure motion gives ghost doubles and motion-blur smear (S3 t1). A reference image used for a different camera setup can be pasted in as a double exposure (S5 t1). It ignores car colour and era at night. Grass and wet asphalt always turn to Canny speckle.
+
+# ANIME JADE clips (Seedance 2.5 i2v, 720p 16:9, 24 fps, no audio, use_virtual_avatar false)
+First frames: `assets/character/anime/shots/<SHOT>_720.jpg` (board `FIRST_FRAMES_ANIME.jpg`; gpt-image-2 single-input edits, log `shots/prompts.json`, tool `tools/anime/shots.py`).
+Specs: `assets/gen/specs/anime/` (`make_specs.py`; every prompt = shot action + LOOK suffix "Anime style, consistent with the first frame, clean cel shading, same character design ...").
+Review: `analysis/clips_review/anime/<take>.jpg` (6 frames + Canny) and `<take>.eyes.txt` (eye gate `tools/anime/framemeasure.py --clip`, % vs CANON_HEAD; MediaPipe on anime is noisy, eye_open tracks expression). Lip offset: positive = mouth LATE vs audio; renderer shifts by it.
+| shot | file | take id | dur | cost | eyes (w/iris/open % vs canon) | lip offset | notes |
+|---|---|---|---|---|---|---|---|
+| J1 | `J1.mp4` | `rewind/anime_J1_t1-5920672b36` | 8.04 s | $1.85 | {eye_w_face: 3.3, iris_face: -10.8, eye_open: -9.7} faces 8/8 | TBD | Passenger-dash 3/4 view, LHD correct, sings through, streetlight bands; very stable face. |
+| J2 | `J2.mp4` | `rewind/anime_J2_t1-f666a7df64` | 4.04 s | $0.92 | {eye_w_face: 1.4, iris_face: -6.1, eye_open: -23.5} faces 7/8 | n/a | Unease reads well (brows knit from ~2.4 s); the eye flick to the mirror is subtle. Mirror shows dim headlights only. |
+| J3 | `J3.mp4` | `rewind/anime_J3_t1-cb4175de50` | 6.04 s | $1.39 | {eye_w_face: -3.0, iris_face: -0.5, eye_open: -3.3} faces 8/8 | n/a | Outside driver window; card rises from below the sill at ~1.2 s and is held toward the off-frame suit; red/blue from behind; suit shoulder at right edge. |
+| J5b | `J5b.mp4` | `rewind/anime_J5b_t1-1f451fbb26` | 7.04 s | $1.62 | {eye_w_face: -0.7, iris_face: 9.1, eye_open: -7.5} faces 8/8 | n/a | Hand sweeps back past the shoulder, hair streams; slight sideways camera drift (stabilise in renderer). |
