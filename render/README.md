@@ -164,6 +164,14 @@ Built offline by `tools/jade2/build.py <J>` → `assets/roto/<J>/cel/NNNN.png` +
 - Renderer: when a J roto has `anime`, `roto.jade2` draws the anime cel + the roto's clean ink linework over the whole figure
   (including the face — her own anime eyes/brows/mouth), no template eyes/glasses. Scene light is multiplied.
 - Lip sync: per-clip offset from `meta.lip_offset` (seconds) is added to the clip time (set it from CLIPS.md).
-- Eye clamp: `anime.json` records per-frame eye-blob size vs the clip's 90th percentile (`eye_scale` > 1 where a frame shrinks
-  > 5 %). TODO: apply the scale as a local warp around the eye anchors in the renderer.
-- Cubist planes: `cubist` takes `front`/`side` roto ids (default J6/J1); point them at the anime front + 3/4 clips when present.
+- Eye clamp: anime.py grows the eye label only when the clip's reference eye size is plausible (0.04–0.2 of face) and the
+  frame's eye is 50–95 % of it (cap ×1.08). No current clip measures plausibly, so the footage's own eyes are used unchanged.
+- Faces: MediaPipe finds no face mask on anime footage → fallback = convex hull of the largest skin blob in the upper 45 % of
+  the figure. `--full` (or an empty RVM matte) treats the whole frame as figure (Jeyes ECU).
+- Cubist planes: `cubist` takes `front`/`side` roto ids (default J5 front / J1 3/4); anchors from per_frame mouth (nearest).
+
+## Audio / mix source
+`src/audio.config.js` is the single switch: `AUDIO_DEFAULT` (v4 now) → song for the mux + timing/envelope files (each with a
+fallback list, so `v5` works before `analysis/envelopes_v5.json` / `timing_v5.json` exist). Override per run with
+`node render.mjs ... --audio v5|v5sfx|v5final|v4sfx` (browser: `?audio=v5`); `--song <path>` still overrides the mux file.
+`v5sfx` = `assets/sound/Rewind5_with_intro_sfx.mp3`; `v5final` = `assets/sound/Rewind5_final.mp3` (v5, intro impact removed + intro SFX; the final-encode master). v5 timing is warped vs v4 (see analysis/TIMING_V5_NOTES.md).

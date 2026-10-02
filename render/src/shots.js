@@ -83,7 +83,7 @@ export function buildShots(T) {
     { type: 'world', roto: R.plate('lake_shore_drive_1'), alpha: 0.3, lights: 0.5, cam: { from: [0.5, 0.55, 1.1], to: [0.5, 0.55, 1.2] }, mirror: { y: 640, alpha: 0.3 } },
     { type: 'sodium', period: 4 * P / 2, amount: 0.34, alpha: 0.08 },
     { type: 'rain', n: 70, alpha: 0.08 },
-    jade('J1', { light: 'sodium', late: P, cam: { from: [0.48, 0.42, 1.05], to: [0.48, 0.42, 1.12], dx: 430 } }),
+    jade('J1', { light: 'sodium', late: P, cam: { from: [0.48, 0.42, 1.05], to: [0.48, 0.42, 1.12], dx: 760 } }),
     { type: 'page', lines: [0], notes: { defense: '1' }, footnotes: [{ mark: '1', text: 'tomorrow, 9:00 a.m.', word: 'defense' }], size: 140, maxLines: 3, ...pageHdr },
   ], { hud: hud(1, 0.3), fx: { heart: 0.22, soft: 0.35, blinks: [{ t: W('my').start - 0.2, skip: 0.25 }] } });
   C('V2_pov', L(1).start, L(2).start, [ink,

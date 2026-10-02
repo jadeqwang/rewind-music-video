@@ -22,7 +22,7 @@ def isnet_matte(bgr):
     y = (y - y.min()) / max(1e-6, y.max() - y.min())
     return cv2.resize(y, (bgr.shape[1], bgr.shape[0]))
 
-def classify(bgr, matte, face=None, hair=None):
+def classify(bgr, matte, face=None, hair=None, eye_roi=None):
     H, W = matte.shape
     sm = bgr.copy()
     for _ in range(3): sm = cv2.bilateralFilter(sm, 9, 30, 7)
@@ -54,10 +54,13 @@ def classify(bgr, matte, face=None, hair=None):
     lab[fig] = idx['jacket']
     lab[fig & (vn < 0.62)] = idx['jacket_sh']
     lab[fig & dark] = idx['black']
-    hands = (fig & skinlike & ~dark & ~face).astype(np.uint8)   # hands only: small warm blobs (warm-lit jacket stays jacket)
-    n_, l_, st_, _ = cv2.connectedComponentsWithStats(hands); keep = np.zeros(n_, bool); keep[1:] = st_[1:, 4] < 0.012 * H * W
+    hands = cv2.morphologyEx((fig & skinlike & ~dark & ~face).astype(np.uint8), cv2.MORPH_OPEN, np.ones((9, 9), np.uint8))   # hands only: small solid warm blobs (warm-lit jacket stays jacket)
+    n_, l_, st_, _ = cv2.connectedComponentsWithStats(hands); keep = np.zeros(n_, bool); keep[1:] = (st_[1:, 4] < 0.012 * H * W) & (st_[1:, 4] > 0.0006 * H * W)
+    if n_ > 1:   # skin is more saturated than warm-lit white nylon; big close-up hands are fine when clearly skin-saturated
+        ms = np.bincount(l_.ravel(), s.ravel(), n_) / np.maximum(1, np.bincount(l_.ravel(), None, n_)); ar = st_[:, 4]
+        keep = (ar > 0.0006 * H * W) & (ar < 0.012 * H * W) & (ms > 0.2); keep[0] = False
     lab[keep[l_] & (hands > 0)] = idx['skin']
-    lab[fig & orange & ~face] = idx['orange']
+    lab[fig & orange & ~face & ~cv2.dilate(hair.astype(np.uint8), np.ones((15, 15), np.uint8)).astype(bool)] = idx['orange']   # warm rim light on hair is not the stripe
     pb = (fig & blue & ~face).astype(np.uint8); n_, l_, st_, _ = cv2.connectedComponentsWithStats(pb)   # the patch: compact round blobs only (not blue rim light on hair)
     for j in range(1, n_):
         a_ = st_[j, 4]; bw, bh = st_[j, 2], st_[j, 3]
@@ -69,7 +72,11 @@ def classify(bgr, matte, face=None, hair=None):
         lab[face] = idx['skin']; lab[face & (vn < t_sh) & ~dark] = idx['skin_sh']
         inner = cv2.erode(face.astype(np.uint8), np.ones((15, 15), np.uint8)) > 0
         lab[face & dark & ~inner] = idx['hair']
-        lab[inner & ((v < 0.36) | dark)] = idx['eye']   # irises / lash lines / brows (face-relative darks)
+        fmed = np.median(v[face]); eyeish = inner & ((v < 0.5 * fmed) | dark)   # irises / lash lines / brows: dark *relative to her skin*
+        n_, l_, st_, _ = cv2.connectedComponentsWithStats(eyeish.astype(np.uint8)); fa = face.sum()
+        keep = np.zeros(n_, bool); keep[1:] = st_[1:, 4] < 0.06 * fa   # a shadowed cheek / hand is not an eye
+        lab[keep[l_] & eyeish] = idx['eye']
+        if eye_roi is not None: lab[eyeish & eye_roi] = idx['eye']   # landmark eye/brow regions: always her eyes
         lab[face & (vn > 0.92) & (s < 0.12)] = idx['eye_white']
         lab[face & (h < 20) & (s > 0.35) & (vn > 0.35) & (vn < 0.85)] = idx['mouth']
     return lab, names
@@ -117,6 +124,23 @@ def grow_eyes(lab, names, face, k):
     return out
 
 FULL = False
+def eye_rois(d, n, H, W):
+    """per-frame eye/brow ROI masks from face.json landmarks (nearest frame within ±6), or None"""
+    try: F = json.load(open(d + '/face.json'))
+    except Exception: return lambda i: None
+    def roi(i):
+        for k in sorted(range(max(0, i - 6), min(len(F), i + 7)), key=lambda k: abs(k - i)):
+            f = F[k]
+            if not f: continue
+            m = np.zeros((H, W), np.uint8); sc = float(f.get('template_scale_px') or f.get('template_scale') or 60)
+            for key, pts in f.items():   # front: eye_R_/eye_L_ upper/lower + brow_R/L; profile: eye_near_* + brow_near
+                if not (key.startswith('eye_') or key.startswith('brow')) or 'iris' in key or not isinstance(pts, list) or len(pts) < 3: continue
+                if not all(isinstance(q, list) and len(q) == 2 for q in pts): continue
+                cv2.fillPoly(m, [cv2.convexHull(np.array(pts, np.float32).astype(np.int32))], 1)
+            if not m.any(): continue
+            r = max(5, int(sc * 0.18)); return cv2.dilate(m, np.ones((r, r), np.uint8)) > 0
+        return None
+    return roi
 def run_clip(J, fr=None):
     d = f'{ROOT}/assets/roto/{J}'; meta = json.load(open(d + '/meta.json'))
     cap = cv2.VideoCapture(f"{ROOT}/{meta['src']}"); sfps = cap.get(cv2.CAP_PROP_FPS); frames = []
@@ -125,14 +149,14 @@ def run_clip(J, fr=None):
         if not ok: break
         frames.append(f)
     a = lambda p: (cv2.imread(p, cv2.IMREAD_UNCHANGED)[..., 3] / 255.0) if os.path.exists(p) else None
-    os.makedirs(d + '/anime', exist_ok=True); info = {}; cache = {}; names = list(P.keys())
+    os.makedirs(d + '/anime', exist_ok=True); info = {}; cache = {}; names = list(P.keys()); ROI = eye_rois(d, meta['frames'], meta['h'], meta['w'])
     for i in (range(meta['frames']) if fr is None else range(*fr)):
         f = cv2.resize(frames[min(len(frames) - 1, int(round(i / meta['fps'] * sfps)))], (meta['w'], meta['h']), interpolation=cv2.INTER_CUBIC)
         mt = a(f'{d}/matte/{i:04d}.png')
         if FULL or mt is None or mt.mean() < 0.01: mt = np.ones((meta['h'], meta['w']), np.float32)   # ECU shots (Jeyes): the whole frame is her
         fc = a(f'{d}/face/{i:04d}.png'); hr = a(f'{d}/hair/{i:04d}.png')
         face = (fc > 0.5) if fc is not None else None; hair = (hr > 0.5) if hr is not None else None
-        lab, names = classify(f, mt, face, hair)
+        lab, names = classify(f, mt, face, hair, ROI(i))
         cache[i] = (lab, mt.astype(np.float16), face)
         info[i] = dict(eye=eye_size(lab, names, face) if face is not None else None)
     # eye clamp: canon eye size = the clip's 90th percentile (gen footage only ever shrinks them); frames > 5 % smaller

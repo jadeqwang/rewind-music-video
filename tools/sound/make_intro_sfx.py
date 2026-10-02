@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Optional A/B variant: subtle sound design for the cold-open hook (0-6.8 s) of "Rewind (4).mp3".
+"""Optional A/B variant: subtle sound design for the cold-open hook (0-6.8 s) of "Rewind (4).mp3" (or --song/--timing for v5:
+  make_intro_sfx.py --song "Rewind (5).mp3" --timing analysis/timing_v5.json --tag 5  -> intro_sfx5.wav, Rewind5_with_intro_sfx.wav).
 
 Layers (all derived from the song itself unless --el-whir):
   freeze  0.00-0.594  reversed synthetic-reverb tail of the gunshot noise burst (43.24-43.48 s), E-tuned comb -> "suspended" swell
@@ -16,12 +17,26 @@ from scipy import signal
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SR = 48000
 OUT = os.path.join(ROOT, "assets/sound")
-EL_WHIR = "--el-whir" in sys.argv
-TAG = "_elwhir" if EL_WHIR else ""
+import argparse
+ap = argparse.ArgumentParser()
+ap.add_argument("--el-whir", action="store_true")
+ap.add_argument("--song", default="Rewind (4).mp3", help="input master (relative to repo root or absolute)")
+ap.add_argument("--timing", default="analysis/timing.json", help="timing JSON on the input's timeline")
+ap.add_argument("--tag", default=None, help="output name tag; default '' (v4) -> intro_sfx{tag}.wav, Rewind{tag}_with_intro_sfx.wav")
+ap.add_argument("--stem-only", action="store_true", help="write only the stem (used by declick_intro.py pipelines)")
+ARGS = ap.parse_args()
+EL_WHIR = ARGS.el_whir
+TAG = (ARGS.tag or "") + ("_elwhir" if EL_WHIR else "")
 MARGIN = 6.0   # dB under the song in the kalimba band
-T_FREEZE_END, T_STOP = 0.5939, 4.4056          # bt(1), bt(9) from analysis/timing.json
-SRC_FROM, SRC_TO = 227.2 - 0.5, 13.452          # sec('end').start - 0.5  ->  verse1 start (render/src/shots.js H1_scrub)
-STEM_LEN = 7.0
+_T = json.load(open(os.path.join(ROOT, ARGS.timing)))
+_bt = _T["beats"]; _sec = {s_["name"]: s_ for s_ in _T["sections"]}
+_ev = lambda ty, n=1: [e for e in _T["events"] if e["type"] == ty][n - 1]["t"]
+T_FREEZE_END, T_STOP = _bt[1], _bt[9]          # bt(1), bt(9)  (v4: 0.5939, 4.4056)
+SRC_FROM, SRC_TO = _sec["end"]["start"] - 0.5, _sec["verse1"]["start"]   # H1_scrub playhead (v4: 226.7 -> 13.452)
+BRAAM = _ev("braam", 1)                          # intro impact (v4 6.78)
+SHOT_SFX = _ev("shot_sfx", 1)                    # gunshot noise burst start (v4 43.24, 0.24 s long)
+STEM_END, REG_END = BRAAM + 0.02, BRAAM + 0.22   # stem silent after, mix touched only before (v4: 6.80 / 7.00)
+STEM_LEN = REG_END
 rng = np.random.default_rng(64)
 
 def decode(path):
@@ -34,13 +49,13 @@ def bp(x, lo, hi, order=4):
 
 def db(x): return 10 ** (x / 20)
 
-song = decode(os.path.join(ROOT, "Rewind (4).mp3"))
+song = decode(os.path.join(ROOT, ARGS.song))
 mono = song.mean(1)
 N = int(STEM_LEN * SR); t = np.arange(N) / SR
 stem = np.zeros((N, 2))
 
 # ---------------- 1. freeze: reversed reverb tail of the gunshot burst ----------------
-b0, b1 = int(43.24 * SR), int(43.48 * SR)
+b0, b1 = int(SHOT_SFX * SR), int((SHOT_SFX + 0.24) * SR)
 burst = mono[b0:b1] * signal.windows.tukey(b1 - b0, 0.2)
 burst = bp(burst, 1500, 12000)
 L = int(2.4 * SR); tt = np.arange(L) / SR
@@ -130,10 +145,10 @@ stem = signal.sosfilt(signal.butter(2, 40, "high", fs=SR, output="sos"), stem, a
 # keep the hard stop hard (istft smears a few ms) and silence after the clunk
 stem[s1 + k:] = 0
 # fades: gentle in from 0, nothing after 6.8
-stem[int(6.8 * SR):] = 0
+stem[int(STEM_END * SR):] = 0
 
 # ---------------- mix: original + stem, only 0-7.0 s; -1 dBTP limiter on that region ----------------
-REG = int(7.0 * SR)
+REG = int(REG_END * SR)
 mix = song.copy()
 reg = song[:REG].astype(np.float64) + stem[:REG]
 def true_peak(x): return np.abs(signal.resample_poly(x, 4, 1, axis=0)).max()
@@ -143,19 +158,20 @@ if tp > ceil:  # simple look-ahead gain limiter (only ever reduces in 0-6.8 s, u
     pk = np.abs(signal.resample_poly(reg, 4, 1, axis=0)).max(1).reshape(-1, 4).max(1)
     g = np.minimum(1, ceil / np.maximum(pk, 1e-9))
     from scipy.ndimage import minimum_filter1d; g = minimum_filter1d(g, int(0.005 * SR))
-    g = signal.filtfilt(np.ones(240) / 240, [1], g); g[int(6.8 * SR):] = 1
+    g = signal.filtfilt(np.ones(240) / 240, [1], g); g[int(STEM_END * SR):] = 1
     reg = reg * g[:, None]
 mix[:REG] = reg.astype(np.float32)
 
 sf.write(os.path.join(OUT, f"intro_sfx{TAG}.wav"), stem.astype(np.float32), SR, subtype="FLOAT")
-sf.write(os.path.join(OUT, f"Rewind_with_intro_sfx{TAG}.wav"), mix, SR, subtype="FLOAT")
+if not ARGS.stem_only:
+    sf.write(os.path.join(OUT, f"Rewind{ARGS.tag or ''}_with_intro_sfx{'_elwhir' if EL_WHIR else ''}.wav"), mix, SR, subtype="FLOAT")
 
 # ---------------- stats ----------------
 def rms_db(x): return 20 * np.log10(np.sqrt((x ** 2).mean()) + 1e-12)
 st = {"true_peak_region_dBTP": 20 * np.log10(true_peak(mix[:REG].astype(np.float64))),
       "stem_peak_dBFS": 20 * np.log10(np.abs(stem).max()),
       "seg_rms_dB": {f"{a}-{b}": {"song": rms_db(song[int(a*SR):int(b*SR)]), "stem": rms_db(stem[int(a*SR):int(b*SR)])}
-                     for a, b in [(0, 0.594), (0.594, 2), (2, 4.4), (4.4, 6.8)]}}
+                     for a, b in [(0, T_FREEZE_END), (T_FREEZE_END, 2), (2, T_STOP), (T_STOP, STEM_END)]}}
 # masking check in the kalimba band: song-to-stem ratio per STFT frame, 220-3000 Hz
 _, _, S2 = signal.stft(stem.T, SR, nperseg=nper, noverlap=nper * 3 // 4)
 bm = (fr > 220) & (fr < 3000)

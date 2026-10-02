@@ -51,3 +51,36 @@ so the mix is processed directly. Re-summing the separated stems would only have
 True peak over 0–14 s is −7.96 dBTP. Previews of 0–14 s, all with the intro SFX: `preview/00_reference_original_plus_sfx_0-14s.mp3`,
 `preview/c1_06.78_impact_full_0-14s.mp3` and `preview/c1b_06.78_roll_only_0-14s.mp3`. Before/after spectrogram: `spectrogram_v2_intro_clean_0-14s.png`.
 The video's title card (H3_title) still cuts on 6.78. With c1 that cut happens on a quiet moment.
+
+## v5 ("Rewind (5).mp3"): use `Rewind5_final` for the final encode
+v5 is **re-timed** against v4: it's conformed to a constant 129 BPM, so t5 - t4 runs from -483 to +86 ms (see `analysis/TIMING_V5_NOTES.md`).
+Every v5 file here is built on the v5 timeline from `analysis/timing_v5.json`. The intro beats are bt(1) = 0.5815 and bt(9) = 4.3106, the impact is at 6.635, the gunshot burst at 42.793, and the scrub runs 226.62 -> 13.154.
+
+| file | what |
+|---|---|
+| `Rewind5_final.wav` (gitignored, float32) / `.mp3` (320k) | **master**: v5 with the 6.6 s impact removed (c1 method) plus the intro SFX |
+| `Rewind5_final_soft.wav` / `.mp3` | alternate: the impact is kept at -12 dB (`clean + 0.25 x removed`) plus the intro SFX |
+| `Rewind5_intro_clean.wav` / `.mp3` | impact removed, no SFX |
+| `Rewind5_with_intro_sfx.wav` / `.mp3` | v5 plus the intro SFX only (the impact is untouched) |
+| `intro_sfx5.wav` / `.mp3` | the SFX stem rebuilt on v5 timing (6.855 s) |
+| `preview/v5_original_0-14s.mp3`, `v5_with_intro_sfx_`, `v5_final_`, `v5_final_soft_` | 0-14 s previews |
+| `spectrogram_v5_final_0-14s.png`, `v5_intro_stats.json` | before/after and numbers |
+
+Rebuild:
+1. `python3 tools/sound/make_intro_sfx.py --song "Rewind (5).mp3" --timing analysis/timing_v5.json --tag 5`, then convert to mp3 with ffmpeg (libmp3lame 320k).
+2. `python3 tools/sound/declick_intro.py --v5 [--soft-db 12]`.
+
+The v4 defaults are unchanged. One difference: reading the constants from timing.json now gives a 1-sample-longer gunshot burst, which differs from the old v4 build by at most 1e-6.
+
+**The impact in v5:** her mutes reduced it by about 4-6 dB, but it is still clearly there:
+
+| version | sub 20-150 (0-2.5 s) over pre-hit | 150-3k (0-1 s) | 3-16k (0-0.97 s) | mix RMS 0-1 s over pre | mix peak |
+|---|---|---|---|---|---|
+| v4 | +42.9 dB | +7.7 | +14.1 | +11.0 | -7.0 dBFS |
+| v5 | +38.6 (-25.8 dBFS) | +1.3 | +14.4 (-43.6 dBFS) | +4.5 | -9.6 |
+| v5 clean (final) | +9.4 (-55.0 dBFS) | -1.1 | +4.9 (-53.1 dBFS) | -1.0 | -13.2 |
+| v5 soft (-12 dB) | +27.3 (-37.1 dBFS) | -0.7 | +8.1 | -0.1 | -12.8 |
+
+In the full removal, the 150-800 Hz texture during 7.0-8.5 s ends up 2-3.6 dB under the v5 original. Part of that is the impact's own low-mid tail, and part is kalimba notes that weren't in the reference window. The soft variant fills that dip back in, but it keeps an audible sub swell (-37 dBFS).
+
+**Null tests:** all three edited files have the same length as the v5 decode and are **bit-identical to v5 from 10.367 s** (the last differing sample is at 10.192 s). The removal starts at 6.557 s. `Rewind5_with_intro_sfx.wav` is bit-identical from 6.855 s (the last difference is at 4.40 s). True peak over 0-14 s is -5.1 dBTP, because v5 is about 2 dB hotter than v4. The mp3s are lossy re-encodes; use the wav for the mux if possible.
