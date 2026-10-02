@@ -1190,11 +1190,35 @@
    },
    "est_usd": 2.312,
    "est_basis": "10s x 0.2312 (@720p non-video input (per second))",
-   "state": "running",
+   "state": "done",
    "bucket": 29848688,
    "submitted": 1790921186.6075668,
    "bytes": 368273,
-   "started": 1790921317.241
+   "started": 1790921317.241,
+   "state_relay": "done",
+   "gen_secs": 292.7,
+   "finished": 1790921609.962,
+   "latency_secs": 423.4,
+   "files": [
+    "assets/gen/nj_E1_t2b_1fa57c7b8d.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 10.042,
+     "bytes": 11360252,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "241"
+      }
+     ]
+    }
+   ],
+   "collected": 1790921665.5520833
   },
   "rewind/nj_Epull_t3b-36df0a5b33": {
    "id": "36df0a5b33",
@@ -1221,13 +1245,97 @@
    },
    "est_usd": 0.9248,
    "est_basis": "4s x 0.2312 (@720p non-video input (per second))",
-   "state": "running",
+   "state": "done",
    "bucket": 29848688,
    "submitted": 1790921187.0077896,
    "bytes": 365814,
-   "started": 1790921317.244
+   "started": 1790921317.244,
+   "state_relay": "done",
+   "gen_secs": 160.1,
+   "finished": 1790921477.353,
+   "latency_secs": 290.3,
+   "files": [
+    "assets/gen/nj_Epull_t3b_36df0a5b33.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 4.042,
+     "bytes": 2240527,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "97"
+      }
+     ]
+    }
+   ],
+   "collected": 1790921534.4350514
+  },
+  "rewind/jade_J1_lip_t2-dcc910095f": {
+   "id": "dcc910095f",
+   "job": "rewind/jade_J1_lip_t2-dcc910095f",
+   "tag": "jade_J1_lip_t2",
+   "model": "bytedance/seedance-2.5",
+   "notes": "J1 lip-sync validation: vocals 13.15-22.15 s ('The night before my dissertation defense,' sung 13.45-21.12) | t2: no reference_images (t1 7003 User Input Error)",
+   "spec_file": "assets/gen/specs/jade/J1_lip_t2.json",
+   "input": {
+    "duration": 9,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Night. She sits in the driver's seat of a white 2001 Acura TL, seen from outside the open driver's window, side profile facing frame-left, both hands on the steering wheel, driving. She sings the vocal in the reference audio, her lips moving in exact sync with each sung word, small natural breaths, calm focused eyes on the road. Warm orange sodium streetlight bands sweep slowly across her and the car door from front to back as the car moves; the camera stays locked to the car. Jade: East Asian woman, heart-shaped face with a large broad forehead, thin rectangular dark gray-teal metal glasses always on, long straight black hair half-up half-down, white cropped zip jacket with an orange chest band over a black top. Keep her face exactly as in the first frame and the reference photos; same eye size, never squinting. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/firstframes/J1.jpg",
+    "reference_audios": [
+     "file:analysis/slices/vocals_J1_13.15_9.0.mp3"
+    ]
+   },
+   "est_usd": 2.0808,
+   "est_basis": "9s x 0.2312 (@720p non-video input (per second))",
+   "state": "queued",
+   "bucket": 29848699,
+   "submitted": 1790921820.9364922,
+   "bytes": 465544
+  },
+  "rewind/jade_J6_lip_t2-202dbc2055": {
+   "id": "202dbc2055",
+   "job": "rewind/jade_J6_lip_t2-202dbc2055",
+   "tag": "jade_J6_lip_t2",
+   "model": "bytedance/seedance-2.5",
+   "notes": "J6 lip-sync validation: vocals 73.25-81.25 s ('And now I'm back on the road' 73.55-80.57) | t2: no reference_images (t1 7003 User Input Error)",
+   "spec_file": "assets/gen/specs/jade/J6_lip_t2.json",
+   "input": {
+    "duration": 8,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Night, driving. Three-quarter front view through the windshield of a white 2001 Acura TL: she sits in the left-hand driver's seat on the right side of the frame, both hands on the steering wheel, determined, looking ahead at the road. She sings the vocal in the reference audio, her lips moving in exact sync with each sung word. Orange sodium streetlight reflections slide over the windshield; soft cool dashboard glow on her face; the camera is mounted to the car and stays steady. Jade: East Asian woman, heart-shaped face with a large broad forehead, thin rectangular dark gray-teal metal glasses always on, long straight black hair half-up half-down, white cropped zip jacket with an orange chest band over a black top. Keep her face exactly as in the first frame and the reference photos; same eye size, never squinting. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/firstframes/J6.jpg",
+    "reference_audios": [
+     "file:analysis/slices/vocals_J6_73.25_8.0.mp3"
+    ]
+   },
+   "est_usd": 1.8496,
+   "est_basis": "8s x 0.2312 (@720p non-video input (per second))",
+   "state": "queued",
+   "bucket": 29848699,
+   "submitted": 1790921821.39947,
+   "bytes": 425082
   }
  },
- "total_est_usd": 37.506,
- "total_est_usd_done": 27.102
+ "total_est_usd": 41.4364,
+ "total_est_usd_done": 30.3388
 }

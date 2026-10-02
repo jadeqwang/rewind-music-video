@@ -66,7 +66,7 @@ SHOTS = {
     'S1':        dict(persons='suits', rvm=0.4),
     'S2':        dict(persons='suits', rvm=0.4),
     'S3':        dict(persons='suits', rvm=0.7, grass=True),
-    'S4':        dict(persons='suits', rvm=0.8),
+    'S4':        dict(persons='suits', rvm=0.8, mgain=2.6),   # seated dark suits: RVM gives soft 0.3-0.7 alpha
     'S5':        dict(persons='suits', rvm=0.4),
 }
 
@@ -480,6 +480,8 @@ def run_chunk(job):
         if 'matte' in layers:
             if rvm is not None:
                 a = rvm(brighten(src, tn))
+                if cfg.get('mgain', 1) != 1:
+                    a = np.clip(a * cfg['mgain'], 0, 1)
                 a = cv2.resize(a, (OW, OH), interpolation=cv2.INTER_CUBIC)
                 ch[cfg['persons']] = a
             if cfg['car']:
@@ -758,7 +760,7 @@ def main():
                 m = os.path.join(ROOT, 'assets', 'roto', s, 'meta.json')
                 fresh = os.path.exists(m) and os.path.getmtime(m) > os.path.getmtime(p) and \
                     all(json.load(open(m))['per_frame'])
-                if not fresh:
+                if a.force or not fresh:
                     process(s, layers=layers, workers=a.workers, force=a.force)
             if not a.watch:
                 break
