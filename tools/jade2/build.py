@@ -294,7 +294,7 @@ def warm(out, info, face, hair, iod):
         out[(m > 0) & ink, :3] = HAIR_HI
     return out
 SKIN, SKIN_SH, BLUSH, HAIR_HI = (182, 203, 236), (150, 172, 214), (172, 184, 236), (34, 36, 46)
-CHEEK_TONE = (172, 194, 232)   # BGR warm palette
+CHEEK_TONE = (177, 199, 234)   # BGR warm palette
 def variant_B(J, i, out, frame, info, face, hair, iod):
     """(B) 4–5 tone warm-skin cel: skin + skin shadow + cheek blush + 2-tone hair (flat shapes)."""
     fm = face > 0

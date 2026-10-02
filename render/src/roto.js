@@ -268,7 +268,7 @@ function thinBrow(b, profile) {
   for (let i = 0; i < h; i++) {
     const j = n - 1 - i, u = i / Math.max(1, h - 1);
     const mx = (b[i][0] + b[j][0]) / 2, my = (b[i][1] + b[j][1]) / 2;
-    const k = 0.62 * (1 - 0.55 * Math.pow(u, 1.6));   // thinner overall, tapering toward the tail
+    const k = 0.74 * (1 - 0.45 * Math.pow(u, 1.8));   // thinner overall, tapering toward the tail
     out[i] = [mx + (b[i][0] - mx) * k, my + (b[i][1] - my) * k]; out[j] = [mx + (b[j][0] - mx) * k, my + (b[j][1] - my) * k];
   }
   return out;
