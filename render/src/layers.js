@@ -561,10 +561,9 @@ Object.assign(LAYERS, {
       const id = L.roto, tr = CAR.trackFor(id); if (!tr || !roto.meta(id)) return;
       const ct = roto.clipTime(id, env.lt, { speed: A(L.speed, env, 1), offset: A(L.offset, env, 0), loop: L.loop ?? true });
       const b = CAR.trackBox(tr, ct, camRect(L.cam, env)); if (!b) return;
-      const pad = (b.x1 - b.x0) * 0.25; g.fillStyle = PAL.ink; g.fillRect(b.x0 - pad, b.y0 - pad, b.x1 - b.x0 + 2 * pad, b.y1 - b.y0 + 2 * pad);
       cx = (b.x0 + b.x1) / 2; by = b.y1; w = (b.x1 - b.x0) * (L.wScale ?? 1);
     } else { cx = A(L.x, env, 960); by = A(L.y, env, 800); w = A(L.w, env, 500); }
-    CAR.drawView(g, L.view || 'chase', cx, by, w, { color: L.color, alpha: A(L.alpha, env, 1), seed: Math.floor(env.lt * 10), lights: L.lights ?? 'tail', rot: L.rot, outline: L.outline, fill: L.fill });
+    CAR.drawView(g, L.view || 'chase', cx, by, w, { color: L.color, alpha: A(L.alpha, env, 1), seed: Math.floor(env.lt * 10), lights: L.lights ?? 'tail', rot: L.rot, outline: L.outline, fill: L.fill, erase: !!L.roto });
     if (L.trail) { g.save(); g.globalCompositeOperation = 'lighter'; headlights(g, cx, by - w * 0.2, w * 0.9, 0.25, PAL.red); g.restore(); }
   },
 });

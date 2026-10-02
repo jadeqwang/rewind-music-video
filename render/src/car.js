@@ -35,7 +35,11 @@ export function drawView(g, view, cx, by, w, o = {}) {
   const F = V.features;
   // faint white-paint fill so the car reads as WHITE against the ink
   const body = F.find(f => f.type === 'body');
-  if (body && !o.outline) { path(body.pts, 0, 0); g.closePath(); g.fillStyle = rgba(col, (o.fill ?? 0.1) * a); g.fill(); }
+  if (body && o.erase) {   // erase the Seedance car under ours: the body silhouette, enlarged, filled with ink
+    const cxu = V.extent[0] / 2 * s, cyu = V.extent[1] / 2 * s;
+    g.save(); g.translate(cxu, cyu); g.scale(1.3, 1.35); g.translate(-cxu, -cyu); path(body.pts, 0, 0); g.closePath(); g.fillStyle = PAL.ink; g.shadowColor = PAL.ink; g.shadowBlur = w * 0.15; g.fill(); g.restore();
+  }
+  if (body && !o.outline) { path(body.pts, 0, 0); g.closePath(); g.fillStyle = rgba(col, (o.fill ?? 0.18) * a); g.fill(); }
   F.forEach((f, k) => {
     const t = f.type;
     if (minimal && !(t === 'body' || t === 'taillight' || t === 'window')) return;
@@ -49,7 +53,7 @@ export function drawView(g, view, cx, by, w, o = {}) {
     }
     const isDetail = t === 'detail' || t === 'lower_dark';
     path(f.pts, isDetail ? 0.6 : 0.15, k); if (f.closed) g.closePath();
-    g.strokeStyle = rgba(col, a * (isDetail ? 0.5 : 1)); g.lineWidth = Math.max(1.5, w * (t === 'body' ? 0.009 : 0.006)) * (o.outline ? 1.2 : 1);
+    g.strokeStyle = rgba(col, a * (isDetail ? 0.5 : 1)); g.lineWidth = Math.max(2, w * (t === 'body' ? 0.014 : 0.008)) * (o.outline ? 1.2 : 1);
     g.stroke();
   });
   g.restore();

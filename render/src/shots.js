@@ -56,8 +56,8 @@ export function buildShots(T) {
   ], { fx: { jerks: [braam0], heart: 0.2 } }, { post: e => ({ bloom: 0.25, bloomThr: 0.7, warble: 0.5 * Math.sin((e.lt % (2 * P)) / (2 * P) * Math.PI) ** 2, warbleSeed: Math.floor(e.lt * 30), scan: 0.25 }) });
   // H4: aerial LSD self-drawing as one pen stroke; THEOREM / PROOF
   C('H4_theorem', db(5), v1, [ink,
-    { type: 'world', roto: R.aerial, alpha: 0.5, lights: 0.4, cam: { from: [0.5, 0.5, 1.0], to: [0.48, 0.55, 1.12] } },
-    { type: 'car', roto: R.aerial, view: 'chase', lights: 'tail', cam: { from: [0.5, 0.5, 1.0], to: [0.48, 0.55, 1.12] }, offset: 4 },
+    { type: 'world', roto: R.aerial, alpha: 0.5, lights: 0.4, cam: { from: [0.5, 0.5, 1.0], to: [0.48, 0.55, 1.12] }, offset: 1.2 },
+    { type: 'car', roto: R.aerial, view: 'chase', lights: 'tail', cam: { from: [0.5, 0.5, 1.0], to: [0.48, 0.55, 1.12] }, offset: 1.2 },
     { type: 'pathdraw', progress: e => easeInOutCubic(e.u), width: 5 },
     { type: 'cm', lead: 'Theorem.', text: 'She makes it home.', x: 420, y: 520, size: 112 },
     { type: 'cm', lead: 'Proof.', text: 'By exhaustion.', x: 420, y: 690, size: 112, at: 1.4 },
