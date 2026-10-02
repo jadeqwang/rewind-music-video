@@ -1,0 +1,38 @@
+[
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/v2/cands/sheet_2.jpg",
+  "job": "sheet",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "src": "CANON_SHEET.jpg",
+  "prompt": "Edit this anime character turnaround sheet (front, three-quarter, side and back views). Apply the SAME change identically in all four views. Change ONLY the jacket's neckline and shoulders to a moto/racer jacket construction: (1) COLLAR: replace the collarless neckline with a short STAND-UP BAND COLLAR (racer collar), about 3 cm tall, made of white vertical-RIBBED knit (fine parallel vertical rib lines), hugging the base of the neck all the way around and standing upright, over the black high-neck top; at the front opening, on one end of the band collar there is a small horizontal SNAP TAB (a short white strap tab with one round metal snap button) at the throat; the collar sits on top of a smooth plain front zipper (thin zip tape lines down both front edges; the jacket stays OPEN/unzipped exactly as now, showing the black crop top). (2) SHOULDERS: add a structured EPAULETTE on top of EACH shoulder: a flat white fabric strap about 3 cm wide running along the top of the shoulder from the collar seam out to the shoulder point, outlined with a clean line and fastened with one small round snap button at its inner end near the collar. The shoulders look slightly more structured/defined (crisp shoulder seam), not padded. In the side and back views the band collar wraps around the back of the neck and the epaulette is visible on top of the shoulder. Keep EVERYTHING else EXACTLY identical to the input image: the same face, the same eyes and their size and shape, the same hair, the same line weight, flat cel shading, colours, pose, composition, background and lighting; the jacket stays white, cropped, with the same orange horizontal bands, the pale-blue dot patch on her left chest, the round '1420 MHz' patch ONLY on her LEFT sleeve, the same sleeves and cuffs; same black crop top and black trousers. No chest pocket, no extra patches, no text added. Keep the back print (pale-blue circle and 'RARE EARTH') and the view labels exactly as they are.",
+  "secs": 29.8,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/v2/cands/sheet_1.jpg",
+  "job": "sheet",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "src": "CANON_SHEET.jpg",
+  "prompt": "Edit this anime character turnaround sheet (front, three-quarter, side and back views). Apply the SAME change identically in all four views. Change ONLY the jacket's neckline and shoulders to a moto/racer jacket construction: (1) COLLAR: replace the collarless neckline with a short STAND-UP BAND COLLAR (racer collar), about 3 cm tall, made of white vertical-RIBBED knit (fine parallel vertical rib lines), hugging the base of the neck all the way around and standing upright, over the black high-neck top; at the front opening, on one end of the band collar there is a small horizontal SNAP TAB (a short white strap tab with one round metal snap button) at the throat; the collar sits on top of a smooth plain front zipper (thin zip tape lines down both front edges; the jacket stays OPEN/unzipped exactly as now, showing the black crop top). (2) SHOULDERS: add a structured EPAULETTE on top of EACH shoulder: a flat white fabric strap about 3 cm wide running along the top of the shoulder from the collar seam out to the shoulder point, outlined with a clean line and fastened with one small round snap button at its inner end near the collar. The shoulders look slightly more structured/defined (crisp shoulder seam), not padded. In the side and back views the band collar wraps around the back of the neck and the epaulette is visible on top of the shoulder. Keep EVERYTHING else EXACTLY identical to the input image: the same face, the same eyes and their size and shape, the same hair, the same line weight, flat cel shading, colours, pose, composition, background and lighting; the jacket stays white, cropped, with the same orange horizontal bands, the pale-blue dot patch on her left chest, the round '1420 MHz' patch ONLY on her LEFT sleeve, the same sleeves and cuffs; same black crop top and black trousers. No chest pocket, no extra patches, no text added. Keep the back print (pale-blue circle and 'RARE EARTH') and the view labels exactly as they are.",
+  "secs": 30.4,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/v2/cands/sheet_0.jpg",
+  "job": "sheet",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "src": "CANON_SHEET.jpg",
+  "prompt": "Edit this anime character turnaround sheet (front, three-quarter, side and back views). Apply the SAME change identically in all four views. Change ONLY the jacket's neckline and shoulders to a moto/racer jacket construction: (1) COLLAR: replace the collarless neckline with a short STAND-UP BAND COLLAR (racer collar), about 3 cm tall, made of white vertical-RIBBED knit (fine parallel vertical rib lines), hugging the base of the neck all the way around and standing upright, over the black high-neck top; at the front opening, on one end of the band collar there is a small horizontal SNAP TAB (a short white strap tab with one round metal snap button) at the throat; the collar sits on top of a smooth plain front zipper (thin zip tape lines down both front edges; the jacket stays OPEN/unzipped exactly as now, showing the black crop top). (2) SHOULDERS: add a structured EPAULETTE on top of EACH shoulder: a flat white fabric strap about 3 cm wide running along the top of the shoulder from the collar seam out to the shoulder point, outlined with a clean line and fastened with one small round snap button at its inner end near the collar. The shoulders look slightly more structured/defined (crisp shoulder seam), not padded. In the side and back views the band collar wraps around the back of the neck and the epaulette is visible on top of the shoulder. Keep EVERYTHING else EXACTLY identical to the input image: the same face, the same eyes and their size and shape, the same hair, the same line weight, flat cel shading, colours, pose, composition, background and lighting; the jacket stays white, cropped, with the same orange horizontal bands, the pale-blue dot patch on her left chest, the round '1420 MHz' patch ONLY on her LEFT sleeve, the same sleeves and cuffs; same black crop top and black trousers. No chest pocket, no extra patches, no text added. Keep the back print (pale-blue circle and 'RARE EARTH') and the view labels exactly as they are.",
+  "secs": 31.0,
+  "attempts": 3,
+  "est_cost_usd": 0.21000000000000002,
+  "error": null
+ }
+]

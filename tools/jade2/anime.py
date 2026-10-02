@@ -47,7 +47,7 @@ def classify(bgr, matte, face=None, hair=None):
         if n > 1:
             k = 1 + int(np.argmax(st[1:, 4])); face = l == k
             cs, _ = cv2.findContours(face.astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-            face = np.zeros((H, W), np.uint8); cv2.drawContours(face, cs, -1, 1, -1); face = face > 0
+            face = np.zeros((H, W), np.uint8); hull = cv2.convexHull(max(cs, key=cv2.contourArea)); cv2.fillPoly(face, [hull], 1); face = (face > 0) & fig   # hull: eyes at the hair edge stay inside
     if hair is None: hair = np.zeros((H, W), bool)
     face = face & fig; hair = hair & fig & ~cv2.erode(face.astype(np.uint8), np.ones((9, 9), np.uint8)).astype(bool)
     # outfit / body
