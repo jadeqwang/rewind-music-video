@@ -29,10 +29,11 @@
    },
    "est_usd": 0.514,
    "est_basis": "5s x 0.1028 (@480p non-video input (per second))",
-   "state": "queued",
+   "state": "running",
    "bucket": 29848630,
    "submitted": 1790917684.3795178,
-   "bytes": 111219
+   "bytes": 111219,
+   "started": 1790917849.863
   }
  },
  "total_est_usd": 0.514,

@@ -479,5 +479,22 @@
   "aspect": "16:9",
   "file": "cands/v3_nbp_expr_y28.jpg",
   "secs": 21.7
+ },
+ {
+  "id": "v3_gpt_expr_y28",
+  "model": "openai/gpt-image-2",
+  "kind": "face_expr",
+  "prompt": "Character expression reference photograph, four head-and-shoulders portraits side by side on a plain light gray studio background, soft even frontal lighting, all front-facing: 1 focused calm gaze looking ahead as if driving, 2 startled with eyes opened wide (natural iris size) and eyebrows raised, 3 singing softly with lips slightly parted, 4 determined with a firm closed mouth. The exact woman in the reference photos: same face as the reference photos, same eye shape and size, accurate likeness. Keep her wide, round, soft face with full cheeks and soft rounded jaw exactly as in the photos, her eyes exactly as large and as shaped as in the photos (not narrowed, not smaller), her nose and mouth unchanged. Long straight solid black hair with a center part falling past the shoulders, a few loose strands at the temples, natural straight brows, thin rectangular dark gray-teal metal frame glasses. Smooth clear skin, natural healthy complexion. She is shown as she looked at age 28, matching the younger reference photos: youthful, smooth clear skin, but identical facial structure, identical eye shape and eye size, same nose, same mouth, same round face and full cheeks, unmistakably the same person. Hair entirely black, no dyed ends. Wearing a white cropped zip jacket with a few bold orange horizontal bands across the chest and sleeves, over a black top. Photographic cinematic realism, sharp focus. No text, no labels, no captions.",
+  "refs": [
+   "IMG_20180610_074732_mr1528617091925.jpg",
+   "IMG_20180610_073429.jpg",
+   "MVIMG_20171213_083641.jpg",
+   "IMG_20180209_082832.jpg",
+   "PXL_20250908_195405539.MP.jpg"
+  ],
+  "seed": 520951553,
+  "aspect": "3:2",
+  "file": "cands/v3_gpt_expr_y28.jpg",
+  "secs": 28.9
  }
 ]

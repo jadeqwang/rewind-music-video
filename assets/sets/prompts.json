@@ -983,5 +983,29 @@
   "secs": 28.4,
   "error": null,
   "ts": "2026-10-02T05:10:25"
+ },
+ {
+  "file": "assets/sets/_modeltest/edit_gpt.jpg",
+  "set": "_modeltest",
+  "model": "openai/gpt-image-2",
+  "prompt": "Same room as the reference image, same furniture, same lighting and palette. New camera angle: reverse shot from behind the committee table, looking past the backs of the five empty chairs toward the single empty chair alone on the floor; the projector beam shines toward the camera. Night. Graphic neo-noir cinematography, photographic, 16:9 widescreen film still. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark. No people.",
+  "seed": null,
+  "seed_note": "model has no seed param; not reproducible",
+  "refs": [
+   "assets/sets/defense_room/c4_gpt-image-2.jpg"
+  ],
+  "params": {
+   "size": "1536x1024",
+   "quality": "medium",
+   "output_format": "jpeg"
+  },
+  "size": [
+   1536,
+   864
+  ],
+  "est_cost_usd": 0.06,
+  "secs": 28.4,
+  "error": null,
+  "ts": "2026-10-02T05:11:27"
  }
 ]

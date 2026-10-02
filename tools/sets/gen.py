@@ -16,24 +16,31 @@ COST = {"xai/grok-imagine-image": 0.02, "xai/grok-imagine-image-quality": 0.05, 
 LOCK = threading.Lock()
 PJ = os.path.join(ROOT, "assets/sets/prompts.json")
 
-def payload(model, prompt, seed):
+def payload(model, prompt, seed, refs=()):
+    from cf import to_data_uri
+    R = [to_data_uri(os.path.join(ROOT, r)) for r in refs]
     if model.startswith("xai/"):
         p = {"prompt": prompt, "aspect_ratio": "16:9", "response_format": "b64_json"}
         if model != "xai/grok-imagine-image-2.0": p["resolution"] = "1k"
+        if R: p["images"] = [{"url": u} for u in R]
         return p
     if model.startswith("bytedance/"):
         return {"prompt": prompt, "size": "1536x864", "watermark": False}
     if model.startswith("google/"):
-        return {"prompt": prompt, "aspect_ratio": "16:9", "image_size": "1K", "output_format": "jpg"}
+        p = {"prompt": prompt, "aspect_ratio": "16:9", "image_size": "1K", "output_format": "jpg"}
+        if R: p["image_input"] = R
+        return p
     if model.startswith("black-forest-labs/"):
         return {"prompt": prompt, "width": 1536, "height": 864, "seed": seed, "output_format": "jpeg", "safety_tolerance": 2}
     if model.startswith("openai/"):
-        return {"prompt": prompt, "size": "1536x1024", "quality": "medium", "output_format": "jpeg"}
+        p = {"prompt": prompt, "size": "1536x1024", "quality": "medium", "output_format": "jpeg"}
+        if R: p["images"] = R
+        return p
     raise ValueError(model)
 
 def one(job):
     seed = job.get("seed") or random.randint(1, 2**31 - 1)
-    pl = payload(job["model"], job["prompt"], seed)
+    pl = payload(job["model"], job["prompt"], seed, job.get("refs", []))
     d = os.path.join(ROOT, "assets/sets", job["set"]); os.makedirs(d, exist_ok=True)
     out = os.path.join(d, job["name"])
     t0 = time.time()
@@ -56,7 +63,7 @@ def one(job):
     rec = {"file": f"assets/sets/{job['set']}/{job['name']}.jpg", "set": job["set"], "model": job["model"],
            "prompt": job["prompt"], "seed": seed if "seed" in pl else None,
            "seed_note": None if "seed" in pl else "model has no seed param; not reproducible",
-           "params": {k: v for k, v in pl.items() if k != "prompt"}, "size": size,
+           "refs": job.get("refs", []), "params": {k: v for k, v in pl.items() if k not in ("prompt", "images", "image_input")}, "size": size,
            "est_cost_usd": COST.get(job["model"]), "secs": round(time.time() - t0, 1), "error": err,
            "ts": time.strftime("%Y-%m-%dT%H:%M:%S")}
     with LOCK:

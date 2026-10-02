@@ -18,8 +18,7 @@ export function transport(g, x, y, h, col, dir = -1, n = 2) {
   for (let i = 0; i < n; i++) {
     const ox = x + dir * i * h * 0.78;
     g.beginPath(); g.moveTo(ox + dir * h * 0.0, y); g.lineTo(ox - dir * h * 0.85, y - h / 2); g.lineTo(ox - dir * h * 0.85, y + h / 2); g.closePath();
-    // the glyph points in `dir`
-    g.setTransform(g.getTransform()); g.fill();
+    g.fill();
   }
   g.restore();
 }
