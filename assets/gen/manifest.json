@@ -2266,10 +2266,35 @@
    },
    "est_usd": 0.6168,
    "est_basis": "6s x 0.1028 (@480p non-video input (per second))",
-   "state": "queued",
+   "state": "done",
    "bucket": 29849122,
    "submitted": 1790947258.510633,
-   "bytes": 181082
+   "bytes": 181082,
+   "state_relay": "done",
+   "gen_secs": 141.0,
+   "started": 1790947366.008,
+   "finished": 1790947507.036,
+   "latency_secs": 248.5,
+   "files": [
+    "assets/gen/anime_J5_t2_480_3be8655050.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 6.042,
+     "bytes": 2820827,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 854,
+       "height": 480,
+       "r_frame_rate": "24/1",
+       "nb_frames": "145"
+      }
+     ]
+    }
+   ],
+   "collected": 1790947542.0464911
   },
   "rewind/anime_J2_t2_480-e3b91b3ce2": {
    "id": "e3b91b3ce2",
@@ -2293,12 +2318,37 @@
    },
    "est_usd": 0.4112,
    "est_basis": "4s x 0.1028 (@480p non-video input (per second))",
-   "state": "queued",
+   "state": "done",
    "bucket": 29849122,
    "submitted": 1790947259.0782235,
-   "bytes": 311204
+   "bytes": 311204,
+   "state_relay": "done",
+   "gen_secs": 153.2,
+   "started": 1790947365.994,
+   "finished": 1790947519.152,
+   "latency_secs": 260.1,
+   "files": [
+    "assets/gen/anime_J2_t2_480_e3b91b3ce2.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 4.042,
+     "bytes": 2310238,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 854,
+       "height": 480,
+       "r_frame_rate": "24/1",
+       "nb_frames": "97"
+      }
+     ]
+    }
+   ],
+   "collected": 1790947542.8313587
   }
  },
  "total_est_usd": 70.4396,
- "total_est_usd_done": 56.4644
+ "total_est_usd_done": 57.4924
 }

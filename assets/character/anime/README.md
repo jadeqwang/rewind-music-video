@@ -6,3 +6,8 @@ User decisions: keep 1420 MHz + pale-blue-dot patches + back print; remove Yagi 
 - Picks: cands/E_expr2_0 (expressions), cands/K_perform_0, cands/K_drive_1 (alt K_drive_0). Board: ANIME_BOARD.jpg.
 - Tools: tools/anime/edit.py (jobs+prompts), board.py, headmeasure.py, gen.py (superseded from-photo designs). Log: prompts.json.
 - gpt-image-2 single-input edits at medium quality run 25-30 s (at the proxy limit); >=4 input images time out every time.
+- SHOT FIRST FRAMES (2026-10-02): `shots/<SHOT>.jpg` (1536x864) + `_720.jpg` (Seedance input), board `shots/FIRST_FRAMES_ANIME.jpg`, raw cands +
+  log in `shots/cands`, `shots/prompts.json`. Built by `tools/anime/shots.py`: car shots are edits of K_drive_1, J5 = K_perform_0, J5b an edit of it,
+  scene shots (J7/J8) use ONE composite reference board image (sheet + head + set plate) as the input. Follow-up edits fixed patch side (1420 MHz
+  patch only on the LEFT sleeve; the model kept putting it on the right) and the police car's position (J3). Eye gate / fix: `tools/anime/framemeasure.py`
+  (`--fix` = size-only eye enlarge via likeness/warp.py; J6 and J9 were fixed). Clips: assets/clips/CLIPS.md (ANIME JADE section).
