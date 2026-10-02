@@ -25,8 +25,8 @@ HUD = eval bar (left), ATTEMPT counter (top-left mono), search tree (grows acros
 | 28.53–29.56 | B1 flood | Mirror floods red/blue (silent sirens). Mono `SIRENS (SILENT)`. | C | E3 |
 | 29.56–32.50 | B2 pull over | Car decelerates to shoulder (exterior). HUD: `1. pull over ?!` ; tree draws node 1. | C | E-pull |
 | 32.50–35.93 | B3 formation | 4 suits in formation walk toward camera — REDACTION figures, sunglass glints on "shades". Center-framed, symmetrical (K-pop formation). | C | **S1** |
-| 35.93–38.50 | B4 ID | Jade's hands, reaching; NASA ID badge (our drawing). The [pause]: everything slows; eval bar sliding. | C | **J3** |
-| 38.50–40.57 | B5 and I do | Badge held up at the window; suit's sunglasses reflect her. | A "and I do" | J3/S2 |
+| 35.93–38.50 | B4 ID | Jade's hands, reaching; her DRIVER LICENSE (our drawing, generic design). The [pause]: everything slows; eval bar sliding. | C | **J3** |
+| 38.50–40.57 | B5 and I do | License held up at the window; suit's sunglasses reflect her. | A "and I do" | J3/S2 |
 | 40.57–42.89 | B6 no warning | Suit's arm rises; clock ticks accelerate; cuts tighten to 16ths. | B "WITH NO WARNING" | **S2** |
 | 42.89 | SHOT | FREEZE (Superhot). Muzzle flash frozen as a drawn star; bullet a single white line. | B "SHOT" | — |
 | 43.24–43.92 | burst/inhale | Impact invert at 43.24; inhale 43.73: frame breathes (zoom 1.02). "and time" | C | — |

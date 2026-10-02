@@ -87,3 +87,5 @@ impacts, speed lines, stutter frames on vocal chops, never a static frame > 2 ba
   hypnagogic JERK — the falling-jolt snap (hard 1-frame vertical jump + flash) at each rewind's start; heart racing
   under a calm surface (heartbeat-synced vignette pulse even in quiet verses); vision going soft at the edges then
   snapping sharp on the beat; a radio-static whisper layer of text. The rewind itself is waking up inside the dream.
+- (user) The ID is her DRIVER'S LICENSE, not a NASA badge. And every rewind must continuously show actual reverse
+  motion of earlier footage + ghost multiples of her past runs as the base layer; type/case files are overlays.

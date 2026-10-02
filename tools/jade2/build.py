@@ -12,7 +12,7 @@ W, H = 1920, 1080
 SH = json.load(open(ROOT + '/tools/jade2/jade_shape.json'))
 TF = json.load(open(ROOT + '/tools/roto/templates/jade_front.json'))
 # MediaPipe's oval stops at the upper forehead; her real forehead / upper head is larger: lift the upper oval (rounded)
-LIFT, LOWER, CHEEK = 1.30, 0.93, 1.07
+LIFT, LOWER, CHEEK = 1.48, 0.93, 1.07
 _ny = SH['nose_tip'][1]
 def _shape(P):
     P = np.array(P, np.float64)
@@ -106,8 +106,8 @@ def build_frame(J, i, frame, meta, fd, pf):
         inner = cv2.erode(face, np.ones((int(iod * 0.16) | 1, int(iod * 0.16) | 1), np.uint8)); hair[inner > 0] = 0   # hair may overlap the cheek edges, never the face centre
         # hairline: centre part a little below the oval top, curving down to the temples (large forehead stays visible)
         ovp = np.array(proj(SH['oval'])); ov = apply(M, ovp)
-        templeL = ov[np.argmin(np.abs(ovp[:, 1] + 0.72) + (ovp[:, 0] > 0) * 9)]; templeR = ov[np.argmin(np.abs(ovp[:, 1] + 0.72) + (ovp[:, 0] < 0) * 9)]
-        part = apply(M, proj([[0.05, 0.96, 0.2]]))[0]
+        templeL = ov[np.argmin(np.abs(ovp[:, 1] + 0.85) + (ovp[:, 0] > 0) * 9)]; templeR = ov[np.argmin(np.abs(ovp[:, 1] + 0.85) + (ovp[:, 0] < 0) * 9)]
+        part = apply(M, proj([[0.05, 1.12, 0.2]]))[0]
         up = (top - (templeL + templeR) / 2); up /= max(1e-6, np.linalg.norm(up))
         crown = []
         # hair cap over the forehead top: two curtains from the part to each temple
@@ -305,7 +305,12 @@ def variant_C(J, i, out, frame, info, face, hair, iod):
     sm = warped
     for _ in range(4): sm = cv2.bilateralFilter(sm, 11, 30, 11)
     sm = cv2.medianBlur(sm, 9)
-    region = cv2.dilate(face, np.ones((5, 5), np.uint8)) > 0
+    OV = [10, 338, 297, 332, 284, 251, 389, 356, 454, 323, 361, 288, 397, 365, 379, 378, 400, 377, 152, 148, 176, 149, 150, 136, 172, 58, 132, 93, 234, 127, 162, 21, 54, 103, 67, 109]
+    po = (np.c_[P[OV], np.ones(len(OV))] @ A.T)
+    pm = np.zeros(face.shape, np.uint8); cv2.fillPoly(pm, [np.round(chaikin(po, 3) * 4).astype(np.int32)], 1, cv2.LINE_AA, shift=2)
+    region = (cv2.dilate(face, np.ones((5, 5), np.uint8)) > 0) & (pm > 0)
+    # her face skin inside her own face outline; outside it (forehead top / temples) keep the cel skin
+    res0 = out.copy(); bone = (np.abs(res0[..., :3].astype(int) - BONE).sum(-1) < 12) & (face > 0); res0[bone, :3] = (204, 222, 244); out = res0
     px = sm[region].reshape(-1, 3).astype(np.float32)
     crit = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.5)
     _, lab, cen = cv2.kmeans(px, 6, None, crit, 3, cv2.KMEANS_PP_CENTERS)
