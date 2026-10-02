@@ -16,3 +16,5 @@ W0000 00:00:1790959609.448769    6404 inference_feedback_manager.cc:121] Feedbac
   J9   40/121 2.93s  flow=0.06 matte=0.37 ground=0.00 face=1.51 lines=0.35 write=0.63
   J9   50/121 2.20s  flow=0.06 matte=0.41 ground=0.00 face=0.80 lines=0.29 write=0.64
   J9   60/121 2.53s  flow=0.07 matte=0.40 ground=0.00 face=1.10 lines=0.35 write=0.60
+  J9   70/121 2.61s  flow=0.06 matte=0.43 ground=0.00 face=1.02 lines=0.43 write=0.67
+  J9   80/121 2.31s  flow=0.07 matte=0.42 ground=0.00 face=0.89 lines=0.31 write=0.61

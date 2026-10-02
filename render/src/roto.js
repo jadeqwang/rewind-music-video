@@ -132,6 +132,7 @@ export function contours(g, id, clipT, o = {}) {
 //        mouth (0..1 openness from the vocal envelope), alpha}
 export function jade(g, id, clipT, o = {}) {
   const m0 = meta(id);
+  if (m0 && !o.ghost && self.__jadeLog) self.__jadeLog.push({ id, fi: frameIndex(m0, clipT), rect: o.rect || null });
   if (m0 && JADE_MODE === 'direct' && m0.layers.includes('direct') && !o.v1 && !o.ghost && !FORCE_V1) return jadeDirect(g, id, clipT, o);
   if (m0 && (m0.layers.includes('anime') || m0.layers.includes('cel')) && !o.v1 && !o.ghost && !FORCE_V1) return jade2(g, id, clipT, o);
   const m = m0; const mt = get(id, 'matte', clipT); if (!m || !mt) return false;

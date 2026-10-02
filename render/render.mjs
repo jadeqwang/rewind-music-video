@@ -108,8 +108,9 @@ try {
   } else if (args.stills) {
     const { page } = await openPage(); const out = resolve(HERE, args.out || `lookdev/stills_${SHOTS}`); mkdirSync(out, { recursive: true });
     for (const t of parseTimes(args.stills)) {
-      const r = await page.evaluate(([t, q]) => window.renderTimed(t, 'image/jpeg', q), [t, Q]);
+      const r = await page.evaluate(async ([t, q]) => { window.__jadeLog = []; const r = await window.renderTimed(t, 'image/jpeg', q); r.jade = window.__jadeLog; return r; }, [t, Q]);
       const f = join(out, `t${t.toFixed(3).replace('.', '_')}.jpg`); atomic(f, dataUrl(r.url));
+      if (r.jade && r.jade.length) writeFileSync(f.replace(/\.jpg$/, '.jade.json'), JSON.stringify(r.jade));   // which Jade clip frames this still drew
       console.log(`${f}  render ${r.ms.toFixed(0)} ms  encode ${r.msEnc.toFixed(0)} ms`);
     }
   } else if (range()) {
