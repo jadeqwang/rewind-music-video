@@ -82,3 +82,8 @@ Dream devices (use throughout, sparingly but constantly):
 - Text behaves like dream text: words re-spell themselves, letters drift out of the line, the page breathes.
 Energy devices: cut on kicks/downbeats in drops, 2–4% zoom punches, strobe on four-on-the-floor, camera shake on
 impacts, speed lines, stutter frames on vocal chops, never a static frame > 2 bars outside the verses.
+- **"Caffeine nap vibes"** (user): wired-but-asleep, the hypnagogic edge. Devices: BLINK wipes — black eyelid bars close
+  top+bottom for 2–4 frames and reopen on a slightly different frame (microsleep at the wheel = dropped time);
+  hypnagogic JERK — the falling-jolt snap (hard 1-frame vertical jump + flash) at each rewind's start; heart racing
+  under a calm surface (heartbeat-synced vignette pulse even in quiet verses); vision going soft at the edges then
+  snapping sharp on the beat; a radio-static whisper layer of text. The rewind itself is waking up inside the dream.
