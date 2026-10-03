@@ -1,9 +1,9 @@
 // suits: the approach. Siren floods alternate red/blue on the beat; the world is luminous contour lines;
-// the agents are REDACTION — black cut-outs with a one-sided siren rim, FOIA face bars, a sunglasses glint.
+// the agents are REDACTION — black cut-outs with a one-sided siren rim, redaction face bars, a sunglasses glint.
 // params: {roto, lines:[idx] (subtitle), eval:[v0,v1], mate (at end), attempt, move:{n,move,nag,at}, banner, freezeAt}
 import { DW, DH, PAL, clamp, lerp, smooth, hash } from '../core.js';
 import { subtitle } from '../type.js';
-import { evalBar, attempt, annotation, foiaBanner } from '../hud.js';
+import { evalBar, attempt, annotation, agencyBanner } from '../hud.js';
 import { sirens, fillInk, headlights } from '../fx.js';
 
 export function draw(ctx, lt, t, shot, { T, roto }) {

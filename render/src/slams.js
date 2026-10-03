@@ -4,6 +4,7 @@
 //   bars    — the word printed ON redaction bars: black bars on bone paper with the letters knocked out
 //   stack   — stutter-stack: the word repeated in rows, each row a frame-step further back in time (motion echo)
 import { DW, DH, PAL, clamp, lerp, inv, smooth, easeOutExpo, easeOutCubic, hash, hsig, rgba } from './core.js';
+import { fileNo } from './agency.js';
 import { F, setFont } from './type.js';
 
 function fit(g, text, fam, px, maxW, maxH, track = 0) {
@@ -61,7 +62,7 @@ export function bars(g, o) {
   g.fillStyle = paper; g.fillText(text, cx - w / 2, by); g.restore();
   // exemption code, like the margin of a released file
   setFont(g, F.mono(44, 700), 2); g.fillStyle = PAL.red; g.textAlign = 'right';
-  if (dt > 0.12) g.fillText(o.code ?? '(b)(7)(C)', DW - 150, barY - 24);
+  if (dt > 0.12) g.fillText(o.code ?? fileNo(1), DW - 150, barY - 24);
   g.restore();
 }
 

@@ -1,5 +1,5 @@
 // hud.js: the nightmare's UI — chess-engine eval bar, ATTEMPT counter, search tree with pruned ✗ leaves,
-// move annotations (?!, ??, !!), FOIA banners, rewind transport (◀◀, ×N badge, timecode).
+// move annotations (?!, ??, !!), classification banners, rewind transport (◀◀, ×N badge, timecode).
 // Symbols (✗ ◀ ▶ − ∎ ∴ ‖ ×) come from the DejaVu Sans Mono symbol subset registered under the JBM family.
 // Legibility floor (phone, muted): mono cap-height ≥ 30 px at 1080p (JetBrains Mono cap ≈ 0.73 em → ≥ 42 px font),
 // key items ≥ 40 px cap (≥ 56 px font). Fewer elements, larger.
@@ -73,12 +73,12 @@ export function annotation(g, o) {
   g.restore();
 }
 
-// ---- FOIA / classification banner ----
-export function foiaBanner(g, o = {}) {
+// ---- the agency's classification banner ----
+export function agencyBanner(g, o = {}) {
   const a = o.alpha ?? 1, y = o.y ?? 52;
   g.save(); g.textBaseline = 'middle'; g.textAlign = 'center';
   setFont(g, F.mono(o.size ?? MONO_MIN, 700), 4); g.fillStyle = rgba(o.color || PAL.boneDim, a);
-  g.fillText(o.text ?? 'UNCLASSIFIED//FOUO', DW / 2, y);
+  g.fillText(o.text ?? AGENCY.classif, DW / 2, y);
   g.restore();
 }
 

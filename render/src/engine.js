@@ -17,6 +17,11 @@ import { drawLayers } from './layers.js';
 import * as CAR from './car.js';
 
 const Q = new URLSearchParams(location.search);
+if (Q.has('textlog')) {   // audit: record every string drawn (render.mjs --stills writes <still>.text.json)
+  const f0 = CanvasRenderingContext2D.prototype.fillText, s0 = CanvasRenderingContext2D.prototype.strokeText;
+  CanvasRenderingContext2D.prototype.fillText = function (t, ...a) { if (self.__textLog) self.__textLog.add(String(t)); return f0.call(this, t, ...a); };
+  CanvasRenderingContext2D.prototype.strokeText = function (t, ...a) { if (self.__textLog) self.__textLog.add(String(t)); return s0.call(this, t, ...a); };
+}
 export const W = +(Q.get('w') || 1920), H = +(Q.get('h') || 1080), S = H / DH;
 
 const E = { T: null, shots: [], post: null, scene: null, type: null, out: null, ready: false };

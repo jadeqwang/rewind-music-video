@@ -414,8 +414,8 @@ function drawMouth(a, [x, y, w], open, col, tilt) {
 }
 
 // ---- REDACTION agents ----------------------------------------------------------------------------
-// black cut-outs from the matte, a one-sided rim of siren light, FOIA face bars and a sunglasses glint.
-// opts: {rect, boil, rimL (colour from the left), rimR, rimAmt, bars (true), barLabel ('(b)(6)'), glint (0..1), glintSeed}
+// black cut-outs from the matte, a one-sided rim of siren light, redaction face bars and a sunglasses glint.
+// opts: {rect, boil, rimL (colour from the left), rimR, rimAmt, bars (true), barLabel (text beside the bar), glint (0..1), glintSeed}
 export function suits(g, id, clipT, o = {}) {
   const m = meta(id); const mt = get(id, 'matte', clipT); if (!m || !mt) return false;
   const pf = perFrame(id, clipT);

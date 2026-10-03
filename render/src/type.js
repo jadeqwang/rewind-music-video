@@ -147,7 +147,7 @@ export function subtitle(g, words, t, o = {}) {
 }
 
 // (d) REDACT — a solid bar the colour of the type covers the word, then retracts in steps to reveal it
-// (the FOIA bar lifting). o: {text, x, y, font, t0, dur, color, barColor, align}
+// (the redaction bar lifting). o: {text, x, y, font, t0, dur, color, barColor, align}
 export function redact(g, o) {
   const t = o.t; g.save(); setFont(g, o.font || F.mono(60, 700), o.track ?? 0); g.textBaseline = 'alphabetic';
   const w = g.measureText(o.text).width, px = parseFloat(/(\d+(\.\d+)?)px/.exec(g.font)[1]);

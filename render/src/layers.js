@@ -8,7 +8,7 @@ import * as V from './slams.js';
 import { searchTree, buildTree, glyph, evalBar, annotation, rewindHud, anomaly, anomalySpike } from './hud.js';
 import { sirens, sodiumSweep, sodiumWash, rain, bullet, headlights, fillInk } from './fx.js';
 import * as CAR from './car.js';
-import { AGENCY } from './agency.js';
+import { AGENCY, fileNo } from './agency.js';
 
 export const A = (v, env, d) => (typeof v === 'function' ? v(env) : v ?? d);
 
@@ -556,13 +556,13 @@ export const LAYERS = {
     else g.drawImage(Lf, 0, 0, Lf.width, Lf.height, 0, 0, DW, DH);
     g.restore();
   },
-  // FOIA pages flying past (internet brutalism): redacted text blocks
-  foia(ctx, L, env) {
+  // the agency's pages flying past (internet brutalism): header, file no., classification line, redacted text blocks
+  agencyfiles(ctx, L, env) {
     const g = ctx.g, n = L.n ?? 5;
     for (let i = 0; i < n; i++) {
       const sp = 0.7 + hash(i, 1), x = lerp(DW + 400, -900, fract(env.t * sp * 0.35 + hash(i, 2))), y = 120 + hash(i, 3) * 600, r = hsig(i, 4) * 0.25;
       g.save(); g.translate(x, y); g.rotate(r); g.fillStyle = PAL.bone; g.fillRect(0, 0, 520, 680);
-      setFont(g, F.mono(30, 700), 1); g.fillStyle = PAL.ink; g.fillText('FEDERAL BUREAU OF ████████', 30, 60);
+      redactedLine(g, AGENCY.header, 30, 60, F.mono(30, 700), PAL.ink, '#000'); setFont(g, F.mono(22, 400), 1); g.fillStyle = PAL.ink; g.fillText(fileNo(1 + (i % 3)), 30, 92); g.textAlign = 'right'; g.fillText(AGENCY.classif, 490, 660); g.textAlign = 'left';
       for (let k = 0; k < 12; k++) { const w = 120 + hash(i, k, 5) * 330; g.fillStyle = hash(i, k, 6) < 0.45 ? '#000' : 'rgba(7,8,10,0.35)'; g.fillRect(30, 100 + k * 44, w, hash(i, k, 6) < 0.45 ? 30 : 8); }
       g.restore();
     }
@@ -623,7 +623,8 @@ Object.assign(LAYERS, {
       const r = lerp(60, 1500, Math.pow(ph, 1.4)), x = 960 + Math.cos(ang) * r, y = 520 + Math.sin(ang) * r * 0.6, sc = lerp(0.25, 1.7, ph), rot = hsig(i, 4) * 3 * ph;
       g.save(); g.translate(x, y); g.rotate(rot); g.scale(sc, sc); g.globalAlpha = 1 - smooth(0.85, 1, ph);
       g.fillStyle = PAL.bone; g.fillRect(-200, -260, 400, 520);
-      setFont(g, F.mono(40, 700), 2); g.fillStyle = PAL.ink; g.fillText(`ANOMALY 0${1 + (i % 2)}`, -170, -200);
+      redactedLine(g, AGENCY.header, -170, -232, F.mono(20, 700), PAL.ink, '#000');   // the agency's letterhead
+      setFont(g, F.mono(40, 700), 2); g.fillStyle = PAL.ink; g.fillText(`ANOMALY 0${1 + (i % 2)}`, -170, -186);
       g.fillStyle = '#0b0b0c'; g.fillRect(-170, -170, 340, 210);
       g.fillStyle = '#000'; for (let k = 0; k < 6; k++) g.fillRect(-170, 70 + k * 30, 120 + hash(i, k) * 210, 16);
       setFont(g, F.mono(220, 700)); g.fillStyle = PAL.red; g.textAlign = 'center'; g.fillText('✗', 60, 40);

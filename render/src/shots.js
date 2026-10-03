@@ -6,7 +6,7 @@
 // Jade is always her own layer ('J*|ld_jade') so the real roto drops in without touching the edit.
 import { DW, DH, PAL, clamp, lerp, smooth, easeOutCubic, easeInOutCubic, hash } from './core.js';
 
-import { AGENCY } from './agency.js';
+import { AGENCY, fileNo } from './agency.js';
 export function buildShots(T) {
   const S = [];
   const add = (id, t0, t1, scene, params = {}, extra = {}) => { if (t1 > t0 + 1e-3) S.push({ id, t0, t1, scene, params, ...extra }); };
@@ -171,7 +171,7 @@ export function buildShots(T) {
   // Picasso escalation 1/4: a hint — the subject's portrait on the case file splits into 2 planes; Guernica planes + lamp-eye over the print
   const casePic = (planes) => [{ type: 'guernica', rect: [100, 190, 1150, 647], n: 5 + planes, bx: 675, by: 236, br: 62 },
     { type: 'cubist', front: R.jade('J5'), side: R.jade('J1'), planes, clip: [1320, 820, 420, 210], cx: 1530, cy: 930, scale: 0.55, bg: '#2A2624', seed: planes }];
-  add('B8_case01', sfx1, drop1, 'freeze', { unwrite: [sil1, drop1 - 0.12], source: 'B6_tab', case: 1, move: { n: 1, move: 'pull over', nag: '??' }, loc: 'LAKE SHORE DR', file: 'FILE 65-HQ-', over: casePic(2) },
+  add('B8_case01', sfx1, drop1, 'freeze', { unwrite: [sil1, drop1 - 0.12], source: 'B6_tab', case: 1, move: { n: 1, move: 'pull over', nag: '??' }, loc: 'LAKE SHORE DR', file: fileNo(1), over: casePic(2) },
     { fx: { heart: 0, jerks: [] }, post: {} });
   // (B9_silence folded into the report: it un-writes itself through the silence — they're still on case 1)
 
@@ -249,7 +249,7 @@ export function buildShots(T) {
   const sfx2 = ev('shot_sfx', 2), drop2 = ev('drop', 2), stops2 = W('stops', 2).start;
   C('F4_shot', shot2, sfx2, [{ type: 'freezeOf', shot: 'F3_tab', withType: false }, { type: 'star', x: 520, y: 420, r: 140 }, { type: 'bullet', x: 900, y: 600, len: 900, angle: 0.4 },
     { type: 'slam', text: 'SHOT', at: 0, y: 1010, maxH: 260, onType: true, stutter: 0.5 }], { hud: { attempt: 2, failed: true, mate: -1, tc: true } });
-  add('F5_case02', sfx2, drop2, 'freeze', { unwrite: [ev('silence', 2), drop2 - 0.12], ghost: { anomaly: 'ANOMALY 01', loc: 'LAKE SHORE DR', move: '1. pull over' }, over: casePic(4), source: 'F3_tab', case: 2, move: { n: 1, move: 'bolt', nag: '?' }, loc: 'FIELD, MONTROSE', file: 'FILE 65-HQ-', bullet: { x: 900, y: 600, len: 900, angle: 0.4 } });
+  add('F5_case02', sfx2, drop2, 'freeze', { unwrite: [ev('silence', 2), drop2 - 0.12], ghost: { anomaly: 'ANOMALY 01', loc: 'LAKE SHORE DR', move: '1. pull over' }, over: casePic(4), source: 'F3_tab', case: 2, move: { n: 1, move: 'bolt', nag: '?' }, loc: 'FIELD, MONTROSE', file: fileNo(1), bullet: { x: 900, y: 600, len: 900, angle: 0.4 } });
   // (F6_silence folded into F5: the same CASE 0001 re-filed, erased again)
 
   // =============================== 6 · DROP 2 104.56 – 134.09 (darker) ===============================
@@ -258,7 +258,7 @@ export function buildShots(T) {
     overlay: { from: shot1 - 0.02, to: L(3).start, color: PAL.red, alpha: 0.75 },
     layers: [{ type: 'sweepbars', progress: e => (e.lt % (2 * P)) / (2 * P), n: 5, onType: true }] }, { fx: { jerks: [drop2], kick: 1 } });
   for (const d of T.downbeatsIn(drop2 + 1, r9 - 1).filter((_, i) => i % 2 === 1)) C(`R8_j${DI(d)}`, d, d + 2 * P, [ink, { type: 'sirens', side: 'pair', base: 0.5, peak: 0.6 }, jade('J5b', { light: 'siren', late: P / 2, lateColor: PAL.red, cam: { from: [0.76, 0.42, 1.0], to: [0.76, 0.42, 1.1] } }), { type: 'circle', x: 960, y: 420, r: 320, color: PAL.red }], { fx: { kick: 1, strobe: 0.6 } });
-  C('R9_bars', r9, r10, [{ type: 'fill', color: PAL.bone }, { type: 'fill', color: PAL.red, when: e => e.t >= (T.downbeatsIn(r9 + 0.5, r10)[0] ?? r9 + bar) }, { type: 'slam', hits: [{ t: r9, text: 'REWIND', variant: 'bars', code: '(b)(7)(C)' }, { t: T.downbeatsIn(r9 + 0.5, r10)[0] ?? r9 + bar, text: 'REWIND', variant: 'behind' }] },
+  C('R9_bars', r9, r10, [{ type: 'fill', color: PAL.bone }, { type: 'fill', color: PAL.red, when: e => e.t >= (T.downbeatsIn(r9 + 0.5, r10)[0] ?? r9 + bar) }, { type: 'slam', hits: [{ t: r9, text: 'REWIND', variant: 'bars', code: fileNo(1) }, { t: T.downbeatsIn(r9 + 0.5, r10)[0] ?? r9 + bar, text: 'REWIND', variant: 'behind' }] },
     { type: 'suits', roto: R.suits('B3'), when: e => e.t >= (T.downbeatsIn(r9 + 0.5, r10)[0] ?? r9 + bar), cam: { from: [0.5, 0.5, 1.0], to: [0.5, 0.5, 1.15] } }, ...rwm('R_rw3', (r9 - 111.652) + 0.75, RWCAM)],
     { fx: { kick: 1, jerks: [r9] } }, { post: { bloom: 0, vignette: 0.1 } });
   const r11 = T.downbeatsIn(r10 + 0.3, r10 + 3)[0] ?? r10 + bar / 2;
@@ -266,17 +266,17 @@ export function buildShots(T) {
   const r12 = T.downbeatsIn(bd - 1.5 * bar, bd)[0] ?? bd - bar;
   {
     const ks = [r11, ...T.kicksIn(r11 + 0.2, r12).filter((_, i) => i % 2 === 1)]; ks.push(r12);
-    const kinds = ['wall', 'foia', 'jade', 'counter', 'tree', 'case'];
+    const kinds = ['wall', 'files', 'jade', 'counter', 'tree', 'case'];
     for (let i = 0; i < ks.length - 1; i++) {
       const kd = kinds[i % kinds.length], id = `R11_${i}`;
       const lay = kd === 'wall' ? [ink, { type: 'wall', progress: 1 }]
-        : kd === 'foia' ? [ink, { type: 'foia', n: 6 }]
+        : kd === 'files' ? [ink, { type: 'agencyfiles', n: 6 }]
         : kd === 'jade' ? [ink, { type: 'sirens', side: 'pair', base: 0.5 }, jade('J5b', { light: 'siren', late: P / 2, cam: { from: [0.76, 0.4, 1.3], to: [0.76, 0.4, 1.2] } }), { type: 'circle', x: 960, y: 420, r: 320 }]
         : kd === 'counter' ? [ink, { type: 'counter', value: e => (e.lt % 0.2 < 0.1 ? '02' : '03'), x: DW / 2, y: 720, size: 520, align: 'center', color: e => (e.lt % 0.2 < 0.1 ? PAL.bone : PAL.red) }]
         : kd === 'tree' ? [ink, { type: 'rollouts', n: 420, seed: 11 + i, progress: e => 0.6 + 0.4 * e.u, kills: [{ at: 0.38, share: 0.55, dy: -0.3, label: 'pull over ??' }, { at: 0.68, share: 0.43, dy: 0.05, label: 'bolt ?' }], surviveDy: 0.3 },
           { type: 'freezeOf', shot: 'B6_tab', rect: [1450, 120, 360, 203], rot: 0.05, slot: 1, withType: false }, { type: 'freezeOf', shot: 'F3_tab', rect: [1450, 380, 360, 203], rot: -0.04, slot: 2, withType: false }]
         : [{ type: 'fill', color: PAL.bone }, { type: 'freezeOf', shot: 'B8_case01', time: sil1 - 0.05, withType: true }];
-      C(id, ks[i], ks[i + 1], lay, { hud: { attempt: e => (hash(Math.floor(e * 15)) < 0.5 ? 2 : 3), tc: true, eval: -9 }, fx: { kick: 1, strobe: 0.4 } }, { post: { bloom: 0.15 } });
+      C(id, ks[i], ks[i + 1], lay, { hud: kd === 'case' ? null : { attempt: e => (hash(Math.floor(e * 15)) < 0.5 ? 2 : 3), tc: true, eval: -9 }, fx: { kick: 1, strobe: 0.4 } }, { post: { bloom: 0.15 } });   // the report insert carries its own header
     }
   }
   C('R12_drain', r12, bd, [ink, { type: 'rollouts', n: 420, seed: 12, progress: 1, alpha: e => 1 - e.u, labels: false, kills: [{ at: 0.38, share: 0.55, dy: -0.3 }, { at: 0.68, share: 0.45, dy: 0.05 }] }, { type: 'drain', amount: e => easeInOutCubic(e.u) }, { type: 'dot', r: 6, x: 960, y: 540 }],

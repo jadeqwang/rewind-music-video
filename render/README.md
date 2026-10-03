@@ -20,7 +20,7 @@ src/type.js           fonts + kinetic type: page() (a, 120–170 px CMU italic, 
                       restrained centred slam: keep for the single biggest moment), subtitle() (c, ≥42 px mono), redact()/redactedLine() (d), revisions() (e)
 src/slams.js          designed drop variants: behind (depth sandwich, matte occludes the word), mirror (palindromic REWIND),
                       bars (word knocked out of redaction bars on bone paper), stack (stutter-stack motion echo)
-src/hud.js            evalBar, attempt, annotation (?! ?? !!), foiaBanner, rewindHud (◀◀ ×N, timecode), buildTree/searchTree, cross
+src/hud.js            evalBar, attempt, annotation (?! ?? !!), agencyBanner, anomalyMeter, rewindHud (◀◀ ×N, timecode), buildTree/searchTree, cross
 src/fx.js             sirens (alternating red/blue floods on the beat), sodiumSweep/Wash, bullet, rain, fillInk
 src/scenes/*.js       page, suits, freeze (→ CASE FILE dossier page: halftone print via post htRect, mono annotations, ✗ stamp),
                       rewind, slam (hits[].variant), tree, road, black (+ index.js registry)
@@ -45,7 +45,7 @@ and JS values that reach canvas or GL go through `fin()`.
   streetlights (infinite/Shepard), speedlines, jade, suits, mirror (inset with its own layers / time offset), page,
   subtitle, mono (typed), cm (theorem setting), redact, revisions, slam (variants), tree, explode, counter, map (pursuit
   curves), routemap, grass, runner, beams, dash, badge, pathdraw, ghosts, wall, glasses, reload, committee, sweepbars,
-  freezeOf (another shot frozen, full-frame or as a pinned print), foia, circle, star, ghostcar, drain, flash, kickflash).
+  freezeOf (another shot frozen, full-frame or as a pinned print), agencyfiles, circle, star, ghostcar, drain, flash, kickflash).
   Any numeric layer field may be a function of `env` ({lt, t, u, dur, T, k kick, b beat}).
 - Overlapping shots are allowed: `shotAt` picks the latest-starting shot covering t, so inserts (Jade on downbeats) sit
   inside a long rewind and the rewind resumes after them. `params.over` adds layers on top of any scene.
@@ -96,7 +96,7 @@ After each frame the current shot is prefetched for about 10 frames ahead and 2 
 - `jade()`: flat bone fill, hair as ink, interior lines outside the face mask only. Inside the face mask only `features`
   (eyes at full size, brows, nose tip, hair/jaw contours) and a mouth driven by `T.e('vocal')` are drawn, with no skin texture
   (docs/LIKENESS_RULES.md). `ghost: true` gives the outline-only past self, `rim` gives an edge light, `light` gives a sodium/siren wash.
-- `suits()`: black cut-out, one-sided siren rim, FOIA face bars wider than the head plus a `(b)(6)` label, sunglasses glint stars.
+- `suits()`: black cut-out, one-sided siren rim, redaction face bars wider than the head (optional label), sunglasses glint stars.
 
 #### Production roto (`tools/roto/roto.py`, see tools/roto/README.md)
 `assets/roto/<CLIP>/` (E1, E2_calm, S1, J6, ...) at 15 fps, **1920x1080** (bitmaps are 8.3 MB decoded: consider MAX ≈ 80).
