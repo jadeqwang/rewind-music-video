@@ -103,3 +103,9 @@ Cubist simultaneity = multiple attempts in one face (frontal + 3/4 planes), esca
 she RESOLVES into one single-view face in the final drop (the survivor). Picasso/Gjon Mili 1949 light drawings =
 rewind trails and ghost runs as continuous light-pen strokes. Guernica-inflected freezes (fractured planes, bulb-eye
 = siren). Always flattering, recognizably her (Dora Maar-era elegance, never grotesque).
+
+## World-building (user): the suits are a time-enforcement agency
+They hunt her because her rewinds create detectable anomalies (Loki/TVA riff). We use an invented agency — the
+OFFICE OF CAUSAL INTEGRITY (OCI) — never TVA names/logos/props (Disney IP; takedown risk). Case files = variance
+reports; anomaly meter spikes per rewind; suits multiply per anomaly and "prune" dead runs; payoff: in the final
+drop she stops rewinding → "ANOMALY: NONE DETECTED" → she drives past unseen ("as inconspicuously as possible").
