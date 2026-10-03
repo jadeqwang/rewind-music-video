@@ -8,6 +8,10 @@ export const AUDIO = {
   v5:    { song: 'Rewind (5).mp3',                         timing: ['analysis/timing_v5.json', 'analysis/timing.json'], envelopes: ['analysis/envelopes_v5.json', 'analysis/envelopes.json'] },
   v5sfx: { song: 'assets/sound/Rewind5_with_intro_sfx.mp3', timing: ['analysis/timing_v5.json', 'analysis/timing.json'], envelopes: ['analysis/envelopes_v5.json', 'analysis/envelopes.json'] },
   // v5final: v5 with the 6.6 s intro impact removed + intro SFX (tools/sound/declick_intro.py --v5) = the master for the final encode
+  // v5final_v2*: the sung "them" re-inserted at ~0:37 (pending user approval) — the edit adds the word to line 4 when selected
+  v5final_v2:  { song: 'assets/sound/Rewind5_final_v2.wav',  timing: ['analysis/timing_v5.json', 'analysis/timing.json'], envelopes: ['analysis/envelopes_v5.json', 'analysis/envelopes.json'], addWords: [{ w: 'them,', after: 'show', line: 4 }] },
+  v5final_v2B: { song: 'assets/sound/Rewind5_final_v2B.wav', timing: ['analysis/timing_v5.json', 'analysis/timing.json'], envelopes: ['analysis/envelopes_v5.json', 'analysis/envelopes.json'], addWords: [{ w: 'them,', after: 'show', line: 4 }] },
+  v5final_v2C: { song: 'assets/sound/Rewind5_final_v2C.wav', timing: ['analysis/timing_v5.json', 'analysis/timing.json'], envelopes: ['analysis/envelopes_v5.json', 'analysis/envelopes.json'], addWords: [{ w: 'them,', after: 'show', line: 4 }] },
   v5final: { song: 'assets/sound/Rewind5_final.wav',          timing: ['analysis/timing_v5.json', 'analysis/timing.json'], envelopes: ['analysis/envelopes_v5.json', 'analysis/envelopes.json'] },
 };
 export const audioCfg = key => AUDIO[key || AUDIO_DEFAULT] || AUDIO[AUDIO_DEFAULT];

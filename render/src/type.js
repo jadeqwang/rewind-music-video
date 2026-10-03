@@ -133,7 +133,7 @@ export function subtitle(g, words, t, o = {}) {
   const vis = words.filter(w => t >= w.start - 0.05);
   if (!vis.length) return;
   g.save(); setFont(g, F.mono(Math.max(42, o.size ?? 44), 400), 1); g.textBaseline = 'alphabetic';
-  const txt = words.map(w => (o.upper ? clean(w.w).toUpperCase() : clean(w.w).toLowerCase()));
+  const txt = words.map(w => (o.upper ? clean(w.w).toUpperCase() : o.keepCase ? clean(w.w) : clean(w.w).toLowerCase()));
   const sp = g.measureText(' ').width, widths = txt.map(s => g.measureText(s).width);
   const total = widths.reduce((a, b) => a + b, 0) + sp * (txt.length - 1);
   let x = (o.x ?? DW / 2) - total / 2; const y = o.y ?? 990;
@@ -166,9 +166,14 @@ export function redactedLine(g, parts, x, y, font, col = PAL.boneDim, barCol = P
   const px = parseFloat(/(\d+(\.\d+)?)px/.exec(g.font)[1]);
   for (const p of parts) {
     const s = typeof p === 'string' ? p : '█'.repeat(p.bar);
-    const w = typeof p === 'string' ? g.measureText(s).width : g.measureText('M').width * p.bar;
+    // a bar = p.bar mono CELLS (one redaction rectangle per character: the advance incl. tracking, a hairline gap between)
+    const adv = g.measureText('MM').width - g.measureText('M').width;
+    const w = typeof p === 'string' ? g.measureText(s).width : adv * p.bar;
     if (typeof p === 'string') { g.fillStyle = col; g.fillText(s, x, y); }
-    else { g.fillStyle = barCol; g.fillRect(x, y - px * 0.8, w, px * 0.98); }
+    else {
+      g.fillStyle = barCol; const n = Math.ceil(p.bar), gap = Math.max(1, px * 0.05);
+      for (let i = 0; i < n; i++) { const cw = Math.min(adv, adv * p.bar - i * adv); if (cw > 0) g.fillRect(x + i * adv, y - px * 0.8, Math.max(0, cw - (i < n - 1 ? gap : 0)), px * 0.98); }
+    }
     x += w + g.measureText(' ').width;
   }
   g.restore();

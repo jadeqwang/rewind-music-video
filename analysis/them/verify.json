@@ -1,0 +1,155 @@
+{
+ "A": {
+  "f0_voiced_frac": 0.84,
+  "f0_err_cents_median_abs": 13.0,
+  "f0_err_cents_p90_abs": 44.7,
+  "sustain_B_median_hz": 490.2,
+  "shore_B_median_hz": 490.2,
+  "sustain_vs_shore_cents": 0.0,
+  "sustain_vs_B4_cents": -13.0,
+  "cep_dist_inserted_to": {
+   "show": 90.6,
+   "and": 96.2,
+   "do": 99.2,
+   "Shore(B4)": 68.4,
+   "dreamt1_eh(src)": 100.3,
+   "dreamt2_eh": 114.2
+  },
+  "cep_dist_baseline": {
+   "show-and": 91.0,
+   "show-do": 111.4,
+   "dreamt1-dreamt2": 47.3,
+   "Shore-show": 66.7
+  },
+  "LUFS_M_vocal_stem": {
+   "them": -21.1,
+   "show": -20.9,
+   "and": -20.7,
+   "do": -21.8
+  },
+  "LUFS_M_mix": {
+   "before": -19.3,
+   "after": -17.3
+  },
+  "flux_ours": {
+   "hiss_start": 110.0,
+   "vowel_on": 132.0,
+   "m_end": 78.0
+  },
+  "flux_natural_onsets": {
+   "show_sh": 82.0,
+   "show_vowel": 102.0,
+   "and": 147.0,
+   "I": 249.0,
+   "do": 61.0
+  },
+  "max_HF_insert_over_mix_dB": 11.5,
+  "sustain_purity_dB": {
+   "insert": 16.5,
+   "Shore_22.9": 27.6,
+   "Shore_156.9": 19.5
+  }
+ },
+ "B": {
+  "f0_voiced_frac": 0.89,
+  "f0_err_cents_median_abs": 10.8,
+  "f0_err_cents_p90_abs": 50.5,
+  "sustain_B_median_hz": 490.2,
+  "shore_B_median_hz": 490.2,
+  "sustain_vs_shore_cents": 0.0,
+  "sustain_vs_B4_cents": -13.0,
+  "cep_dist_inserted_to": {
+   "show": 91.0,
+   "and": 99.1,
+   "do": 105.3,
+   "Shore(B4)": 66.9,
+   "dreamt1_eh(src)": 106.0,
+   "dreamt2_eh": 107.9
+  },
+  "cep_dist_baseline": {
+   "show-and": 92.5,
+   "show-do": 112.6,
+   "dreamt1-dreamt2": 47.3,
+   "Shore-show": 67.5
+  },
+  "LUFS_M_vocal_stem": {
+   "them": -20.8,
+   "show": -20.9,
+   "and": -20.7,
+   "do": -21.8
+  },
+  "LUFS_M_mix": {
+   "before": -19.3,
+   "after": -17.1
+  },
+  "flux_ours": {
+   "hiss_start": 117.0,
+   "vowel_on": 178.0,
+   "m_end": 96.0
+  },
+  "flux_natural_onsets": {
+   "show_sh": 82.0,
+   "show_vowel": 109.0,
+   "and": 133.0,
+   "I": 246.0,
+   "do": 61.0
+  },
+  "max_HF_insert_over_mix_dB": 11.5,
+  "sustain_purity_dB": {
+   "insert": 19.1,
+   "Shore_22.9": 27.6,
+   "Shore_156.9": 19.5
+  }
+ },
+ "C": {
+  "f0_voiced_frac": 0.84,
+  "f0_err_cents_median_abs": 13.0,
+  "f0_err_cents_p90_abs": 44.7,
+  "sustain_B_median_hz": 490.2,
+  "shore_B_median_hz": 490.2,
+  "sustain_vs_shore_cents": 0.0,
+  "sustain_vs_B4_cents": -13.0,
+  "cep_dist_inserted_to": {
+   "show": 89.0,
+   "and": 96.3,
+   "do": 99.4,
+   "Shore(B4)": 68.2,
+   "dreamt1_eh(src)": 100.3,
+   "dreamt2_eh": 114.3
+  },
+  "cep_dist_baseline": {
+   "show-and": 90.3,
+   "show-do": 110.0,
+   "dreamt1-dreamt2": 47.3,
+   "Shore-show": 65.3
+  },
+  "LUFS_M_vocal_stem": {
+   "them": -21.1,
+   "show": -20.9,
+   "and": -20.7,
+   "do": -21.8
+  },
+  "LUFS_M_mix": {
+   "before": -19.3,
+   "after": -17.3
+  },
+  "flux_ours": {
+   "hiss_start": 143.0,
+   "vowel_on": 131.0,
+   "m_end": 77.0
+  },
+  "flux_natural_onsets": {
+   "show_sh": 82.0,
+   "show_vowel": 104.0,
+   "and": 147.0,
+   "I": 249.0,
+   "do": 61.0
+  },
+  "max_HF_insert_over_mix_dB": 10.3,
+  "sustain_purity_dB": {
+   "insert": 16.5,
+   "Shore_22.9": 27.6,
+   "Shore_156.9": 19.5
+  }
+ }
+}

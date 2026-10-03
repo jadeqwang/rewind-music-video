@@ -162,6 +162,23 @@ export function searchTree(g, T, o) {
   return { P };
 }
 
+// ---- the in-world clock: ONE continuous clock for the whole film (the integral of its rate). +1×/s normally; inside a
+// rewind window (T.clock.windows: {a, b, net}) it runs BACKWARDS at −0.5×/s plus one step back on every kick, sized so the
+// window nets exactly `net` seconds. Continuous at every window edge; deterministic from timing. T.clock.c0 = clock at t=0.
+export function clockAt(T, t) {
+  const C = T && T.clock; if (!C) return t;
+  let c = C.c0 + t;
+  for (const w of C.windows) {
+    if (t <= w.a) break;
+    const span = w.b - w.a, x = Math.min(t, w.b) - w.a, r = 0.5;
+    const nk = T.kicksIn ? T.kicksIn(w.a, w.b).length : 0, j = nk ? (-w.net - r * span) / nk : 0;   // per-kick step so the window nets `net`
+    const kd = T.kicksIn ? T.kicksIn(w.a, Math.min(t, w.b) + 1e-6).length : 0;
+    c += -x - r * x - (nk ? j * kd : (-w.net - r * span) * x / span);   // replace the +1×/s with −r×/s and the kick steps
+  }
+  return c;
+}
+export const inRewind = (T, t) => !!(T && T.clock && T.clock.windows.some(w => t >= w.a && t < w.b));
+
 // ---- ANOMALY meter: the agency detects every rewind. Spikes at each rewind start (escalating), decays slowly; in the
 // final drop she never rewinds, so it drains to "ANOMALY: NONE DETECTED". T.rewindStarts is set by the engine at boot.
 const AMPS = [0.62, 0.8, 0.95, 1];
@@ -213,15 +230,10 @@ export function hudOverlay(g, t, shot, T) {
     const v = Array.isArray(h.eval) ? lerp(h.eval[0], h.eval[1], u * u) : typeof h.eval === 'function' ? h.eval(t) : h.eval;
     evalBar(g, h.mate != null && (h.mateAt == null || lt >= h.mateAt) ? { mate: h.mate, alpha: a, ink: h.ink } : { value: v, alpha: a, inf: v === Infinity, ink: h.ink });
   }
-  if (h.tc) {
-    let tcT = typeof h.tc === 'number' ? t + h.tc : t;
-    const rwA = shot.params && shot.params.rwA;
-    if (rwA != null) {   // inside a rewind the timecode runs BACKWARDS: fast, kick-stepped (each kick knocks it back further)
-      const nk = T && T.kicksIn ? T.kicksIn(rwA, t + 1e-6).length : 0;
-      tcT = 23 * 3600 + 41 * 60 + 7 + rwA - (t - rwA) * 4 - nk * 0.75;   // local clock (23:41:07 + song time): always far above zero
-    }
-    g.save(); setFont(g, F.mono(46, 400), 1); g.fillStyle = rgba(h.ink ? PAL.ink : rwA != null ? PAL.cyan : PAL.boneDim, a); g.textAlign = 'right'; g.textBaseline = 'alphabetic';
-    g.fillText((rwA != null ? '\u25c0\u25c0 ' : '') + timecode(tcT), DW - 72, 96); g.restore();
+  if (h.tc) {   // the in-world clock (continuous; runs backwards inside rewinds, in cyan with ◀◀)
+    const rw = inRewind(T, t), tcT = clockAt(T, t);
+    g.save(); setFont(g, F.mono(46, 400), 1); g.fillStyle = rgba(h.ink ? PAL.ink : rw ? PAL.cyan : PAL.boneDim, a); g.textAlign = 'right'; g.textBaseline = 'alphabetic';
+    g.fillText((rw ? '\u25c0\u25c0 ' : '') + timecode(tcT), DW - 72, 96); g.restore();
   }
   // corner tag after each world card: TIMESTREAM 2010 · ITERATION 0N (small, beside the eval label)
   const it = T && T.iterations ? T.iterations.find(r => t >= r.t0 && t < r.t1) : null;

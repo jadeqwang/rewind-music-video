@@ -1,0 +1,98 @@
+{
+ "target_f0_shore_B_median_hz": 487.75009144246144,
+ "target_cents_vs_B4": -21.632600521645255,
+ "show_tail_rel_dB": -16.122782618719587,
+ "A": {
+  "variant": "A",
+  "src": {
+   "th": [
+    147.665,
+    147.815
+   ],
+   "eh": [
+    24.065,
+    24.19
+   ],
+   "m": [
+    24.19,
+    24.345
+   ]
+  },
+  "vowel_on": 37.8164,
+  "wet_gain": 0.775,
+  "tail_rel_dB": -16.2,
+  "target_tail_rel_dB": -16.1,
+  "tilt_eq_dB_range": [
+   -4.0,
+   4.0
+  ],
+  "null": {
+   "len_equal": true,
+   "first_diff_s": 37.7184,
+   "last_diff_s": 39.3161,
+   "identical_outside_window": true
+  }
+ },
+ "B": {
+  "variant": "B",
+  "src": {
+   "th": [
+    147.665,
+    147.815
+   ],
+   "eh": [
+    158.055,
+    158.13
+   ],
+   "m": [
+    158.13,
+    158.42
+   ]
+  },
+  "vowel_on": 37.8164,
+  "wet_gain": 0.65,
+  "tail_rel_dB": -16.0,
+  "target_tail_rel_dB": -16.1,
+  "tilt_eq_dB_range": [
+   -4.0,
+   4.0
+  ],
+  "null": {
+   "len_equal": true,
+   "first_diff_s": 37.7184,
+   "last_diff_s": 39.3157,
+   "identical_outside_window": true
+  }
+ },
+ "C": {
+  "variant": "C",
+  "src": {
+   "th": [
+    13.765,
+    13.875
+   ],
+   "eh": [
+    24.065,
+    24.19
+   ],
+   "m": [
+    24.19,
+    24.345
+   ]
+  },
+  "vowel_on": 37.8164,
+  "wet_gain": 0.775,
+  "tail_rel_dB": -16.2,
+  "target_tail_rel_dB": -16.1,
+  "tilt_eq_dB_range": [
+   -4.0,
+   4.0
+  ],
+  "null": {
+   "len_equal": true,
+   "first_diff_s": 37.7184,
+   "last_diff_s": 39.3161,
+   "identical_outside_window": true
+  }
+ }
+}

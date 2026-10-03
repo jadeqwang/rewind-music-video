@@ -84,3 +84,23 @@ The v4 defaults are unchanged. One difference: reading the constants from timing
 In the full removal, the 150-800 Hz texture during 7.0-8.5 s ends up 2-3.6 dB under the v5 original. Part of that is the impact's own low-mid tail, and part is kalimba notes that weren't in the reference window. The soft variant fills that dip back in, but it keeps an audible sub swell (-37 dBFS).
 
 **Null tests:** all three edited files have the same length as the v5 decode and are **bit-identical to v5 from 10.367 s** (the last differing sample is at 10.192 s). The removal starts at 6.557 s. `Rewind5_with_intro_sfx.wav` is bit-identical from 6.855 s (the last difference is at 4.40 s). True peak over 0-14 s is -5.1 dBTP, because v5 is about 2 dB hotter than v4. The mp3s are lossy re-encodes; use the wav for the mux if possible.
+
+## v5 final v2: "show (them) and I do" (`tools/sound/insert_them.py`, `verify_them.py`)
+`Rewind5_final_v2.wav` / `.mp3` is `Rewind5_final` with the sung word "them" added at 37.72-38.25 s (v5 time). The vowel starts on the beat at 37.816, and the word ends before "and" at 38.26.
+- **How it's built:** WORLD vocoder resynthesis of her own phonemes from the v5 vocal stem. Formants and aperiodicity are kept.
+  - /ð/ is the whispered "th" hiss of "The".
+  - /ɛm/ is the ɛ+m of "dreamt", taken before the t.
+  - The f0 is the measured contour of "Shore" (22.915 s): a scoop on A4, then B4 at -21 cents. Its timing relative to the vowel onset is kept.
+  - Level matched to "show"; octave-smoothed tilt EQ (±4 dB); L/R balance of "show".
+  - Ducked synthetic room tail (wet at 10 % while the word sounds), calibrated to "show"'s release tail (-16 dB).
+- **How it's mixed:** the word is added on top of the full mix. The file is bit-identical to `Rewind5_final.wav` outside 37.718-39.316 s.
+- **Variants:** B = master (/ð/ from the reprise "The" at 147.67, ɛm from the reprise "dreamt" at 158.06). A = ð from the reprise + ɛm from verse-1 "dreamt" (24.07). C = ð from verse-1 "The" (13.77) + verse-1 ɛm. Files: `Rewind5_final_v2A.wav`, `Rewind5_final_v2C.wav`.
+- **Previews:** `preview/them_before_30-45s.mp3`, `them_after_30-45s.mp3` (B), `them_after_A_30-45s.mp3`, `them_after_C_30-45s.mp3`.
+- **Plot:** `them_insert_spectrogram_f0.png`.
+- **Checks:** run on the re-separated 30-45 s; numbers in `analysis/them/verify.json`.
+  - **B (master):** f0 error median 11 cents, p90 50 cents. B4 sustain is 490.2 Hz, the same as "Shore" (0 cents).
+  - **Sustain purity:** the fundamental sits 19 dB over the A4 region, against 19.5-27.6 dB on the real "Shore".
+  - **Loudness:** LUFS-M is -20.8 vs "show" -20.9 and "and" -20.7.
+  - **Cepstral distance:** to "show" 91, against the natural show-to-"and" distance of 92.
+  - **Splices:** spectral flux at the joins is 96-178, within the 61-249 range of the line's natural onsets.
+  - **Caveat:** the vowel is spectrally further from the source "dreamt" ɛ (about 106, against 47 between the two real "dreamt"s). This comes from the +9 semitone shift (D4 -> B4). Listen for "them" sounding thin or synthetic.

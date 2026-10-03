@@ -74,7 +74,7 @@ export async function draw(ctx, lt, t, shot, data) {
     const y = RY0 + i * RDY; setFont(ty, FM, 1); ty.fillStyle = rgba(ink, 0.6); ty.fillText(k, KX, y);
     if (kind === 'action') { const o = tw(v, VX, y, FM, ink, 0.02, 0.1); const tag = typ('[PRUNED]', 0, 0.04); setFont(ty, F.mono(42, 700), 1); ty.fillStyle = PAL.red; ty.textAlign = 'right'; ty.fillText(tag.s, DW - 90, y); ty.textAlign = 'left'; }
     else if (kind === 'agent') {   // redacted agent name (bar retracts right→left) + signature retracting along its stroke
-      const bw = 1 - seg(0.55, 0.62); if (bw > 0) { setFont(ty, FM, 1); const cw = ty.measureText('M').width; ty.fillStyle = '#000'; ty.fillRect(VX, y - 34, cw * 9 * bw, 41); }
+      const bw = 1 - seg(0.55, 0.62); if (bw > 0) redactedLine(ty, [{ bar: 9 * bw }], VX, y, FM, ink, '#000');   // 9 cells, retracting right→left
       const keep = 1 - seg(0.1, 0.2), pts = sigPath(p.case ?? 1), n = Math.floor(pts.length * keep);
       if (n > 1) { ty.save(); ty.strokeStyle = '#1B2A6B'; ty.lineWidth = 3.2; ty.lineCap = 'round'; ty.lineJoin = 'round'; ty.beginPath();
         for (let q = 0; q < n; q++) { const [sx, sy] = pts[q]; q ? ty.lineTo(VX + 300 + sx, y - 12 + sy) : ty.moveTo(VX + 300 + sx, y - 12 + sy); } ty.stroke(); ty.restore(); }

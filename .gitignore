@@ -25,3 +25,4 @@ assets/sound/*.wav
 assets/sound/*.wav
 assets/sound/**/*.wav
 analysis/stems_v5/
+analysis/them/sep_*/

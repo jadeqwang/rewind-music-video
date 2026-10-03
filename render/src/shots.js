@@ -135,7 +135,7 @@ export function buildShots(T) {
     { type: 'sirens', side: 'pair', base: 0.12, peak: 0.25 },
     { type: 'rain', n: 80, alpha: 0.18, slow: 0.15 },
     { type: 'licensecard', roto: R.jade('J3'), offset: 0.9, light: null, cam: { from: [0.52, 0.52, 1.25], to: [0.5, 0.52, 1.55], dx: 260 } },   // her anime hand presenting the card (J3_v3), our license warped onto it
-    { type: 'subtitle', lines: [4], until: W('and', 1, { after: L(4).start }).start, x: 620 },
+    { type: 'subtitle', lines: [4], until: W('and', 1, { after: L(4).start }).start, x: 620, keepCase: true },   // "I reach for my ID to show them," (them: v2 mix)
   ], { hud: hud(1, [-1.2, -2.5]), fx: { heart: 0.35, soft: 0.5 } });
   C('B5_and_i_do', T.beatAfter(reachE), L(5).start, [ink,
     { type: 'world', roto: R.window, alpha: 0.55, lights: 0.8 },
@@ -196,7 +196,7 @@ export function buildShots(T) {
     jade('J5_circle', { light: 'siren', late: P / 2, lateColor: PAL.cyan, cam: { from: [0.76, 0.42, 1.0], to: [0.76, 0.42, 1.08] } }), { type: 'circle', x: 960, y: 420, r: 320 }], { fx: { kick: 1, strobe: 0.6 } });
   // sung "Rewind" = a Jade centre-lock performance (R_rw*, anime-direct, generated on the v5 mix: clock 'v5'), the REWIND slam
   // behind her (depth sandwich: never over her face), her twirl drawn as a cyan CCW light-pen arc + ◀◀. off = clip s at the word.
-  const rwm = (id, off, cam, light = 'siren') => [jade(id, { light, cam, offset: off, loop: false, mouth: false }), { type: 'rwpen', roto: R.jade(id), offset: off, cam }];
+  const rwm = (id, off, cam, light = 'siren') => [jade(id, { light, cam, offset: off, loop: false, mouth: false, forward: true }), { type: 'rwpen', roto: R.jade(id), offset: off, cam }];
   const RWCAM = { from: [0.5, 0.47, 1.0], to: [0.5, 0.45, 1.1] };
   const R3b = T.downbeatsIn(L(6).start + P, L(7).start)[0] ?? L(6).start + bar;
   C('R3_slam', L(6).start, R3b, [ink, { type: 'sirens', side: 'pair', base: 0.2, peak: 0.4 }, { type: 'slam', text: 'REWIND', variant: 'mirror', at: 0, y: 700 }, ...rwm('R_rw1', 1.3, RWCAM)], { fx: { kick: 1, jerks: [L(6).start] } });
@@ -286,7 +286,8 @@ export function buildShots(T) {
         : kd === 'counter' ? [ink, { type: 'counter', value: e => (e.lt % 0.2 < 0.1 ? '02' : '03'), x: DW / 2, y: 720, size: 520, align: 'center', color: e => (e.lt % 0.2 < 0.1 ? PAL.bone : PAL.red) }]
         : kd === 'tree' ? [ink, { type: 'rollouts', n: 420, seed: 11 + i, progress: e => 0.6 + 0.4 * e.u, kills: [{ at: 0.38, share: 0.55, dy: -0.3, label: 'pull over ??' }, { at: 0.68, share: 0.43, dy: 0.05, label: 'bolt ?' }], surviveDy: 0.3 },
           { type: 'freezeOf', shot: 'B6_tab', rect: [1450, 120, 360, 203], rot: 0.05, slot: 1, withType: false }, { type: 'freezeOf', shot: 'F3_tab', rect: [1450, 380, 360, 203], rot: -0.04, slot: 2, withType: false }]
-        : [{ type: 'fill', color: PAL.bone }, { type: 'freezeOf', shot: 'B8_case01', time: sil1 - 0.05, withType: true }];
+        : [{ type: 'fill', color: PAL.bone }, Math.floor(i / kinds.length) % 2 === 0 ? { type: 'freezeOf', shot: 'B8_case01', time: sil1 - 0.05, withType: true }   // report 01 …
+          : { type: 'freezeOf', shot: 'F5_case02', time: ev('silence', 2) - 0.05, withType: true }];   // … then REPORT 02 (the field, RE-OPENED)
       C(id, ks[i], ks[i + 1], lay, { hud: kd === 'case' ? null : { attempt: e => (hash(Math.floor(e * 15)) < 0.5 ? 2 : 3), tc: true, eval: -9 }, fx: { kick: 1, strobe: 0.4 } }, { post: { bloom: 0.15 } });   // the report insert carries its own header
     }
   }
@@ -401,6 +402,9 @@ export function buildShots(T) {
   C('END_credits', end + 0.9, T.duration + 0.5, [{ type: 'fill', color: '#000' }, { type: 'creditfolder', text: 'REWIND — Jade Wang' }], { fx: { heart: 0 } }, { post: { bloom: 0, vignette: 0 } });
   // ---- every rewind section keeps actual reverse motion of earlier footage as its base layer (overlays sit on top) ----
   const RW = [{ a: drop1, b: sec('verse3').start, from: shot1 - 0.02, to: sec('build1').start + 0.1 }, { a: drop2, b: bd, from: shot2 - 0.02, to: sec('verse3').start + 0.3 }];
+  // the in-world clock: 23:41:07 local exactly at the first shot (report 01's TIME); each rewind nets a jump back
+  // (window 1 = the report's Δt discontinuity −00:00:31)
+  T.clock = { c0: 23 * 3600 + 41 * 60 + 7 - shot1 + 0.034, windows: [{ a: RW[0].a, b: RW[0].b, net: -31 }, { a: RW[1].a, b: RW[1].b, net: -34 }] };
   T.iterations = [{ n: 1, t0: v1, t1: drop1 }, { n: 2, t0: sec('verse3').start, t1: drop2 }, { n: 3, t0: fd, t1: qed }];   // corner tag after each world card
   for (const sh of S) for (const w of RW) {
     if (sh.t0 < w.a - 1e-3 || sh.t0 >= w.b - 1e-3) continue;

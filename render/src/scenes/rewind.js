@@ -5,7 +5,7 @@
 //          speeds [2,4,8], segs [fractions of the rewind time], hold (s of frozen negative before it moves), lines (subtitle)}
 import { DW, DH, PAL, clamp, lerp, smooth, hash, easeInCubic, layer, clearLayer, resetCtx } from '../core.js';
 import { drawLayers } from '../layers.js';
-import { rewindHud } from '../hud.js';
+import { rewindHud, clockAt } from '../hud.js';
 import { subtitle, setFont, F } from '../type.js';
 
 const LOCAL0 = 23 * 3600 + 41 * 60 + 7;   // 23:41:07 local (the incident, COPY_v9)
@@ -54,7 +54,7 @@ export async function draw(ctx, lt, t, shot, data) {
     qg.putImageData(id, 0, 0);
     ty.save(); ty.setTransform(1, 0, 0, 1, 0, 0); ty.globalAlpha = p.overlay.alpha ?? 0.6; ty.drawImage(Q, 0, 0, ty.canvas.width, ty.canvas.height); ty.restore();
   }
-  rewindHud(ty, { speed: p.badge ?? s.speed, tc: LOCAL0 + ts, alpha: 1 });   // local clock base: never near 00:00
+  rewindHud(ty, { speed: p.badge ?? s.speed, tc: clockAt(T, t), alpha: 1 });   // the one continuous in-world clock
   // a thin progress rail along the bottom: the scrub position over the rewound span
   ty.fillStyle = 'rgba(61,242,230,0.35)'; ty.fillRect(90, 1052, DW - 180, 4);
   ty.fillStyle = PAL.cyan; ty.fillRect(90 + (DW - 180) * (1 - s.progress) - 4, 1040, 8, 28);

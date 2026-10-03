@@ -22,6 +22,12 @@ export class TimeMap {
     if (!tm) throw new Error('no timing.json (analysis/timing.json or render/data/timing.stub.json)');
     const m = new TimeMap(tm.json, env ? env.json : null);
     m.sources = { audio: audioKey || AUDIO_DEFAULT, timing: tm.url, envelopes: env && env.url };
+    for (const aw of A.addWords || []) {   // a word the mix adds (e.g. the re-inserted sung "them"): placed in the gap after `after`
+      const k = m.words.findIndex(w => w.line_idx === aw.line && w.key === aw.after); if (k < 0) continue;
+      const a0 = m.words[k].end, b0 = m.words[k + 1] ? m.words[k + 1].start : a0 + 0.3;
+      m.words.splice(k + 1, 0, { w: aw.w, start: a0 + 0.01, end: Math.max(a0 + 0.05, b0 - 0.02), line_idx: aw.line, key: norm(aw.w) });
+      m.words.forEach((w, i) => { w.i = i; });
+    }
     return m;
   }
 

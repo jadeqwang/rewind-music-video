@@ -5,7 +5,7 @@
 import { DW, DH, PAL, clamp, lerp, inv, smooth, fract, easeOutCubic, easeInOutCubic, easeOutExpo, easeOutBack, hash, hsig, rng, rgba, layer, clearLayer, resetCtx, fin, noise1, timecode } from './core.js';
 import { page as pageType, slam, subtitle, redact, redactedLine, revisions, setFont, F } from './type.js';
 import * as V from './slams.js';
-import { searchTree, buildTree, glyph, evalBar, annotation, rewindHud, anomaly, anomalySpike } from './hud.js';
+import { searchTree, buildTree, glyph, evalBar, annotation, rewindHud, anomaly, anomalySpike, clockAt } from './hud.js';
 import { sirens, sodiumSweep, sodiumWash, rain, bullet, headlights, fillInk } from './fx.js';
 import * as CAR from './car.js';
 import { AGENCY, fileNo } from './agency.js';
@@ -29,6 +29,17 @@ const words = (T, L, shot) => {
 };
 
 // ---------------------------------------------------------------------------------------------------------------
+// clip time inside rewinds: every Jade / suit / ghost clip plays REVERSED. In a rewind re-render (ctx.rewinding) the source
+// shot's local time already runs backwards, but at ×4–×8 it aliases a run cycle into apparent forward motion, so the clip
+// runs back at a readable 0.35× from the shot's end; in a comp shot inside a rewind window it plays end → start across the
+// shot. L.forward keeps a clip forward (the lip-synced sung "Rewind" performances).
+export function rwLt(ctx, L, env, lt = env.lt) {
+  if (L.forward) return lt;
+  const dur = env.dur ?? (env.shot ? env.shot.t1 - env.shot.t0 : 0);
+  if (ctx.rewinding && dur > 0) return dur - (dur - lt) * 0.35;
+  if (env.shot && env.shot.params && env.shot.params.isRewind && dur > 0) return dur - lt;
+  return lt;
+}
 export const LAYERS = {
   fill(ctx, L, env) { const g = ctx.g; g.save(); g.globalAlpha = clamp(A(L.alpha, env, 1)); g.fillStyle = L.color || PAL.ink; g.fillRect(-10, -10, DW + 20, DH + 20); g.restore(); },
 
@@ -101,7 +112,8 @@ export const LAYERS = {
     const id = L.roto, m = roto.meta(id); if (!m) return;
     // lip-synced clips (meta.lip_offset set) were generated against v4 vocal slices: play footage on the v4 clock through the
     // inverse map so the mouth stays locked to this mix's vocal despite local tempo changes
-    const lt = (m.lip_offset != null || L.v4clock) && m.clock !== 'v5' && env.T.mapped ? env.T.to4(env.t) - env.T.to4(env.t - env.lt) : env.lt;   // meta.clock 'v5' (R_rw*): generated on this mix, no inverse map
+    const lt0 = (m.lip_offset != null || L.v4clock) && m.clock !== 'v5' && env.T.mapped ? env.T.to4(env.t) - env.T.to4(env.t - env.lt) : env.lt;
+    const lt = rwLt(ctx, L, env, lt0);   // meta.clock 'v5' (R_rw*): generated on this mix, no inverse map
     const ct = roto.clipTime(id, lt, { speed: L.speed ?? 1, offset: (L.offset ?? 0) + (m.lip_offset ?? 0), loop: L.loop ?? 'pingpong' });   // per-clip lip offset (meta.lip_offset, s)
     const rect = camRect(L.cam, env);
     const light = L.light === 'sodium' ? (env.sweep || sodiumSweep(env.t, { amount: 0.32 })) : L.light === 'siren'
@@ -129,7 +141,7 @@ export const LAYERS = {
     const cps = [...(L.copies || []).slice().sort((p, q) => (p.s ?? 1) - (q.s ?? 1)), { dx: 0, dy: 0, s: 1, dt: 0, main: true }];
     for (const c of cps) {
       const s_ = c.s ?? 1, rect = { x: rect0.x + rect0.w / 2 * (1 - s_) + (c.dx ?? 0), y: rect0.y + rect0.h * (1 - s_) + (c.dy ?? 0), w: rect0.w * s_, h: rect0.h * s_ };
-      const ct = L.still ? (L.offset ?? 0) : roto.clipTime(id, env.lt + (c.dt ?? 0), { speed: A(L.speed, env, 1), offset: L.offset ?? 0, loop: L.loop ?? 'pingpong' });
+      const ct = L.still ? (L.offset ?? 0) : roto.clipTime(id, rwLt(ctx, L, env) + (c.dt ?? 0), { speed: A(L.speed, env, 1), offset: L.offset ?? 0, loop: L.loop ?? 'pingpong' });
       roto.suits(ctx.g, id, ct, { rect, boil: ctx.seed, rimL: L.rimL ?? PAL.red, rimR: L.rimR ?? PAL.blue, rimAmt: c.main ? 1 : 0.6, glint: c.main ? glint : glint * 0.7, glintColor, glintSeed: b.i + (c.dt ?? 0) * 7, barLabel: null, bars: L.bars });
     }
   },
@@ -245,12 +257,12 @@ export const LAYERS = {
     // routing slip, clipped on at the right (typed in)
     g.save(); g.translate(x + 600, y + 330); g.rotate(0.035);
     g.fillStyle = '#F4F0E6'; g.fillRect(0, 0, 540, 300); g.strokeStyle = 'rgba(7,8,10,0.25)'; g.strokeRect(0, 0, 540, 300);
-    setFont(g, F.mono(30, 700), 3); g.fillStyle = rgba(PAL.ink, 0.75); g.fillText('ROUTING SLIP', 56, 52); g.fillRect(56, 66, 456, 2);
+    setFont(g, F.mono(30, 700), 3); g.fillStyle = rgba(PAL.ink, 0.75); g.fillText('ROUTING SLIP', 84, 52); g.fillRect(84, 66, 428, 2);
     setFont(g, F.mono(26, 400), 1); g.fillStyle = rgba(PAL.ink, 0.55); g.fillText('FILE', 28, 120); g.fillText('TO', 28, 220); g.fillText('ARCHIVE · CANON', 120, 220);
     const txt = L.text || 'REWIND — Jade Wang', n = Math.floor(clamp((lt - 0.9) / 0.9) * txt.length);
     setFont(g, F.mono(40, 700), 1); g.fillStyle = PAL.ink; g.fillText(txt.slice(0, n) + (n > 0 && n < txt.length ? '▌' : ''), 28, 165);
     g.restore();
-    g.save(); g.translate(x + 660, y + 312); g.strokeStyle = '#8E918F'; g.lineWidth = 5; g.lineCap = 'round';   // the paper clip
+    g.save(); g.translate(x + 630, y + 312); g.strokeStyle = '#8E918F'; g.lineWidth = 5; g.lineCap = 'round';   // the paper clip
     g.beginPath(); g.moveTo(0, 70); g.lineTo(0, 8); g.arc(14, 8, 14, Math.PI, 0); g.lineTo(28, 90); g.arc(10, 90, 18, 0, Math.PI); g.lineTo(-8, 22); g.stroke(); g.restore();
     // the stamp
     const su = clamp((lt - 2.0) / 0.1);
@@ -330,7 +342,7 @@ export const LAYERS = {
     const fns = (L.footnotes || []).map(f => ({ ...f, at: f.at ?? (ws.find(w => w.key === f.word)?.start ?? 0) }));
     pageType(ctx.ty, ws, env.t, { x: L.x ?? 150, y: L.y ?? 470, w: L.measure ?? 1060, size: L.size ?? 140, maxLines: L.maxLines ?? 3, header: L.header, headerX: env.shot.hud ? 560 : undefined, folio: L.folio, footnotes: fns, furniture: smooth(0, 0.4, env.lt), settle: L.settle, color: L.color, hybrid: L.hybrid, drift: L.drift });
   },
-  subtitle(ctx, L, env) { const ws = words(env.T, L, env.shot).filter(w => w.start < env.shot.t1 + (L.tail ?? 0.01)); subtitle(ctx.ty, ws, env.t, { y: L.y ?? 1010, x: L.x, lit: L.lit, color: L.color, upper: L.upper }); },
+  subtitle(ctx, L, env) { const ws = words(env.T, L, env.shot).filter(w => w.start < env.shot.t1 + (L.tail ?? 0.01)); subtitle(ctx.ty, ws, env.t, { y: L.y ?? 1010, x: L.x, lit: L.lit, color: L.color, upper: L.upper, keepCase: L.keepCase }); },
   mono(ctx, L, env) {
     const at = L.at ?? 0; if (env.lt < at) return;
     let s = typeof L.text === 'function' ? L.text(env) : L.text; if (L.typed) s = s.slice(0, Math.floor((env.lt - at) * L.typed + 1));
@@ -501,27 +513,36 @@ export const LAYERS = {
 
   // her driver license: a generic horizontal card (no real state design, seals or logos). Drawn at the origin (640x404);
   // the portrait is her ANIME face (a still of her footage), never a stand-in.
-  _licenseTex(roto) {
-    const W0 = 640, H0 = 404, c = layer('license_tex', W0, H0), g = clearLayer(c);
-    g.fillStyle = PAL.bone; roundRect(g, 0, 0, W0, H0, 24); g.fill();
-    g.fillStyle = PAL.ink; g.fillRect(0, 22, W0, 70);
-    setFont(g, F.mono(46, 700), 6); g.fillStyle = PAL.bone; g.textAlign = 'left'; g.textBaseline = 'alphabetic'; g.fillText('DRIVER LICENSE', 30, 74);
+  _licenseTex(roto) {   // ANIME-style card to match her footage: flat cel tones + one shade, thin dark lines, a soft sheen
+    const W0 = 640, H0 = 404, c = layer('license_tex', W0, H0), g = clearLayer(c), LINE = '#2B2622';
+    g.save(); roundRect(g, 3, 3, W0 - 6, H0 - 6, 26); g.clip();
+    g.fillStyle = '#F1EBDD'; g.fillRect(0, 0, W0, H0);
+    g.fillStyle = '#DDD4C3'; g.beginPath(); g.moveTo(W0 * 0.52, H0); g.lineTo(W0, H0 * 0.38); g.lineTo(W0, H0); g.closePath(); g.fill();   // the cel shade (one flat tone)
+    g.fillStyle = '#26354A'; g.fillRect(0, 24, W0, 66);                                                                               // header band
+    g.fillStyle = '#34465F'; g.fillRect(0, 24, W0, 12);
+    setFont(g, F.mono(42, 700), 5); g.fillStyle = '#EDE6D6'; g.textAlign = 'left'; g.textBaseline = 'alphabetic'; g.fillText('DRIVER LICENSE', 30, 72);
     const px = 36, py = 116, pw = 190, ph = 240;
-    g.fillStyle = '#B9B3A7'; g.fillRect(px, py, pw, ph);
+    g.fillStyle = '#AFC3CF'; g.fillRect(px, py, pw, ph);
     const pid = roto.meta('J5_v3') ? 'J5_v3' : 'J5', pm = roto.meta(pid), pb = pm && roto.get(pid, 'direct', 0.2);
-    if (pb && pm) {   // her face from the anime footage, centred on the tracked mouth
+    if (pb && pm) {   // her anime face, from her footage
       const mo = (pm.per_frame && pm.per_frame[3] && pm.per_frame[3].mouth) || [960, 420, 60], fw = mo[2] * 7.5, fh = fw * ph / pw;
       g.save(); g.beginPath(); g.rect(px, py, pw, ph); g.clip(); g.drawImage(pb, mo[0] - fw / 2, mo[1] - fh * 0.52, fw, fh, px, py, pw, ph); g.restore();
     }
+    g.strokeStyle = LINE; g.lineWidth = 3; g.strokeRect(px, py, pw, ph);
     setFont(g, F.mono(26, 700), 1); const fx = px + pw + 30;
     const fields = [['DL', null, 'K4471'], ['EXP', null, null], ['DOB', null, null], ['CLASS', 'D'], ['NAME', 'WANG, J.']];
     fields.forEach(([k, v, tail], i) => {
-      const fy = py + 30 + i * 46; g.fillStyle = 'rgba(7,8,10,0.55)'; g.fillText(k, fx, fy);
+      const fy = py + 30 + i * 46; g.fillStyle = 'rgba(43,38,34,0.6)'; g.fillText(k, fx, fy);
       const vx = fx + 100;
-      if (v) { g.fillStyle = PAL.ink; g.fillText(v, vx, fy); }
-      else { g.fillStyle = '#000'; g.fillRect(vx, fy - 24, 150, 30); if (tail) { g.fillStyle = PAL.ink; g.fillText(tail, vx + 160, fy); } }
+      if (v) { g.fillStyle = LINE; g.fillText(v, vx, fy); }
+      else { g.fillStyle = '#16120F'; g.fillRect(vx, fy - 24, 150, 30); if (tail) { g.fillStyle = LINE; g.fillText(tail, vx + 160, fy); } }
     });
-    setFont(g, F.mono(20, 700), 2); g.fillStyle = PAL.red; g.fillText('DONOR', fx, py + ph - 4);
+    setFont(g, F.mono(20, 700), 2); g.fillStyle = '#C8453B'; g.fillText('DONOR', fx, py + ph - 4);
+    const sh = g.createLinearGradient(0, 0, W0, H0);   // paper sheen: one soft diagonal highlight band
+    sh.addColorStop(0.18, 'rgba(255,255,255,0)'); sh.addColorStop(0.3, 'rgba(255,255,255,0.32)'); sh.addColorStop(0.42, 'rgba(255,255,255,0)');
+    g.fillStyle = sh; g.fillRect(0, 0, W0, H0);
+    g.restore();
+    g.strokeStyle = LINE; g.lineWidth = 5; roundRect(g, 3, 3, W0 - 6, H0 - 6, 26); g.stroke();   // thin clean outline (at card scale)
     return c;
   },
   // her anime footage (J3 takes: she holds up a blank card) with our license warped onto the tracked card quad
@@ -535,7 +556,17 @@ export const LAYERS = {
     const tex = LAYERS._licenseTex(roto), g = ctx.g, [tl, tr, br, bl] = P;
     g.save(); g.beginPath(); g.moveTo(...tl); g.lineTo(...tr); g.lineTo(...br); g.lineTo(...bl); g.closePath(); g.clip();
     g.setTransform(ctx.S * (tr[0] - tl[0]) / tex.width, ctx.S * (tr[1] - tl[1]) / tex.width, ctx.S * (bl[0] - tl[0]) / tex.height, ctx.S * (bl[1] - tl[1]) / tex.height, ctx.S * tl[0], ctx.S * tl[1]);
-    g.globalAlpha = 0.96; g.drawImage(tex, 0, 0); g.restore();
+    g.globalAlpha = 1; g.drawImage(tex, 0, 0);
+    const tn = m.cardTint && m.cardTint[roto.frameIndex(m, ct)];   // the scene light on the card (siren tint) via multiply
+    if (tn) { g.globalCompositeOperation = 'multiply'; g.fillStyle = `rgb(${Math.min(255, tn[0] + 12)},${Math.min(255, tn[1] + 12)},${Math.min(255, tn[2] + 12)})`; g.fillRect(0, 0, tex.width, tex.height); g.globalCompositeOperation = 'source-over'; }
+    g.restore();
+    // her fingers stay IN FRONT of the card: re-draw her footage where the tracked occluder mask says a finger covers it
+    const occ = roto.get(id, 'cardocc', ct), src = roto.get(id, 'direct', ct);
+    if (occ && src) {
+      const O = layer('license_occ', m.w, m.h), og = clearLayer(O);
+      og.drawImage(src, 0, 0, m.w, m.h); og.globalCompositeOperation = 'destination-in'; og.drawImage(occ, 0, 0, m.w, m.h); og.globalCompositeOperation = 'source-over';
+      g.drawImage(O, rect.x, rect.y, rect.w, rect.h);
+    }
   },
   // self-drawing pen stroke (the winning line / the theorem's road) with a moving light at the head
   pathdraw(ctx, L, env) {
@@ -556,7 +587,7 @@ export const LAYERS = {
     for (let i = 0; i < n; i++) {
       const c = i % 4, r = Math.floor(i / 4), w = DW * sc, h = DH * sc;
       const x = DW / 2 - w * 0.75 + (c - (cols - 1) / 2) * w * 0.34, y = DH * 0.08 + r * h * 0.42 + (DH - h) * 0.4 - (rows - 1) * h * 0.2;
-      const ct = roto.clipTime(id, env.lt - i * 0.12, { loop: 'pingpong' });   // each copy a step later in time
+      const ct = roto.clipTime(id, rwLt(ctx, L, env) - i * 0.12, { loop: 'pingpong' });   // each copy a step later in time
       if (i === 0) { roto.jade(ctx.g, id, ct, { rect: { x, y, w, h }, boil: ctx.seed, mouth: 0 }); continue; }
       // Gjon Mili light drawing: the past run as one luminous line, long exposure (soft glow + crisp core), brightness travelling
       const g = ctx.g; g.save(); g.globalCompositeOperation = 'lighter';
@@ -1039,7 +1070,7 @@ Object.assign(LAYERS, {
     const g = ctx.g; g.save(); g.setTransform(1, 0, 0, 1, 0, 0); g.drawImage(M, 0, 0); g.restore();
     env.montageTs = ts;
   },
-  rwhud(ctx, L, env) { rewindHud(ctx.ty, { speed: L.speed ?? 64, tc: 23 * 3600 + 41 * 60 + 7 + (env.montageTs ?? env.t), alpha: 1 }); },
+  rwhud(ctx, L, env) { rewindHud(ctx.ty, { speed: L.speed ?? 64, tc: clockAt(env.T, env.t), alpha: 1 }); },
 });
 const TREES = new Map();
 
