@@ -1,0 +1,1 @@
+turns_ccw +3.26  coverage 0.83  frames 100  radius_med 33.8px

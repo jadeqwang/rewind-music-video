@@ -1,0 +1,17 @@
+{
+ "model": "bytedance/seedance-2.5",
+ "tag": "anime_R_rw4_t1",
+ "notes": "anime Jade R_rw4 t1 rewind gesture+lip, clock v5",
+ "input": {
+  "prompt": "Centre-locked straight-on performance shot in a dark void with red and blue police-siren rim light pulsing; she stands square to the camera, waist-up, eyes to the lens. Locked-off camera, plain dark void background (no lights, no tubes, no objects in the background). Right at the start she sings the single word \"Rewind\" from the reference audio, in exact sync: lips together softly on \"re-\", then the mouth opens wide on \"-WIND\" and holds it, then she closes her lips. Her hands never cover her mouth or face; the face stays fully visible. Gesture: both forearms held in front of her chest below her chin, both hands rolling around each other BACKWARDS, toward herself (the top of the roll moves toward her body, the bottom moves out toward the camera) - the reverse of the 'keep rolling' gesture, a fast continuous rewind roll - then both hands pull back toward her shoulders.  Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+  "image": "file:assets/character/anime/shots/J5b_v3_720.jpg",
+  "duration": 5,
+  "resolution": "720p",
+  "aspect_ratio": "16:9",
+  "generate_audio": false,
+  "use_virtual_avatar": false,
+  "reference_audios": [
+   "file:analysis/slices/vocals_v5_rw4_115.258_5.mp3"
+  ]
+ }
+}

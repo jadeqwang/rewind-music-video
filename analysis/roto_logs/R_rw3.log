@@ -1,0 +1,16 @@
+J5: 76 frames @15fps from assets/clips/R_rw3.mp4 (1280x720), layers=['lines', 'matte', 'light', 'flow', 'face'], workers=1, tone={'hi': 0.843137264251709, 'gamma': 0.35}
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+WARNING: Logging before InitGoogle() is written to STDERR
+W0000 00:00:1790999057.962790    6734 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790999058.862676    6739 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+W0000 00:00:1790999058.939898    6741 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790999058.992710    6741 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790999060.534513    6747 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+W0000 00:00:1790999060.541135    6749 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790999060.557073    6749 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1790999060.621498    6755 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+  J5    0/76 8.43s  flow=0.49 matte=1.32 ground=0.00 face=5.63 lines=0.37 write=0.63
+  J5   10/76 3.21s  flow=0.07 matte=0.47 ground=0.00 face=1.59 lines=0.38 write=0.70
+  J5   20/76 2.15s  flow=0.07 matte=0.40 ground=0.00 face=0.61 lines=0.28 write=0.79
+  J5   30/76 3.44s  flow=0.07 matte=0.46 ground=0.00 face=1.79 lines=0.41 write=0.72
+  J5   40/76 2.64s  flow=0.08 matte=0.44 ground=0.00 face=0.93 lines=0.50 write=0.69
