@@ -218,7 +218,7 @@ export function hudOverlay(g, t, shot, T) {
     const rwA = shot.params && shot.params.rwA;
     if (rwA != null) {   // inside a rewind the timecode runs BACKWARDS: fast, kick-stepped (each kick knocks it back further)
       const nk = T && T.kicksIn ? T.kicksIn(rwA, t + 1e-6).length : 0;
-      tcT = Math.max(0, rwA - (t - rwA) * 4 - nk * 0.75);
+      tcT = 23 * 3600 + 41 * 60 + 7 + rwA - (t - rwA) * 4 - nk * 0.75;   // local clock (23:41:07 + song time): always far above zero
     }
     g.save(); setFont(g, F.mono(46, 400), 1); g.fillStyle = rgba(h.ink ? PAL.ink : rwA != null ? PAL.cyan : PAL.boneDim, a); g.textAlign = 'right'; g.textBaseline = 'alphabetic';
     g.fillText((rwA != null ? '\u25c0\u25c0 ' : '') + timecode(tcT), DW - 72, 96); g.restore();

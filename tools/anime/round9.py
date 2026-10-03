@@ -42,8 +42,22 @@ COMM = (
   "shoulder, their heads in the upper-middle of the frame and LARGE (each face clearly readable), the table top only in the "
   "bottom quarter of the frame; little empty wall above them. No text anywhere.")
 
+COMM2 = (
+  "Edit this anime film frame. Keep the room, camera, framing, the table, the name cards, the lighting and every woman's position, "
+  "pose, size, jacket and FACE exactly as they are (same face for all of them: same large dark-brown eyes, same face shape - they "
+  "are all the same woman). Change ONLY these hairstyles / props, counting the eight women from LEFT to RIGHT: "
+  "(1) the note-taker: a long sleek black BOB (straight, chin-to-collarbone length, blunt ends) instead of long hair; "
+  "(2) the blank-staring one: a short PURPLE pixie cut (cropped short, violet-purple); "
+  "(3) the arms-crossed one: shoulder-length straight black hair with a bright TEAL under-layer visible underneath; "
+  "(4) the one asleep on her hand: unchanged; (5) the one with glasses reading the thesis: unchanged; "
+  "(6) the snacking one: MERMAID WAVES - shoulder-length wavy hair in blended blue, green and purple; "
+  "(7) the knowing smile with steepled fingers: unchanged; "
+  "(8) the one in the mint-green jacket: she is now CHEWING GUM, blowing a small round pink bubble-gum bubble from her lips, her "
+  "chin still on her fist. Same anime art style, clean lineart, flat cel shading. No text.")
+
 if __name__ == "__main__":
     job, n, k0 = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
-    src, prompt = (A + "/shots/J5_v3.jpg", STOP) if job == "stopff" else (committee_board(), COMM)
+    src, prompt = {"stopff": lambda: (A + "/shots/J5_v3.jpg", STOP), "committee": lambda: (committee_board(), COMM),
+                   "committee2": lambda: (A + "/committee_ff.jpg", COMM2)}[job]()
     with ThreadPoolExecutor(4) as ex:
         for k in range(n): ex.submit(JV.one, job, src, prompt, "1536x1024", k0 + k, "medium")

@@ -224,6 +224,45 @@ export const LAYERS = {
     }
     g.restore();
   },
+  // end credits as a case-file object: a manila folder (tab CASE 0001, the agency label), a routing slip clipped on with the
+  // only credit typed ("REWIND — Jade Wang"), the CLOSED · CANON stamp; at the very end the folder slides away. L: {text}
+  creditfolder(ctx, L, env) {
+    const g = ctx.ty, lt = env.lt, dur = env.dur || 4.7;
+    const inU = easeOutCubic(clamp(lt / 0.45)), outU = smooth(dur - 0.75, dur - 0.05, lt);
+    const ox = 0, oy = lerp(360, 0, inU) + outU * 1250, rot = lerp(0.05, -0.02, inU) + outU * 0.08;
+    g.save(); g.translate(DW / 2 + ox, DH / 2 + oy); g.rotate(rot); g.textBaseline = 'alphabetic';
+    const W = 1120, H = 700, x = -W / 2, y = -H / 2 + 30;
+    // back + tab
+    g.fillStyle = 'rgba(0,0,0,0.45)'; g.fillRect(x + 18, y + 22, W, H);
+    g.fillStyle = '#C49F5E'; g.beginPath(); g.moveTo(x, y); g.lineTo(x + 40, y - 70); g.lineTo(x + 380, y - 70); g.lineTo(x + 420, y); g.closePath(); g.fill(); g.fillRect(x, y, W, H);
+    setFont(g, F.mono(42, 700), 3); g.fillStyle = PAL.ink; g.fillText('CASE 0001', x + 70, y - 18);
+    // front cover (slightly shorter, darker edge)
+    g.fillStyle = '#D9B877'; g.fillRect(x, y + 26, W, H - 26); g.fillStyle = 'rgba(80,55,20,0.25)'; g.fillRect(x, y + 26, W, 4);
+    // label sticker with the agency
+    g.fillStyle = PAL.bone; g.fillRect(x + 80, y + 120, 780, 128); g.strokeStyle = 'rgba(7,8,10,0.4)'; g.lineWidth = 2; g.strokeRect(x + 80, y + 120, 780, 128);
+    redactedLine(g, AGENCY.header, x + 110, y + 175, F.mono(42, 700), PAL.ink, '#000');
+    setFont(g, F.mono(34, 400), 1); g.fillStyle = rgba(PAL.ink, 0.7); g.fillText('TIMESTREAM 2010 · ITERATIONS 01–03', x + 110, y + 222);
+    // routing slip, clipped on at the right (typed in)
+    g.save(); g.translate(x + 600, y + 330); g.rotate(0.035);
+    g.fillStyle = '#F4F0E6'; g.fillRect(0, 0, 540, 300); g.strokeStyle = 'rgba(7,8,10,0.25)'; g.strokeRect(0, 0, 540, 300);
+    setFont(g, F.mono(30, 700), 3); g.fillStyle = rgba(PAL.ink, 0.75); g.fillText('ROUTING SLIP', 56, 52); g.fillRect(56, 66, 456, 2);
+    setFont(g, F.mono(26, 400), 1); g.fillStyle = rgba(PAL.ink, 0.55); g.fillText('FILE', 28, 120); g.fillText('TO', 28, 220); g.fillText('ARCHIVE · CANON', 120, 220);
+    const txt = L.text || 'REWIND — Jade Wang', n = Math.floor(clamp((lt - 0.9) / 0.9) * txt.length);
+    setFont(g, F.mono(40, 700), 1); g.fillStyle = PAL.ink; g.fillText(txt.slice(0, n) + (n > 0 && n < txt.length ? '▌' : ''), 28, 165);
+    g.restore();
+    g.save(); g.translate(x + 660, y + 312); g.strokeStyle = '#8E918F'; g.lineWidth = 5; g.lineCap = 'round';   // the paper clip
+    g.beginPath(); g.moveTo(0, 70); g.lineTo(0, 8); g.arc(14, 8, 14, Math.PI, 0); g.lineTo(28, 90); g.arc(10, 90, 18, 0, Math.PI); g.lineTo(-8, 22); g.stroke(); g.restore();
+    // the stamp
+    const su = clamp((lt - 2.0) / 0.1);
+    if (su > 0) {
+      const sc = lerp(1.35, 1, easeOutBack(su));
+      g.save(); g.translate(x + 290, y + 560); g.rotate(-0.1); g.scale(sc, sc); g.globalAlpha = 0.9;
+      setFont(g, F.mono(64, 700), 5); const tw = g.measureText('CLOSED · CANON').width;
+      g.strokeStyle = PAL.red; g.lineWidth = 8; g.strokeRect(-tw / 2 - 30, -70, tw + 60, 108); g.fillStyle = PAL.red; g.textAlign = 'center'; g.fillText('CLOSED · CANON', 0, 8);
+      g.restore();
+    }
+    g.restore();
+  },
   // roadside agents (final drop payoff): a still group on each shoulder sliding past as she drives. Frozen frame, no glint,
   // heads never turn — no anomaly, nothing to track. L: {roto, period (s), still frame (s), horizon y}
   roadside(ctx, L, env, { roto }) {
@@ -436,22 +475,20 @@ export const LAYERS = {
   },
   dash(ctx, L, env) { const g = ctx.g, a = A(L.amount, env, 0.3); const gr = g.createLinearGradient(0, DH, 0, DH * 0.55); gr.addColorStop(0, rgba(L.color || PAL.sodium, a)); gr.addColorStop(1, rgba(L.color || PAL.sodium, 0)); g.save(); g.globalCompositeOperation = 'lighter'; g.fillStyle = gr; g.fillRect(0, 0, DW, DH); g.restore(); },
 
-  // her driver license: a generic horizontal card (no real state design, seals or logos), held by a bone hand
-  badge(ctx, L, env) {
-    const g = ctx.g, x = A(L.x, env, 1240), y = A(L.y, env, 560), s = A(L.scale, env, 1), r = A(L.rot, env, -0.06);
-    g.save(); g.translate(x, y); g.rotate(r); g.scale(s, s);
-    const W0 = 640, H0 = 404;
-    g.fillStyle = PAL.bone; roundRect(g, -W0 / 2, -H0 / 2, W0, H0, 24); g.fill();
-    g.fillStyle = PAL.ink; g.fillRect(-W0 / 2, -H0 / 2 + 22, W0, 70);
-    setFont(g, F.mono(46, 700), 6); g.fillStyle = PAL.bone; g.textAlign = 'left'; g.textBaseline = 'alphabetic'; g.fillText('DRIVER LICENSE', -W0 / 2 + 30, -H0 / 2 + 74);
-    // portrait: her as a tiny bone figure (ink hair, bone face, glasses)
-    const px = -W0 / 2 + 36, py = -H0 / 2 + 116, pw = 190, ph = 240;
+  // her driver license: a generic horizontal card (no real state design, seals or logos). Drawn at the origin (640x404);
+  // the portrait is her ANIME face (a still of her footage), never a stand-in.
+  _licenseTex(roto) {
+    const W0 = 640, H0 = 404, c = layer('license_tex', W0, H0), g = clearLayer(c);
+    g.fillStyle = PAL.bone; roundRect(g, 0, 0, W0, H0, 24); g.fill();
+    g.fillStyle = PAL.ink; g.fillRect(0, 22, W0, 70);
+    setFont(g, F.mono(46, 700), 6); g.fillStyle = PAL.bone; g.textAlign = 'left'; g.textBaseline = 'alphabetic'; g.fillText('DRIVER LICENSE', 30, 74);
+    const px = 36, py = 116, pw = 190, ph = 240;
     g.fillStyle = '#B9B3A7'; g.fillRect(px, py, pw, ph);
-    g.fillStyle = PAL.ink; g.beginPath(); g.ellipse(px + pw / 2, py + 108, 70, 84, 0, 0, Math.PI * 2); g.fill(); g.fillRect(px + 26, py + 108, 138, 132);
-    g.fillStyle = PAL.bone; g.beginPath(); g.ellipse(px + pw / 2, py + 120, 46, 58, 0, 0, Math.PI * 2); g.fill();
-    g.fillRect(px + 52, py + 196, 86, 44);
-    g.strokeStyle = '#1C2E31'; g.lineWidth = 3; g.strokeRect(px + 58, py + 108, 34, 16); g.strokeRect(px + 98, py + 108, 34, 16);
-    // fields: label + value, sensitive ones redacted
+    const pid = roto.meta('J5_v3') ? 'J5_v3' : 'J5', pm = roto.meta(pid), pb = pm && roto.get(pid, 'direct', 0.2);
+    if (pb && pm) {   // her face from the anime footage, centred on the tracked mouth
+      const mo = (pm.per_frame && pm.per_frame[3] && pm.per_frame[3].mouth) || [960, 420, 60], fw = mo[2] * 7.5, fh = fw * ph / pw;
+      g.save(); g.beginPath(); g.rect(px, py, pw, ph); g.clip(); g.drawImage(pb, mo[0] - fw / 2, mo[1] - fh * 0.52, fw, fh, px, py, pw, ph); g.restore();
+    }
     setFont(g, F.mono(26, 700), 1); const fx = px + pw + 30;
     const fields = [['DL', null, 'K4471'], ['EXP', null, null], ['DOB', null, null], ['CLASS', 'D'], ['NAME', 'WANG, J.']];
     fields.forEach(([k, v, tail], i) => {
@@ -461,11 +498,20 @@ export const LAYERS = {
       else { g.fillStyle = '#000'; g.fillRect(vx, fy - 24, 150, 30); if (tail) { g.fillStyle = PAL.ink; g.fillText(tail, vx + 160, fy); } }
     });
     setFont(g, F.mono(20, 700), 2); g.fillStyle = PAL.red; g.fillText('DONOR', fx, py + ph - 4);
-    // hand: thumb over the edge
-    g.fillStyle = PAL.bone; g.strokeStyle = PAL.ink; g.lineWidth = 4;
-    g.beginPath(); g.moveTo(-W0 / 2 - 40, H0 / 2 - 60); g.quadraticCurveTo(-W0 / 2 - 70, H0 / 2 + 80, -W0 / 2 + 50, H0 / 2 + 150); g.lineTo(-W0 / 2 + 230, H0 / 2 + 150); g.quadraticCurveTo(-W0 / 2 + 250, H0 / 2 + 60, -W0 / 2 + 140, H0 / 2 + 20); g.lineTo(-W0 / 2 + 40, H0 / 2 - 40); g.closePath(); g.fill(); g.stroke();
-    g.beginPath(); g.moveTo(-W0 / 2 + 40, H0 / 2 - 20); g.quadraticCurveTo(-W0 / 2 + 90, H0 / 2 - 60, -W0 / 2 + 140, H0 / 2 + 20); g.stroke();
-    g.restore();
+    return c;
+  },
+  // her anime footage (J3 takes: she holds up a blank card) with our license warped onto the tracked card quad
+  // (meta.card from tools/jade2/cardtrack.py; affine on tl/tr/bl, clipped to the quad). L: {roto, cam, offset, light}
+  licensecard(ctx, L, env, data) {
+    const roto = data.roto, id = L.roto, m = roto.meta(id); if (!m) return;
+    const ct = roto.clipTime(id, env.lt, { offset: L.offset ?? 0, loop: false }), rect = camRect(L.cam, env);
+    roto.jade(ctx.g, id, ct, { rect, light: L.light || null, mouth: 0, alpha: 1 });
+    const q = m.card && m.card[roto.frameIndex(m, ct)]; if (!q) return;
+    const kx = rect.w / m.w, ky = rect.h / m.h, P = q.map(([x, y]) => [rect.x + x * kx, rect.y + y * ky]);
+    const tex = LAYERS._licenseTex(roto), g = ctx.g, [tl, tr, br, bl] = P;
+    g.save(); g.beginPath(); g.moveTo(...tl); g.lineTo(...tr); g.lineTo(...br); g.lineTo(...bl); g.closePath(); g.clip();
+    g.setTransform(ctx.S * (tr[0] - tl[0]) / tex.width, ctx.S * (tr[1] - tl[1]) / tex.width, ctx.S * (bl[0] - tl[0]) / tex.height, ctx.S * (bl[1] - tl[1]) / tex.height, ctx.S * tl[0], ctx.S * tl[1]);
+    g.globalAlpha = 0.96; g.drawImage(tex, 0, 0); g.restore();
   },
   // self-drawing pen stroke (the winning line / the theorem's road) with a moving light at the head
   pathdraw(ctx, L, env) {
@@ -969,7 +1015,7 @@ Object.assign(LAYERS, {
     const g = ctx.g; g.save(); g.setTransform(1, 0, 0, 1, 0, 0); g.drawImage(M, 0, 0); g.restore();
     env.montageTs = ts;
   },
-  rwhud(ctx, L, env) { rewindHud(ctx.ty, { speed: L.speed ?? 64, tc: env.montageTs ?? env.t, alpha: 1 }); },
+  rwhud(ctx, L, env) { rewindHud(ctx.ty, { speed: L.speed ?? 64, tc: 23 * 3600 + 41 * 60 + 7 + (env.montageTs ?? env.t), alpha: 1 }); },
 });
 const TREES = new Map();
 
