@@ -55,9 +55,20 @@ COMM2 = (
   "(8) the one in the mint-green jacket: she is now CHEWING GUM, blowing a small round pink bubble-gum bubble from her lips, her "
   "chin still on her fist. Same anime art style, clean lineart, flat cel shading. No text.")
 
+COMM3 = (
+  "Edit this anime film frame minimally. Keep the room, camera, framing, table, name cards, lighting and every woman's position, "
+  "pose, jacket, props and FACE exactly as they are (same face, same eyes and their size). Change ONLY three things, counting the "
+  "eight women from LEFT to RIGHT: (1) the note-taker's straight black bob becomes slightly longer - just past the jaw, reaching "
+  "toward the collarbone (a subtle change, same style); (2) the purple-haired one: her short purple pixie becomes a messy, tousled "
+  "purple bob of about the same length as woman 1's (chin-to-collarbone), still violet-purple; (4) the sleeping one: she is "
+  "asleep with her head resting on her folded arms lying directly on the table, her face turned to the side toward the camera and "
+  "partly visible, eyes closed, long black hair spilling over her arms - no longer propped on her hand. Everything else identical. "
+  "Same anime art style. No text.")
+
 if __name__ == "__main__":
     job, n, k0 = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
     src, prompt = {"stopff": lambda: (A + "/shots/J5_v3.jpg", STOP), "committee": lambda: (committee_board(), COMM),
-                   "committee2": lambda: (A + "/committee_ff.jpg", COMM2)}[job]()
+                   "committee2": lambda: (A + "/committee_ff.jpg", COMM2),
+                   "committee3": lambda: (A + "/committee_v2_ff.jpg", COMM3)}[job]()
     with ThreadPoolExecutor(4) as ex:
         for k in range(n): ex.submit(JV.one, job, src, prompt, "1536x1024", k0 + k, "medium")
