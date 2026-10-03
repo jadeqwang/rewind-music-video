@@ -245,7 +245,7 @@ export function buildShots(T) {
     }
   }
   C('F2_toofast', L(12).start, L(13).start, [ink, ...sirenLit({ base: 0.35 }), { type: 'speedlines', amount: 0.55, vy: 440, n: 120 },
-    ...suits('F2', { roto: 'S3_sprint|' + R.suits('F2'), speed: e => 1 + 2.2 * e.u * e.u, cam: { from: [0.5, 0.45, 0.9], to: [0.5, 0.42, 1.6] }, world: { double: true } }),   // sprint clip if present, else S3 ramped
+    ...suits('F2', { roto: 'S3_sprint|' + R.suits('F2'), speed: 1.05, offset: 0.7, loop: false, cam: { from: [0.5, 0.45, 0.9], to: [0.5, 0.42, 1.6] }, world: { double: true } }),   // sprint clip if present, else S3 ramped
     { type: 'slam', hits: [{ t: W('fast', 1, { after: L(12).start }).start, text: 'TOO FAST', variant: 'behind' }], y: 560 },
     { type: 'subtitle', lines: [12], until: W('fast', 1, { after: L(12).start }).start }], { hud: hud(2, [-2.5, -7]), fx: { kick: 0.8, strobe: 0.3 } });
   {
@@ -390,10 +390,10 @@ export function buildShots(T) {
     { type: 'pathdraw', progress: 1, width: 9, head: false, color: PAL.cyan }], { fx: { kick: 0.5, heart: 0.2, downInvert: 2, jerks: [ev('braam', 8)] } });
   // FINAL DISPOSITION: the closing report on the braam → it un-writes → her palm STOPs it → PLAY snaps it back → stamp on the
   // end hit (TIMELINE IS NOW CANON), held 8 frames, hard cut. Inset: J_stopplay (anime-direct) when present.
-  const dEnd = end + 8 / 30, dStop = 2.0, dPlay = 2.8;
+  const dEnd = end + 8 / 30, dStop = 1.0, dPlay = 3.45;   // J_stopplay: palm up at clip ~0.9 s (STOP), forward tap ~3.5 s (PLAY)
   C('N7_qed', qed, dEnd, [{ type: 'fill', color: PAL.bone },
-    { type: 'mirror', flip: false, rect: [1380, 230, 440, 520], zoom: 2.6, focus: [0.5, 0.42], layers: [{ type: 'fill', color: PAL.ink }, { type: 'jade', roto: 'J_stopplay', light: null, loop: false, mouth: false }] },
-    { type: 'disposition', erase: [0.9, 3.4], stopAt: dStop, playAt: dPlay, stampAt: end - qed }], { fx: { heart: 0 } }, { post: { bloom: 0, vignette: 0.1, grain: 0.03 } });
+    { type: 'mirror', flip: false, rect: [1380, 230, 440, 520], zoom: 2.15, focus: [0.46, 0.46], layers: [{ type: 'fill', color: PAL.ink }, { type: 'jade', roto: 'J_stopplay', light: null, loop: false, mouth: false }] },
+    { type: 'disposition', erase: [0.3, 2.4], stopAt: dStop, playAt: dPlay, stampAt: end - qed }], { fx: { heart: 0 } }, { post: { bloom: 0, vignette: 0.1, grain: 0.03 } });
   C('END_black', dEnd, end + 0.9, [{ type: 'fill', color: '#000' }, { type: 'mono', text: '∎', y: 580, size: 120, weight: 700 }], { fx: { heart: 0 } }, { post: { bloom: 0, vignette: 0, grain: 0.02 } });
   C('END_credits', end + 0.9, T.duration + 0.5, [{ type: 'fill', color: '#000' }, { type: 'mono', text: 'REWIND — Jade Wang', y: 560, size: 44, color: PAL.boneDim }], { fx: { heart: 0 } }, { post: { bloom: 0, vignette: 0 } });
   // ---- every rewind section keeps actual reverse motion of earlier footage as its base layer (overlays sit on top) ----
