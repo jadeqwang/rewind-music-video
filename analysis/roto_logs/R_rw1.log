@@ -1,0 +1,20 @@
+J5: 76 frames @15fps from assets/clips/R_rw1.mp4 (1280x720), layers=['lines', 'matte', 'light', 'flow', 'face'], workers=1, tone={'hi': 0.8509804010391235, 'gamma': 0.38295895961848686}
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+WARNING: Logging before InitGoogle() is written to STDERR
+W0000 00:00:1791000347.018678    9886 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1791000347.399698    9892 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+W0000 00:00:1791000347.406456    9894 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1791000347.421835    9895 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1791000348.266837    9899 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+W0000 00:00:1791000348.273751    9901 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1791000348.289741    9903 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1791000348.337261    9907 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+  J5    0/76 3.47s  flow=0.05 matte=0.45 ground=0.00 face=2.16 lines=0.24 write=0.58
+  J5   10/76 2.01s  flow=0.06 matte=0.39 ground=0.00 face=0.68 lines=0.25 write=0.62
+  J5   20/76 1.97s  flow=0.07 matte=0.42 ground=0.00 face=0.51 lines=0.35 write=0.61
+  J5   30/76 2.78s  flow=0.06 matte=0.38 ground=0.00 face=1.44 lines=0.25 write=0.65
+  J5   40/76 2.60s  flow=0.06 matte=0.42 ground=0.00 face=1.13 lines=0.27 write=0.71
+  J5   50/76 2.10s  flow=0.06 matte=0.41 ground=0.00 face=0.59 lines=0.26 write=0.78
+  J5   60/76 2.65s  flow=0.09 matte=0.43 ground=0.00 face=1.27 lines=0.29 write=0.57
+  J5   70/76 2.03s  flow=0.07 matte=0.39 ground=0.00 face=0.72 lines=0.22 write=0.62
+J5: done 76/76 frames, wall 177.8s, 32.8 MB, mean s/frame (per worker): flow=0.07, matte=0.402, ground=0.0, face=0.974, lines=0.269, write=0.622, total=2.337

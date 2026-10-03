@@ -79,10 +79,10 @@ export async function draw(ctx, lt, t, shot, data) {
   { const o = typ('NO WARNING', 0.42, 0.5); redactedLine(ty, [{ bar: 3 * bars }, o.s || ' '], x1, 784, F.mono(46, 400), ink, '#000'); }
   tw('∴ branch pruned. rewinding.', PH.x, 940, F.mono(46, 400), ink, 0.16, 0.3);
   // signature: a light-pen scrawl on the AGENT line, retracting along its own stroke path (reverse write)
-  setFont(ty, F.mono(42, 400), 2); ty.fillStyle = rgba(ink, 0.55); ty.fillText('AGENT', x1, 1000); ty.fillRect(x1 + 150, 1004, 400, 2);
+  const sgx = 720; setFont(ty, F.mono(42, 400), 2); ty.fillStyle = rgba(ink, 0.55); ty.fillText('AGENT', sgx, 1012); ty.fillRect(sgx + 150, 1016, 400, 2);
   { const keep = 1 - seg(0.07, 0.2), pts = sigPath(p.case ?? 1), n = Math.floor(pts.length * keep);
     if (n > 1) { ty.save(); ty.strokeStyle = '#1B2A6B'; ty.lineWidth = 3.2; ty.lineCap = 'round'; ty.lineJoin = 'round'; ty.beginPath();
-      for (let k = 0; k < n; k++) { const [sx, sy] = pts[k]; k ? ty.lineTo(x1 + 170 + sx, 990 + sy) : ty.moveTo(x1 + 170 + sx, 990 + sy); } ty.stroke(); ty.restore(); } }
+      for (let k = 0; k < n; k++) { const [sx, sy] = pts[k]; k ? ty.lineTo(sgx + 170 + sx, 1000 + sy) : ty.moveTo(sgx + 170 + sx, 1000 + sy); } ty.stroke(); ty.restore(); } }
   // the stamp: big red ✗ + boxed PRUNED; it lifts off first (scales up, ink fades)
   const lift = seg(0, 0.1);
   if (lift < 1) {
@@ -94,7 +94,7 @@ export async function draw(ctx, lt, t, shot, data) {
     ty.restore();
   }
   // the player's prompt (blinks while the form erases itself)
-  if (w > 0) { setFont(ty, F.mono(46, 700), 2); ty.fillStyle = rgba(PAL.cyan, Math.floor(t * 3) % 2 ? 1 : 0.4); ty.textAlign = 'right'; ty.fillText('hold ◀◀ to rewind', DW - 90, 940); ty.textAlign = 'left'; }
+  if (w > 0) { setFont(ty, F.mono(46, 700), 2); ty.fillStyle = rgba(PAL.cyan, Math.floor(t * 3) % 2 ? 1 : 0.4); ty.fillText('hold ◀◀ to rewind', PH.x, 1012); }
   P.zoom = 1.0 + 0.02 * smooth(0, shot.t1 - shot.t0, lt);
   P.ca = 0.8; P.bloom = 0; P.grain = 0.05; P.vignette = 0.18; P.typeCA = 0.1;
 }

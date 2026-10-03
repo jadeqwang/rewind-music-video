@@ -101,7 +101,7 @@ export const LAYERS = {
     const id = L.roto, m = roto.meta(id); if (!m) return;
     // lip-synced clips (meta.lip_offset set) were generated against v4 vocal slices: play footage on the v4 clock through the
     // inverse map so the mouth stays locked to this mix's vocal despite local tempo changes
-    const lt = (m.lip_offset != null || L.v4clock) && env.T.mapped ? env.T.to4(env.t) - env.T.to4(env.t - env.lt) : env.lt;
+    const lt = (m.lip_offset != null || L.v4clock) && m.clock !== 'v5' && env.T.mapped ? env.T.to4(env.t) - env.T.to4(env.t - env.lt) : env.lt;   // meta.clock 'v5' (R_rw*): generated on this mix, no inverse map
     const ct = roto.clipTime(id, lt, { speed: L.speed ?? 1, offset: (L.offset ?? 0) + (m.lip_offset ?? 0), loop: L.loop ?? 'pingpong' });   // per-clip lip offset (meta.lip_offset, s)
     const rect = camRect(L.cam, env);
     const light = L.light === 'sodium' ? (env.sweep || sodiumSweep(env.t, { amount: 0.32 })) : L.light === 'siren'
