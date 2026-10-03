@@ -104,3 +104,21 @@ In the full removal, the 150-800 Hz texture during 7.0-8.5 s ends up 2-3.6 dB un
   - **Cepstral distance:** to "show" 91, against the natural show-to-"and" distance of 92.
   - **Splices:** spectral flux at the joins is 96-178, within the 61-249 range of the line's natural onsets.
   - **Caveat:** the vowel is spectrally further from the source "dreamt" ɛ (about 106, against 47 between the two real "dreamt"s). This comes from the +9 semitone shift (D4 -> B4). Listen for "them" sounding thin or synthetic.
+
+**Dropped (user verdict):** all three "them" variants sound distorted/funny. Keep `Rewind5_final_v2*` and `analysis/them/` for reference only; don't use them. She'll record the line herself.
+
+## v5 final v3: intro rewind SFX tapered (the master; no "them")
+`Rewind5_final_v3.wav` (gitignored) / `.mp3`: `Rewind5_final` with the reversed-grain chatter + motor ("the bats") spun down instead of hard-stopped at bt(9) = 4.31 s (v5).
+- **Fade:** equal-power from 3.6 s to silence at 5.4 s.
+- **Tape slowing down over the same span:** playhead speed and grain pitch drop to ×0.5. Grain density thins (each grain is kept with probability speed²). The motor glide slows too. A time-varying low-pass closes from 12 kHz to 3 kHz.
+- **Clunk:** −12 dB vs before, moved to the end of the spin-down (5.4 s).
+- **Stem RMS per 100 ms:** −34 dB (3.6 s), −39 (4.4), −47 (4.8), −56 (5.2), −60 (5.4), then silence. Before, it went from −34 to silence at 4.31.
+- **Rebuild:** `make_intro_sfx.py --song "Rewind (5).mp3" --timing analysis/timing_v5.json --tag 5_taper --stem-only --taper 3.6 5.4`, then `tools/sound/build_final_v3.py`.
+- **Null test:** bit-identical to `Rewind5_final.wav` except 3.490–5.490 s (same length). Before 3.3 s the original stem samples are used. Numbers are in `v5_final_v3_stats.json`.
+- **Preview:** `preview/v5_final_v3_0-10s.mp3` (compare with `preview/v5_final_0-14s.mp3`).
+
+## Recording guide for "I reach for my ID to show them and I do"
+- **Full song:** `Rewind5_final_v3.mp3`.
+- **`recording_guide_28-48s.mp3`:** bars 16–27 of v3. Song time = file time + 28.047.
+- **`recording_guide_28-48s_click.mp3`:** a 2-bar count-in click (3.725 s), then the same excerpt with a click on every beat (accent on downbeats, ~129 BPM). Song time = file time − 3.725 + 28.047.
+- **`recording_guide_28-48s.json`:** line and word times. "show" is at 37.20–37.66 s and "them" belongs on the beat at 37.816. "and" starts at ~38.0 (its vowel lands on the 38.285 beat). The line starts at 35.448 and ends at 39.275.

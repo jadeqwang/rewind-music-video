@@ -1,0 +1,85 @@
+{
+ "excerpt_song_start": 28.047,
+ "excerpt_song_end": 48.4969,
+ "bars": [
+  16,
+  27
+ ],
+ "bpm": 128.866,
+ "beat_period": 0.465600000000002,
+ "click_file_count_in_s": 3.7248,
+ "click_file_song_offset": "song time = file time - 3.7248 + 28.0470",
+ "plain_file_song_offset": "song time = file time + 28.0470",
+ "lines": [
+  {
+   "text": "I pulled over, and men in shades and suits,",
+   "start": 29.078,
+   "end": 34.019
+  },
+  {
+   "text": "I reach for my ID to show \u2026 and I do,",
+   "start": 35.448,
+   "end": 39.275
+  },
+  {
+   "text": "With no warning I get shot \u2026 and time stops",
+   "start": 40.107,
+   "end": 44.989
+  }
+ ],
+ "line4_words": [
+  {
+   "w": "I",
+   "start": 35.448,
+   "end": 35.778
+  },
+  {
+   "w": "reach",
+   "start": 35.778,
+   "end": 36.057
+  },
+  {
+   "w": "for",
+   "start": 36.057,
+   "end": 36.258
+  },
+  {
+   "w": "my",
+   "start": 36.258,
+   "end": 36.598
+  },
+  {
+   "w": "ID",
+   "start": 36.598,
+   "end": 36.938
+  },
+  {
+   "w": "to",
+   "start": 36.938,
+   "end": 37.2
+  },
+  {
+   "w": "show",
+   "start": 37.2,
+   "end": 37.663
+  },
+  {
+   "w": "and",
+   "start": 37.965,
+   "end": 38.468
+  },
+  {
+   "w": "I",
+   "start": 38.468,
+   "end": 38.749
+  },
+  {
+   "w": "do",
+   "start": 38.749,
+   "end": 39.275
+  }
+ ],
+ "them_slot": {
+  "note": "\"them\" belongs on the beat at 37.816 (between \"show\" 37.20-37.66 and \"and\" 37.97/38.26); original pitch target: B4 like \"Shore\" (22.9 s)"
+ }
+}

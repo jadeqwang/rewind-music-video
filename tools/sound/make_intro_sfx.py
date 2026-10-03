@@ -24,6 +24,10 @@ ap.add_argument("--song", default="Rewind (4).mp3", help="input master (relative
 ap.add_argument("--timing", default="analysis/timing.json", help="timing JSON on the input's timeline")
 ap.add_argument("--tag", default=None, help="output name tag; default '' (v4) -> intro_sfx{tag}.wav, Rewind{tag}_with_intro_sfx.wav")
 ap.add_argument("--stem-only", action="store_true", help="write only the stem (used by declick_intro.py pipelines)")
+ap.add_argument("--taper", nargs=2, type=float, metavar=("FADE_START", "SILENT_AT"), default=None,
+                help="v3: instead of the hard stop at bt(9), spin the rewind down: equal-power fade from FADE_START to SILENT_AT (s), "
+                     "grain pitch / playhead speed slow to x0.5 and grain density thins; clunk -12 dB, moved to SILENT_AT. "
+                     "Everything before FADE_START is sample-identical to the untapered stem.")
 ARGS = ap.parse_args()
 EL_WHIR = ARGS.el_whir
 TAG = (ARGS.tag or "") + ("_elwhir" if EL_WHIR else "")
@@ -81,6 +85,7 @@ stem[:nf] += seg * db(-26)
 s0, s1 = int(T_FREEZE_END * SR), int(T_STOP * SR)
 G = int(0.046 * SR); H = int(0.019 * SR)
 chat = np.zeros((s1 - s0 + G, 2)); win = signal.windows.hann(G)
+GRAINS = []                                                       # (o, q, pan, amp) as drawn -> reused by --taper
 for o in range(0, s1 - s0, H):
     u = o / (s1 - s0)
     pos = SRC_FROM + (SRC_TO - SRC_FROM) * u                     # playhead in song seconds (moving backwards)
@@ -92,14 +97,16 @@ for o in range(0, s1 - s0, H):
     g = signal.resample_poly(chunk, G, n_src, axis=0)[:G]           # anti-aliased speed-up
     if len(g) < G: g = np.pad(g, ((0, G - len(g)), (0, 0)))
     pan = 0.5 + 0.25 * rng.uniform(-1, 1)
-    g = g * np.array([1 - pan, pan]) * 2 * (0.8 + 0.4 * rng.random())
+    amp = 2 * (0.8 + 0.4 * rng.random()); GRAINS.append((o, q, pan, amp))
+    g = g * np.array([1 - pan, pan]) * amp
     chat[o:o + G] += g * win[:, None]
 chat = chat[:s1 - s0]
 chat = bp(chat, 350, 7000)
 chat = signal.sosfilt(signal.butter(2, 1200, "high", fs=SR, output="sos"), chat, axis=0) * 0.6 + chat * 0.4  # thin, tape-head
 u = np.linspace(0, 1, s1 - s0)
 ramp = (u ** 1.6) * 0.85 + 0.15 * np.minimum(1, u / 0.08)
-chat = chat / (np.sqrt((chat ** 2).mean()) + 1e-9) * ramp[:, None]
+CN = np.sqrt((chat ** 2).mean()) + 1e-9
+chat = chat / CN * ramp[:, None]
 
 # ---------------- 3. whir: tape transport ----------------
 if EL_WHIR:
@@ -112,17 +119,67 @@ else:
     ph = 2 * np.pi * np.cumsum(f) / SR
     motor = sum((0.6 ** k) * np.sin(k * ph + k) for k in range(1, 7))
     motor *= 1 + 0.25 * np.sin(ph / 4)                              # reel eccentricity
-    hiss = bp(rng.standard_normal((s1 - s0, 2)), 3500, 12000) * (u ** 2)[:, None] * 0.8
+    HISS_RAW = rng.standard_normal((s1 - s0, 2))
+    hiss = bp(HISS_RAW, 3500, 12000) * (u ** 2)[:, None] * 0.8
     w = motor[:, None] * np.array([1, 1]) / 1.5 * (0.25 + 0.75 * u ** 1.2)[:, None] + hiss
-    w = w / (np.sqrt((w ** 2).mean()) + 1e-9) * (0.3 + 0.7 * u)[:, None]
+    WN = np.sqrt((w ** 2).mean()) + 1e-9
+    w = w / WN * (0.3 + 0.7 * u)[:, None]
 rew = chat * db(-29) + w * db(-36 if not EL_WHIR else -35)
 rew[:int(0.006 * SR)] *= np.linspace(0, 1, int(0.006 * SR))[:, None]
 rew[-int(0.003 * SR):] *= np.linspace(1, 0, int(0.003 * SR))[:, None]   # abrupt stop
-stem[s0:s1] += rew
 # transport clunk on the stop: short low thump + click
 k = int(0.09 * SR); kt = np.arange(k) / SR
 clunk = (np.sin(2 * np.pi * 95 * kt) * np.exp(-kt / 0.018) + 0.3 * bp(rng.standard_normal(k), 2000, 6000) * np.exp(-kt / 0.004))
-stem[s1:s1 + k] += clunk[:, None] * db(-34)
+if ARGS.taper is None:
+    stem[s0:s1] += rew
+    stem[s1:s1 + k] += clunk[:, None] * db(-34)
+    S_END = s1
+else:
+    # ---- v3 spin-down: reuse the drawn grains / hiss (identical before TF0), new draws only for the extension
+    assert not EL_WHIR
+    TF0, TEND = ARGS.taper; rng2 = np.random.default_rng(65)
+    n_ext = int(TEND * SR) - s0; tq = T_FREEZE_END + np.arange(n_ext) / SR
+    x = np.clip((tq - TF0) / (TEND - TF0), 0, 1)
+    sd = 0.5 ** x                                                 # tape speed: 1 -> 0.5 (pitch, playhead speed)
+    gfade = np.cos(0.5 * np.pi * x)                               # equal-power fade, 0 at TEND
+    un = np.arange(n_ext) / (s1 - s0 - 1); ue = np.minimum(1, un)   # == the original u before s1, held at 1 after
+    vel = (SRC_TO - SRC_FROM) / ((s1 - s0 - 1) / SR)              # playhead velocity (song s per s), slowed by sd
+    pos_t = SRC_FROM + np.r_[0, np.cumsum(vel * sd[:-1] / SR)]
+    pos_lin = SRC_FROM + (SRC_TO - SRC_FROM) * np.arange(n_ext) / (s1 - s0)
+    pos_t = np.where(tq < TF0, pos_lin, pos_t - pos_t[np.searchsorted(tq, TF0)] + pos_lin[np.searchsorted(tq, TF0)])
+    ext = [(o, 9 * (1 + 0.04 * rng2.standard_normal()), 0.5 + 0.25 * rng2.uniform(-1, 1), 2 * (0.8 + 0.4 * rng2.random()))
+           for o in range(GRAINS[-1][0] + H, n_ext, H)]
+    chat_t = np.zeros((n_ext + G, 2))
+    for o, q, pan, amp in GRAINS + ext:
+        if tq[o] >= TF0:
+            if rng2.random() > sd[o] ** 2: continue               # density thins as the tape slows
+            q = q * sd[o]; pos = pos_t[o]
+        else:
+            pos = SRC_FROM + (SRC_TO - SRC_FROM) * (o / (s1 - s0))
+        n_src = int(G * q); a = int(pos * SR) - n_src
+        if a < 0: continue
+        g = signal.resample_poly(song[a:a + n_src][::-1], G, n_src, axis=0)[:G]
+        if len(g) < G: g = np.pad(g, ((0, G - len(g)), (0, 0)))
+        chat_t[o:o + G] += g * np.array([1 - pan, pan]) * amp * win[:, None]
+    chat_t = bp(chat_t[:n_ext], 350, 7000)
+    chat_t = signal.sosfilt(signal.butter(2, 1200, "high", fs=SR, output="sos"), chat_t, axis=0) * 0.6 + chat_t * 0.4
+    chat_t = chat_t / CN * ((ue ** 1.6) * 0.85 + 0.15 * np.minimum(1, ue / 0.08))[:, None]
+    f = 70 * (330 / 70) ** (ue ** 1.3) * (1 + 0.012 * np.sin(2 * np.pi * 7.3 * un * 3.8)) * sd
+    ph = 2 * np.pi * np.cumsum(f) / SR
+    motor = sum((0.6 ** kk) * np.sin(kk * ph + kk) for kk in range(1, 7)) * (1 + 0.25 * np.sin(ph / 4))
+    hn = np.concatenate([HISS_RAW, rng2.standard_normal((n_ext - (s1 - s0), 2))])
+    hiss_t = bp(hn, 3500, 12000) * (ue ** 2)[:, None] * 0.8
+    w_t = (motor[:, None] * np.array([1, 1]) / 1.5 * (0.25 + 0.75 * ue ** 1.2)[:, None] + hiss_t) / WN * (0.3 + 0.7 * ue)[:, None]
+    rew_t = (chat_t * db(-29) + w_t * db(-36)) * gfade[:, None]
+    # the slowing tape also gets duller: time-varying low-pass, fc 12 kHz * speed^2 (-> 3 kHz at the end), unity before TF0
+    fq, ft, X = signal.stft(rew_t.T, SR, nperseg=1024, noverlap=768)
+    sdf = np.interp(ft, np.arange(n_ext) / SR, sd); fc = 12000 * sdf ** 2
+    lp = 1 / np.sqrt(1 + (fq[:, None] / fc[None, :]) ** 4); lp[:, T_FREEZE_END + ft < TF0] = 1
+    rew_t = signal.istft(X * lp[None], SR, nperseg=1024, noverlap=768)[1].T[:n_ext]
+    rew_t[:int(0.006 * SR)] *= np.linspace(0, 1, int(0.006 * SR))[:, None]
+    stem[s0:s0 + n_ext] += rew_t
+    S_END = s0 + n_ext
+    stem[S_END:S_END + k] += clunk[:, None] * db(-34 - 12)        # very soft, at the end of the spin-down
 
 # ---------------- kalimba protection: spectral side-chain against the song ----------------
 nper = 2048
@@ -143,7 +200,7 @@ for _it in range(3):                                                  # iterate:
     stem = sd.T[:N]
 stem = signal.sosfilt(signal.butter(2, 40, "high", fs=SR, output="sos"), stem, axis=0)
 # keep the hard stop hard (istft smears a few ms) and silence after the clunk
-stem[s1 + k:] = 0
+stem[S_END + k:] = 0
 # fades: gentle in from 0, nothing after 6.8
 stem[int(STEM_END * SR):] = 0
 
