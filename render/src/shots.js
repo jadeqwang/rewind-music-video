@@ -184,10 +184,14 @@ export function buildShots(T) {
   add('R2_backward', R2a, R2b, 'rewind', { from: b6a, to: L(3).start, speeds: [2, 4, 8], segs: [0.3, 0.33, 0.37], hold: 0, lines: [] }, { fx: { kick: 0.8 } });
   for (const d of T.downbeatsIn(R2a + 0.1, R2b - 0.3)) C(`R2_j${DI(d)}`, d, Math.min(R2b, d + 2 * P), [ink, { type: 'sirens', side: 'pair', base: 0.5 },
     jade('J5_circle', { light: 'siren', late: P / 2, lateColor: PAL.cyan, cam: { from: [0.76, 0.42, 1.0], to: [0.76, 0.42, 1.08] } }), { type: 'circle', x: 960, y: 420, r: 320 }], { fx: { kick: 1, strobe: 0.6 } });
+  // sung "Rewind" = a Jade centre-lock performance (R_rw*, anime-direct, generated on the v5 mix: clock 'v5'), the REWIND slam
+  // behind her (depth sandwich: never over her face), her twirl drawn as a cyan CCW light-pen arc + ◀◀. off = clip s at the word.
+  const rwm = (id, off, cam, light = 'siren') => [jade(id, { light, cam, offset: off, loop: false, mouth: false }), { type: 'rwpen', roto: R.jade(id), offset: off, cam }];
+  const RWCAM = { from: [0.5, 0.47, 1.0], to: [0.5, 0.45, 1.1] };
   const R3b = T.downbeatsIn(L(6).start + P, L(7).start)[0] ?? L(6).start + bar;
-  C('R3_slam', L(6).start, R3b, [ink, { type: 'sirens', side: 'pair', base: 0.2, peak: 0.4 }, { type: 'slam', text: 'REWIND', variant: 'mirror', at: 0, y: 700 }], { fx: { kick: 1, jerks: [L(6).start] } });
+  C('R3_slam', L(6).start, R3b, [ink, { type: 'sirens', side: 'pair', base: 0.2, peak: 0.4 }, { type: 'slam', text: 'REWIND', variant: 'mirror', at: 0, y: 700 }, ...rwm('R_rw1', 1.3, RWCAM)], { fx: { kick: 1, jerks: [L(6).start] } });
   add('R3b_rewind', R3b, L(7).start, 'rewind', { from: L(3).start, to: L(0).start, speeds: [4, 8], segs: [0.5, 0.5], hold: 0, echo: 2, layers: [{ type: 'slam', text: 'REWIND', variant: 'stack', at: 0, onType: true, color: PAL.cyan }] }, { fx: { kick: 1 } });
-  C('R4_slam', L(7).start, T.chopsIn(L(7).start, L(7).start + 3)[0] ?? L(7).end, [{ type: 'fill', color: PAL.bone }, { type: 'slam', text: 'REWIND', variant: 'mirror', at: 0, y: 700, color: PAL.ink }], { fx: { kick: 1, jerks: [L(7).start] } }, { post: { bloom: 0 } });
+  C('R4_slam', L(7).start, T.chopsIn(L(7).start, L(7).start + 3)[0] ?? L(7).end, [{ type: 'fill', color: PAL.bone }, { type: 'slam', text: 'REWIND', variant: 'mirror', at: 0, y: 700, color: PAL.ink }, ...rwm('R_rw2', (L(7).start - 55.289) + 0.6, { from: [0.5, 0.36, 1.55], to: [0.52, 0.33, 1.8] })], { fx: { kick: 1, jerks: [L(7).start] } }, { post: { bloom: 0 } });
   const r5a = T.chopsIn(L(7).start, L(7).start + 3)[0] ?? L(7).end, r6a = T.downbeatsIn(r5a + 2, r5a + 6)[0];
   C('R5_hoots', r5a, r6a, [ink, { type: 'sirens', side: 'pair', base: 0.3 }, { type: 'ghosts', roto: R.jade('J5'), n: e => [2, 4, 8, 8][Math.min(3, Math.floor(e.lt / P / 1.5))] }], { fx: { kick: 1, strobe: 0.5 } });
   const r7a = T.downbeatsIn(r6a + 8.5, sec('verse3').start)[0] ?? sec('verse3').start - bar;
@@ -255,10 +259,10 @@ export function buildShots(T) {
     layers: [{ type: 'sweepbars', progress: e => (e.lt % (2 * P)) / (2 * P), n: 5, onType: true }] }, { fx: { jerks: [drop2], kick: 1 } });
   for (const d of T.downbeatsIn(drop2 + 1, r9 - 1).filter((_, i) => i % 2 === 1)) C(`R8_j${DI(d)}`, d, d + 2 * P, [ink, { type: 'sirens', side: 'pair', base: 0.5, peak: 0.6 }, jade('J5b', { light: 'siren', late: P / 2, lateColor: PAL.red, cam: { from: [0.76, 0.42, 1.0], to: [0.76, 0.42, 1.1] } }), { type: 'circle', x: 960, y: 420, r: 320, color: PAL.red }], { fx: { kick: 1, strobe: 0.6 } });
   C('R9_bars', r9, r10, [{ type: 'fill', color: PAL.bone }, { type: 'fill', color: PAL.red, when: e => e.t >= (T.downbeatsIn(r9 + 0.5, r10)[0] ?? r9 + bar) }, { type: 'slam', hits: [{ t: r9, text: 'REWIND', variant: 'bars', code: '(b)(7)(C)' }, { t: T.downbeatsIn(r9 + 0.5, r10)[0] ?? r9 + bar, text: 'REWIND', variant: 'behind' }] },
-    { type: 'suits', roto: R.suits('B3'), when: e => e.t >= (T.downbeatsIn(r9 + 0.5, r10)[0] ?? r9 + bar), cam: { from: [0.5, 0.5, 1.0], to: [0.5, 0.5, 1.15] } }],
+    { type: 'suits', roto: R.suits('B3'), when: e => e.t >= (T.downbeatsIn(r9 + 0.5, r10)[0] ?? r9 + bar), cam: { from: [0.5, 0.5, 1.0], to: [0.5, 0.5, 1.15] } }, ...rwm('R_rw3', (r9 - 111.652) + 0.75, RWCAM)],
     { fx: { kick: 1, jerks: [r9] } }, { post: { bloom: 0, vignette: 0.1 } });
   const r11 = T.downbeatsIn(r10 + 0.3, r10 + 3)[0] ?? r10 + bar / 2;
-  C('R10_stack', r10, r11, [{ type: 'fill', color: PAL.red }, { type: 'slam', text: 'REWIND', variant: 'stack', at: 0, color: PAL.ink }], { fx: { kick: 1, jerks: [r10] } }, { post: { bloom: 0 } });
+  C('R10_stack', r10, r11, [{ type: 'fill', color: PAL.red }, { type: 'slam', text: 'REWIND', variant: 'stack', at: 0, color: PAL.ink }, ...rwm('R_rw4', (r10 - 115.258) + 0.63, { from: [0.5, 0.45, 1.12], to: [0.48, 0.43, 1.22] })], { fx: { kick: 1, jerks: [r10] } }, { post: { bloom: 0 } });
   const r12 = T.downbeatsIn(bd - 1.5 * bar, bd)[0] ?? bd - bar;
   {
     const ks = [r11, ...T.kicksIn(r11 + 0.2, r12).filter((_, i) => i % 2 === 1)]; ks.push(r12);

@@ -138,6 +138,42 @@ export const LAYERS = {
   bullet(ctx, L, env) { bullet(ctx.g, { x: A(L.x, env, 760), y: A(L.y, env, 470), len: L.len ?? 1100, angle: L.angle ?? 0.03, color: L.color, comp: L.comp }); },
   dot(ctx, L, env) { const g = ctx.g; g.fillStyle = L.color || PAL.bone; g.beginPath(); g.arc(A(L.x, env, DW / 2), A(L.y, env, DH / 2), A(L.r, env, 6), 0, Math.PI * 2); g.fill(); },
 
+  // the rewind gesture as a light-pen: a cyan counter-clockwise arc + arrowhead + ◀◀ that follows her twirling fingertip
+  // (meta.fingertip from tools/jade2/fingertip.py). The arc advances with the finger's own travel, always CCW, so it reads
+  // as "rewind" even when the hand rolls. L: {roto, offset (clip s at lt 0), cam (same as her jade layer)}
+  rwpen(ctx, L, env, { roto }) {
+    const id = L.roto, m = roto.meta(id); if (!m || !m.fingertip) return;
+    const FT = m.fingertip, n = FT.length;
+    if (!m._pen) {   // per-frame cumulative travel, local centre, radius, activity
+      const S = [0]; for (let i = 1; i < n; i++) { const a = FT[i - 1], b = FT[i]; S.push(S[i - 1] + (a && b ? Math.hypot(b[0] - a[0], b[1] - a[1]) : 0)); }
+      const C = [], Rr = [], act = [];
+      for (let i = 0; i < n; i++) {
+        const win = []; for (let j = Math.max(0, i - 7); j <= Math.min(n - 1, i + 7); j++) if (FT[j]) win.push(FT[j]);
+        const cx = win.reduce((q, p) => q + p[0], 0) / Math.max(1, win.length), cy = win.reduce((q, p) => q + p[1], 0) / Math.max(1, win.length);
+        C.push([cx, cy]); Rr.push(clamp(1.5 * win.reduce((q, p) => q + Math.hypot(p[0] - cx, p[1] - cy), 0) / Math.max(1, win.length), 80, 210));
+        let sp = 0; for (let j = Math.max(1, i - 4); j <= Math.min(n - 1, i + 4); j++) sp = Math.max(sp, S[j] - S[j - 1]); act.push(smooth(6, 20, sp));
+      }
+      m._pen = { S, C, Rr, act };
+    }
+    const { S, C, Rr, act } = m._pen;
+    const ct = roto.clipTime(id, env.lt, { offset: L.offset ?? 0 }), fi = Math.min(n - 1, Math.max(0, ct * m.fps)), i0 = Math.floor(fi), i1 = Math.min(n - 1, i0 + 1), fr = fi - i0;
+    const a = (act[i0] * (1 - fr) + act[i1] * fr) * A(L.alpha, env, 1); if (a < 0.02) return;
+    const rect = camRect(L.cam, env), kx = rect.w / m.w, ky = rect.h / m.h;
+    const cx = rect.x + lerp(C[i0][0], C[i1][0], fr) * kx, cy = rect.y + lerp(C[i0][1], C[i1][1], fr) * ky, r = lerp(Rr[i0], Rr[i1], fr) * kx;
+    const th = -lerp(S[i0], S[i1], fr) / Math.max(40, lerp(Rr[i0], Rr[i1], fr)) * 1.1, span = 4.6;   // CCW on screen = decreasing angle
+    const g = ctx.ty; g.save(); g.lineCap = 'round'; g.shadowColor = PAL.cyan; g.shadowBlur = 18;
+    const N = 48;
+    for (let k = 0; k < N; k++) {   // tail fades out behind the head
+      const u0 = k / N, u1 = (k + 1) / N, t0 = th + span * (1 - u0), t1 = th + span * (1 - u1);
+      g.strokeStyle = rgba(PAL.cyan, a * Math.pow(u1, 1.4)); g.lineWidth = 3 + 6 * u1;
+      g.beginPath(); g.moveTo(cx + r * Math.cos(t0), cy + r * Math.sin(t0)); g.lineTo(cx + r * Math.cos(t1), cy + r * Math.sin(t1)); g.stroke();
+    }
+    const hx = cx + r * Math.cos(th), hy = cy + r * Math.sin(th), tx = Math.sin(th), tyy = -Math.cos(th);   // tangent in the CCW direction
+    g.fillStyle = rgba(PAL.cyan, a); g.beginPath(); g.moveTo(hx + tx * 30, hy + tyy * 30); g.lineTo(hx - tx * 6 - tyy * 18, hy - tyy * 6 + tx * 18); g.lineTo(hx - tx * 6 + tyy * 18, hy - tyy * 6 - tx * 18); g.closePath(); g.fill();
+    g.shadowBlur = 10; setFont(g, F.mono(56, 700), 0); g.textAlign = 'center'; g.textBaseline = 'middle';
+    const gx = cx + (r + 70) * Math.cos(th + 0.5), gy = cy + (r + 70) * Math.sin(th + 0.5); g.fillText('◀◀', gx, gy);
+    g.restore();
+  },
   // roadside agents (final drop payoff): a still group on each shoulder sliding past as she drives. Frozen frame, no glint,
   // heads never turn — no anomaly, nothing to track. L: {roto, period (s), still frame (s), horizon y}
   roadside(ctx, L, env, { roto }) {
