@@ -109,3 +109,4 @@ They hunt her because her rewinds create detectable anomalies (Loki/TVA riff). W
 OFFICE OF CAUSAL INTEGRITY (OCI) — never TVA names/logos/props (Disney IP; takedown risk). Case files = variance
 reports; anomaly meter spikes per rewind; suits multiply per anomaly and "prune" dead runs; payoff: in the final
 drop she stops rewinding → "ANOMALY: NONE DETECTED" → she drives past unseen ("as inconspicuously as possible").
+- NAME (user choice): "TIME VARIANCE ████████" (last word always redacted; never 'Authority'/'TVA'; no Marvel logo/props). OCI = fallback.
