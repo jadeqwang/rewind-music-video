@@ -4310,8 +4310,68 @@
     }
    ],
    "collected": 1790998678.7860477
+  },
+  "rewind/anime_R_rw1_t3-1dae813a85": {
+   "id": "1dae813a85",
+   "job": "rewind/anime_R_rw1_t3-1dae813a85",
+   "tag": "anime_R_rw1_t3",
+   "model": "bytedance/seedance-2.5",
+   "notes": "anime Jade R_rw1 t3 rewind gesture+lip, clock v5",
+   "spec_file": "assets/gen/specs/anime/R_rw1_t3.json",
+   "input": {
+    "duration": 5,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Centre-locked straight-on performance shot in a dark void with red and blue police-siren rim light pulsing; she stands square to the camera, waist-up, eyes to the lens. Locked-off camera, plain dark void background (no lights, no tubes, no objects in the background). She opens her mouth at the start and sings ONE long sustained note \"re-WIIIND\" from the reference audio: a quick soft \"re\", then the mouth held open on the vowel for about three seconds, then she closes her lips. Her hands never cover her mouth or face; the face stays fully visible. Gesture, starting IMMEDIATELY at 0.2 s: her right hand is up beside her right temple, well out to the side of her head (never near her mouth), index finger extended, and it twirls in fast loops rotating COUNTER-CLOCKWISE as seen by the viewer, like rewinding a cassette tape: at the top of each loop the fingertip moves to the viewer's LEFT, at the bottom to the viewer's RIGHT; four or five loops, then she flicks the hand backwards over her shoulder.  Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/anime/shots/J5b_v3_720.jpg",
+    "reference_audios": [
+     "file:analysis/slices/vocals_v5_rw1_51.546_5.mp3"
+    ]
+   },
+   "est_usd": 1.156,
+   "est_basis": "5s x 0.2312 (@720p non-video input (per second))",
+   "state": "queued",
+   "bucket": 29849997,
+   "submitted": 1790999738.7024891,
+   "bytes": 382714
+  },
+  "rewind/anime_R_rw2_t3-bf80705334": {
+   "id": "bf80705334",
+   "job": "rewind/anime_R_rw2_t3-bf80705334",
+   "tag": "anime_R_rw2_t3",
+   "model": "bytedance/seedance-2.5",
+   "notes": "anime Jade R_rw2 t3 rewind gesture+lip, clock v5",
+   "spec_file": "assets/gen/specs/anime/R_rw2_t3.json",
+   "input": {
+    "duration": 5,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Centre-locked straight-on performance shot in a dark void with red and blue police-siren rim light pulsing; she stands square to the camera, waist-up, eyes to the lens. Locked-off camera, plain dark void background (no lights, no tubes, no objects in the background). She opens her mouth at the start and sings ONE long sustained note \"re-WIIIND\" from the reference audio: a quick soft \"re\", then the mouth held open on the vowel for about three seconds, then she closes her lips. Her hands never cover her mouth or face; the face stays fully visible. Gesture, starting immediately: both forearms rolling backward around each other in front of her chest, below her chin - a continuous rolling motion, the forearms circling each other like a rewinding tape reel, the top of the roll moving toward her body (not crossing in an X, not waving); keep rolling for about three seconds, then both hands pull back to her shoulders.  Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/anime/shots/J5b_v3_720.jpg",
+    "reference_audios": [
+     "file:analysis/slices/vocals_v5_rw2_55.289_5.mp3"
+    ]
+   },
+   "est_usd": 1.156,
+   "est_basis": "5s x 0.2312 (@720p non-video input (per second))",
+   "state": "queued",
+   "bucket": 29849997,
+   "submitted": 1790999739.1712778,
+   "bytes": 382632
   }
  },
- "total_est_usd": 125.4652,
+ "total_est_usd": 127.7772,
  "total_est_usd_done": 112.518
 }
