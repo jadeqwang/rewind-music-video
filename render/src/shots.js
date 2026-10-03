@@ -325,7 +325,7 @@ export function buildShots(T) {
     { type: 'ghosts', roto: R.jade('J8b'), n: 3 },
     // the reveal, landing on "a shadow chasing me I couldn't place": every committee member is a Jade variant (J_committee,
     // anime-direct, full-frame matte), one bar, then back to the projector room. No-op until the clip exists.
-    { type: 'jade', roto: 'J_committee_v2|J_committee', light: null, loop: false, mouth: false, offset: 1.568, t1: 2.0,   /* pop (clip 3.0 s) on the 160.60 beat */ cam: { from: [0.5, 0.5, 1.0], to: [0.5, 0.5, 1.04] } },
+    { type: 'jade', roto: 'J_committee_v3|J_committee_v2|J_committee', light: null, loop: false, mouth: false, offset: 1.488, t1: 2.0,   /* v3: pop (clip 2.92 s) on the 160.60 beat */ cam: { from: [0.5, 0.5, 1.0], to: [0.5, 0.5, 1.04] } },
     { type: 'page', lines: [18], until: W('couldn\'t', 2).start, size: 110, y: 820, measure: 1500, maxLines: 1 },
     { type: 'redact', text: 'it was me.', x: 150, y: 970, size: 110, at: W('place', 2).end - L(18).start + 0.2, dur: 0.7, color: PAL.cyan, barColor: PAL.bone },
   ], { hud: hud(3, 0.0), fx: { heart: 0.35 } });
