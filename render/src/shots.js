@@ -6,6 +6,7 @@
 // Jade is always her own layer ('J*|ld_jade') so the real roto drops in without touching the edit.
 import { DW, DH, PAL, clamp, lerp, smooth, easeOutCubic, easeInOutCubic, hash } from './core.js';
 
+import { AGENCY } from './agency.js';
 export function buildShots(T) {
   const S = [];
   const add = (id, t0, t1, scene, params = {}, extra = {}) => { if (t1 > t0 + 1e-3) S.push({ id, t0, t1, scene, params, ...extra }); };
@@ -57,12 +58,13 @@ export function buildShots(T) {
     64.0, 59.0, 56.5, 52.6, 49.5, 47.2, 43.6, 41.6, 41.0, 37.0, 33.0, 27.0, 18.0].map(T.from4);
   C('H1_scrub', bt(1), bt(9), [ink, { type: 'montage', times: TR, per: (bt(9) - bt(1)) / TR.length }, { type: 'rwhud', speed: 64 }],
     { fx: { jerks: [bt(1)], heart: 0 } }, { post: e => ({ warble: 0.8, warbleSeed: Math.floor(e.lt * 30), tracking: 0.5, scan: 0.3, ca: 3, bloom: 0.2 }) });
+  const H2_TALLY_END = (u => Math.floor(48203 + 40 * u + 180 * u * u))(Math.max(0, braam0 - bt(9) - 0.3 - 10 / 14));   // where the H2 tally stops
   C('H2_rain', bt(9), braam0, [ink,
     { type: 'world', roto: R.plate('car_interior_1'), alpha: 0.95, lights: 1, cam: { from: [0.5, 0.5, 1.06], to: [0.5, 0.52, 1.14] } },
     { type: 'sodium', period: P * 2, amount: 0.9, alpha: 0.5 }, { type: 'flash', amount: 0.12, color: PAL.sodium },
     { type: 'rain', n: 320, alpha: 0.75 }, { type: 'rain', n: 90, alpha: 1, slow: 0.25 },
     { type: 'dash', amount: e => 0.5 + 0.4 * e.u },
-    { type: 'mono', text: 'case 1 of ∞', y: 560, at: 0.3, typed: 14, color: PAL.bone, size: 56, weight: 700 },
+    { type: 'tally', prefix: 'CASE 1 OF ', base: 48203, v0: 40, acc: 180, y: 560, at: 0.3, typed: 14, color: PAL.bone, size: 56, weight: 700 },   // the agency's tally of branches, climbing
   ], { fx: { heart: 0.25, soft: 0.4, blinks: [{ t: bt(9) + 1.0, skip: 0.4 }] } });
   // H3: title card on the braam
   C('H3_title', braam0, db(5), [ink,
@@ -71,7 +73,8 @@ export function buildShots(T) {
   ], { fx: { jerks: [braam0], heart: 0.2 } }, { post: e => ({ bloom: 0.25, bloomThr: 0.7, warble: 0.5 * Math.sin((e.lt % (2 * P)) / (2 * P) * Math.PI) ** 2, warbleSeed: Math.floor(e.lt * 30), scan: 0.25 }) });
   // H4: storybook page (poem lines that are not sung), then world card 1 over the aerial with her car
   const w1 = db(5) + bar;
-  C('H4_story', db(5), w1, [{ type: 'storypage', size: 60, x: 300, lines: ['I was speeding down Lake Shore Drive, a spectre', 'shadowing me I couldn\u2019t place, saw sirens', 'in my rear view. Silent, for some reason.'] }],
+  C('H4_story', db(5), w1, [{ type: 'storypage', size: 60, x: 300, lines: ['I was speeding down Lake Shore Drive, a spectre', 'shadowing me I couldn\u2019t place, saw sirens', 'in my rear view. Silent, for some reason.'] },
+    { type: 'mono', text: `${AGENCY.code}: temporal anomaly detected, Lake Shore Dr.`, y: 990, size: 42, weight: 400, color: '#6A645A', at: 1.0, typed: 34 }],   // the agency, first contact
     { fx: { heart: 0.15 } }, { post: { bloom: 0, vignette: 0.12 } });
   C('H4_world1', w1, v1, [ink,
     { type: 'world', roto: R.aerial, alpha: 0.5, lights: 0.4, cam: { from: [0.5, 0.5, 1.0], to: [0.48, 0.55, 1.08] }, offset: 1.2 },
@@ -235,9 +238,9 @@ export function buildShots(T) {
     const cuts = [L(13).start]; let t = L(13).start; while (t < shot2 - P / 2) { t = T.snap(t + P / 2, T.beats.concat(T.beats.map(b => b + P / 2)).sort((a, b) => a - b)); cuts.push(Math.min(t, shot2)); }
     if (cuts[cuts.length - 1] < shot2) cuts.push(shot2);
     for (let i = 0; i < cuts.length - 1; i++) {
-      if (i === cuts.length - 2) C('F3_tab', cuts[i], cuts[i + 1], [...fieldGrass({ beams: 4, beamAmt: 0.45, x: 1000, scale: 1.2 }), { type: 'sirens', side: 'pair', base: 0.3 }, ...suits('F3', { cam: { from: [0.3, 0.45, 1.0], to: [0.3, 0.45, 1.0] }, world: { alpha: 0 } })], { hud: hud(2, null, { mate: -1 }) });
+      if (i === cuts.length - 2) C('F3_tab', cuts[i], cuts[i + 1], [...fieldGrass({ beams: 4, beamAmt: 0.45, x: 1000, scale: 1.2 }), { type: 'sirens', side: 'pair', base: 0.3 }, ...suits('F3', { copies: FIELD_COPIES, cam: { from: [0.3, 0.45, 1.0], to: [0.3, 0.45, 1.0] }, world: { alpha: 0 } })], { hud: hud(2, null, { mate: -1 }) });
       else if (i % 2) C(`F3_${i}`, cuts[i], cuts[i + 1], [...fieldGrass({ beams: 4, beamAmt: 0.45, medium: true }), { type: 'subtitle', lines: [13] }], { hud: hud(2, -8) });
-      else C(`F3_${i}`, cuts[i], cuts[i + 1], [ink, ...sirenLit({ base: 0.5 }), ...suits('F3', { cam: { from: [0.5, 0.4, 1.9 + i * 0.05], to: [0.5, 0.4, 2.0 + i * 0.05] } })], { hud: hud(2, -9) });
+      else C(`F3_${i}`, cuts[i], cuts[i + 1], [ink, ...sirenLit({ base: 0.5 }), ...suits('F3', { copies: FIELD_COPIES, cam: { from: [0.5, 0.4, 1.9 + i * 0.05], to: [0.5, 0.4, 2.0 + i * 0.05] } })], { hud: hud(2, -9) });
     }
   }
   const sfx2 = ev('shot_sfx', 2), drop2 = ev('drop', 2), stops2 = W('stops', 2).start;
@@ -283,16 +286,19 @@ export function buildShots(T) {
   // D1: the room lit by its projector — a bone screen and a big bone wedge of light; on each braam the projector
   // flickers and one more redacted committee member is sitting there (solid black against the screen). Dream: too many chairs.
   const seats = [[700, 690], [860, 690], [1020, 690], [1180, 690], [1340, 690]];
+  // anomaly 2 (the field): the agency escalates — the same cut-outs duplicated and scaled behind, receding
+  const FIELD_COPIES = [{ dx: -430, dy: -40, s: 0.8, dt: 0.4 }, { dx: 450, dy: -50, s: 0.78, dt: 0.9 }, { dx: -820, dy: -90, s: 0.62, dt: 1.3 }, { dx: 840, dy: -100, s: 0.6, dt: 1.7 },
+    { dx: -250, dy: -130, s: 0.5, dt: 2.1 }, { dx: 260, dy: -140, s: 0.48, dt: 2.6 }];
   const room = (n, o = {}) => [ink, { type: 'world', roto: R.room, alpha: 0.7, lights: 0.6, speed: 0.6, loop: 'pingpong', cam: o.cam },
     { type: 'projector', flicker: e => (o.flick && e.lt < 0.3 ? Math.abs(Math.sin(e.lt * 60)) : 0), title: 'DEFENSE', sub: 'Wednesday, 9:00 a.m.' },
-    { type: 'committee', n, scale: 1.0, seats }];
+    { type: 'committee', n, scale: 1.0, seats, rows: o.rows ?? 0 }];
   const chairsAt = brm[0] + bar;
   C('D1_room0', bd, brm[0], [...room(0), { type: 'mono', text: 'DEFENSE · 09:00', y: 1010, size: 50, weight: 700, at: 0.8, typed: 16 }], { hud: hud(3, 0.0), fx: { heart: 0.3, soft: 0.2 } });
   C('D1_room1', brm[0], chairsAt, room(1, { flick: true }), { hud: hud(3, 0.0), fx: { heart: 0.3, jerks: [brm[0]] } });
   C('D1_chairs', chairsAt, brm[1], [{ type: 'fill', color: PAL.bone }, { type: 'chairs' }, { type: 'mono', text: 'committee: 5 of ∞', y: 1010, size: 50, weight: 700, color: PAL.ink }],
     { hud: hud(3, 0.0, { ink: true }), fx: { heart: 0.3, blinks: [{ t: brm[1] - 0.5, skip: 0.3 }] } }, { post: { bloom: 0, vignette: 0.15 } });
-  C('D1_room2', brm[1], brm[2], room(2, { flick: true, cam: { from: [0.5, 0.5, 1.05], to: [0.5, 0.5, 1.15] } }), { hud: hud(3, 0.0), fx: { heart: 0.3, jerks: [brm[1]] } });
-  C('D1_room3', brm[2], L(16).start, room(e => (e.lt > bar ? 5 : 3), { flick: true }), { hud: hud(3, 0.0), fx: { heart: 0.35, jerks: [brm[2]] } });
+  C('D1_room2', brm[1], brm[2], room(2, { flick: true, rows: 1, cam: { from: [0.5, 0.5, 1.05], to: [0.5, 0.5, 1.15] } }), { hud: hud(3, 0.0), fx: { heart: 0.3, jerks: [brm[1]] } });
+  C('D1_room3', brm[2], L(16).start, room(e => (e.lt > bar ? 5 : 3), { flick: true, rows: e => 2 + smooth(0, 1.5 * bar, e.lt) }), { hud: hud(3, 0.0), fx: { heart: 0.35, jerks: [brm[2]] } });   // full table + standing rows (too many)
   C('D2_chair', L(16).start, dSil.t ?? dSil, [ink, { type: 'projector', title: '', sub: '' },
     jade('J8', { cam: { from: [0.5, 0.42, 1.1], to: [0.5, 0.42, 1.14], dx: 400 } }),   // right third: the revisions column (x ≤ 1020) never crosses her
     { type: 'revisions', lines: [16], size: 100, y: 800, measure: 820 }], { hud: hud(3, 0.0), fx: { heart: 0.3 } });   // below the projector screen, left of her
@@ -300,7 +306,7 @@ export function buildShots(T) {
   C('D3_dropout', dsil, dsilEnd, [{ type: 'fill', color: PAL.bone }, { type: 'mono', text: '∴', y: 700, size: 520, weight: 700, color: PAL.ink }], { fx: { heart: 0.1 } }, { post: { bloom: 0, vignette: 0.1 } });
   // D4: A Beautiful Mind wall, BIG: four case-file prints pinned with red string, filling the frame
   C('D4_wall', dsilEnd, L(18).start, [{ type: 'fill', color: '#16110C' },
-    { type: 'wall', card: 2.3, progress: e => 0.3 + e.u, pins: [[420, 290, ev('shot', 1).toFixed(2)], [1480, 300, ev('shot', 2).toFixed(2)], [520, 840, v1.toFixed(2)], [1420, 830, '∞']] },
+    { type: 'wall', card: 2.3, progress: e => 0.3 + e.u, pins: [[420, 330, ev('shot', 1).toFixed(2)], [1480, 340, ev('shot', 2).toFixed(2)], [520, 840, v1.toFixed(2), false], [1420, 830, '∞']], banner: true, bannerAt: 0.35 },
     { type: 'rect', x: 690, y: 330, w: 540, h: 420, color: PAL.bone }, { type: 'dot', x: 960, y: 336, r: 10, color: PAL.red },
     { type: 'rollouts', n: 300, seed: 21, ink: true, x: 720, y: 520, w: 480, h: 300, lw: 1.2, tick: 2, labels: false, progress: e => smooth(0, 0.5, e.u), kills: [{ at: 0.38, share: 0.55, dy: -0.3 }, { at: 0.68, share: 0.44, dy: 0.05 }], survivor: true, surviveDy: 0.3, survivorW: 3 },
     { type: 'revisions', lines: [17], size: 76, y: 560, measure: 1500, revs: [{ dx: 0, dy: 0 }, { dx: 18, dy: 30 }] }],
@@ -314,7 +320,7 @@ export function buildShots(T) {
   // =============================== 8 · BUILD 3 164.10 – 171.50 (brute force) ===============================
   const b3 = sec('build3').start, never = W('never').start, stop3 = W('stop', 1, { after: never }).start, fd = ev('drop', 3);
   C('X1_search', b3, never, [ink, { type: 'rollouts', n: e => 220 + 2600 * e.u * e.u, seed: 31, x: 180, y: 540, w: 1600, h: 900, lw: 1.2, tick: 2, labels: false, kills: [{ at: 0.3, share: 0.3, dy: -0.35 }, { at: 0.55, share: 0.3, dy: 0.0 }, { at: 0.8, share: 0.35, dy: 0.3 }] },
-    { type: 'counter', value: e => (e.u < 0.92 ? Math.floor(3 + Math.pow(e.u / 0.92, 3) * 996) : '∞'), x: DW - 80, y: 250, size: 150 }],
+    { type: 'counter', value: e => (e.u < 0.92 ? Math.floor(H2_TALLY_END + Math.pow(e.u / 0.92, 3) * (999999 - H2_TALLY_END)).toLocaleString('en-US') : '∞'), x: DW - 80, y: 250, size: 150 }],   // picks up the intro tally
     { hud: { attempt: 3, tc: true, eval: e => Math.sin(e * 17) * 9 }, fx: { heart: 0.5, kick: 0.6 } });
   // Picasso escalation 3/4: the fully fractured portrait, planes re-cut on every heartbeat
   for (const d of T.downbeatsIn(b3 + 0.5, never - 0.5)) C(`X1_eyes${DI(d)}`, d + 2 * P, d + 3 * P, [ink, jade('Jeyes', { mouth: false, light: null })], { fx: { heart: 0.6 } });
@@ -339,7 +345,8 @@ export function buildShots(T) {
     : kind === 'scale' ? [ink, ...sirenLit({ base: 0.45 }), ...suits('S5', { cam: { from: [0.5, 0.5, 0.28], to: [0.5, 0.5, 0.22], dy: -120 } }),
       { type: 'suits', roto: R.suits('S5'), cam: { from: [0.25, 0.4, 2.8], to: [0.25, 0.4, 3.2], dx: 700 } }, { type: 'speedlines', amount: 0.6 }]
     : [ink, { type: 'world', roto: R.road, alpha: 0.9, lights: 1, speed: 2.4 }, { type: 'mirror', rect: [460, 60, 1000, 300], zoom: 1.2, layers: [{ type: 'world', roto: R.flood, alpha: 0.9, lights: e => 1 - e.u * 0.8 }, { type: 'sirens', side: 'full', amount: e => 1 - e.u, base: 0.4 }] }];
-  C('N2_lane', n2, n3, lane(), { hud: hud(3, 4, { ok: true }), fx: drive });
+  C('N2_lane', n2, n3, [...lane(), { type: 'roadside', roto: R.suits('B3'), period: 2 * bar }],   // payoff: no anomaly → the suits stand still, heads don't turn
+    { hud: hud(3, 4, { ok: true }), fx: drive });
   // Picasso escalation 4/4: she RESOLVES — the planes converge into one whole single-view face (the survivor)
   C('N1_resolve', n2, DB(2), [ink, { type: 'sodium', period: P, amount: 0.6, alpha: 0.3 }, { type: 'cubist', front: R.jade('J5'), side: R.jade('J1'), planes: 6, resolve: e => smooth(0.05, 0.75, e.u), scale: 2.3, cy: 500 }],
     { hud: hud(3, 5, { ok: true }), fx: { kick: 1 } }, { post: { bloom: 0.1 } });

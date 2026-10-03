@@ -5,9 +5,10 @@
 import { DW, DH, PAL, clamp, lerp, inv, smooth, fract, easeOutCubic, easeInOutCubic, easeOutExpo, easeOutBack, hash, hsig, rng, rgba, layer, clearLayer, resetCtx, fin, noise1, timecode } from './core.js';
 import { page as pageType, slam, subtitle, redact, redactedLine, revisions, setFont, F } from './type.js';
 import * as V from './slams.js';
-import { searchTree, buildTree, glyph, evalBar, annotation, rewindHud } from './hud.js';
+import { searchTree, buildTree, glyph, evalBar, annotation, rewindHud, anomaly, anomalySpike } from './hud.js';
 import { sirens, sodiumSweep, sodiumWash, rain, bullet, headlights, fillInk } from './fx.js';
 import * as CAR from './car.js';
+import { AGENCY } from './agency.js';
 
 export const A = (v, env, d) => (typeof v === 'function' ? v(env) : v ?? d);
 
@@ -120,16 +121,37 @@ export const LAYERS = {
 
   suits(ctx, L, env, { roto }) {
     const id = L.roto, m = roto.meta(id); if (!m) return;
-    const ct = roto.clipTime(id, env.lt, { speed: A(L.speed, env, 1), offset: L.offset ?? 0, loop: L.loop ?? 'pingpong' });
-    const rect = camRect(L.cam, env);
-    const b = env.b, glint = L.glint != null ? A(L.glint, env) : ((b.i % 4 === 1) ? Math.exp(-b.phase * 5) : 0);
-    roto.suits(ctx.g, id, ct, { rect, boil: ctx.seed, rimL: L.rimL ?? PAL.red, rimR: L.rimR ?? PAL.blue, rimAmt: 1, glint, glintSeed: b.i, barLabel: null, bars: L.bars });
+    // L.still: frozen (heads don't turn — the payoff: no anomaly, nothing to track). L.copies: [{dx, dy, s, dt}] extra cut-outs
+    // of the same roto behind the main one (the agency escalates per anomaly; dream logic: too many)
+    const rect0 = camRect(L.cam, env), b = env.b, sp = anomalySpike(env.T, env.t);
+    const glint = Math.max(L.glint != null ? A(L.glint, env) : ((b.i % 4 === 1) ? Math.exp(-b.phase * 5) : 0), L.still ? 0 : sp);
+    const glintColor = sp > 0.2 || anomaly(env.T, env.t) > 0.55 ? PAL.amber : PAL.bone;   // they've detected her
+    const cps = [...(L.copies || []).slice().sort((p, q) => (p.s ?? 1) - (q.s ?? 1)), { dx: 0, dy: 0, s: 1, dt: 0, main: true }];
+    for (const c of cps) {
+      const s_ = c.s ?? 1, rect = { x: rect0.x + rect0.w / 2 * (1 - s_) + (c.dx ?? 0), y: rect0.y + rect0.h * (1 - s_) + (c.dy ?? 0), w: rect0.w * s_, h: rect0.h * s_ };
+      const ct = L.still ? (L.offset ?? 0) : roto.clipTime(id, env.lt + (c.dt ?? 0), { speed: A(L.speed, env, 1), offset: L.offset ?? 0, loop: L.loop ?? 'pingpong' });
+      roto.suits(ctx.g, id, ct, { rect, boil: ctx.seed, rimL: L.rimL ?? PAL.red, rimR: L.rimR ?? PAL.blue, rimAmt: c.main ? 1 : 0.6, glint: c.main ? glint : glint * 0.7, glintColor, glintSeed: b.i + (c.dt ?? 0) * 7, barLabel: null, bars: L.bars });
+    }
   },
 
   // world contours of a base clip with the interim suits stand-in placed into it (until real mattes exist)
   bullet(ctx, L, env) { bullet(ctx.g, { x: A(L.x, env, 760), y: A(L.y, env, 470), len: L.len ?? 1100, angle: L.angle ?? 0.03, color: L.color, comp: L.comp }); },
   dot(ctx, L, env) { const g = ctx.g; g.fillStyle = L.color || PAL.bone; g.beginPath(); g.arc(A(L.x, env, DW / 2), A(L.y, env, DH / 2), A(L.r, env, 6), 0, Math.PI * 2); g.fill(); },
 
+  // roadside agents (final drop payoff): a still group on each shoulder sliding past as she drives. Frozen frame, no glint,
+  // heads never turn — no anomaly, nothing to track. L: {roto, period (s), still frame (s), horizon y}
+  roadside(ctx, L, env, { roto }) {
+    const id = L.roto, m = roto.meta(id); if (!m) return;
+    const hy = L.horizon ?? 520, per = L.period ?? 4;
+    for (let i = 0; i < 2; i++) {
+      const ph = fract(env.t / per + i * 0.5), z = ph * ph, side = i ? 1 : -1;
+      const s = lerp(0.07, 0.9, z), w = DW * s, h = DH * s, cx = DW / 2 + side * lerp(160, 1500, z), by = lerp(hy + 10, DH + 360, z);
+      const a = smooth(0, 0.15, ph) * (1 - smooth(0.85, 1, ph));
+      ctx.g.save(); ctx.g.globalAlpha = a;
+      roto.suits(ctx.g, id, L.frame ?? 1.0, { rect: { x: cx - w / 2, y: by - h, w, h }, boil: 0, rimL: PAL.sodium, rimR: PAL.sodium, rimAmt: 0.5, glint: 0, barLabel: null });
+      ctx.g.restore();
+    }
+  },
   // the rear-view mirror: an inset that shows its own layers (possibly at a different time: dream continuity)
   async mirror(ctx, L, env, data) {
     const [x, y, w, h] = L.rect || [560, 70, 800, 240];
@@ -166,6 +188,30 @@ export const LAYERS = {
     const g = L.onScene ? ctx.g : ctx.ty; g.save(); setFont(g, F.mono(Math.max(42, L.size ?? 44), L.weight ?? 400), L.track ?? 2);
     g.fillStyle = rgba(L.color || PAL.bone, A(L.alpha, env, 1) * smooth(at, at + 0.12, env.lt)); g.textAlign = L.align || 'center'; g.textBaseline = 'alphabetic';
     g.fillText(s + (L.typed && fract(env.t * 2) < 0.5 ? '▌' : ''), A(L.x, env, DW / 2), A(L.y, env, 560)); g.restore();
+  },
+  // the agency's tally, odometer-style: "CASE 1 OF 48,203" with the count rolling up, accelerating (deterministic in t).
+  // L: {prefix, base, v0 (/s), acc (/s²), at, typed (chars/s for the prefix), x, y, size, color}
+  tally(ctx, L, env) {
+    const at = L.at ?? 0; if (env.lt < at) return;
+    const g = ctx.ty, px = Math.max(42, L.size ?? 56), pre = L.prefix ?? 'CASE 1 OF ', ty = (env.lt - at) * (L.typed ?? 14);
+    const u = Math.max(0, env.lt - at - pre.length / (L.typed ?? 14)), N = (L.base ?? 48203) + (L.v0 ?? 40) * u + (L.acc ?? 180) * u * u;
+    g.save(); setFont(g, F.mono(px, L.weight ?? 700), L.track ?? 2); g.textBaseline = 'alphabetic';
+    g.fillStyle = rgba(L.color || PAL.bone, A(L.alpha, env, 1) * smooth(at, at + 0.12, env.lt));
+    const digs = String(Math.floor(N)).split(''), groups = []; digs.forEach((d, i) => { groups.push(d); const r = digs.length - 1 - i; if (r && r % 3 === 0) groups.push(','); });
+    const cw = g.measureText('0').width, sw = g.measureText(',').width, pw = g.measureText(pre).width;
+    const total = pw + groups.reduce((w, c) => w + (c === ',' ? sw : cw), 0);
+    let x = A(L.x, env, DW / 2) - (L.align === 'left' ? 0 : total / 2); const y = A(L.y, env, 560);
+    g.fillText(pre.slice(0, Math.floor(ty + 1)), x, y); if (ty < pre.length) { g.restore(); return; }
+    x += pw; let k = digs.length - 1;
+    for (const c of groups) {
+      if (c === ',') { g.fillText(',', x, y); x += sw; continue; }
+      const v = N / Math.pow(10, k), d = Math.floor(v) % 10, p = (N % Math.pow(10, k + 0)) / Math.pow(10, k);   // p: progress of the lower digits
+      const r = k === 0 ? fract(N) : clamp((fract(v) - 0.9) / 0.1);   // a digit rolls while everything below it wraps 9 → 0
+      g.save(); g.beginPath(); g.rect(x - 2, y - px * 0.95, cw + 4, px * 1.18); g.clip();
+      g.fillText(String(d), x, y - r * px * 1.05); g.fillText(String((d + 1) % 10), x, y + (1 - r) * px * 1.05);
+      g.restore(); x += cw; k--;
+    }
+    g.restore();
   },
   cm(ctx, L, env) {   // a line of Computer Modern (title-page/theorem setting); bold lead-in in roman
     const at = L.at ?? 0; if (env.lt < at) return;
@@ -367,7 +413,7 @@ export const LAYERS = {
   wall(ctx, L, env) {
     const g = ctx.g, p = A(L.progress, env, env.u);
     const T = env.T, f2 = (fn, d) => { try { const v = fn(); return Number.isFinite(v) ? v.toFixed(2) : d; } catch (e) { return d; } };   // timestamps from this mix's timing
-    const pins = L.pins || [[300, 260, f2(() => T.event('shot', 1), '42.44')], [700, 600, f2(() => T.event('shot', 2), '102.02')], [1180, 300, f2(() => T.section('verse1').start, '13.15')],
+    const pins = L.pins || [[300, 260, f2(() => T.event('shot', 1), '42.44')], [700, 600, f2(() => T.event('shot', 2), '102.02')], [1180, 300, f2(() => T.section('verse1').start, '13.15'), false],
       [1500, 700, '∞'], [480, 820, f2(() => T.section('drop1').start, '44.77')], [1640, 240, f2(() => T.section('final_drop').start, '171.29')]];
     const cs = L.card ?? 1;
     g.save();
@@ -381,7 +427,23 @@ export const LAYERS = {
       g.fillStyle = '#000'; for (let k = 0; k < 3; k++) { g.beginPath(); g.ellipse(-60 + k * 60, -10, 18, 22, 0, 0, Math.PI * 2); g.fill(); g.fillRect(-82 + k * 60, 10, 44, 40); }
       setFont(g, F.mono(42, 700), 1); g.fillStyle = PAL.ink; g.textAlign = 'center'; g.fillText(lab, 0, 86);
       g.fillStyle = PAL.red; g.beginPath(); g.arc(0, -92, 9, 0, Math.PI * 2); g.fill();
-      if (lab !== '∞' && lab !== '13.45') { setFont(g, F.mono(90, 700)); g.fillStyle = rgba(PAL.red, 0.9); g.fillText('✗', 80, -10); }
+      if (lab !== '∞' && pins[i][3] !== false) { setFont(g, F.mono(90, 700)); g.fillStyle = rgba(PAL.red, 0.9); g.fillText('✗', 80, -10); }
+      g.restore();
+    }
+    // the agency's finding, pinned across the top, red string to each branch timestamp (the ✗ pins)
+    const bu = L.banner ? clamp((p - (L.bannerAt ?? 0.45)) * 4) : 0;
+    if (bu > 0) {
+      const bx = DW / 2, by = L.bannerY ?? 170, bw = 1320, bh = 170;
+      g.strokeStyle = PAL.red; g.lineWidth = 3;
+      pins.forEach(([x, y, lab, ok]) => { if (lab === '∞' || ok === false || !/^\d/.test(lab)) return; g.beginPath(); g.moveTo(bx + (x < bx ? -bw * 0.3 : bw * 0.3), by + bh / 2 - 8);
+        g.quadraticCurveTo((bx + x) / 2, Math.max(by + bh, y) + 90, x, y + 86 * cs - 10); g.stroke(); });
+      g.save(); g.translate(bx, by); g.rotate(-0.018); g.scale(lerp(1.15, 1, easeOutBack(bu)), lerp(1.15, 1, easeOutBack(bu))); g.globalAlpha = clamp(bu * 2);
+      g.fillStyle = 'rgba(0,0,0,0.35)'; g.fillRect(-bw / 2 + 10, -bh / 2 + 12, bw, bh); g.fillStyle = PAL.bone; g.fillRect(-bw / 2, -bh / 2, bw, bh);
+      g.textBaseline = 'alphabetic';
+      setFont(g, F.mono(42, 700), 3); const hw = AGENCY.header.reduce((w, q) => w + (typeof q === 'string' ? g.measureText(q).width : g.measureText('M').width * q.bar) + g.measureText(' ').width, 0);
+      redactedLine(g, AGENCY.header, -hw / 2, -24, F.mono(42, 700), PAL.ink, '#000');
+      setFont(g, F.mono(60, 700), 2); g.fillStyle = PAL.red; g.textAlign = 'center'; g.fillText('DETECTED: 2 UNAUTHORIZED BRANCHES', 0, 56);
+      g.fillStyle = PAL.red; g.beginPath(); g.arc(-bw / 2 + 26, -bh / 2 + 22, 9, 0, Math.PI * 2); g.arc(bw / 2 - 26, -bh / 2 + 22, 9, 0, Math.PI * 2); g.fill();
       g.restore();
     }
     g.restore();
@@ -414,6 +476,19 @@ export const LAYERS = {
   // the committee: seated redaction figures appearing one per braam
   committee(ctx, L, env) {
     const g = ctx.g, n = Math.floor(A(L.n, env, 0)), seats = L.seats || [[600, 470], [780, 470], [960, 470], [1140, 470], [1320, 470]];
+    const rows = A(L.rows, env, 0), sp = anomalySpike(env.T, env.t), amb = anomaly(env.T, env.t) > 0.35 || sp > 0.2;
+    for (let r = Math.ceil(rows); r >= 1; r--) {   // standing rows behind the table: too many (dream logic), smaller, darker
+      const k = Math.pow(0.78, r), cnt = 5 + r * 4, y = 470 - r * 62, w = 1300 + r * 160, al = clamp(rows - r + 1);
+      for (let j = 0; j < cnt; j++) {
+        const x = DW / 2 - w / 2 + (j + 0.5) / cnt * w + hsig(j, r) * 14;
+        g.save(); g.globalAlpha = al; g.translate(x, y); g.scale(k, k); g.fillStyle = '#000';
+        g.beginPath(); g.ellipse(0, -110, 30, 38, 0, 0, Math.PI * 2); g.fill();
+        g.beginPath(); g.moveTo(-60, -60); g.quadraticCurveTo(0, -84, 60, -60); g.lineTo(76, 120); g.lineTo(-76, 120); g.closePath(); g.fill();
+        g.fillRect(-64, -122, 128, 22);
+        if (amb && hash(j, r + 11) < 0.35) { g.fillStyle = rgba(PAL.amber, 0.85 * (0.5 + 0.5 * Math.sin(env.t * 6 + j))); g.fillRect(-36 + hash(j, r) * 40, -116, 14, 8); }   // amber glint
+        g.restore();
+      }
+    }
     for (let i = 0; i < Math.min(n, seats.length); i++) {
       const [x, y] = seats[i], s = L.scale ?? 1;
       g.save(); g.translate(x, y); g.scale(s, s);
@@ -644,6 +719,11 @@ Object.assign(LAYERS, {
     // deaths: red terminal ticks
     g.strokeStyle = rgba(PAL.red, Math.min(1, 0.5 + aBase * 2)); g.lineWidth = L.tick ?? 3;
     g.beginPath(); for (const [x, y] of ends) { g.moveTo(x - 6, y - 6); g.lineTo(x + 6, y + 6); g.moveTo(x + 6, y - 6); g.lineTo(x - 6, y + 6); } g.stroke();
+    // pruned: the agency's amber cut lands where each ✗ does (a scissor-jaw closing on the run, just behind the tick)
+    if (ends.length && L.prune !== false) {
+      g.strokeStyle = rgba(PAL.amber, Math.min(1, 0.45 + aBase * 2)); g.lineWidth = Math.max(2, (L.tick ?? 3) - 0.5);
+      g.beginPath(); for (const [x, y] of ends) { g.moveTo(x - 24, y - 11); g.lineTo(x - 12, y); g.lineTo(x - 24, y + 11); } g.stroke();
+    }
     // the survivor
     if (L.survivor && prog > 0) {
       const ru = { seed: 77.7, amp: 0.06, drift: -0.05, dy: L.surviveDy ?? 0.22, end: 1 };
@@ -784,7 +864,7 @@ Object.assign(LAYERS, {
     g.restore();
   },
 });
-const TYPE_LAYERS = new Set(['slam', 'mono', 'page', 'cm', 'subtitle', 'worldcard', 'redact', 'revisions', 'storypage', 'counter', 'annotation', 'reload', 'routemap']);
+const TYPE_LAYERS = new Set(['slam', 'mono', 'tally', 'page', 'cm', 'subtitle', 'worldcard', 'redact', 'revisions', 'storypage', 'counter', 'annotation', 'reload', 'routemap']);
 Object.assign(LAYERS, {
   // the hook trailer: a reverse montage of curated bright source moments, 2–3 frames each (times descending)
   async montage(ctx, L, env, data) {

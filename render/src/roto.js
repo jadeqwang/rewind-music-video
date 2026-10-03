@@ -448,7 +448,7 @@ export function suits(g, id, clipT, o = {}) {
       const gi = clamp((o.glint) * (0.55 + 0.45 * hash(i, o.glintSeed ?? 0)));
       if (gi < 0.02) continue;
       const [gx, gy] = pf.glints[i];
-      star(g, r.x + (gx + 18 * (i % 2 ? 1 : -1)) * kx, r.y + gy * ky, 16 + 44 * gi, gi, PAL.bone);
+      star(g, r.x + (gx + 18 * (i % 2 ? 1 : -1)) * kx, r.y + gy * ky, 16 + 44 * gi, gi, o.glintColor || PAL.bone);
     }
   }
   g.restore();
