@@ -1,0 +1,8 @@
+member 1: mean 1.89  p90 2.21  moving 100%  pairs 40
+member 2: mean 2.19  p90 3.03  moving 100%  pairs 40
+member 3: mean 2.14  p90 2.54  moving 100%  pairs 40
+member 4: mean 2.60  p90 3.98  moving 100%  pairs 40
+member 5: mean 4.05  p90 9.93  moving 100%  pairs 40
+member 6: mean 3.17  p90 5.04  moving 100%  pairs 40
+member 7: mean 2.39  p90 4.02  moving 100%  pairs 40
+member 8: mean 6.43  p90 9.21  moving 100%  pairs 40

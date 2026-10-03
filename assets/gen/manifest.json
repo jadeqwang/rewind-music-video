@@ -4680,8 +4680,60 @@
     }
    ],
    "collected": 1791049843.5697217
+  },
+  "rewind/r9_J_committee_v3_t1-b7169e92f8": {
+   "id": "b7169e92f8",
+   "job": "rewind/r9_J_committee_v3_t1-b7169e92f8",
+   "tag": "r9_J_committee_v3_t1",
+   "model": "bytedance/seedance-2.5",
+   "notes": "round9 committee v3 (bob longer, purple messy bob, sleeper on arms, everyone breathing) t1",
+   "spec_file": "assets/gen/specs/round9/J_committee_v3_t1.json",
+   "input": {
+    "duration": 5,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Dark seminar room, the long committee table with eight copies of the same young woman seated behind it, each with her own hairstyle (black bob, messy purple bob, black with a teal under-layer, long black hair, mermaid waves in blue-green-purple, mint-green jacket on the far right). The MAIN ACTION: the woman on the far right in the mint-green jacket, chin on her fist, is chewing gum and blowing a pink bubble-gum bubble; the bubble slowly grows bigger and bigger until it is as big as her face, then at about 3 seconds it POPS - it bursts and the pink gum snaps back over her lips and nose - and she blinks, unbothered. Everyone else moves only subtly: the note-taker's pen keeps writing, the sleeping one, head on her folded arms on the table, breathes slowly with her back rising and falling, the one with glasses turns a page, the snacking one takes a small bite, the purple-haired one tilts her head, the smiling one keeps smiling and blinks slowly. Every person at the table breathes and shifts their weight slightly throughout, nobody is perfectly still: visible breathing (shoulders and chest rising), small weight shifts, tiny head adjustments and occasional blinks for all eight, the whole time. The projector beam stays steady. Very slow, gentle camera push-in. All eight faces stay the same, everyone keeps her position and hairstyle, no one stands up, no new people appear. Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/anime/committee_v3_ff_720.jpg"
+   },
+   "est_usd": 1.156,
+   "est_basis": "5s x 0.2312 (@720p non-video input (per second))",
+   "state": "done",
+   "bucket": 29850847,
+   "submitted": 1791050705.5780182,
+   "bytes": 298716,
+   "started": 1791050875.401,
+   "state_relay": "done",
+   "gen_secs": 149.6,
+   "finished": 1791051024.964,
+   "latency_secs": 319.4,
+   "files": [
+    "assets/gen/r9_J_committee_v3_t1_b7169e92f8.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 5.042,
+     "bytes": 3933735,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "121"
+      }
+     ]
+    }
+   ],
+   "collected": 1791051084.942543
   }
  },
- "total_est_usd": 134.0196,
- "total_est_usd_done": 121.0724
+ "total_est_usd": 135.1756,
+ "total_est_usd_done": 122.2284
 }

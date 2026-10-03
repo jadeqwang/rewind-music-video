@@ -754,5 +754,29 @@
   "attempts": 2,
   "est_cost_usd": 0.14,
   "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/v2/cands/committee3_0.jpg",
+  "job": "committee3",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "src": "committee_v2_ff.jpg",
+  "prompt": "Edit this anime film frame minimally. Keep the room, camera, framing, table, name cards, lighting and every woman's position, pose, jacket, props and FACE exactly as they are (same face, same eyes and their size). Change ONLY three things, counting the eight women from LEFT to RIGHT: (1) the note-taker's straight black bob becomes slightly longer - just past the jaw, reaching toward the collarbone (a subtle change, same style); (2) the purple-haired one: her short purple pixie becomes a messy, tousled purple bob of about the same length as woman 1's (chin-to-collarbone), still violet-purple; (4) the sleeping one: she is asleep with her head resting on her folded arms lying directly on the table, her face turned to the side toward the camera and partly visible, eyes closed, long black hair spilling over her arms - no longer propped on her hand. Everything else identical. Same anime art style. No text.",
+  "secs": 29.3,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/v2/cands/committee3_1.jpg",
+  "job": "committee3",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "src": "committee_v2_ff.jpg",
+  "prompt": "Edit this anime film frame minimally. Keep the room, camera, framing, table, name cards, lighting and every woman's position, pose, jacket, props and FACE exactly as they are (same face, same eyes and their size). Change ONLY three things, counting the eight women from LEFT to RIGHT: (1) the note-taker's straight black bob becomes slightly longer - just past the jaw, reaching toward the collarbone (a subtle change, same style); (2) the purple-haired one: her short purple pixie becomes a messy, tousled purple bob of about the same length as woman 1's (chin-to-collarbone), still violet-purple; (4) the sleeping one: she is asleep with her head resting on her folded arms lying directly on the table, her face turned to the side toward the camera and partly visible, eyes closed, long black hair spilling over her arms - no longer propped on her hand. Everything else identical. Same anime art style. No text.",
+  "secs": 29.4,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
  }
 ]

@@ -1,0 +1,20 @@
+J_committee: 76 frames @15fps from assets/clips/J_committee_v3.mp4 (1280x720), layers=['lines', 'matte', 'light', 'flow', 'face'], workers=1, tone={'hi': 0.8588235378265381, 'gamma': 0.8236595605929187}
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+WARNING: Logging before InitGoogle() is written to STDERR
+W0000 00:00:1791051208.025278    4072 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1791051208.718315    4078 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+W0000 00:00:1791051208.724746    4080 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1791051208.739146    4080 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1791051208.818851    4083 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+W0000 00:00:1791051208.825907    4085 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1791051208.840610    4086 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1791051209.282734    4091 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+  J_committee    0/76 4.04s  flow=0.05 matte=0.58 ground=0.00 face=2.05 lines=0.65 write=0.71
+  J_committee   10/76 1.92s  flow=0.07 matte=0.43 ground=0.00 face=0.34 lines=0.35 write=0.72
+  J_committee   20/76 2.16s  flow=0.07 matte=0.47 ground=0.00 face=0.35 lines=0.40 write=0.87
+  J_committee   30/76 2.12s  flow=0.08 matte=0.46 ground=0.00 face=0.52 lines=0.42 write=0.64
+  J_committee   40/76 1.88s  flow=0.06 matte=0.43 ground=0.00 face=0.44 lines=0.29 write=0.67
+  J_committee   50/76 1.75s  flow=0.06 matte=0.43 ground=0.00 face=0.35 lines=0.31 write=0.60
+  J_committee   60/76 1.80s  flow=0.08 matte=0.43 ground=0.00 face=0.34 lines=0.32 write=0.64
+  J_committee   70/76 1.67s  flow=0.07 matte=0.39 ground=0.00 face=0.31 lines=0.27 write=0.63
+J_committee: done 76/76 frames, wall 150.0s, 43.7 MB, mean s/frame (per worker): flow=0.07, matte=0.434, ground=0.0, face=0.423, lines=0.355, write=0.687, total=1.97

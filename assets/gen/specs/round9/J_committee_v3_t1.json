@@ -1,0 +1,14 @@
+{
+ "model": "bytedance/seedance-2.5",
+ "tag": "r9_J_committee_v3_t1",
+ "notes": "round9 committee v3 (bob longer, purple messy bob, sleeper on arms, everyone breathing) t1",
+ "input": {
+  "prompt": "Dark seminar room, the long committee table with eight copies of the same young woman seated behind it, each with her own hairstyle (black bob, messy purple bob, black with a teal under-layer, long black hair, mermaid waves in blue-green-purple, mint-green jacket on the far right). The MAIN ACTION: the woman on the far right in the mint-green jacket, chin on her fist, is chewing gum and blowing a pink bubble-gum bubble; the bubble slowly grows bigger and bigger until it is as big as her face, then at about 3 seconds it POPS - it bursts and the pink gum snaps back over her lips and nose - and she blinks, unbothered. Everyone else moves only subtly: the note-taker's pen keeps writing, the sleeping one, head on her folded arms on the table, breathes slowly with her back rising and falling, the one with glasses turns a page, the snacking one takes a small bite, the purple-haired one tilts her head, the smiling one keeps smiling and blinks slowly. Every person at the table breathes and shifts their weight slightly throughout, nobody is perfectly still: visible breathing (shoulders and chest rising), small weight shifts, tiny head adjustments and occasional blinks for all eight, the whole time. The projector beam stays steady. Very slow, gentle camera push-in. All eight faces stay the same, everyone keeps her position and hairstyle, no one stands up, no new people appear. Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+  "image": "file:assets/character/anime/committee_v3_ff_720.jpg",
+  "duration": 5,
+  "resolution": "720p",
+  "aspect_ratio": "16:9",
+  "generate_audio": false,
+  "use_virtual_avatar": false
+ }
+}
