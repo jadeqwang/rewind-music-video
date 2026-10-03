@@ -263,6 +263,30 @@ export const LAYERS = {
     }
     g.restore();
   },
+  // the death-tableau agent as a full drawn silhouette (frame 0 / B6_tab / the report photo): hat, head with the redaction
+  // face bar + sunglasses glint, shoulders, suit torso, the arm extended toward her, the pistol muzzle at L.muzzle (where the
+  // chest-height bullet trails back to). Black cut-out with a thin bone rim, like the roto suits.
+  suitfigure(ctx, L, env, { roto }) {
+    const g = ctx.g, [mx, my] = L.muzzle || [1200, 436], cx = L.x ?? 1470, hy = L.headY ?? 330, k = L.scale ?? 1;
+    const parts = [];
+    const P = f => { const p = new Path2D(); f(p); parts.push(p); };
+    P(p => { p.moveTo(cx - 190 * k, hy + 200 * k); p.quadraticCurveTo(cx - 150 * k, hy + 120 * k, cx - 40 * k, hy + 105 * k); p.lineTo(cx + 40 * k, hy + 105 * k);   // torso (suit jacket)
+      p.quadraticCurveTo(cx + 150 * k, hy + 120 * k, cx + 190 * k, hy + 200 * k); p.lineTo(cx + 225 * k, DH + 40); p.lineTo(cx - 215 * k, DH + 40); p.closePath(); });
+    P(p => p.rect(cx - 32 * k, hy + 40 * k, 64 * k, 80 * k));                                         // neck
+    P(p => p.ellipse(cx, hy, 60 * k, 76 * k, 0, 0, Math.PI * 2));                                       // head
+    P(p => { p.moveTo(cx - 120 * k, hy - 50 * k); p.lineTo(cx + 120 * k, hy - 50 * k); p.lineTo(cx + 96 * k, hy - 30 * k); p.lineTo(cx - 96 * k, hy - 30 * k); p.closePath(); });   // hat brim
+    P(p => { p.moveTo(cx - 62 * k, hy - 48 * k); p.lineTo(cx - 54 * k, hy - 126 * k); p.quadraticCurveTo(cx, hy - 142 * k, cx + 54 * k, hy - 126 * k); p.lineTo(cx + 62 * k, hy - 48 * k); p.closePath(); });   // crown
+    const sx = cx - 150 * k, sy = hy + 170 * k, ax = mx + 64, ay = my + 2, nx = ay - sy, ny = -(ax - sx), nl = Math.hypot(nx, ny), w0 = 46 * k, w1 = 26;   // the extended arm (sleeve tapers to the wrist)
+    P(p => { p.moveTo(sx + nx / nl * w0, sy + ny / nl * w0); p.lineTo(ax + nx / nl * w1, ay + ny / nl * w1); p.lineTo(ax - nx / nl * w1, ay - ny / nl * w1); p.lineTo(sx - nx / nl * w0, sy - ny / nl * w0); p.closePath(); });
+    P(p => p.ellipse(mx + 62, my + 6, 30, 26, 0, 0, Math.PI * 2));                                    // hand
+    P(p => { p.rect(mx - 8, my - 14, 74, 24); p.rect(mx + 40, my + 4, 22, 40); });                    // pistol: slide + grip
+    g.save(); g.lineJoin = 'round';
+    g.strokeStyle = rgba(L.rim || PAL.bone, 0.6); g.lineWidth = 5; for (const p of parts) g.stroke(p);   // rim first, then the cut-out over it (outer rim only)
+    g.fillStyle = '#000'; for (const p of parts) g.fill(p);
+    g.fillRect(cx - 104 * k, hy - 18 * k, 208 * k, 36 * k);                                           // the face bar, wider than the head
+    g.restore();
+    if ((L.glint ?? 1) > 0) roto.star(g, cx - 34 * k, hy - 2 * k, 50, clamp(L.glint ?? 1), PAL.bone);
+  },
   // roadside agents (final drop payoff): a still group on each shoulder sliding past as she drives. Frozen frame, no glint,
   // heads never turn — no anomaly, nothing to track. L: {roto, period (s), still frame (s), horizon y}
   roadside(ctx, L, env, { roto }) {

@@ -41,7 +41,7 @@ export function buildShots(T) {
   // suit black at right with bar + glint, the bullet suspended between them
   const tableau = () => [{ type: 'rect', x: 0, w: DW / 2, color: '#C81E22' }, { type: 'rect', x: DW / 2, w: DW / 2, color: '#2347D6' },
     jade('J3', { cam: { from: [0.5, 0.44, 1.0], to: [0.5, 0.44, 1.0], dx: -470, dy: 30 }, mouth: false }),
-    { type: 'suits', roto: R.suits('B6'), cam: { from: [0.416, 0.3, 2.4], to: [0.416, 0.3, 2.4], dx: 470, dy: 150 }, rimL: PAL.bone, rimR: PAL.bone, glint: 1 },
+    { type: 'suitfigure', x: 1480, headY: 320, muzzle: [1200, 436], glint: 1 },   // a full readable agent: arm out, muzzle → her chest
     { type: 'bullet', x: 650, y: 660, len: 600, angle: 2.76, color: PAL.bone }];   // aimed at her CHEST (never the head: she needs her brain to rewind)
 
   // =============================== 0 · INTRO 0 – 13.45 (the hook) ===============================
