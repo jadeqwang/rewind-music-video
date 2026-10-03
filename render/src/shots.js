@@ -245,7 +245,7 @@ export function buildShots(T) {
     }
   }
   C('F2_toofast', L(12).start, L(13).start, [ink, ...sirenLit({ base: 0.35 }), { type: 'speedlines', amount: 0.55, vy: 440, n: 120 },
-    ...suits('F2', { roto: 'S3_sprint|' + R.suits('F2'), speed: 1.05, offset: 0.7, loop: false, cam: { from: [0.5, 0.45, 0.9], to: [0.5, 0.42, 1.6] }, world: { double: true } }),   // sprint clip if present, else S3 ramped
+    ...suits('F2', { roto: 'S3_sprint|' + R.suits('F2'), speed: 1.05, offset: 0.8, loop: false, cam: { from: [0.5, 0.45, 0.9], to: [0.5, 0.42, 1.6] }, world: { double: true } }),   // sprint clip if present, else S3 ramped
     { type: 'slam', hits: [{ t: W('fast', 1, { after: L(12).start }).start, text: 'TOO FAST', variant: 'behind' }], y: 560 },
     { type: 'subtitle', lines: [12], until: W('fast', 1, { after: L(12).start }).start }], { hud: hud(2, [-2.5, -7]), fx: { kick: 0.8, strobe: 0.3 } });
   {
@@ -325,7 +325,7 @@ export function buildShots(T) {
     { type: 'ghosts', roto: R.jade('J8b'), n: 3 },
     // the reveal, landing on "a shadow chasing me I couldn't place": every committee member is a Jade variant (J_committee,
     // anime-direct, full-frame matte), one bar, then back to the projector room. No-op until the clip exists.
-    { type: 'jade', roto: 'J_committee', light: null, loop: false, mouth: false, t1: bar, cam: { from: [0.5, 0.5, 1.0], to: [0.5, 0.5, 1.08] } },
+    { type: 'jade', roto: 'J_committee', light: null, loop: false, mouth: false, t1: 1.3, cam: { from: [0.5, 0.5, 1.0], to: [0.5, 0.5, 1.04] } },
     { type: 'page', lines: [18], until: W('couldn\'t', 2).start, size: 110, y: 820, measure: 1500, maxLines: 1 },
     { type: 'redact', text: 'it was me.', x: 150, y: 970, size: 110, at: W('place', 2).end - L(18).start + 0.2, dur: 0.7, color: PAL.cyan, barColor: PAL.bone },
   ], { hud: hud(3, 0.0), fx: { heart: 0.35 } });
