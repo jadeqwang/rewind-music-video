@@ -1,13 +1,13 @@
-// freeze → VARIANCE REPORT (the agency's file on the anomaly). Two frames of muzzle-flash red, then the death becomes a page of the dossier: bone paper,
-// the frozen frame as a halftone photo print (GL AM screen), the bullet hanging in it, mono annotations, redaction
-// bars and a red ✗ / TERMINATED stamp. params: {source (shot id), case (n), move:{n,move,nag}, loc, eval, bullet, file}
+// freeze → VARIANCE REPORT, written by the field agent (copy: docs/COPY_v9.md). Two frames of muzzle-flash red, then the
+// death becomes the agency's form: bone paper, the frozen frame as a halftone print, the bullet hanging in it, typed rows,
+// a redacted agent name + signature, a red ✗ / PRUNED stamp. params: {source, case, report:{case, sub, classif, anomaly,
+// what, rows:[[key, value, kind('field'|'text'|'action'|'agent')]]}, ghostRows, bullet, unwrite:[t0, t1]}
 import { DW, DH, PAL, clamp, smooth, lerp, easeOutBack, rgba, layer, resetCtx, fin } from '../core.js';
 import { bullet, fillInk } from '../fx.js';
 import { setFont, F, redactedLine } from '../type.js';
-import { annotation } from '../hud.js';
 import { AGENCY } from '../agency.js';
 
-const PH = { x: 100, y: 190, w: 1150, h: 647 };    // the photo print (16:9)
+export const PH = { x: 100, y: 205, w: 640, h: 360 };    // the photo print (16:9)
 const pad2 = n => String(n).padStart(2, '0');
 // a deterministic signature: looping cursive strokes (polyline, ~170 points), different per case
 function sigPath(seed) {
@@ -36,65 +36,63 @@ export async function draw(ctx, lt, t, shot, data) {
   const b = p.bullet || { x: 700, y: 452, len: 1300, angle: 0.025 };
   bullet(lg, { ...b, color: PAL.bone });
   fillInk(g, PAL.bone);
-  // UN-WRITING (user): the report starts complete; as the rewind kicks in (p.unwrite = [t0, t1], song time) it erases itself
-  // in reverse — stamp lifts, signature retracts, text backspaces, bars retract, the photo un-develops, fields empty last —
-  // ending on a blank form that still says CASE 0001 (the case number never increments). Kick-stepped stutter, on twos.
+  // UN-WRITING: complete at the shot; through the silence it erases itself (p.unwrite = [t0, t1], song time), stepped on
+  // twos with a stutter on each kick. Order (COPY_v9): the PRUNED stamp + every pruned/terminated indicator FIRST, then the
+  // signature retracts, text rows backspace (bottom-up), redaction bars retract RIGHT→LEFT, the photo un-develops, the
+  // fields empty last. The pre-printed form (header, CASE 0001, keys) never erases: they're still on case 1.
   const uw = p.unwrite || [Infinity, Infinity];
   let w = clamp((Math.floor(t * 15) / 15 - uw[0]) / Math.max(0.05, uw[1] - uw[0]));
-  if (w > 0 && w < 1 && data.T) w = clamp(w - 0.04 * data.T.kick(t, 0.06));   // each kick catches the eraser for a frame
+  if (w > 0 && w < 1 && data.T) w = clamp(w - 0.04 * data.T.kick(t, 0.06));
   const seg = (a, b) => clamp((w - a) / (b - a));   // 0 = still written, 1 = gone
   const typ = (s_, a, b) => { const r = seg(a, b), n = Math.round(s_.length * (1 - r)); return { s: s_.slice(0, n), cur: r > 0 && r < 1 }; };
-  const CUR = '▌';
-  const photoGone = seg(0.38, 0.86);
-  ctx.overAlpha = 1 - photoGone;   // the 'over' layers (Guernica planes, cubist clip) un-develop with the print
-  const sh = 0.6 * (1 - photoGone);
-  g.fillStyle = `rgba(7,8,10,${0.22 * sh})`; g.fillRect(PH.x + 10, PH.y + 12, PH.w, PH.h);
+  const CUR = '▌', R = p.report || {}, rows = R.rows || [];
+  const photoGone = seg(0.6, 0.82);
+  ctx.overAlpha = 1 - photoGone;
+  g.fillStyle = `rgba(7,8,10,${0.13 * (1 - photoGone)})`; g.fillRect(PH.x + 8, PH.y + 10, PH.w, PH.h);
   g.globalAlpha = 1 - photoGone; g.drawImage(L, 0, 0, L.width, L.height, PH.x, PH.y, PH.w, PH.h); g.globalAlpha = 1;
-  g.strokeStyle = PAL.ink; g.lineWidth = 3; g.strokeRect(PH.x, PH.y, PH.w, PH.h);   // the empty print box stays (a blank form)
-  P.htRect = [PH.x, PH.y, PH.w, PH.h]; P.htAmt = 1 - photoGone; P.htCell = 6.5;
-  // palimpsest: the re-filed case carries a faint ghost of the first, erased report's typing
-  const ink = PAL.ink, x1 = 1320;
-  if (p.ghost) {
-    ty.save(); ty.globalAlpha = 0.1; setFont(ty, F.mono(46, 400), 1); ty.fillStyle = ink;
-    ty.fillText(p.ghost.anomaly, x1 + 6, 268); ty.fillText(p.ghost.loc, x1 + 156, 486); ty.fillText(p.ghost.move, x1 + 6, 646); ty.fillText('∴ branch pruned. rewinding.', PH.x + 8, 946);
-    ty.restore();
-  }
-  // header (pre-printed form: never erased): agency · VARIANCE REPORT, CASE 0001 right
-  setFont(ty, F.mono(42, 700), 3); ty.fillStyle = ink; ty.textBaseline = 'alphabetic';
-  redactedLine(ty, [...AGENCY.header, '·', 'VARIANCE REPORT'], PH.x, 110, F.mono(42, 700), ink, '#000');
-  setFont(ty, F.mono(42, 700), 3); ty.textAlign = 'right'; ty.fillText('CASE 0001', DW - 90, 110); ty.textAlign = 'left';
-  ty.fillRect(PH.x, 140, DW - 190, 3);
-  // typed fields (written order: ANOMALY → type → values → move → agents → note → signature → stamp; erased in reverse)
-  const tt = fin(src.t1), mm = Math.floor(tt / 60), ss = (tt - mm * 60).toFixed(2).padStart(5, '0');
-  const tw = (str, x, y, font, col, a, b, track = 1) => { const o = typ(str, a, b); setFont(ty, font, track); ty.fillStyle = col; ty.fillText(o.s + (o.cur ? CUR : ''), x, y); };
-  tw(`ANOMALY ${pad2(p.case ?? 1)}`, x1, 262, F.mono(76, 700), ink, 0.62, 0.74, 2);
-  tw('unauthorized rewind', x1, 330, F.mono(44, 700), PAL.amber, 0.5, 0.62);
-  const rows = [['t', `${pad2(mm)}:${ss}`], ['LOC', p.loc ?? 'LSD NB'], ['EVAL', p.eval ?? '−#1']];
-  rows.forEach(([k, v], i) => { const y = 410 + i * 70; setFont(ty, F.mono(46, 400), 1); ty.fillStyle = rgba(ink, 0.6); ty.fillText(k, x1, y);   // labels are pre-printed
-    tw(v, x1 + 150, y, F.mono(46, 400), k === 'EVAL' ? PAL.red : ink, 0.86 + i * 0.03, 0.93 + i * 0.03); });   // values empty last
-  if (p.move) { const o = typ(`${p.move.n ?? 1}. ${p.move.move}`, 0.3, 0.42); setFont(ty, F.mono(46, 400), 1); ty.fillStyle = ink; ty.fillText(o.s + (o.cur ? CUR : ''), x1, 640);
-    if (seg(0.3, 0.32) < 1 && o.s.length === `${p.move.n ?? 1}. ${p.move.move}`.length && p.move.nag) { const mw = ty.measureText(o.s).width; setFont(ty, F.mono(53, 700), 0); ty.fillStyle = p.move.nag === '??' ? PAL.red : PAL.sodium; ty.fillText(p.move.nag, x1 + mw + 10, 640); } }
-  const bars = 1 - seg(0.24, 0.38);   // redaction bars retract to zero width
-  { const o = typ('AGENTS', 0.42, 0.5); redactedLine(ty, [o.s || ' ', { bar: 5 * bars }], x1, 714, F.mono(46, 400), ink, '#000'); }
-  { const o = typ('NO WARNING', 0.42, 0.5); redactedLine(ty, [{ bar: 3 * bars }, o.s || ' '], x1, 784, F.mono(46, 400), ink, '#000'); }
-  tw('∴ branch pruned. rewinding.', PH.x, 940, F.mono(46, 400), ink, 0.16, 0.3);
-  // signature: a light-pen scrawl on the AGENT line, retracting along its own stroke path (reverse write)
-  const sgx = 720; setFont(ty, F.mono(42, 400), 2); ty.fillStyle = rgba(ink, 0.55); ty.fillText('AGENT', sgx, 1012); ty.fillRect(sgx + 150, 1016, 400, 2);
-  { const keep = 1 - seg(0.07, 0.2), pts = sigPath(p.case ?? 1), n = Math.floor(pts.length * keep);
-    if (n > 1) { ty.save(); ty.strokeStyle = '#1B2A6B'; ty.lineWidth = 3.2; ty.lineCap = 'round'; ty.lineJoin = 'round'; ty.beginPath();
-      for (let k = 0; k < n; k++) { const [sx, sy] = pts[k]; k ? ty.lineTo(sgx + 170 + sx, 1000 + sy) : ty.moveTo(sgx + 170 + sx, 1000 + sy); } ty.stroke(); ty.restore(); } }
-  // the stamp: big red ✗ + boxed PRUNED; it lifts off first (scales up, ink fades)
-  const lift = seg(0, 0.1);
+  g.strokeStyle = PAL.ink; g.lineWidth = 3; g.strokeRect(PH.x, PH.y, PH.w, PH.h);
+  P.htRect = [PH.x, PH.y, PH.w, PH.h]; P.htAmt = 1 - photoGone; P.htCell = 5.5;
+  const ink = PAL.ink, KX = 100, VX = 375, RY0 = 652, RDY = 48, xr = 800, FM = F.mono(42, 400);
+  // palimpsest: the re-opened case carries a faint ghost of the first, erased report's typing
+  if (p.ghostRows) { ty.save(); ty.globalAlpha = 0.07; setFont(ty, FM, 1); ty.fillStyle = ink; p.ghostRows.forEach((v, i) => ty.fillText(v, VX + 8, RY0 + i * RDY + 5)); ty.restore(); }
+  // header + sub line (pre-printed)
+  ty.textBaseline = 'alphabetic'; ty.fillStyle = ink;
+  redactedLine(ty, [...AGENCY.header, '·', 'VARIANCE REPORT'], KX, 106, F.mono(42, 700), ink, '#000');
+  setFont(ty, F.mono(42, 700), 2); ty.textAlign = 'right'; ty.fillText(R.case || 'CASE 0001', DW - 90, 106); ty.textAlign = 'left';
+  setFont(ty, F.mono(42, 400), 1); ty.fillText(R.sub || '', KX, 160);
+  if (R.classif) { setFont(ty, F.mono(42, 700), 3); ty.textAlign = 'right'; ty.fillText(R.classif, DW - 90, 1045); ty.textAlign = 'left'; }   // classification at the page foot
+  ty.fillRect(KX, 180, DW - 190, 3);
+  const tw = (str, x, y, font, col, a, b, track = 1) => { const o = typ(str, a, b); setFont(ty, font, track); ty.fillStyle = col; ty.fillText(o.s + (o.cur ? CUR : ''), x, y); return o; };
+  // ANOMALY 0n + what (fields: empty last / text)
+  tw(R.anomaly || `ANOMALY ${pad2(p.case ?? 1)}`, xr, 285, F.mono(76, 700), ink, 0.88, 0.97, 2);
+  { const wt = R.what || 'suspected unauthorized rewind', k = wt.indexOf(' \u00b7 ');   // long subtitles wrap after the first ' · '
+    if (wt.length > 34 && k > 0) { tw(wt.slice(0, k + 2), xr, 350, F.mono(44, 700), PAL.amber, 0.54, 0.58); tw(wt.slice(k + 3), xr, 402, F.mono(44, 700), PAL.amber, 0.5, 0.54); }
+    else tw(wt, xr, 350, F.mono(44, 700), PAL.amber, 0.5, 0.58); }
+  // rows: keys pre-printed; values erase by kind — action first, text bottom-up, fields last
+  const texts = rows.map((r, i) => i).filter(i => rows[i][2] === 'text').reverse();
+  rows.forEach(([k, v, kind], i) => {
+    const y = RY0 + i * RDY; setFont(ty, FM, 1); ty.fillStyle = rgba(ink, 0.6); ty.fillText(k, KX, y);
+    if (kind === 'action') { const o = tw(v, VX, y, FM, ink, 0.02, 0.1); const tag = typ('[PRUNED]', 0, 0.04); setFont(ty, F.mono(42, 700), 1); ty.fillStyle = PAL.red; ty.textAlign = 'right'; ty.fillText(tag.s, DW - 90, y); ty.textAlign = 'left'; }
+    else if (kind === 'agent') {   // redacted agent name (bar retracts right→left) + signature retracting along its stroke
+      const bw = 1 - seg(0.55, 0.62); if (bw > 0) { setFont(ty, FM, 1); const cw = ty.measureText('M').width; ty.fillStyle = '#000'; ty.fillRect(VX, y - 34, cw * 9 * bw, 41); }
+      const keep = 1 - seg(0.1, 0.2), pts = sigPath(p.case ?? 1), n = Math.floor(pts.length * keep);
+      if (n > 1) { ty.save(); ty.strokeStyle = '#1B2A6B'; ty.lineWidth = 3.2; ty.lineCap = 'round'; ty.lineJoin = 'round'; ty.beginPath();
+        for (let q = 0; q < n; q++) { const [sx, sy] = pts[q]; q ? ty.lineTo(VX + 300 + sx, y - 12 + sy) : ty.moveTo(VX + 300 + sx, y - 12 + sy); } ty.stroke(); ty.restore(); }
+    } else if (kind === 'field') tw(v, VX, y, FM, ink, 0.86 + 0.03 * i / rows.length, 0.94 + 0.03 * i / rows.length);
+    else { const r = texts.indexOf(i), a = 0.2 + r * (0.3 / Math.max(1, texts.length)); tw(v, VX, y, FM, ink, a, a + 0.3 / Math.max(1, texts.length)); }
+  });
+  // the stamp: ✗ + boxed PRUNED over the print — lifts off FIRST (scales up, ink fades)
+  const lift = seg(0, 0.06);
   if (lift < 1) {
-    const sc = 1 + 0.25 * lift;
-    ty.save(); ty.globalAlpha = 0.92 * (1 - lift); ty.translate(PH.x + PH.w - 230, PH.y + PH.h - 250 - 40 * lift); ty.rotate(-0.12); ty.scale(sc, sc);
+    const sc = 0.62 * (1 + 0.25 * lift);
+    ty.save(); ty.globalAlpha = 0.92 * (1 - lift); ty.translate(PH.x + PH.w - 150, PH.y + PH.h - 170 - 30 * lift); ty.rotate(-0.12); ty.scale(sc, sc);
     setFont(ty, F.mono(300, 700)); ty.fillStyle = PAL.red; ty.textAlign = 'center'; ty.textBaseline = 'middle'; ty.fillText('✗', 0, 0);
-    setFont(ty, F.mono(52, 700), 6); const sw = ty.measureText('PRUNED').width;
-    ty.strokeStyle = PAL.red; ty.lineWidth = 6; ty.strokeRect(-sw / 2 - 22, 150, sw + 44, 82); ty.fillText('PRUNED', 0, 193);
+    setFont(ty, F.mono(56, 700), 6); const sw = ty.measureText('PRUNED').width;
+    ty.strokeStyle = PAL.red; ty.lineWidth = 7; ty.strokeRect(-sw / 2 - 22, 150, sw + 44, 86); ty.fillText('PRUNED', 0, 195);
     ty.restore();
   }
   // the player's prompt (blinks while the form erases itself)
-  if (w > 0) { setFont(ty, F.mono(46, 700), 2); ty.fillStyle = rgba(PAL.cyan, Math.floor(t * 3) % 2 ? 1 : 0.4); ty.fillText('hold ◀◀ to rewind', PH.x, 1012); }
+  if (w > 0) { setFont(ty, F.mono(46, 700), 2); ty.fillStyle = rgba(PAL.cyan, Math.floor(t * 3) % 2 ? 1 : 0.4); ty.fillText('hold ◀◀ to rewind', xr, 545); }
   P.zoom = 1.0 + 0.02 * smooth(0, shot.t1 - shot.t0, lt);
   P.ca = 0.8; P.bloom = 0; P.grain = 0.05; P.vignette = 0.18; P.typeCA = 0.1;
 }

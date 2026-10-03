@@ -206,3 +206,21 @@ timing `analysis/timing_v5.json`, envelopes `analysis/envelopes_v5.json`. Overri
 - Suits escalate per anomaly: 4 in build 1; `copies` in the field; committee `rows` in the breakdown. In the payoff, `roadside` suits stand still.
 - Rollouts: an amber prune jaw lands at every ✗. The D4 wall gets a `banner` with "DETECTED: 2 UNAUTHORIZED BRANCHES".
 - The H2 `tally` is an odometer ("CASE 1 OF 48,203…", rising). The X1 counter picks up from where it stops.
+
+## v9 (docs/COPY_v9.md is the authoritative copy)
+- The agency bar is 9 mono characters everywhere (`AGENCY.header`).
+- The variance reports are written by the field agent (`report` param: header, sub, classification at the page foot, typed rows by kind field/text/action/agent). Un-writing order:
+  1. the stamp and [PRUNED];
+  2. the signature;
+  3. text rows, bottom-up;
+  4. redaction bars, right to left;
+  5. the photo;
+  6. the fields.
+  - CASE 0001 stays. The re-opened report carries a faint palimpsest of report 01.
+- HUD: inside rewind windows (`params.rwA`) the timecode runs backwards, kick-stepped, in cyan with ◀◀. Sweep-bar redactions run right to left there.
+- HUD corner tag "TIMESTREAM 2010 · ITERATION 0N" (`T.iterations`). In the final drop the HUD shows "HEADS k/k" (`T.heads`, the coin-flip chops).
+- `disposition`: the FINAL DISPOSITION page. It un-writes bottom-up; STOP freezes it (`stopAt`); PLAY snaps it back (`playAt`); the stamp lands on the end hit. The inset is `J_stopplay`.
+- Pending clips, wired as no-ops until they exist:
+  - S3_sprint (F2 suits; S3 is speed-ramped meanwhile);
+  - J_committee (the first bar of D5_reveal);
+  - J_stopplay (the final inset; retime stopAt/playAt to her gestures).

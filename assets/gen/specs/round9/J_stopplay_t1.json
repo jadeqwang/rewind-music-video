@@ -1,0 +1,14 @@
+{
+ "model": "bytedance/seedance-2.5",
+ "tag": "r9_J_stopplay_t1",
+ "notes": "round9 J_stopplay t1 (COPY_v9)",
+ "input": {
+  "prompt": "Straight-on waist-up shot, plain dark blue-black background, soft cool night light on her, locked-off camera. She looks into the lens, then firmly raises her right hand and holds it up flat in front of her at shoulder height, PALM FACING THE CAMERA, fingers together and pointing up - a firm 'STOP' gesture - and holds it perfectly still for about one and a half seconds, face visible beside the hand. Then she lowers the hand, extends her index finger and taps it forward once toward the camera, like pressing a PLAY button in the air, and ends with a small knowing smile. Her mouth stays closed (no talking). Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+  "image": "file:assets/character/anime/shots/J_stopplay_720.jpg",
+  "duration": 5,
+  "resolution": "720p",
+  "aspect_ratio": "16:9",
+  "generate_audio": false,
+  "use_virtual_avatar": false
+ }
+}

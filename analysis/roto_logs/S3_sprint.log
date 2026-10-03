@@ -1,0 +1,11 @@
+S3: 82 frames @15fps from assets/clips/S3_sprint.mp4 (1280x720), layers=['lines', 'matte', 'light', 'flow'], workers=3, tone={'hi': 0.9764705896377563, 'gamma': 0.6649427919285145}
+  S3    0/82 1.75s  flow=0.05 matte=1.19 ground=0.03 face=0.00 lines=0.13 write=0.36
+  S3   30/82 1.55s  flow=0.07 matte=0.97 ground=0.03 face=0.00 lines=0.18 write=0.30
+  S3   10/82 1.42s  flow=0.06 matte=0.89 ground=0.02 face=0.00 lines=0.13 write=0.32
+  S3   60/82 1.54s  flow=0.07 matte=0.90 ground=0.02 face=0.00 lines=0.21 write=0.34
+  S3   40/82 1.58s  flow=0.07 matte=0.91 ground=0.02 face=0.00 lines=0.23 write=0.35
+  S3   20/82 1.53s  flow=0.07 matte=0.92 ground=0.03 face=0.00 lines=0.15 write=0.37
+  S3   70/82 1.56s  flow=0.07 matte=0.89 ground=0.02 face=0.00 lines=0.22 write=0.36
+  S3   50/82 1.50s  flow=0.07 matte=0.90 ground=0.02 face=0.00 lines=0.20 write=0.31
+  S3   80/82 1.33s  flow=0.07 matte=0.79 ground=0.02 face=0.00 lines=0.13 write=0.32
+S3: done 82/82 frames, wall 50.5s, 26.1 MB, mean s/frame (per worker): flow=0.069, matte=0.91, ground=0.023, face=0.0, lines=0.173, write=0.335, total=1.511

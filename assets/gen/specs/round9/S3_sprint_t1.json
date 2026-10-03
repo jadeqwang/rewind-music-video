@@ -1,0 +1,14 @@
+{
+ "model": "bytedance/seedance-2.5",
+ "tag": "r9_S3_sprint_t1",
+ "notes": "round9 S3_sprint t1 (COPY_v9)",
+ "input": {
+  "prompt": "Low camera at the edge of a field of tall grass at night. Four or five men in dark suits and sunglasses come RUNNING AT FULL SPRINT, not walking - long fast strides, both feet leaving the ground, arms pumping hard, suit coats and ties flying back - out of the darkness toward the camera through the waist-high grass, and the closest ones rush right past the camera on both sides. Flashlight beams in their hands swing wildly as they run; two hard white beams behind them through faint mist. They are solid pitch-black backlit silhouettes, faces completely in shadow and unreadable, only the outlines of sunglasses, shoulders and arms. Grass whips and splits around their legs. Very fast, urgent, relentless. Single continuous shot, no cuts, no transitions. Night. Graphic neo-noir cinematography, photographic. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus, no motion blur smear. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark, no subtitles.",
+  "image": "file:assets/sets/grass_field/1.jpg",
+  "duration": 6,
+  "resolution": "720p",
+  "aspect_ratio": "16:9",
+  "generate_audio": false,
+  "use_virtual_avatar": false
+ }
+}

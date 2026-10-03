@@ -4420,8 +4420,216 @@
     }
    ],
    "collected": 1791000066.394242
+  },
+  "rewind/r9_J_stopplay_t1-f8d7d5a279": {
+   "id": "f8d7d5a279",
+   "job": "rewind/r9_J_stopplay_t1-f8d7d5a279",
+   "tag": "r9_J_stopplay_t1",
+   "model": "bytedance/seedance-2.5",
+   "notes": "round9 J_stopplay t1 (COPY_v9)",
+   "spec_file": "assets/gen/specs/round9/J_stopplay_t1.json",
+   "input": {
+    "duration": 5,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Straight-on waist-up shot, plain dark blue-black background, soft cool night light on her, locked-off camera. She looks into the lens, then firmly raises her right hand and holds it up flat in front of her at shoulder height, PALM FACING THE CAMERA, fingers together and pointing up - a firm 'STOP' gesture - and holds it perfectly still for about one and a half seconds, face visible beside the hand. Then she lowers the hand, extends her index finger and taps it forward once toward the camera, like pressing a PLAY button in the air, and ends with a small knowing smile. Her mouth stays closed (no talking). Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/anime/shots/J_stopplay_720.jpg"
+   },
+   "est_usd": 1.156,
+   "est_basis": "5s x 0.2312 (@720p non-video input (per second))",
+   "state": "done",
+   "bucket": 29850713,
+   "submitted": 1791042691.178661,
+   "bytes": 173926,
+   "started": 1791042833.556,
+   "state_relay": "done",
+   "gen_secs": 580.8,
+   "finished": 1791043414.361,
+   "latency_secs": 723.2,
+   "files": [
+    "assets/gen/r9_J_stopplay_t1_f8d7d5a279.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 5.042,
+     "bytes": 4949029,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "121"
+      }
+     ]
+    }
+   ],
+   "collected": 1791043445.4037015
+  },
+  "rewind/r9_S3_sprint_t1-7e8e2a9e00": {
+   "id": "7e8e2a9e00",
+   "job": "rewind/r9_S3_sprint_t1-7e8e2a9e00",
+   "tag": "r9_S3_sprint_t1",
+   "model": "bytedance/seedance-2.5",
+   "notes": "round9 S3_sprint t1 (COPY_v9)",
+   "spec_file": "assets/gen/specs/round9/S3_sprint_t1.json",
+   "input": {
+    "duration": 6,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Low camera at the edge of a field of tall grass at night. Four or five men in dark suits and sunglasses come RUNNING AT FULL SPRINT, not walking - long fast strides, both feet leaving the ground, arms pumping hard, suit coats and ties flying back - out of the darkness toward the camera through the waist-high grass, and the closest ones rush right past the camera on both sides. Flashlight beams in their hands swing wildly as they run; two hard white beams behind them through faint mist. They are solid pitch-black backlit silhouettes, faces completely in shadow and unreadable, only the outlines of sunglasses, shoulders and arms. Grass whips and splits around their legs. Very fast, urgent, relentless. Single continuous shot, no cuts, no transitions. Night. Graphic neo-noir cinematography, photographic. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus, no motion blur smear. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark, no subtitles.",
+    "image": "file:assets/sets/grass_field/1.jpg"
+   },
+   "est_usd": 1.3872,
+   "est_basis": "6s x 0.2312 (@720p non-video input (per second))",
+   "state": "done",
+   "bucket": 29850713,
+   "submitted": 1791042691.623191,
+   "bytes": 209514,
+   "started": 1791042833.521,
+   "state_relay": "done",
+   "gen_secs": 339.5,
+   "finished": 1791043172.973,
+   "latency_secs": 481.3,
+   "files": [
+    "assets/gen/r9_S3_sprint_t1_7e8e2a9e00.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 6.042,
+     "bytes": 10008515,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "145"
+      }
+     ]
+    }
+   ],
+   "collected": 1791043188.92422
+  },
+  "rewind/r9_S3_sprint_t1b-d2632e57ad": {
+   "id": "d2632e57ad",
+   "job": "rewind/r9_S3_sprint_t1b-d2632e57ad",
+   "tag": "r9_S3_sprint_t1b",
+   "model": "bytedance/seedance-2.5",
+   "notes": "round9 S3_sprint t1b (COPY_v9)",
+   "spec_file": "assets/gen/specs/round9/S3_sprint_t1b.json",
+   "input": {
+    "duration": 6,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Low camera at the edge of a field of tall grass at night. Four or five men in dark suits and sunglasses come RUNNING AT FULL SPRINT, not walking - long fast strides, both feet leaving the ground, arms pumping hard, suit coats and ties flying back - out of the darkness toward the camera through the waist-high grass, and the closest ones rush right past the camera on both sides. Flashlight beams in their hands swing wildly as they run; two hard white beams behind them through faint mist. They are solid pitch-black backlit silhouettes, faces completely in shadow and unreadable, only the outlines of sunglasses, shoulders and arms. Grass whips and splits around their legs. Very fast, urgent, relentless. Single continuous shot, no cuts, no transitions. Night. Graphic neo-noir cinematography, photographic. Large areas of pure black, hard directional light sources with crisp edges, clean bold silhouettes, simple readable geometry, uncluttered composition, smooth surfaces, sharp focus, no motion blur smear. Palette limited to sodium-vapor orange, siren red, siren blue and cold white. No text, no lettering, no signs, no logos, no license plates, no watermark, no subtitles.",
+    "image": "file:assets/sets/grass_field/1.jpg"
+   },
+   "est_usd": 1.3872,
+   "est_basis": "6s x 0.2312 (@720p non-video input (per second))",
+   "state": "done",
+   "bucket": 29850714,
+   "submitted": 1791042692.0273302,
+   "bytes": 209514,
+   "started": 1791042895.605,
+   "state_relay": "done",
+   "gen_secs": 673.1,
+   "finished": 1791043568.738,
+   "latency_secs": 876.7,
+   "files": [
+    "assets/gen/r9_S3_sprint_t1b_d2632e57ad.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 6.042,
+     "bytes": 7333517,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "145"
+      }
+     ]
+    }
+   ],
+   "collected": 1791043572.2990856
+  },
+  "rewind/r9_J_committee_t1-1f9669cfee": {
+   "id": "1f9669cfee",
+   "job": "rewind/r9_J_committee_t1-1f9669cfee",
+   "tag": "r9_J_committee_t1",
+   "model": "bytedance/seedance-2.5",
+   "notes": "round9 J_committee t1 (COPY_v9)",
+   "spec_file": "assets/gen/specs/round9/J_committee_t1.json",
+   "input": {
+    "duration": 5,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "camera_fixed": false,
+    "watermark": false,
+    "output_format": "mp4",
+    "use_virtual_avatar": false,
+    "generate_audio": false,
+    "prompt": "Dark seminar room, the long committee table with eight copies of the same young woman seated behind it. Subtle motion only: the one on the far left keeps writing, her pen moving; the arms-crossed one tilts her head slightly; the sleeping one breathes slowly; the one with glasses turns a page; the snacking one takes a small bite; the knowing one keeps smiling at the camera and blinks slowly once; the mint-jacket one shifts her chin on her fist. The projector beam stays steady. Very slow, gentle camera push-in. All eight faces stay the same and keep their positions, no one stands up, no new people appear. Anime style, consistent with the first frame, clean cel shading, same character design: same face, same large eyes (same size, never smaller), same long straight black hair, same white cropped jacket with orange bands and patches, black top and trousers; no glasses. Smooth, stable lineart, no morphing, correct hands with five fingers. Single continuous shot, no cuts. No text, no subtitles, no logos.",
+    "image": "file:assets/character/anime/committee_ff_720.jpg"
+   },
+   "est_usd": 1.156,
+   "est_basis": "5s x 0.2312 (@720p non-video input (per second))",
+   "state": "done",
+   "bucket": 29850714,
+   "submitted": 1791042692.486238,
+   "bytes": 323214,
+   "started": 1791042895.61,
+   "state_relay": "done",
+   "gen_secs": 295.2,
+   "finished": 1791043190.785,
+   "latency_secs": 498.3,
+   "files": [
+    "assets/gen/r9_J_committee_t1_1f9669cfee.mp4"
+   ],
+   "probe": [
+    {
+     "duration": 5.042,
+     "bytes": 4443273,
+     "streams": [
+      {
+       "codec_type": "video",
+       "codec_name": "h264",
+       "width": 1280,
+       "height": 720,
+       "r_frame_rate": "24/1",
+       "nb_frames": "121"
+      }
+     ]
+    }
+   ],
+   "collected": 1791043206.3940177
   }
  },
- "total_est_usd": 127.7772,
- "total_est_usd_done": 114.83
+ "total_est_usd": 132.8636,
+ "total_est_usd_done": 119.9164
 }

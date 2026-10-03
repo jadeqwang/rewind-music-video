@@ -174,6 +174,56 @@ export const LAYERS = {
     const gx = cx + (r + 70) * Math.cos(th + 0.5), gy = cy + (r + 70) * Math.sin(th + 0.5); g.fillText('◀◀', gx, gy);
     g.restore();
   },
+  // FINAL DISPOSITION (COPY_v9): the closing report, fully written on the braam; it starts to un-write bottom-up, she
+  // raises her palm (STOP) and it freezes mid-erase, she taps forward (PLAY) and the erased characters snap back; on the
+  // end hit the stamp TIMELINE IS NOW CANON. L: {erase: [lt0, lt1 (would-be full erase)], stopAt, playAt, stampAt, inset}
+  disposition(ctx, L, env) {
+    const g = ctx.ty, ink = PAL.ink, lt = env.lt, [e0, e1] = L.erase || [0.9, 3.4], stopAt = L.stopAt ?? 2.0, playAt = L.playAt ?? 2.8, snap = 0.16;
+    const wAt = x => clamp((x - e0) / (e1 - e0));
+    let w = lt < stopAt ? wAt(Math.floor(lt * 15) / 15) : lt < playAt ? wAt(stopAt) : wAt(stopAt) * (1 - clamp((lt - playAt) / snap));
+    const flick = lt >= playAt && lt < playAt + snap;   // the snap-back: fast-forward flicker
+    const CUR = '▌', KX = 100, VX = 420, FM = F.mono(40, 400), FB = F.mono(40, 700);
+    // erasable items, top-down; erased bottom-up (the last item goes first)
+    const items = [
+      ['row', 'STATUS', 'no anomaly detected', 240], ['row', 'NOTE', 'subject outcomes remain', 290], ['cont', '', 'statistically improbable (p < 10⁻¹⁹)', 335],
+      ['row', 'DISPOSITION', 'case closed ·', 390], ['cont', '', 'insufficient evidence of tampering', 435],
+      ['cm', '', 'I’m back in my car, sirens in my rear view,', 600], ['cm', '', 'and I don’t stop. I don’t pull over. I keep driving', 670], ['cm', '', 'as inconspicuously as possible.', 740],
+      ['big', '', 'And I never stop.', 850],
+      ['foot', '', 'Contains fragments from the poem “Reload” from Inference, Book 1 of the', 1005], ['foot', '', 'Spaces Left Blank trilogy, by Jade Wang.', 1045]];
+    const N = items.length;
+    g.save(); g.textBaseline = 'alphabetic';
+    g.fillStyle = ink;
+    redactedLine(g, [...AGENCY.header, '·', 'FINAL DISPOSITION'], KX, 100, F.mono(42, 700), ink, '#000');
+    setFont(g, F.mono(42, 700), 2); g.textAlign = 'right'; g.fillText('CASE 0001', DW - 90, 100); g.textAlign = 'left';
+    setFont(g, F.mono(42, 400), 1); g.fillText('TIMESTREAM 2010 · ITERATION 03', KX, 150); g.fillRect(KX, 172, DW - 190, 3);
+    setFont(g, FB, 2); g.fillText('RECOVERED STATEMENT', KX, 525);
+    // pre-printed compliance line (part of the form)
+    redactedLine(g, ['Produced in compliance with the ordinances of the', ...AGENCY.header, '.'].map(q => q === '.' ? '' : q), KX, 960, F.mono(34, 400), rgba(ink, 0.75), '#000');
+    items.forEach(([kind, key, val, y], i) => {
+      const r = clamp(w * N - (N - 1 - i)), n = Math.round(val.length * (1 - r)), cur = r > 0 && r < 1, str = val.slice(0, n) + (cur ? CUR : '');
+      if (key) { setFont(g, FM, 1); g.fillStyle = rgba(ink, 0.6); g.fillText(key, KX, y); }
+      const ff = flick && hash(i, Math.floor(lt * 60)) < 0.5; g.fillStyle = ff ? PAL.cyan : ink;
+      if (kind === 'row' || kind === 'cont') { setFont(g, FM, 1); g.fillText(str, VX, y); }
+      else if (kind === 'cm') { setFont(g, F.cmu(54), 0); g.fillText(str, 140, y); }
+      else if (kind === 'big') { setFont(g, F.cmu(88), 0); g.textAlign = 'right'; g.fillText(str, 1300, y); g.textAlign = 'left'; }
+      else { setFont(g, F.mono(34, 400), 0); g.fillStyle = rgba(ff ? PAL.cyan : ink, 0.8); g.fillText(str, KX, y); }
+    });
+    // the player's state badge in the inset corner (her gesture is in the inset clip)
+    if (lt >= stopAt && lt < playAt + 0.4) {
+      const st = lt < playAt; setFont(g, F.mono(46, 700), 2); g.fillStyle = st ? PAL.red : PAL.cyan;
+      g.fillText(st ? '■ STOP' : '▶ PLAY', 1400, 800);
+    }
+    // the stamp on the end hit
+    const su = clamp((lt - (L.stampAt ?? 3.72)) / 0.08);
+    if (su > 0) {
+      const sc = lerp(1.4, 1, easeOutBack(su));
+      g.save(); g.translate(720, 640); g.rotate(-0.08); g.scale(sc, sc); g.globalAlpha = 0.94;
+      setFont(g, F.mono(78, 700), 6); const tw = g.measureText('TIMELINE IS NOW CANON').width;
+      g.strokeStyle = PAL.red; g.lineWidth = 9; g.strokeRect(-tw / 2 - 34, -78, tw + 68, 120); g.fillStyle = PAL.red; g.textAlign = 'center'; g.fillText('TIMELINE IS NOW CANON', 0, 8);
+      g.restore();
+    }
+    g.restore();
+  },
   // roadside agents (final drop payoff): a still group on each shoulder sliding past as she drives. Frozen frame, no glint,
   // heads never turn — no anomaly, nothing to track. L: {roto, period (s), still frame (s), horizon y}
   roadside(ctx, L, env, { roto }) {
@@ -203,7 +253,7 @@ export const LAYERS = {
     g.fillStyle = PAL.ink; g.fillRect(x, y, w, h);
     // the inset is a horizontally flipped crop of the full-frame layer stack
     const sc = L.zoom ?? 1, cw = DW / sc, ch = cw * h / w, cx = (L.focus?.[0] ?? 0.5) * DW - cw / 2, cy = (L.focus?.[1] ?? 0.5) * DH - ch / 2;
-    g.translate(x + w, y); g.scale(-1, 1);
+    if (L.flip === false) g.translate(x, y); else { g.translate(x + w, y); g.scale(-1, 1); }
     g.drawImage(Lm, cx * ctx.S, cy * ctx.S, cw * ctx.S, ch * ctx.S, 0, 0, w, h);
     g.restore();
     g.save(); g.strokeStyle = rgba(PAL.boneDim, 0.7); g.lineWidth = 3; roundRect(g, x, y, w, h, r); g.stroke();
@@ -220,7 +270,7 @@ export const LAYERS = {
   subtitle(ctx, L, env) { const ws = words(env.T, L, env.shot).filter(w => w.start < env.shot.t1 + (L.tail ?? 0.01)); subtitle(ctx.ty, ws, env.t, { y: L.y ?? 1010, x: L.x, lit: L.lit, color: L.color, upper: L.upper }); },
   mono(ctx, L, env) {
     const at = L.at ?? 0; if (env.lt < at) return;
-    let s = L.text; if (L.typed) s = s.slice(0, Math.floor((env.lt - at) * L.typed + 1));
+    let s = typeof L.text === 'function' ? L.text(env) : L.text; if (L.typed) s = s.slice(0, Math.floor((env.lt - at) * L.typed + 1));
     const g = L.onScene ? ctx.g : ctx.ty; g.save(); setFont(g, F.mono(Math.max(42, L.size ?? 44), L.weight ?? 400), L.track ?? 2);
     g.fillStyle = rgba(L.color || PAL.bone, A(L.alpha, env, 1) * smooth(at, at + 0.12, env.lt)); g.textAlign = L.align || 'center'; g.textBaseline = 'alphabetic';
     g.fillText(s + (L.typed && fract(env.t * 2) < 0.5 ? '▌' : ''), A(L.x, env, DW / 2), A(L.y, env, 560)); g.restore();
@@ -539,7 +589,8 @@ export const LAYERS = {
   sweepbars(ctx, L, env) {
     const g = L.onType ? ctx.ty : ctx.g, p = A(L.progress, env, env.u), n = L.n ?? 7;
     g.save(); g.fillStyle = L.color || '#000';
-    for (let i = 0; i < n; i++) { const y = (i + 0.5) / n * DH - 50, x = lerp(-DW, DW * 1.2, clamp(p * 1.3 - hash(i, 2) * 0.3)); g.fillRect(x, y, DW * (0.4 + hash(i, 3) * 0.5), 70 + hash(i, 4) * 40); }
+    const rtl = L.dir === 'rtl' || (L.dir == null && env.shot && env.shot.params && env.shot.params.isRewind);   // inside rewinds every redaction runs right→left
+    for (let i = 0; i < n; i++) { const y = (i + 0.5) / n * DH - 50, bw = DW * (0.4 + hash(i, 3) * 0.5), x = lerp(-DW, DW * 1.2, clamp(p * 1.3 - hash(i, 2) * 0.3)); g.fillRect(rtl ? DW - x - bw : x, y, bw, 70 + hash(i, 4) * 40); }   // rtl: mirrored about the centre
     g.restore();
   },
   // the frozen frame of another shot, optionally as a small pinned print
@@ -586,11 +637,15 @@ Object.assign(LAYERS, {
   // an outline car (rear 3/4): the ghost of an earlier attempt
   ghostcar(ctx, L, env) {
     const g = ctx.g, x = A(L.x, env, 960), y = A(L.y, env, 600), s = A(L.scale, env, 1), a = A(L.alpha, env, 0.9);
-    if (CAR.has('rear')) { CAR.drawView(g, 'rear', x, y + 40 * s, 400 * s, { color: L.color || PAL.cyan, alpha: a, outline: true, lights: null, seed: Math.floor(env.lt * 10) }); return; }
+    if (CAR.has('rear') && !L.police) { CAR.drawView(g, 'rear', x, y + 40 * s, 400 * s, { color: L.color || PAL.cyan, alpha: a, outline: true, lights: null, seed: Math.floor(env.lt * 10) }); return; }
     g.save(); g.translate(x, y); g.scale(s, s); g.strokeStyle = rgba(L.color || PAL.cyan, a); g.lineWidth = 4; g.lineJoin = 'round';
     g.beginPath(); g.moveTo(-200, 40); g.lineTo(-190, -20); g.lineTo(-120, -40); g.lineTo(-80, -100); g.lineTo(80, -100); g.lineTo(120, -40); g.lineTo(190, -20); g.lineTo(200, 40); g.closePath(); g.stroke();
     g.beginPath(); g.moveTo(-70, -90); g.lineTo(70, -90); g.lineTo(100, -45); g.lineTo(-100, -45); g.closePath(); g.stroke();
-    g.fillStyle = rgba(PAL.red, a); g.fillRect(-185, -12, 50, 16); g.fillRect(135, -12, 50, 16);
+    if (L.police) {   // a cruiser following: headlights + a roof lightbar flashing red | blue
+      const ph = Math.floor(env.t * 6) % 2; g.fillStyle = rgba(PAL.bone, a); g.fillRect(-185, -12, 50, 16); g.fillRect(135, -12, 50, 16);
+      g.shadowBlur = 30; g.shadowColor = ph ? PAL.red : PAL.blue; g.fillStyle = rgba(PAL.red, a * (ph ? 1 : 0.35)); g.fillRect(-70, -122, 64, 20);
+      g.fillStyle = rgba(PAL.blue, a * (ph ? 0.35 : 1)); g.fillRect(6, -122, 64, 20); g.shadowBlur = 0;
+    } else { g.fillStyle = rgba(PAL.red, a); g.fillRect(-185, -12, 50, 16); g.fillRect(135, -12, 50, 16); }
     g.restore();
   },
   // an over-everything vignette of black (drain), amount 0..1

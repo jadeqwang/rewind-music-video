@@ -214,7 +214,26 @@ export function hudOverlay(g, t, shot, T) {
     evalBar(g, h.mate != null && (h.mateAt == null || lt >= h.mateAt) ? { mate: h.mate, alpha: a, ink: h.ink } : { value: v, alpha: a, inf: v === Infinity, ink: h.ink });
   }
   if (h.tc) {
-    g.save(); setFont(g, F.mono(46, 400), 1); g.fillStyle = rgba(h.ink ? PAL.ink : PAL.boneDim, a); g.textAlign = 'right'; g.textBaseline = 'alphabetic';
-    g.fillText(timecode(typeof h.tc === 'number' ? t + h.tc : t), DW - 72, 96); g.restore();
+    let tcT = typeof h.tc === 'number' ? t + h.tc : t;
+    const rwA = shot.params && shot.params.rwA;
+    if (rwA != null) {   // inside a rewind the timecode runs BACKWARDS: fast, kick-stepped (each kick knocks it back further)
+      const nk = T && T.kicksIn ? T.kicksIn(rwA, t + 1e-6).length : 0;
+      tcT = Math.max(0, rwA - (t - rwA) * 4 - nk * 0.75);
+    }
+    g.save(); setFont(g, F.mono(46, 400), 1); g.fillStyle = rgba(h.ink ? PAL.ink : rwA != null ? PAL.cyan : PAL.boneDim, a); g.textAlign = 'right'; g.textBaseline = 'alphabetic';
+    g.fillText((rwA != null ? '\u25c0\u25c0 ' : '') + timecode(tcT), DW - 72, 96); g.restore();
+  }
+  // corner tag after each world card: TIMESTREAM 2010 · ITERATION 0N (small, beside the eval label)
+  const it = T && T.iterations ? T.iterations.find(r => t >= r.t0 && t < r.t1) : null;
+  if (it && h.iterTag !== false) {
+    g.save(); setFont(g, F.mono(MONO_MIN, 400), 1); g.textBaseline = 'alphabetic'; g.fillStyle = rgba(h.ink ? PAL.ink : PAL.boneDim, a * 0.85);
+    g.fillText(`TIMESTREAM 2010 \u00b7 ITERATION ${String(it.n).padStart(2, '0')}`, 250, 224); g.restore();
+  }
+  // final drop: the coin never lands tails — HEADS k/k beside the meter (from the first chop on)
+  if (T && T.heads && T.heads.length && t >= T.heads[0] && h.attempt != null) {
+    let k = 0; for (const c of T.heads) if (t >= c) k++;
+    const n = Math.max(1, Math.round(k / T.heads.length * 64));
+    g.save(); setFont(g, F.mono(MONO_MIN, 700), 2); g.textBaseline = 'alphabetic'; g.fillStyle = rgba(h.ink ? PAL.ink : PAL.cyan, a);
+    g.fillText(`HEADS ${n}/${n}`, 96, 286); g.restore();
   }
 }

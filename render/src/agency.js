@@ -2,7 +2,7 @@
 // with the last word always a black redaction bar. IP rule: never the word that follows, never its initials, no logo /
 // hexagon / props / characters / typography from any franchise. ?agency=oci switches to the invented fallback.
 const AG = {
-  tv:  { header: ['TIME', 'VARIANCE', { bar: 8 }], mark: ['T.V.', { bar: 1 }], code: 'TV-D-7', classif: 'TEMPORAL // EYES ONLY' },
+  tv:  { header: ['TIME', 'VARIANCE', { bar: 9 }]   /* bar = exactly 9 mono chars (the redacted word's width) */, mark: ['T.V.', { bar: 1 }], code: 'TV-D-7', classif: 'TEMPORAL // EYES ONLY' },
   oci: { header: ['OFFICE OF CAUSAL INTEGRITY'], mark: ['OCI'], code: 'OCI-D-7', classif: 'TEMPORAL // EYES ONLY' },
 };
 export const AGENCY_DEFAULT = 'tv';

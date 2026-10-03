@@ -634,5 +634,89 @@
   "attempts": 2,
   "est_cost_usd": 0.14,
   "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/v2/cands/stopff_0.jpg",
+  "job": "stopff",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "src": "J5_v3.jpg",
+  "prompt": "Edit this anime film frame. Keep her face EXACTLY (same eyes and their size, same expression), hair, pose, framing, outfit (white cropped jacket with open band collar, orange bands, pale-blue dot patch, '1420 MHz' patch on her LEFT sleeve, black mock-neck crop top) and art style. Change ONLY the lighting and background: remove the red and blue police-siren rim lights completely; she is lit by a soft, cool, even night light from the front-left (gentle moonlight-blue key, soft fill, a faint cool rim on her hair), clean and youthful, no harsh shadows on the face. The background is a plain, uniform, very dark blue-black void with no lights, no gradients, no objects, so she separates cleanly from it. No text.",
+  "secs": 24.3,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/v2/cands/stopff_1.jpg",
+  "job": "stopff",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "src": "J5_v3.jpg",
+  "prompt": "Edit this anime film frame. Keep her face EXACTLY (same eyes and their size, same expression), hair, pose, framing, outfit (white cropped jacket with open band collar, orange bands, pale-blue dot patch, '1420 MHz' patch on her LEFT sleeve, black mock-neck crop top) and art style. Change ONLY the lighting and background: remove the red and blue police-siren rim lights completely; she is lit by a soft, cool, even night light from the front-left (gentle moonlight-blue key, soft fill, a faint cool rim on her hair), clean and youthful, no harsh shadows on the face. The background is a plain, uniform, very dark blue-black void with no lights, no gradients, no objects, so she separates cleanly from it. No text.",
+  "secs": 26.9,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/v2/cands/committee_1.jpg",
+  "job": "committee",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "src": "committee_board.jpg",
+  "prompt": "The input is a reference board: LEFT = the official model sheet of the character (front and three-quarter view), TOP-RIGHT = her face close-up, BOTTOM-RIGHT = a photo of the location (a dark university seminar room). Draw ONE new anime film frame (not a board), 16:9, in the same anime art style as the sheet (clean thin lineart, flat cel shading): the dissertation-defense room, a long committee table seen straight on from the front, facing the camera, a dark chalkboard behind, a projector beam cutting through the dark from frame-left. Seated in a row behind the table, all facing roughly toward the camera: EIGHT copies of this SAME woman - every one has exactly her face (same large dark-brown eyes, same face shape), her long straight black center-parted hair with curtain bangs, and her white cropped jacket with orange bands and black top - but each one acting differently, left to right: (1) taking notes with a pen, head down; (2) staring blankly into space; (3) arms crossed, skeptical, one eyebrow raised; (4) asleep, head propped on her hand, eyes closed; (5) wearing thin round glasses, reading a stapled thesis; (6) eating a snack from a small bag; (7) smiling knowingly straight at the camera, fingers steepled; (8) same jacket but in pale mint-green instead of white, chin on fist, bored. Each has a small paper name card on the table in front of her, all left blank. Even, soft, dim lighting on all faces so every face reads clearly; cool projector light; faint red/blue glow at the window on the right. All eight are the same size and fully visible from the chest up above the table. No text anywhere.",
+  "secs": 28.3,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/v2/cands/committee_2.jpg",
+  "job": "committee",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "src": "committee_board.jpg",
+  "prompt": "The input is a reference board: LEFT = the official model sheet of the character (front and three-quarter view), TOP-RIGHT = her face close-up, BOTTOM-RIGHT = a photo of the location (a dark university seminar room). Draw ONE new anime film frame (not a board), 16:9, in the same anime art style as the sheet (clean thin lineart, flat cel shading): the dissertation-defense room, a long committee table seen straight on from the front, facing the camera, a dark chalkboard behind, a projector beam cutting through the dark from frame-left. Seated in a row behind the table, all facing roughly toward the camera: EIGHT copies of this SAME woman - every one has exactly her face (same large dark-brown eyes, same face shape), her long straight black center-parted hair with curtain bangs, and her white cropped jacket with orange bands and black top - but each one acting differently, left to right: (1) taking notes with a pen, head down; (2) staring blankly into space; (3) arms crossed, skeptical, one eyebrow raised; (4) asleep, head propped on her hand, eyes closed; (5) wearing thin round glasses, reading a stapled thesis; (6) eating a snack from a small bag; (7) smiling knowingly straight at the camera, fingers steepled; (8) same jacket but in pale mint-green instead of white, chin on fist, bored. Each has a small paper name card on the table in front of her, all left blank. Even, soft, dim lighting on all faces so every face reads clearly; cool projector light; faint red/blue glow at the window on the right. All eight are the same size and fully visible from the chest up above the table. No text anywhere.",
+  "secs": 29.2,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/v2/cands/committee_0.jpg",
+  "job": "committee",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "src": "committee_board.jpg",
+  "prompt": "The input is a reference board: LEFT = the official model sheet of the character (front and three-quarter view), TOP-RIGHT = her face close-up, BOTTOM-RIGHT = a photo of the location (a dark university seminar room). Draw ONE new anime film frame (not a board), 16:9, in the same anime art style as the sheet (clean thin lineart, flat cel shading): the dissertation-defense room, a long committee table seen straight on from the front, facing the camera, a dark chalkboard behind, a projector beam cutting through the dark from frame-left. Seated in a row behind the table, all facing roughly toward the camera: EIGHT copies of this SAME woman - every one has exactly her face (same large dark-brown eyes, same face shape), her long straight black center-parted hair with curtain bangs, and her white cropped jacket with orange bands and black top - but each one acting differently, left to right: (1) taking notes with a pen, head down; (2) staring blankly into space; (3) arms crossed, skeptical, one eyebrow raised; (4) asleep, head propped on her hand, eyes closed; (5) wearing thin round glasses, reading a stapled thesis; (6) eating a snack from a small bag; (7) smiling knowingly straight at the camera, fingers steepled; (8) same jacket but in pale mint-green instead of white, chin on fist, bored. Each has a small paper name card on the table in front of her, all left blank. Even, soft, dim lighting on all faces so every face reads clearly; cool projector light; faint red/blue glow at the window on the right. All eight are the same size and fully visible from the chest up above the table. No text anywhere.",
+  "secs": 31.0,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/v2/cands/committee_3.jpg",
+  "job": "committee",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "src": "committee_board.jpg",
+  "prompt": "The input is a reference board: LEFT = the official model sheet of the character (front and three-quarter view), TOP-RIGHT = her face close-up, BOTTOM-RIGHT = a photo of the location (a dark university seminar room). Draw ONE new anime film frame (not a board), 16:9, in the same anime art style as the sheet (clean thin lineart, flat cel shading): the dissertation-defense room, a long committee table seen straight on from the front, facing the camera, a dark chalkboard behind, a projector beam cutting through the dark from frame-left. Seated in a row behind the table, all facing roughly toward the camera: EIGHT copies of this SAME woman - every one has exactly her face (same large dark-brown eyes, same face shape), her long straight black center-parted hair with curtain bangs, and her white cropped jacket with orange bands and black top - but each one acting differently, left to right: (1) taking notes with a pen, head down; (2) staring blankly into space; (3) arms crossed, skeptical, one eyebrow raised; (4) asleep, head propped on her hand, eyes closed; (5) wearing thin round glasses, reading a stapled thesis; (6) eating a snack from a small bag; (7) smiling knowingly straight at the camera, fingers steepled; (8) same jacket but in pale mint-green instead of white, chin on fist, bored. Each has a small paper name card on the table in front of her, all left blank. Even, soft, dim lighting on all faces so every face reads clearly; cool projector light; faint red/blue glow at the window on the right. All eight are the same size and fully visible from the chest up above the table. FRAMING: a close medium-wide shot from just behind the near edge of the table at seated eye height - the eight women fill the whole width of the frame shoulder to shoulder, their heads in the upper-middle of the frame and LARGE (each face clearly readable), the table top only in the bottom quarter of the frame; little empty wall above them. No text anywhere.",
+  "secs": 28.2,
+  "attempts": 1,
+  "est_cost_usd": 0.07,
+  "error": null
+ },
+ {
+  "file": "/home/user/rewind-music-video/assets/character/anime/v2/cands/committee_4.jpg",
+  "job": "committee",
+  "model": "openai/gpt-image-2",
+  "quality": "medium",
+  "src": "committee_board.jpg",
+  "prompt": "The input is a reference board: LEFT = the official model sheet of the character (front and three-quarter view), TOP-RIGHT = her face close-up, BOTTOM-RIGHT = a photo of the location (a dark university seminar room). Draw ONE new anime film frame (not a board), 16:9, in the same anime art style as the sheet (clean thin lineart, flat cel shading): the dissertation-defense room, a long committee table seen straight on from the front, facing the camera, a dark chalkboard behind, a projector beam cutting through the dark from frame-left. Seated in a row behind the table, all facing roughly toward the camera: EIGHT copies of this SAME woman - every one has exactly her face (same large dark-brown eyes, same face shape), her long straight black center-parted hair with curtain bangs, and her white cropped jacket with orange bands and black top - but each one acting differently, left to right: (1) taking notes with a pen, head down; (2) staring blankly into space; (3) arms crossed, skeptical, one eyebrow raised; (4) asleep, head propped on her hand, eyes closed; (5) wearing thin round glasses, reading a stapled thesis; (6) eating a snack from a small bag; (7) smiling knowingly straight at the camera, fingers steepled; (8) same jacket but in pale mint-green instead of white, chin on fist, bored. Each has a small paper name card on the table in front of her, all left blank. Even, soft, dim lighting on all faces so every face reads clearly; cool projector light; faint red/blue glow at the window on the right. All eight are the same size and fully visible from the chest up above the table. FRAMING: a close medium-wide shot from just behind the near edge of the table at seated eye height - the eight women fill the whole width of the frame shoulder to shoulder, their heads in the upper-middle of the frame and LARGE (each face clearly readable), the table top only in the bottom quarter of the frame; little empty wall above them. No text anywhere.",
+  "secs": 26.8,
+  "attempts": 2,
+  "est_cost_usd": 0.14,
+  "error": null
  }
 ]
