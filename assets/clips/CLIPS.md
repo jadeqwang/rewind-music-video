@@ -101,3 +101,20 @@ Jeyes_v3 = v1, no jacket in frame, not re-animated). Specs `assets/gen/specs/ani
 Lip json `analysis/clips_review/anime/<SHOT>_v3.lip.json` (mouthroi frame 24 (J8: 0), `--win 0.8 7.2 --maxlag 0.8`, stem `analysis/stems/vocals.wav`). Roto `assets/roto/<SHOT>_v3/`
 (`roto.py <SHOT> --src assets/clips/<SHOT>_v3.mp4 --out <SHOT>_v3` so the per-shot config applies).
 Spend (list prices): v2 round (closed collar, superseded) Seedance 15 runs $23.58 + gpt-image-2 $2.17; v3 round Seedance 15 runs $23.35 + gpt-image-2 $2.59. **Total ≈ $51.7** (budget was ≈ $28; the open-collar redo doubled it).
+
+# "Rewind." performance clips R_rw1..4 (jacket v3, CLOCK = v5 audio "Rewind (5).mp3") — 2026-10-03
+Specs `assets/gen/specs/anime/make_rw.py` → `R_rw<k>_t<n>.json` (Seedance 2.5 i2v 720p 16:9, 5 s, generate_audio false, use_virtual_avatar false;
+first frame `J5_v3_720` / `J5b_v3_720`; prompt = stage + sing-"Rewind" + gesture + LOOK). Ref audio = v5 vocal stem (`analysis/stems_v5/vocals.wav`) sliced
+0.3 s before the sung word: `analysis/slices/vocals_v5_rw<k>_<start>_5.mp3` (word starts v5 51.846 / 55.589 / 111.952 / 115.558 from timing_v5.json).
+In the drops "Rewind" is a long held note (~3 s of harmonics, spectrogram), so the mouth should open at ~0.3 s and hold the "-WIND" vowel.
+Checks: `tools/anime/twirl.py` (hand = moving skin blob outside face/neck, winding around its running centre; + = CCW as seen by the viewer),
+`tools/anime/rwsync.py` (mouth-open segments vs voiced-band 250-2500 Hz segments of the slice + xcorr lag; + = mouth late), eye gate, dense frame strips.
+| clip | take id | gesture | twirl turns (CCW +) | eyes (w/iris/open %) | lip offset | notes |
+|---|---|---|---|---|---|---|
+| `R_rw3.mp4` | `rewind/anime_R_rw3_t2-7f4265fd84` | finger twirl | **+3.26** (visually CCW 2.6-3.5 s) | 0.0 / 13.1 / -1.4 | **≈ +0.75 s, low confidence** (mouth opens 1.21 s vs word 0.30 s; xcorr unusable r 0.26 — the stem is continuous) | Twirl 1.2-4.2 s beside her right temple, face never covered; hand pulls back at 4.5 s. Patch LEFT. audio_start_v5 111.652. |
+| `R_rw4.mp4` | `rewind/anime_R_rw4_t1-b518eae03d` | two-hand backward roll | n/a (roll) | 0.6 / 9.3 / -5.9 | **+0.63 s** (xcorr r 0.75; open 1.04 vs 0.30, close 3.88 vs 3.00) | Hands roll around each other in front of the chest 0.75-4.25 s, then pull to the shoulders. Roll DIRECTION (toward herself) is not measurable from a straight-on view — visual: reads as a roll, not a wave. audio_start_v5 115.258. |
+| R_rw1 | — | — | — | — | — | NOT ACCEPTED. t1 `-148c1efd76`: gesture starts late (2.3 s), finger at the mouth, twirl -0.64. t2 `-e79d1aa837`: twirl is CLOCKWISE (-1.52; dense strip: top → right → bottom → left). Retake limit reached. |
+| R_rw2 | — | — | — | — | — | NOT ACCEPTED. t1 `-bf958a65c9` came out PORTRAIT 720x1280. t2 `-bf8b69712b`: hands cross in an X instead of rolling; mouth closes at 2.0 s while the vocal holds. Retake limit reached. |
+Roto `assets/roto/R_rw3/`, `assets/roto/R_rw4/` (`roto.py J5 --src assets/clips/R_rw<k>.mp4 --out R_rw<k>`, J5 config) + `tools/jade2/direct.py` (direct layer);
+their meta.json carries `"clock": "v5"`, `audio_start_v5`, `rewind_word_v5`, `lip_offset_s`. Lip/twirl numbers: `analysis/clips_review/anime/R_rw<k>.{lip.json,rwsync.json,twirl.txt}`.
+Spend: 7 x 5 s 720p = $8.09 (budget ≈ $12).

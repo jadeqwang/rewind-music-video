@@ -171,13 +171,9 @@ export function buildShots(T) {
   // Picasso escalation 1/4: a hint — the subject's portrait on the case file splits into 2 planes; Guernica planes + lamp-eye over the print
   const casePic = (planes) => [{ type: 'guernica', rect: [100, 190, 1150, 647], n: 5 + planes, bx: 675, by: 236, br: 62 },
     { type: 'cubist', front: R.jade('J5'), side: R.jade('J1'), planes, clip: [1320, 820, 420, 210], cx: 1530, cy: 930, scale: 0.55, bg: '#2A2624', seed: planes }];
-  add('B8_case01', sfx1, T.beatBefore(W('stops').start - 0.3), 'freeze', { source: 'B6_tab', case: 1, move: { n: 1, move: 'pull over', nag: '??' }, loc: 'LAKE SHORE DR', file: 'FILE 65-HQ-', over: casePic(2) },
+  add('B8_case01', sfx1, drop1, 'freeze', { unwrite: [sil1, drop1 - 0.12], source: 'B6_tab', case: 1, move: { n: 1, move: 'pull over', nag: '??' }, loc: 'LAKE SHORE DR', file: 'FILE 65-HQ-', over: casePic(2) },
     { fx: { heart: 0, jerks: [] }, post: {} });
-  C('B9_silence', T.beatBefore(W('stops').start - 0.3), drop1, [{ type: 'fill', color: '#000' },
-    { type: 'bullet', x: 1100, y: 540, len: 1400, angle: 0, color: PAL.bone },
-    { type: 'mono', text: 'time stops', y: 700, typed: 12, at: W('stops').start - T.beatBefore(W('stops').start - 0.3) - 0.35 },
-    { type: 'mono', text: 'hold \u25c0\u25c0 to rewind', y: 860, size: 46, weight: 700, color: PAL.cyan, alpha: e => (Math.floor(e.lt * 3) % 2 ? 1 : 0.35) },
-  ], { fx: { heart: 0 } }, { post: { bloom: 0.5, grain: 0.02, vignette: 0 } });
+  // (B9_silence folded into the report: it un-writes itself through the silence — they're still on case 1)
 
   // =============================== 3 · DROP 1 45.20 – 71.23 (REWIND) ===============================
   const r1end = T.snap(drop1 + 3.5 * P);
@@ -249,10 +245,8 @@ export function buildShots(T) {
   const sfx2 = ev('shot_sfx', 2), drop2 = ev('drop', 2), stops2 = W('stops', 2).start;
   C('F4_shot', shot2, sfx2, [{ type: 'freezeOf', shot: 'F3_tab', withType: false }, { type: 'star', x: 520, y: 420, r: 140 }, { type: 'bullet', x: 900, y: 600, len: 900, angle: 0.4 },
     { type: 'slam', text: 'SHOT', at: 0, y: 1010, maxH: 260, onType: true, stutter: 0.5 }], { hud: { attempt: 2, failed: true, mate: -1, tc: true } });
-  add('F5_case02', sfx2, T.beatBefore(stops2 - 0.3), 'freeze', { over: casePic(4), source: 'F3_tab', case: 2, move: { n: 1, move: 'bolt', nag: '?' }, loc: 'FIELD, MONTROSE', file: 'FILE 65-HQ-', bullet: { x: 900, y: 600, len: 900, angle: 0.4 } });
-  C('F6_silence', T.beatBefore(stops2 - 0.3), drop2, [{ type: 'fill', color: '#000' }, { type: 'bullet', x: 1100, y: 540, len: 1400, angle: 0 },
-    { type: 'mono', text: 'time stops', y: 700, typed: 12, at: stops2 - T.beatBefore(stops2 - 0.3) - 0.35 },
-    { type: 'mono', text: 'hold \u25c0\u25c0 to rewind', y: 860, size: 46, weight: 700, color: PAL.cyan, alpha: e => (Math.floor(e.lt * 3) % 2 ? 1 : 0.35) }], { fx: { heart: 0 } }, { post: { bloom: 0.5, vignette: 0 } });
+  add('F5_case02', sfx2, drop2, 'freeze', { unwrite: [ev('silence', 2), drop2 - 0.12], ghost: { anomaly: 'ANOMALY 01', loc: 'LAKE SHORE DR', move: '1. pull over' }, over: casePic(4), source: 'F3_tab', case: 2, move: { n: 1, move: 'bolt', nag: '?' }, loc: 'FIELD, MONTROSE', file: 'FILE 65-HQ-', bullet: { x: 900, y: 600, len: 900, angle: 0.4 } });
+  // (F6_silence folded into F5: the same CASE 0001 re-filed, erased again)
 
   // =============================== 6 · DROP 2 104.56 – 134.09 (darker) ===============================
   const r9 = L(14).start, r10 = L(15).start, bd = sec('breakdown').start;

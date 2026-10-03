@@ -53,8 +53,14 @@ export async function drawShot(shot, t, g, ty, post, opts = {}) {
   // params.over: extra layers drawn over any scene (comp-style)
   if (shot.params.over && !(opts.rewinding && shot.params.overNoRewind)) {
     resetCtx(g); resetCtx(ty); g.setTransform(S, 0, 0, S, 0, 0); ty.setTransform(S, 0, 0, S, 0, 0);
-    const dur = shot.t1 - shot.t0;
-    await drawLayers(ctx, shot.params.over, { lt, t, dur, u: clamp(lt / dur), T: E.T, k: E.T.kick(t, 0.08), b: E.T.beatPhase(t), shot, ctx }, data);
+    const dur = shot.t1 - shot.t0, oa = ctx.overAlpha ?? 1, envO = { lt, t, dur, u: clamp(lt / dur), T: E.T, k: E.T.kick(t, 0.08), b: E.T.beatPhase(t), shot, ctx };
+    if (oa >= 0.999) await drawLayers(ctx, shot.params.over, envO, data);
+    else if (oa > 0.002) {   // a scene can fade its 'over' layers (the variance report un-developing): draw off-screen, composite
+      const Lg = layer('over_g', g.canvas.width, g.canvas.height), Lt = layer('over_t', g.canvas.width, g.canvas.height);
+      const og = clearLayer(Lg), ot = clearLayer(Lt); og.setTransform(S, 0, 0, S, 0, 0); ot.setTransform(S, 0, 0, S, 0, 0);
+      await drawLayers({ ...ctx, g: og, ty: ot }, shot.params.over, { ...envO, ctx: { ...ctx, g: og, ty: ot } }, data);
+      for (const [dst, L] of [[g, Lg], [ty, Lt]]) { dst.save(); dst.setTransform(1, 0, 0, 1, 0, 0); dst.globalAlpha = oa; dst.drawImage(L, 0, 0); dst.restore(); }
+    }
   }
   resetCtx(ty); ty.setTransform(S, 0, 0, S, 0, 0);
   if (shot.hud && !opts.rewinding && !opts.noHud) hudOverlay(ty, tReal, shot, E.T);

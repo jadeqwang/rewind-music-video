@@ -14,3 +14,7 @@ W0000 00:00:1790999060.621498    6755 inference_feedback_manager.cc:121] Feedbac
   J5   20/76 2.15s  flow=0.07 matte=0.40 ground=0.00 face=0.61 lines=0.28 write=0.79
   J5   30/76 3.44s  flow=0.07 matte=0.46 ground=0.00 face=1.79 lines=0.41 write=0.72
   J5   40/76 2.64s  flow=0.08 matte=0.44 ground=0.00 face=0.93 lines=0.50 write=0.69
+  J5   50/76 2.69s  flow=0.08 matte=0.53 ground=0.00 face=0.92 lines=0.37 write=0.81
+  J5   60/76 2.24s  flow=0.07 matte=0.63 ground=0.00 face=0.55 lines=0.39 write=0.60
+  J5   70/76 2.31s  flow=0.08 matte=0.39 ground=0.00 face=0.84 lines=0.43 write=0.58
+J5: done 76/76 frames, wall 229.3s, 29.7 MB, mean s/frame (per worker): flow=0.089, matte=0.516, ground=0.0, face=1.256, lines=0.359, write=0.733, total=2.953
