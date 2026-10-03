@@ -33,6 +33,9 @@ export function buildShots(T) {
   const suits = (id, o = {}) => [{ type: 'world', roto: R.suits(id), color: PAL.ink, alpha: 0.5, comp: 'source-over', lights: 0, cam: o.cam, ...(o.world || {}) },
     { type: 'suits', roto: R.suits(id), ...o }];
   const sirenLit = (o = {}) => [{ type: 'sirens', side: 'pair', base: 0.42, peak: 0.5, ...o }, { type: 'headlights', y: 470, r: 1100, amount: 0.2 }];
+  // anomaly 2 (the field): the agency escalates — the same cut-outs duplicated and scaled behind, receding
+  const FIELD_COPIES = [{ dx: -430, dy: -150, s: 0.8, dt: 0.4 }, { dx: 450, dy: -170, s: 0.78, dt: 0.9 }, { dx: -820, dy: -260, s: 0.62, dt: 1.3 }, { dx: 840, dy: -280, s: 0.6, dt: 1.7 },
+    { dx: -250, dy: -330, s: 0.5, dt: 2.1 }, { dx: 260, dy: -350, s: 0.48, dt: 2.6 }];
   const hud = (attempt, ev_, o = {}) => ({ attempt, eval: ev_, tc: true, ...o });
   // the death tableau (frame 0, the freeze, the case-file photo): flat red | blue split, Jade white at left, the redacted
   // suit black at right with bar + glint, the bullet suspended between them
@@ -286,9 +289,6 @@ export function buildShots(T) {
   // D1: the room lit by its projector — a bone screen and a big bone wedge of light; on each braam the projector
   // flickers and one more redacted committee member is sitting there (solid black against the screen). Dream: too many chairs.
   const seats = [[700, 690], [860, 690], [1020, 690], [1180, 690], [1340, 690]];
-  // anomaly 2 (the field): the agency escalates — the same cut-outs duplicated and scaled behind, receding
-  const FIELD_COPIES = [{ dx: -430, dy: -40, s: 0.8, dt: 0.4 }, { dx: 450, dy: -50, s: 0.78, dt: 0.9 }, { dx: -820, dy: -90, s: 0.62, dt: 1.3 }, { dx: 840, dy: -100, s: 0.6, dt: 1.7 },
-    { dx: -250, dy: -130, s: 0.5, dt: 2.1 }, { dx: 260, dy: -140, s: 0.48, dt: 2.6 }];
   const room = (n, o = {}) => [ink, { type: 'world', roto: R.room, alpha: 0.7, lights: 0.6, speed: 0.6, loop: 'pingpong', cam: o.cam },
     { type: 'projector', flicker: e => (o.flick && e.lt < 0.3 ? Math.abs(Math.sin(e.lt * 60)) : 0), title: 'DEFENSE', sub: 'Wednesday, 9:00 a.m.' },
     { type: 'committee', n, scale: 1.0, seats, rows: o.rows ?? 0 }];
@@ -306,7 +306,7 @@ export function buildShots(T) {
   C('D3_dropout', dsil, dsilEnd, [{ type: 'fill', color: PAL.bone }, { type: 'mono', text: '∴', y: 700, size: 520, weight: 700, color: PAL.ink }], { fx: { heart: 0.1 } }, { post: { bloom: 0, vignette: 0.1 } });
   // D4: A Beautiful Mind wall, BIG: four case-file prints pinned with red string, filling the frame
   C('D4_wall', dsilEnd, L(18).start, [{ type: 'fill', color: '#16110C' },
-    { type: 'wall', card: 2.3, progress: e => 0.3 + e.u, pins: [[420, 330, ev('shot', 1).toFixed(2)], [1480, 340, ev('shot', 2).toFixed(2)], [520, 840, v1.toFixed(2), false], [1420, 830, '∞']], banner: true, bannerAt: 0.35 },
+    { type: 'wall', card: 2.3, progress: e => 0.3 + e.u, pins: [[420, 330, ev('shot', 1).toFixed(2)], [1480, 340, ev('shot', 2).toFixed(2)], [520, 840, v1.toFixed(2), false], [1420, 830, '∞']], banner: true, bannerAt: 0.35, bannerY: 262 },
     { type: 'rect', x: 690, y: 330, w: 540, h: 420, color: PAL.bone }, { type: 'dot', x: 960, y: 336, r: 10, color: PAL.red },
     { type: 'rollouts', n: 300, seed: 21, ink: true, x: 720, y: 520, w: 480, h: 300, lw: 1.2, tick: 2, labels: false, progress: e => smooth(0, 0.5, e.u), kills: [{ at: 0.38, share: 0.55, dy: -0.3 }, { at: 0.68, share: 0.44, dy: 0.05 }], survivor: true, surviveDy: 0.3, survivorW: 3 },
     { type: 'revisions', lines: [17], size: 76, y: 560, measure: 1500, revs: [{ dx: 0, dy: 0 }, { dx: 18, dy: 30 }] }],

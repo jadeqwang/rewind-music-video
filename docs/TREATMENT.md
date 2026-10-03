@@ -110,3 +110,4 @@ OFFICE OF CAUSAL INTEGRITY (OCI) — never TVA names/logos/props (Disney IP; tak
 reports; anomaly meter spikes per rewind; suits multiply per anomaly and "prune" dead runs; payoff: in the final
 drop she stops rewinding → "ANOMALY: NONE DETECTED" → she drives past unseen ("as inconspicuously as possible").
 - NAME (user choice): "TIME VARIANCE ████████" (last word always redacted; never 'Authority'/'TVA'; no Marvel logo/props). OCI = fallback.
+- (user) At each 'shot' the variance report is fully written, then UN-WRITES itself during the rewind (anomaly erased) — that's why the agency is forever on CASE 1 (of a rising 5-digit count). Second death = same case, palimpsest.

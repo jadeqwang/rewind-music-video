@@ -197,3 +197,12 @@ timing `analysis/timing_v5.json`, envelopes `analysis/envelopes_v5.json`. Overri
 - `REWIND_final_1080p_master.mp4`: CRF 17, `-tune grain`, about 350–450 MB.
 - `REWIND_final_1080p_x.mp4`: two-pass 9 Mbps, about 265 MB.
 - `REWIND_final_1080p_100mb.mp4`: two-pass 3 Mbps, about 96 MB.
+
+## The agency (world-building, v8)
+- The suits are a time-enforcement agency. Its name and codes come from one config, src/agency.js: "TIME VARIANCE ████████". The last word is always a redaction bar; the HUD mark is "T.V.█"; the code is TV-D-7. `?agency=oci` switches to the invented fallback, Office of Causal Integrity.
+- IP rule: never write the redacted word or its initials. No franchise logo, hexagon, props, characters or typography.
+- Case files are now VARIANCE REPORTs: "ANOMALY 0n", "unauthorized rewind", a PRUNED stamp, and "∴ branch pruned. rewinding."
+- Anomaly meter (`hud.anomaly`, `T.rewindStarts`): spikes at each rewind start, with escalating amplitudes and a slow decay. Suit glints turn amber on a spike. In the final drop it drains, and "ANOMALY: NONE DETECTED" appears from final_drop + 5 s.
+- Suits escalate per anomaly: 4 in build 1; `copies` in the field; committee `rows` in the breakdown. In the payoff, `roadside` suits stand still.
+- Rollouts: an amber prune jaw lands at every ✗. The D4 wall gets a `banner` with "DETECTED: 2 UNAUTHORIZED BRANCHES".
+- The H2 `tally` is an odometer ("CASE 1 OF 48,203…", rising). The X1 counter picks up from where it stops.
