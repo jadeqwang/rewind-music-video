@@ -1,10 +1,11 @@
-// freeze → CASE FILE. Two frames of muzzle-flash red, then the death becomes a page of the dossier: bone paper,
+// freeze → VARIANCE REPORT (the agency's file on the anomaly). Two frames of muzzle-flash red, then the death becomes a page of the dossier: bone paper,
 // the frozen frame as a halftone photo print (GL AM screen), the bullet hanging in it, mono annotations, redaction
 // bars and a red ✗ / TERMINATED stamp. params: {source (shot id), case (n), move:{n,move,nag}, loc, eval, bullet, file}
 import { DW, DH, PAL, clamp, smooth, lerp, easeOutBack, rgba, layer, resetCtx, fin } from '../core.js';
 import { bullet, fillInk } from '../fx.js';
 import { setFont, F, redactedLine } from '../type.js';
 import { annotation } from '../hud.js';
+import { AGENCY } from '../agency.js';
 
 const PH = { x: 100, y: 190, w: 1150, h: 647 };    // the photo print (16:9)
 const pad2 = n => String(n).padStart(2, '0');
@@ -35,29 +36,30 @@ export async function draw(ctx, lt, t, shot, { drawShot, shotById }) {
   // page furniture (type layer: crisp, not screened)
   const ink = PAL.ink, x1 = 1320;
   setFont(ty, F.mono(42, 700), 3); ty.fillStyle = ink; ty.textBaseline = 'alphabetic';
-  ty.fillText(p.file ?? 'FILE 65-HQ-', PH.x, 110); const fw = ty.measureText(p.file ?? 'FILE 65-HQ-').width;
-  ty.fillRect(PH.x + fw + 6, 74, 230, 44);
+  // VARIANCE REPORT header: the agency (last word always redacted) · report type; page no. right
+  redactedLine(ty, [...AGENCY.header, '·', 'VARIANCE REPORT'], PH.x, 110, F.mono(42, 700), ink, '#000');
   ty.textAlign = 'right'; ty.fillText(`PAGE ${pad2(p.case ?? 1)}`, DW - 90, 110); ty.textAlign = 'left';
   ty.fillRect(PH.x, 140, DW - 190, 3);
-  setFont(ty, F.mono(76, 700), 2); ty.fillText(`CASE ${pad2(p.case ?? 1)}`, x1, 270);
+  setFont(ty, F.mono(76, 700), 2); ty.fillText(`ANOMALY ${pad2(p.case ?? 1)}`, x1, 262);
+  setFont(ty, F.mono(44, 700), 1); ty.fillStyle = PAL.amber; ty.fillText('unauthorized rewind', x1, 330); ty.fillStyle = ink;
   const tt = fin(src.t1), mm = Math.floor(tt / 60), ss = (tt - mm * 60).toFixed(2).padStart(5, '0');
   const rows = [['t', `${pad2(mm)}:${ss}`], ['LOC', p.loc ?? 'LSD NB'], ['EVAL', p.eval ?? '−#1']];
   setFont(ty, F.mono(46, 400), 1);
-  rows.forEach(([k, v], i) => { const y = 370 + i * 74; ty.globalAlpha = smooth(0.05 + i * 0.05, 0.15 + i * 0.05, lt); ty.fillStyle = rgba(ink, 0.6); ty.fillText(k, x1, y); ty.fillStyle = k === 'EVAL' ? PAL.red : ink; ty.fillText(v, x1 + 150, y); });
+  rows.forEach(([k, v], i) => { const y = 410 + i * 70; ty.globalAlpha = smooth(0.05 + i * 0.05, 0.15 + i * 0.05, lt); ty.fillStyle = rgba(ink, 0.6); ty.fillText(k, x1, y); ty.fillStyle = k === 'EVAL' ? PAL.red : ink; ty.fillText(v, x1 + 150, y); });
   ty.globalAlpha = smooth(0.2, 0.3, lt);
-  if (p.move) annotation(ty, { ...p.move, x: x1, y: 620, size: 46, ink: true });
-  redactedLine(ty, ['AGENTS', { bar: 5 }], x1, 700, F.mono(46, 400), ink, '#000');
-  redactedLine(ty, [{ bar: 3 }, 'NO WARNING'], x1, 774, F.mono(46, 400), ink, '#000');
+  if (p.move) annotation(ty, { ...p.move, x: x1, y: 640, size: 46, ink: true });
+  redactedLine(ty, ['AGENTS', { bar: 5 }], x1, 714, F.mono(46, 400), ink, '#000');
+  redactedLine(ty, [{ bar: 3 }, 'NO WARNING'], x1, 784, F.mono(46, 400), ink, '#000');
   ty.globalAlpha = 1;
-  setFont(ty, F.mono(46, 400), 1); ty.fillStyle = ink; ty.fillText('∴ attempt terminated. rewinding.', PH.x, 940);
+  setFont(ty, F.mono(46, 400), 1); ty.fillStyle = ink; ty.fillText('∴ branch pruned. rewinding.', PH.x, 940);
   // the stamp: big red ✗ over the print + boxed TERMINATED, slammed in with a small overshoot
   const su = clamp((lt - 0.12) / 0.12);
   if (su > 0) {
     const sc = lerp(1.35, 1, easeOutBack(su));
     ty.save(); ty.globalAlpha = clamp(su * 2) * 0.92; ty.translate(PH.x + PH.w - 230, PH.y + PH.h - 250); ty.rotate(-0.12); ty.scale(sc, sc);
     setFont(ty, F.mono(300, 700)); ty.fillStyle = PAL.red; ty.textAlign = 'center'; ty.textBaseline = 'middle'; ty.fillText('✗', 0, 0);
-    setFont(ty, F.mono(52, 700), 6); const tw = ty.measureText('TERMINATED').width;
-    ty.strokeStyle = PAL.red; ty.lineWidth = 6; ty.strokeRect(-tw / 2 - 22, 150, tw + 44, 82); ty.fillText('TERMINATED', 0, 193);
+    setFont(ty, F.mono(52, 700), 6); const tw = ty.measureText('PRUNED').width;
+    ty.strokeStyle = PAL.red; ty.lineWidth = 6; ty.strokeRect(-tw / 2 - 22, 150, tw + 44, 82); ty.fillText('PRUNED', 0, 193);
     ty.restore();
   }
   P.zoom = 1.0 + 0.02 * smooth(0, shot.t1 - shot.t0, lt);

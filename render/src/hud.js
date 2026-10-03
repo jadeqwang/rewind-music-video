@@ -4,7 +4,8 @@
 // Legibility floor (phone, muted): mono cap-height ≥ 30 px at 1080p (JetBrains Mono cap ≈ 0.73 em → ≥ 42 px font),
 // key items ≥ 40 px cap (≥ 56 px font). Fewer elements, larger.
 import { DW, DH, PAL, clamp, lerp, inv, smooth, easeOutCubic, easeOutExpo, hash, hsig, rng, rgba, fin, timecode } from './core.js';
-import { F, setFont } from './type.js';
+import { F, setFont, redactedLine } from './type.js';
+import { AGENCY } from './agency.js';
 
 // ✗ as two brush-ish strokes
 export function cross(g, x, y, r, col = PAL.red, lw = null, u = 1) {
@@ -161,6 +162,38 @@ export function searchTree(g, T, o) {
   return { P };
 }
 
+// ---- ANOMALY meter: the agency detects every rewind. Spikes at each rewind start (escalating), decays slowly; in the
+// final drop she never rewinds, so it drains to "ANOMALY: NONE DETECTED". T.rewindStarts is set by the engine at boot.
+const AMPS = [0.62, 0.8, 0.95, 1];
+export function anomaly(T, t) {
+  const st = (T && T.rewindStarts) || []; let v = 0;
+  st.forEach((s, i) => { if (t >= s) v = Math.max(v, AMPS[Math.min(i, AMPS.length - 1)] * smooth(0, 0.25, t - s) * Math.exp(-(t - s) / 38)); });
+  const fd = T && T.opt ? T.opt(T => T.section('final_drop').start, 171.3) : 171.3;
+  return v * (1 - smooth(fd, fd + 6.5, t));
+}
+export function anomalySpike(T, t) {   // 1 right at a rewind start → 0 over a few seconds (amber glints, meter flash)
+  let k = 0; for (const s of (T && T.rewindStarts) || []) if (t >= s) k = Math.max(k, Math.exp(-(t - s) / 2.5)); return k;
+}
+export function anomalyMeter(g, t, T, o = {}) {
+  const x = o.x ?? 96, y = o.y ?? 162, a = o.alpha ?? 1, ink = o.ink, fd = T.opt ? T.opt(T => T.section('final_drop').start, 171.3) : 171.3;
+  const v = anomaly(T, t), sp = anomalySpike(T, t), col = ink ? PAL.ink : PAL.amber;
+  g.save(); g.globalAlpha = a; g.textBaseline = 'alphabetic';
+  redactedLine(g, AGENCY.mark, x, y, F.mono(MONO_MIN, 700), col, col);
+  setFont(g, F.mono(MONO_MIN, 700), 1); let cx = x + g.measureText(AGENCY.mark.map(p => typeof p === 'string' ? p : 'M').join(' ')).width + 30;
+  if (t >= fd + 5) {   // the payoff: calm, mono, bone
+    setFont(g, F.mono(MONO_MIN, 400), 2); g.fillStyle = rgba(ink ? PAL.ink : PAL.bone, clamp((t - fd - 5) * 1.5)); g.fillText('ANOMALY: NONE DETECTED', cx, y);
+  } else {
+    const n = 10, sw = 22, sh = 32, gap = 6, lit = v * n;
+    for (let i = 0; i < n; i++) {
+      const f = clamp(lit - i), bx = cx + i * (sw + gap);
+      g.strokeStyle = rgba(col, 0.55); g.lineWidth = 2; g.strokeRect(bx, y - sh + 2, sw, sh);
+      if (f > 0) { g.fillStyle = rgba(i >= 7 ? PAL.red : col, f * (0.75 + 0.25 * sp)); g.fillRect(bx + 3, y - sh + 5, sw - 6, sh - 6); }
+    }
+    if (sp > 0.3) { setFont(g, F.mono(MONO_MIN, 700), 2); g.fillStyle = rgba(col, clamp((sp - 0.3) * 2) * (0.6 + 0.4 * Math.sin(t * 30))); g.fillText('ANOMALY', cx + n * (sw + gap) + 18, y); }
+  }
+  g.restore();
+}
+
 // ---- global HUD overlay (the proof's UI): ATTEMPT top-left, eval bar left edge, timecode top-right ----
 // shot.hud = {attempt, failed, eval: v | [v0, v1], mate, tc (true | 'song' | number offset), alpha, label}
 export function hudOverlay(g, t, shot, T) {
@@ -175,6 +208,7 @@ export function hudOverlay(g, t, shot, T) {
     if (h.failed || h.ok) { const nw = g.measureText(String(n).padStart(2, '0')).width; g.fillStyle = rgba(h.ok ? PAL.cyan : PAL.red, a); g.fillText(h.ok ? '✓' : '✗', 96 + lw + 30 + nw, 96); }
     g.restore();
   }
+  if (h.attempt != null && h.anomaly !== false) anomalyMeter(g, t, T, { ink: h.ink, alpha: a });
   if (h.eval != null || h.mate != null) {
     const v = Array.isArray(h.eval) ? lerp(h.eval[0], h.eval[1], u * u) : typeof h.eval === 'function' ? h.eval(t) : h.eval;
     evalBar(g, h.mate != null && (h.mateAt == null || lt >= h.mateAt) ? { mate: h.mate, alpha: a, ink: h.ink } : { value: v, alpha: a, inf: v === Infinity, ink: h.ink });

@@ -512,7 +512,7 @@ Object.assign(LAYERS, {
       const r = lerp(60, 1500, Math.pow(ph, 1.4)), x = 960 + Math.cos(ang) * r, y = 520 + Math.sin(ang) * r * 0.6, sc = lerp(0.25, 1.7, ph), rot = hsig(i, 4) * 3 * ph;
       g.save(); g.translate(x, y); g.rotate(rot); g.scale(sc, sc); g.globalAlpha = 1 - smooth(0.85, 1, ph);
       g.fillStyle = PAL.bone; g.fillRect(-200, -260, 400, 520);
-      setFont(g, F.mono(40, 700), 2); g.fillStyle = PAL.ink; g.fillText(`CASE 0${1 + (i % 2)}`, -170, -200);
+      setFont(g, F.mono(40, 700), 2); g.fillStyle = PAL.ink; g.fillText(`ANOMALY 0${1 + (i % 2)}`, -170, -200);
       g.fillStyle = '#0b0b0c'; g.fillRect(-170, -170, 340, 210);
       g.fillStyle = '#000'; for (let k = 0; k < 6; k++) g.fillRect(-170, 70 + k * 30, 120 + hash(i, k) * 210, 16);
       setFont(g, F.mono(220, 700)); g.fillStyle = PAL.red; g.textAlign = 'center'; g.fillText('✗', 60, 40);

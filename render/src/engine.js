@@ -171,6 +171,8 @@ export async function boot() {
   await CAR.load();
   const mod = await import(which === 'main' ? './shots.js' : `./shots.${which}.js`);
   E.shots = mod.buildShots(E.T).map(s => ({ params: {}, ...s, t0: fin(s.t0), t1: fin(s.t1) })).sort((a, b) => a.t0 - b.t0);
+  { const rs = []; for (const s of E.shots) if (s.scene === 'rewind' && !(rs.length && s.t0 - rs[rs.length - 1].end < 0.5)) rs.push({ t: s.t0, end: s.t1 }); else if (s.scene === 'rewind') rs[rs.length - 1].end = s.t1;
+    E.T.rewindStarts = rs.map(r => r.t); }   // the agency's anomaly detections (hud.anomaly)
   const ids = new Set();
   for (const s of E.shots) {
     if (ids.has(s.id)) throw new Error('duplicate shot id ' + s.id); ids.add(s.id);

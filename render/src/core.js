@@ -43,7 +43,8 @@ export function noise2(x, y, seed = 0) {
 
 // ---- palette: REDACTED NOCTURNE ----
 export const PAL = {
-  ink: '#07080A', black: '#000000', bone: '#ECE6D8', red: '#FF2A2A', blue: '#2F5BFF', sodium: '#FF9F1C',
+  ink: '#07080A', black: '#000000', bone: '#ECE6D8', red: '#FF2A2A', blue: '#2F5BFF', sodium: '#FF9F1C', amber: '#FFB000',   // amber: the agency's CRT accent (anomaly meter, glints, prune cuts)
+ 
   cyan: '#3DF2E6',            // rewind-cyan: reversed time only
   boneDim: '#8E897F', graphite: '#1A1C20', rule: '#3A3C40',
 };
