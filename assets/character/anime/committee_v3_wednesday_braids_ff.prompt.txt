@@ -1,0 +1,4 @@
+Tool: built-in image_gen
+Edit target: assets/character/anime/committee_v3_ff.jpg
+
+Use case: identity-preserve. Edit the supplied committee image. Change ONLY the hairstyle of the second woman from the right: the black-haired woman with fingertips steepled beneath her chin, between the colorful-haired snack eater and the far-right bubble-gum woman. Give her Wednesday Addams style hair: a neat center part and two long, clearly woven black braids falling forward over her shoulders, secured with small dark ties. Preserve her existing face, expression, glasses status, clothing and hand pose. Preserve every other character, prop, background, lighting, anime drawing style, framing and aspect ratio exactly. No other edits.
